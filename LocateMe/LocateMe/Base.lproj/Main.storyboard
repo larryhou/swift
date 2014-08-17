@@ -43,7 +43,7 @@
         <!--定位设置-->
         <scene sceneID="bS2-Gm-Mnc">
             <objects>
-                <viewController title="定位设置" id="2kP-va-Rhs" customClass="LocateSetupViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="定位设置" id="2kP-va-Rhs" customClass="SetupViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Uwo-c4-S32"/>
                         <viewControllerLayoutGuide type="bottom" id="qII-Xy-iaj"/>
@@ -60,9 +60,16 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="45" minValue="15" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="aXI-q2-jf5">
                                 <rect key="frame" x="14" y="384" width="572" height="31"/>
+                                <connections>
+                                    <action selector="sliderChangedValue:" destination="2kP-va-Rhs" eventType="valueChanged" id="lwz-RY-HmS"/>
+                                </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5u-Sv-3Ep">
                                 <rect key="frame" x="16" y="86" width="568" height="162"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2kP-va-Rhs" id="bDR-5b-Ltr"/>
+                                    <outlet property="delegate" destination="2kP-va-Rhs" id="NE7-yF-Kkl"/>
+                                </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="定位精度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jY-AM-AQL">
                                 <rect key="frame" x="16" y="72" width="85" height="21"/>
@@ -70,9 +77,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRw-j6-ufL">
+                                <rect key="frame" x="422" y="355" width="162" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="162" id="C14-9w-RoM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aXI-q2-jf5" firstAttribute="top" secondItem="vRw-j6-ufL" secondAttribute="bottom" constant="8" id="AJR-Cc-7pE"/>
                             <constraint firstItem="aXI-q2-jf5" firstAttribute="top" secondItem="Uwo-c4-S32" secondAttribute="bottom" constant="320" id="ATw-rO-9L4"/>
                             <constraint firstItem="aXI-q2-jf5" firstAttribute="leading" secondItem="d3g-xb-7ey" secondAttribute="leadingMargin" id="Fak-ot-Yha"/>
                             <constraint firstItem="Cwa-FW-b1z" firstAttribute="top" secondItem="Uwo-c4-S32" secondAttribute="bottom" constant="260" id="J7E-HI-Cxe"/>
@@ -83,16 +100,22 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Z5u-Sv-3Ep" secondAttribute="trailing" id="RUr-U3-Ojz"/>
                             <constraint firstItem="Z5u-Sv-3Ep" firstAttribute="top" secondItem="Uwo-c4-S32" secondAttribute="bottom" constant="22" id="ZLg-2S-COD"/>
                             <constraint firstItem="Z5u-Sv-3Ep" firstAttribute="leading" secondItem="d3g-xb-7ey" secondAttribute="leadingMargin" id="l8h-ZO-n7q"/>
+                            <constraint firstItem="vRw-j6-ufL" firstAttribute="trailing" secondItem="d3g-xb-7ey" secondAttribute="trailingMargin" id="rgm-yT-wrw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="定位设置" id="AUn-ZV-Um8">
                         <barButtonItem key="rightBarButtonItem" title="定位" style="done" id="fUO-1P-Ap6">
                             <connections>
-                                <segue destination="8wV-74-CIO" kind="show" id="Y4p-34-m60"/>
+                                <segue destination="8wV-74-CIO" kind="show" identifier="SettingSegue" id="Y4p-34-m60"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="accuracyPicker" destination="Z5u-Sv-3Ep" id="M3R-R9-EfV"/>
+                        <outlet property="label" destination="vRw-j6-ufL" id="zeJ-e2-pKc"/>
+                        <outlet property="slider" destination="aXI-q2-jf5" id="X2t-eo-djv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70H-pw-EpB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -101,7 +124,7 @@
         <!--我的位置-->
         <scene sceneID="lFF-x3-W0O">
             <objects>
-                <tableViewController title="我的位置" id="8wV-74-CIO" sceneMemberID="viewController">
+                <tableViewController title="我的位置" id="8wV-74-CIO" customClass="LocateViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="j1k-Fr-ZaH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,7 +179,7 @@
                     <navigationItem key="navigationItem" title="我的位置" id="ddh-yb-1Vy">
                         <barButtonItem key="rightBarButtonItem" title="重置" style="done" id="TC9-4F-3c4">
                             <connections>
-                                <segue destination="Vmb-66-miP" kind="unwind" unwindAction="resetLocateSetup:" id="nQA-4e-i2A"/>
+                                <segue destination="Vmb-66-miP" kind="unwind" unwindAction="reset:" id="Gmq-MV-ONs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -186,7 +209,7 @@
         <!--实时追踪数据-->
         <scene sceneID="QeF-Do-qyp">
             <objects>
-                <tableViewController storyboardIdentifier="TrackViewController" title="实时追踪数据" id="Lg7-cs-5Mi" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TrackViewController" title="实时追踪数据" id="Lg7-cs-5Mi" customClass="TrackViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="3o8-cP-jKb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -241,7 +264,7 @@
                     <navigationItem key="navigationItem" title="实时追踪数据" id="v1a-h8-8VO">
                         <barButtonItem key="rightBarButtonItem" title="重置" style="done" id="UsC-rp-UWz">
                             <connections>
-                                <segue destination="x1S-NN-Tpg" kind="unwind" unwindAction="resetTrackSetup:" id="FyR-Op-aCW"/>
+                                <segue destination="x1S-NN-Tpg" kind="unwind" unwindAction="reset:" id="SE7-4S-6Xy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -368,7 +391,7 @@
         <!--追踪设置-->
         <scene sceneID="Hbw-CS-SIe">
             <objects>
-                <viewController title="追踪设置" id="vNU-D4-Z7w" customClass="TrackSetupViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="追踪设置" id="vNU-D4-Z7w" customClass="SetupViewController" customModule="LocateMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wzf-Os-T3F"/>
                         <viewControllerLayoutGuide type="bottom" id="4YI-gZ-gNi"/>
@@ -385,13 +408,29 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="6Wi-Gm-557">
                                 <rect key="frame" x="14" y="384" width="572" height="31"/>
+                                <connections>
+                                    <action selector="sliderChangedValue:" destination="vNU-D4-Z7w" eventType="valueChanged" id="hhd-4F-wgM"/>
+                                </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHy-2B-0B7">
                                 <rect key="frame" x="16" y="116" width="568" height="162"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vNU-D4-Z7w" id="kOQ-rY-9OL"/>
+                                    <outlet property="delegate" destination="vNU-D4-Z7w" id="6is-f4-fFM"/>
+                                </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="定位精度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOT-sc-Xhf">
                                 <rect key="frame" x="16" y="79" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nif-7a-wdY">
+                                <rect key="frame" x="377" y="355" width="207" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="207" id="Cyl-vQ-KiU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -403,21 +442,28 @@
                             <constraint firstItem="c0w-9Q-jTS" firstAttribute="top" secondItem="wzf-Os-T3F" secondAttribute="bottom" constant="260" id="4QA-fT-24o"/>
                             <constraint firstItem="LOT-sc-Xhf" firstAttribute="leading" secondItem="MFu-J6-9qT" secondAttribute="leadingMargin" id="6WV-ui-IdL"/>
                             <constraint firstItem="6Wi-Gm-557" firstAttribute="top" secondItem="wzf-Os-T3F" secondAttribute="bottom" constant="320" id="8op-ZS-OXI"/>
+                            <constraint firstItem="nif-7a-wdY" firstAttribute="trailing" secondItem="MFu-J6-9qT" secondAttribute="trailingMargin" id="P5a-W9-hk0"/>
                             <constraint firstItem="LOT-sc-Xhf" firstAttribute="top" secondItem="wzf-Os-T3F" secondAttribute="bottom" constant="15" id="RnM-h1-ixo"/>
                             <constraint firstItem="c0w-9Q-jTS" firstAttribute="leading" secondItem="MFu-J6-9qT" secondAttribute="leadingMargin" id="WPL-Kh-FQw"/>
                             <constraint firstItem="6Wi-Gm-557" firstAttribute="trailing" secondItem="MFu-J6-9qT" secondAttribute="trailingMargin" id="e41-lJ-e7l"/>
                             <constraint firstItem="hHy-2B-0B7" firstAttribute="leading" secondItem="MFu-J6-9qT" secondAttribute="leadingMargin" id="esY-vh-vJa"/>
+                            <constraint firstItem="6Wi-Gm-557" firstAttribute="top" secondItem="nif-7a-wdY" secondAttribute="bottom" constant="8" id="ntU-KD-FxL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hHy-2B-0B7" secondAttribute="trailing" id="oKm-95-5Xb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="追踪设置" id="vLe-ww-7hz">
                         <barButtonItem key="rightBarButtonItem" title="追踪" style="done" id="kTn-C5-1YF">
                             <connections>
-                                <segue destination="Lg7-cs-5Mi" kind="show" id="gUW-wS-MGM"/>
+                                <segue destination="Lg7-cs-5Mi" kind="show" identifier="SettingSegue" id="gUW-wS-MGM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="accuracyPicker" destination="hHy-2B-0B7" id="4c7-Jo-i2o"/>
+                        <outlet property="label" destination="nif-7a-wdY" id="xOe-76-s8n"/>
+                        <outlet property="slider" destination="6Wi-Gm-557" id="Ega-rE-mYX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xnh-Jm-sMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

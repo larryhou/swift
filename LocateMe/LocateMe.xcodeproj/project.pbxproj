@@ -12,8 +12,9 @@
 		6BF22D5B199DA2370071FBB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BF22D59199DA2370071FBB5 /* Main.storyboard */; };
 		6BF22D5D199DA2380071FBB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BF22D5C199DA2380071FBB5 /* Images.xcassets */; };
 		6BF22D69199DA2390071FBB5 /* LocateMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF22D68199DA2390071FBB5 /* LocateMeTests.swift */; };
-		6BF22D7B199E1D770071FBB5 /* LocateSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF22D7A199E1D770071FBB5 /* LocateSetupViewController.swift */; };
-		6BF22D7D199E1EC10071FBB5 /* TrackSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF22D7C199E1EC10071FBB5 /* TrackSetupViewController.swift */; };
+		DB2700E7199F69FF00D256DD /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2700E6199F69FF00D256DD /* SetupViewController.swift */; };
+		DB2700EA199FD71000D256DD /* LocateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2700E9199FD71000D256DD /* LocateViewController.swift */; };
+		DB2700EC19A05F0700D256DD /* TrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2700EB19A05F0700D256DD /* TrackViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +37,9 @@
 		6BF22D62199DA2390071FBB5 /* LocateMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocateMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BF22D67199DA2390071FBB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BF22D68199DA2390071FBB5 /* LocateMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocateMeTests.swift; sourceTree = "<group>"; };
-		6BF22D7A199E1D770071FBB5 /* LocateSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocateSetupViewController.swift; sourceTree = "<group>"; };
-		6BF22D7C199E1EC10071FBB5 /* TrackSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSetupViewController.swift; sourceTree = "<group>"; };
+		DB2700E6199F69FF00D256DD /* SetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		DB2700E9199FD71000D256DD /* LocateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocateViewController.swift; sourceTree = "<group>"; };
+		DB2700EB19A05F0700D256DD /* TrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +119,9 @@
 			children = (
 				6BF22D55199DA2370071FBB5 /* AppDelegate.swift */,
 				6BF22D57199DA2370071FBB5 /* HomeViewController.swift */,
-				6BF22D7A199E1D770071FBB5 /* LocateSetupViewController.swift */,
-				6BF22D7C199E1EC10071FBB5 /* TrackSetupViewController.swift */,
+				DB2700E6199F69FF00D256DD /* SetupViewController.swift */,
+				DB2700E9199FD71000D256DD /* LocateViewController.swift */,
+				DB2700EB19A05F0700D256DD /* TrackViewController.swift */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -222,10 +225,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB2700EA199FD71000D256DD /* LocateViewController.swift in Sources */,
 				6BF22D58199DA2370071FBB5 /* HomeViewController.swift in Sources */,
 				6BF22D56199DA2370071FBB5 /* AppDelegate.swift in Sources */,
-				6BF22D7D199E1EC10071FBB5 /* TrackSetupViewController.swift in Sources */,
-				6BF22D7B199E1D770071FBB5 /* LocateSetupViewController.swift in Sources */,
+				DB2700E7199F69FF00D256DD /* SetupViewController.swift in Sources */,
+				DB2700EC19A05F0700D256DD /* TrackViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +350,7 @@
 				INFOPLIST_FILE = LocateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -357,6 +362,7 @@
 				INFOPLIST_FILE = LocateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

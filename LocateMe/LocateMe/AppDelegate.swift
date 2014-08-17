@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -17,7 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool
     {
-        // Override point for customization after application launch.
+        if !CLLocationManager.locationServicesEnabled()
+        {
+            var alert = UIAlertView(title: "定位服务已关闭", message: "您当前设备的定位服务已关闭，如果继续使用，你将会被请求重新打开定位服务。", delegate: nil, cancelButtonTitle: "我知道了")
+            alert.show();
+        }
         return true
     }
 
