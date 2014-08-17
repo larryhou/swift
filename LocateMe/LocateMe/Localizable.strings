@@ -1,0 +1,65 @@
+/* 
+  Localizable.strings
+  LocateMe
+
+  Created by doudou on 8/17/14.
+  Copyright (c) 2014 larryhou. All rights reserved.
+*/
+
+/* Accuracy Levels */
+"AccuracyBest" = "最好";
+"Accuracy10" = "10米";
+"Accuracy100" = "100米";
+"Accuracy1000" = "1千米";
+"Accuracy3000" = "3千米";
+
+/* Location Status */
+"Updating" = "Updating";
+"Tracking" = "Tracking";
+"Timed Out" = "Timed Out";
+"Error" = "Error";
+
+/* Section Labels */
+"Status" = "Status";
+"Best Measurement" = "Best Measurement";
+"All Measurements" = "All Measurements";
+"Attributes" = "Attributes";
+"Accuracy" = "Accuracy";
+"Course and Speed" = "Course and Speed";
+
+/* Location Value Labels */
+"timestamp" = "timestamp";
+"coordinate" = "coordinate";
+"altitude" = "altitude";
+"horizontal" = "horizontal";
+"vertical" = "vertical";
+"course" = "course";
+"speed" = "speed";
+
+/* Reset button labels */
+"Reset" = "Reset";
+
+/* Data unavailable messages */
+"DataUnavailable" = "Unavailable";
+
+/* Formatting strings for location data output */
+"LatLongFormat" = "%.4f° %@, %.4f° %@";
+"AltitudeFormat" = "%.2f meters %@";
+"AccuracyFormat" = "%.2f meters";
+"CourseFormat" = "%.4f° Clockwise from North";
+"SpeedFormat" = "%.2f meters per second";
+"DateFormat" = "EEE MMM-dd-yyyy HH:mm:ss";
+
+/* Directions */
+"North" = "N";
+"South" = "S";
+"East" = "E";
+"West" = "W";
+"AboveSeaLevel" = "above sea level";
+"BelowSeaLevel" = "below sea level";
+
+/* Error messages */
+"NoLocationServices" = "Location services are not enabled.";
+"LocationDenied" = "Access to use your location was denied.";
+"LocationUnknown" = "Your location could not be determined.";
+"GenericLocationError" = "Unknown location error code:";

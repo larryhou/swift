@@ -2,10 +2,14 @@
 
 import Foundation
 
-rand()
 
-var formatter = NSNumberFormatter()
-formatter.minimumFractionDigits = 2
-formatter.minimumIntegerDigits = 1
+func stopUpdatingLocation()
+{
+	println(rand())
+}
 
-formatter.respondsToSelector(Selector("setMinumFractionDigits:"))
+var delay:NSTimeInterval = 0.5
+var timer = NSTimer.scheduledTimerWithTimeInterval(delay,
+	target: nil, selector: "stopUpdatingLocation",
+	userInfo: nil,
+	repeats: true)

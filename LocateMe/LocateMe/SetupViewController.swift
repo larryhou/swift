@@ -63,11 +63,11 @@ class SetupViewController:UIViewController, UIPickerViewDelegate, UIPickerViewDa
     override func viewDidLoad()
     {
         options = []
-        options.append(AccuracyOption(label: "最好", value: kCLLocationAccuracyBest))
-        options.append(AccuracyOption(label: "10米", value: kCLLocationAccuracyNearestTenMeters))
-        options.append(AccuracyOption(label: "100米", value: kCLLocationAccuracyHundredMeters))
-        options.append(AccuracyOption(label: "1,000米", value: kCLLocationAccuracyKilometer))
-        options.append(AccuracyOption(label: "3,000米", value: kCLLocationAccuracyThreeKilometers))
+        options.append(AccuracyOption(label: localizeString("AccuracyBest"), value: kCLLocationAccuracyBest))
+        options.append(AccuracyOption(label: localizeString("Accuracy10"), value: kCLLocationAccuracyNearestTenMeters))
+        options.append(AccuracyOption(label: localizeString("Accuracy100"), value: kCLLocationAccuracyHundredMeters))
+        options.append(AccuracyOption(label: localizeString("Accuracy1000"), value: kCLLocationAccuracyKilometer))
+        options.append(AccuracyOption(label: localizeString("Accuracy3000"), value: kCLLocationAccuracyThreeKilometers))
         
         formater = NSNumberFormatter()
         formater.minimumFractionDigits = 1

@@ -58,7 +58,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="45" minValue="15" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="aXI-q2-jf5">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="15" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="aXI-q2-jf5">
                                 <rect key="frame" x="14" y="384" width="572" height="31"/>
                                 <connections>
                                     <action selector="sliderChangedValue:" destination="2kP-va-Rhs" eventType="valueChanged" id="lwz-RY-HmS"/>
@@ -130,22 +130,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StatusCell" id="FJh-uG-yqj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StatusCell" id="FJh-uG-yqj" customClass="StatusTableViewCell" customModule="LocateMe" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FJh-uG-yqj" id="loU-ar-cOY">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8RL-tZ-gTx">
-                                            <rect key="frame" x="17" y="13" width="540" height="21"/>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="WrC-zH-rME">
+                                            <rect key="frame" x="560" y="12" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnx-9Z-Etx">
+                                            <rect key="frame" x="8" y="16" width="553" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mXh-jh-dfc">
-                                            <rect key="frame" x="572" y="12" width="20" height="20"/>
-                                        </activityIndicatorView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="WrC-zH-rME" secondAttribute="trailing" constant="12" id="286-L9-Fr8"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="rnx-9Z-Etx" secondAttribute="trailing" constant="31" id="FXi-FY-Apt"/>
+                                        <constraint firstItem="WrC-zH-rME" firstAttribute="top" secondItem="loU-ar-cOY" secondAttribute="topMargin" constant="4" id="Txb-Sb-dny"/>
+                                        <constraint firstItem="rnx-9Z-Etx" firstAttribute="leading" secondItem="loU-ar-cOY" secondAttribute="leadingMargin" id="kcw-w6-7jN"/>
+                                        <constraint firstItem="rnx-9Z-Etx" firstAttribute="top" secondItem="loU-ar-cOY" secondAttribute="topMargin" constant="8" id="qiP-lf-7rS"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="indicator" destination="WrC-zH-rME" id="DiA-fE-QUy"/>
+                                    <outlet property="label" destination="rnx-9Z-Etx" id="5A2-XH-cXk"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MeasurementCell" textLabel="SMK-ey-ou2" detailTextLabel="bWd-gz-iEC" style="IBUITableViewCellStyleValue2" id="nPT-6Q-ZOb">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -179,6 +191,7 @@
                     <navigationItem key="navigationItem" title="我的位置" id="ddh-yb-1Vy">
                         <barButtonItem key="rightBarButtonItem" title="重置" style="done" id="TC9-4F-3c4">
                             <connections>
+                                <action selector="reset:" destination="8wV-74-CIO" id="j9X-TL-gE9"/>
                                 <segue destination="Vmb-66-miP" kind="unwind" unwindAction="reset:" id="Gmq-MV-ONs"/>
                             </connections>
                         </barButtonItem>
@@ -187,7 +200,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bet-xr-dz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Vmb-66-miP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3702" y="-33"/>
+            <point key="canvasLocation" x="3702" y="-35"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tHY-PA-aav">
@@ -471,6 +484,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gpT-4b-rxw"/>
+        <segue reference="Xur-uv-Vaa"/>
     </inferredMetricsTieBreakers>
 </document>
