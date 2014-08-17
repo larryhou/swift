@@ -11,17 +11,17 @@ import CoreLocation
 
 extension CLLocation
 {
-    var localizedCoordinateString:String
-    {
-        if self.horizontalAccuracy < 0
-        {
+	var localizedCoordinateString:String
+	{
+		if self.horizontalAccuracy < 0
+		{
 			return localizeString("DataUnavailable")
-        }
-			
-			var latSuffix = self.coordinate.latitude < 0 ? localizeString("South") : localizeString("North")
-			var lonSuffix = self.coordinate.longitude < 0 ? localizeString("West") : localizeString("East")
+		}
+
+		var latSuffix = self.coordinate.latitude < 0 ? localizeString("South") : localizeString("North")
+		var lonSuffix = self.coordinate.longitude < 0 ? localizeString("West") : localizeString("East")
 		return String(format: localizeString("LatLongFormat"), fabs(self.coordinate.latitude), latSuffix, fabs(self.coordinate.longitude), lonSuffix)
-    }
+	}
 	
 	var localizedAltitudeString:String
 	{
