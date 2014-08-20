@@ -20,9 +20,28 @@ enum LocationUpdateStatus:String
 {
 	case Updating = "Updating"
 	case Tracking = "Tracking"
-	case TimedOut = "Timed Out"
+	case Timeout = "Timeout"
 	case Acquired = "Acquired Location"
 	case Error = "Error"
+    case None = "None"
+}
+
+extension CLAuthorizationStatus
+{
+    var description:String
+    {
+        var status:String
+        switch self
+        {
+            case .Authorized:status="Authorized"
+            case .AuthorizedWhenInUse:status="AuthorizedWhenInUse"
+            case .Denied:status="Denied"
+            case .NotDetermined:status="NotDetermined"
+            case .Restricted:status="Restriced"
+        }
+            
+        return "CLAuthorizationStatus.\(status)"
+    }
 }
 
 class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocationManagerDelegate
@@ -55,96 +74,120 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = localizeString("DateFormat")
 		
-		measurements = []
-		
+        measurements = []
 		locationManager = CLLocationManager()
-		locationManager.delegate = self
     }
     
     override func viewWillAppear(animated: Bool)
     {
-        println(setting)
-		
-		locationManager.desiredAccuracy = setting.accuracy
-		locationManager.startUpdatingLocation()
-		
-		var delay:NSTimeInterval = NSTimeInterval(setting.sliderValue)
-		timer = NSTimer.scheduledTimerWithTimeInterval(delay,
-			target: self, selector: "updateTimedOut",
-			userInfo: nil, repeats: false)
-		
-// FIXME: 无法使用带参数的selector，否则报错： [NSCFTimer copyWithZone:]: unrecognized selector sent to instance
-//			timer = NSTimer.scheduledTimerWithTimeInterval(delay,
-//			target: self, selector: "stopUpdatingLocation:",
-//			userInfo: nil, repeats: false)
-		
-		status = .Updating
-		tableView.reloadData()
+        if bestMeasurement == nil
+        {
+            startUpdateLocation()
+        }
 	}
 	
 	override func viewWillDisappear(animated: Bool)
 	{
-		println("\(self) disappear")
-		
-		locationManager.stopUpdatingLocation()
-		locationManager.delegate = nil
-		
-		if timer != nil
-		{
-			timer.invalidate()
-		}
+		stopUpdatingLocation(.None)
 	}
 	
 	// MARK: 数据重置
-	
-	@IBAction func reset(sender: UIBarButtonItem)
-	{
-		locationManager.stopUpdatingLocation()
-		locationManager.delegate = nil
-		
-		measurements.removeAll(keepCapacity: false)
-		bestMeasurement = nil
-	}
+    @IBAction func refresh(sender: UIBarButtonItem)
+    {
+        startUpdateLocation()
+    }
 	
 	// MARK: 定位相关
+    func startUpdateLocation()
+    {
+        if timer != nil
+        {
+            timer.invalidate()
+            timer = nil
+        }
+        
+        locationManager.stopUpdatingLocation()
+        
+        measurements.removeAll(keepCapacity: false)
+        bestMeasurement = nil
+        
+        status = .Updating
+        tableView.reloadData()
+        
+        println(setting)
+        
+        var delay:NSTimeInterval = NSTimeInterval(setting.sliderValue)
+        timer = NSTimer.scheduledTimerWithTimeInterval(delay,
+            target: self, selector: "updateLocationTimeout",
+            userInfo: nil, repeats: false)
+        
+        // FIXME: 无法使用带参数的selector，否则报错： [NSCFTimer copyWithZone:]: unrecognized selector sent to instance
+        //			timer = NSTimer.scheduledTimerWithTimeInterval(delay,
+        //			target: self, selector: "stopUpdatingLocation:",
+        //			userInfo: nil, repeats: false)
+        
+        if (CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse)
+        {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        locationManager.desiredAccuracy = setting.accuracy
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+    }
+    
+    func stopUpdatingLocation(status:LocationUpdateStatus)
+    {
+        if status != .None
+        {
+            self.status = status
+            tableView.reloadData()
+        }
+        
+        locationManager.stopUpdatingLocation()
+        locationManager.delegate = nil
+        
+        if timer != nil
+        {
+            timer.invalidate()
+            timer = nil
+        }
+    }
+    
+    func updateLocationTimeout()
+    {
+        stopUpdatingLocation(.Timeout)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus)
+    {
+        println("authorization:\(status.description)")
+    }
+    
 	func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
 	{
-		var location = locations.first as CLLocation
-		
-		measurements.append(location)
-		
-		if bestMeasurement == nil || bestMeasurement.horizontalAccuracy > location.horizontalAccuracy
-		{
-			bestMeasurement = location
-			
-			if location.horizontalAccuracy < locationManager.desiredAccuracy
-			{
-				stopUpdatingLocation(.Acquired)
-				
-				timer.invalidate()
-				timer = nil
-			}
-		}
+        for data in locations
+        {
+            var location = data as CLLocation
+            
+            measurements.append(location)
+            
+            if bestMeasurement == nil || bestMeasurement.horizontalAccuracy > location.horizontalAccuracy
+            {
+                bestMeasurement = location
+                if location.horizontalAccuracy < locationManager.desiredAccuracy
+                {
+                    stopUpdatingLocation(.Acquired)
+                }
+            }
+        }
+        
+        tableView.reloadData()
 	}
 	
 	func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!)
 	{
 		stopUpdatingLocation(.Error)
-	}
-	
-	func stopUpdatingLocation(status:LocationUpdateStatus)
-	{
-		self.status = status
-		
-		tableView.reloadData()
-		
-		locationManager.stopUpdatingLocation()
-		locationManager.delegate = nil
-	}
-	
-	func updateTimedOut()
-	{
-		stopUpdatingLocation(.TimedOut)
 	}
 	
 	// MARK: 列表展示
@@ -201,24 +244,22 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
 			switch type
 			{
 				case .LocateStatus:
-					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Status.toRaw()) as StatusTableViewCell
-					cell.label.text = localizeString(status.toRaw())
-					if status == .Updating
-					{
-						if !cell.indicator.isAnimating()
-						{
-							cell.indicator.startAnimating()
-						}
-						
-						println(cell.indicator.alpha)
-					}
-					else
-					{
-						if cell.indicator.isAnimating()
-						{
-							cell.indicator.stopAnimating()
-						}
-					}
+					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Status.toRaw()) as UITableViewCell
+					cell.textLabel.text = localizeString(status.toRaw())
+//					if status == .Updating
+//					{
+//						if !cell.indicator.isAnimating()
+//						{
+//							cell.indicator.startAnimating()
+//						}
+//					}
+//					else
+//					{
+//						if cell.indicator.isAnimating()
+//						{
+//							cell.indicator.stopAnimating()
+//						}
+//					}
 					return cell
 				
 				case .BestMeasurement:
@@ -240,6 +281,11 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
 			return nil
 		}
 	}
+    
+    override func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 	
 //	override func tableView(tableView: UITableView!, willSelectRowAtIndexPath indexPath: NSIndexPath!) -> NSIndexPath!
 //	{

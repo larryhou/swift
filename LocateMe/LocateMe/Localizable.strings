@@ -16,7 +16,8 @@
 /* Location Status */
 "Updating" = "Updating";
 "Tracking" = "Tracking";
-"Timed Out" = "Timed Out";
+"Timeout" = "Timeout";
+"Acquired Location" = "Acquired";
 "Error" = "Error";
 
 /* Section Labels */
