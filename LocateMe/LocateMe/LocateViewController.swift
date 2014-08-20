@@ -169,6 +169,7 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         for data in locations
         {
             var location = data as CLLocation
+            println("radius:\(location.horizontalAccuracy), altitude:\(location.verticalAccuracy)")
             
             measurements.append(location)
             

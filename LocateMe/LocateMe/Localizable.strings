@@ -49,7 +49,7 @@
 "AccuracyFormat" = "%.2f meters";
 "CourseFormat" = "%.4f° Clockwise from North";
 "SpeedFormat" = "%.2f meters per second";
-"DateFormat" = "EEE MMM-dd-yyyy HH:mm:ss";
+"DateFormat" = "EEE MMM-dd-yyyy HH:mm:ss.SSS";
 
 /* Directions */
 "North" = "N";
