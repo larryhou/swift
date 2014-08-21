@@ -288,8 +288,25 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 	
-//	override func tableView(tableView: UITableView!, willSelectRowAtIndexPath indexPath: NSIndexPath!) -> NSIndexPath!
-//	{
-//		return SectionType.fromRaw(indexPath.section) == .LocateStatus ? nil : indexPath
-//	}
+	//MARK: segue
+	override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+	{
+		if segue.identifier == "LocationDetailSegue"
+		{
+			var indexPath = tableView.indexPathForCell(sender as UITableViewCell)
+			var type:SectionType = SectionType.fromRaw(indexPath.section)!
+			
+			var destinationCtrl = segue.destinationViewController as LocationDetailViewController
+			
+			switch type
+			{
+				case .BestMeasurement:
+					destinationCtrl.location = bestMeasurement
+				case .Measurements:
+					destinationCtrl.location = measurements[indexPath.row]
+				default:break
+			}
+		}
+	}
+	
 }

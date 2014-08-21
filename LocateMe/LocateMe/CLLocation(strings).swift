@@ -23,6 +23,18 @@ extension CLLocation
 		return String(format: localizeString("LatLongFormat"), fabs(self.coordinate.latitude), latSuffix, fabs(self.coordinate.longitude), lonSuffix)
 	}
 	
+	var localizedLatitudeString:String
+	{
+		var suffix = self.coordinate.latitude < 0 ? localizeString("South") : localizeString("North")
+		return String(format:localizeString("LocationFormat"), fabs(self.coordinate.latitude), suffix);
+	}
+	
+	var localizedLongitudeString:String
+	{
+		var suffix = self.coordinate.longitude < 0 ? localizeString("West") : localizeString("East")
+		return String(format:localizeString("LocationFormat"), fabs(self.coordinate.longitude), suffix);
+	}
+	
 	var localizedAltitudeString:String
 	{
 		if self.verticalAccuracy < 0
@@ -32,7 +44,7 @@ extension CLLocation
 		
 		var suffix:String = self.altitude < 0 ? localizeString("BelowSeaLevel") : localizeString("AboveSeaLevel")
 		
-		return String(format: localizeString("AltitudeFormat"), fabs(self.altitude), suffix)
+		return String(format: localizeString("AltitudeFormat"), suffix, fabs(self.altitude))
 	}
 	
 	var localizedHorizontalAccuracyString:String

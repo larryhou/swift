@@ -37,18 +37,16 @@
 "course" = "course";
 "speed" = "speed";
 
-/* Reset button labels */
-"Reset" = "Reset";
-
 /* Data unavailable messages */
 "DataUnavailable" = "Unavailable";
 
 /* Formatting strings for location data output */
 "LatLongFormat" = "%.4f° %@, %.4f° %@";
-"AltitudeFormat" = "%.2f meters %@";
-"AccuracyFormat" = "%.2f meters";
-"CourseFormat" = "%.4f° Clockwise from North";
-"SpeedFormat" = "%.2f meters per second";
+"LocationFormat" = "%.6f° %@";
+"AltitudeFormat" = "%@ %.2f m";
+"AccuracyFormat" = "%.2f m";
+"CourseFormat" = "%.4f° CW-N";
+"SpeedFormat" = "%.2f m/s";
 "DateFormat" = "EEE MMM-dd-yyyy HH:mm:ss.SSS";
 
 /* Directions */
@@ -56,8 +54,8 @@
 "South" = "S";
 "East" = "E";
 "West" = "W";
-"AboveSeaLevel" = "above sea level";
-"BelowSeaLevel" = "below sea level";
+"AboveSeaLevel" = "+";
+"BelowSeaLevel" = "-";
 
 /* Error messages */
 "NoLocationServices" = "Location services are not enabled.";
