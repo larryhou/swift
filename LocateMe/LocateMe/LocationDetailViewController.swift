@@ -90,37 +90,37 @@ class LocationDetailViewController:UITableViewController
 				{
 					cell.textLabel.text = localizeString("latitude")
 					location.coordinate.latitude
-					cell.detailTextLabel.text = padding(location.coordinate.latitude) + location.localizedLatitudeString
+					cell.detailTextLabel.text = padding(location.coordinate.latitude) + location.getLatitudeString()
 					
 				}
 				else
 				{
 					cell.textLabel.text = localizeString("longitude")
-					cell.detailTextLabel.text = padding(location.coordinate.longitude) + location.localizedLongitudeString
+					cell.detailTextLabel.text = padding(location.coordinate.longitude) + location.getLongitudeString()
 				}
 			
 			case .Accuracy:
 				if indexPath.row == 0
 				{
 					cell.textLabel.text = localizeString("horizontal")
-					cell.detailTextLabel.text = location.localizedHorizontalAccuracyString
+					cell.detailTextLabel.text = location.getHorizontalAccuracyString()
 				}
 				else
 				{
 					cell.textLabel.text = localizeString("vertical")
-					cell.detailTextLabel.text = location.localizedVerticalAccuracyString
+					cell.detailTextLabel.text = location.getVerticalAccuracyString()
 				}
 			case .Altitude:
 				cell.textLabel.text = localizeString("altitude")
-				cell.detailTextLabel.text = location.localizedAltitudeString
+				cell.detailTextLabel.text = location.getAltitudeString()
 			
 			case .Course:
 				cell.textLabel.text = localizeString("course")
-				cell.detailTextLabel.text = location.localizedCourseString
+				cell.detailTextLabel.text = location.getCourseString()
 			
 			case .Speed:
 				cell.textLabel.text = localizeString("speed")
-				cell.detailTextLabel.text = location.localizedSpeedString
+				cell.detailTextLabel.text = location.getSpeedString()
 		}
 		
 		return cell

@@ -11,7 +11,7 @@ import CoreLocation
 
 extension CLLocation
 {
-	var localizedCoordinateString:String
+	func getCoordinateString()->String
 	{
 		if self.horizontalAccuracy < 0
 		{
@@ -23,19 +23,19 @@ extension CLLocation
 		return String(format: localizeString("LatLongFormat"), fabs(self.coordinate.latitude), latSuffix, fabs(self.coordinate.longitude), lonSuffix)
 	}
 	
-	var localizedLatitudeString:String
+	func getLatitudeString()->String
 	{
 		var suffix = self.coordinate.latitude < 0 ? localizeString("South") : localizeString("North")
 		return String(format:localizeString("LocationFormat"), fabs(self.coordinate.latitude), suffix);
 	}
 	
-	var localizedLongitudeString:String
+	func getLongitudeString()->String
 	{
 		var suffix = self.coordinate.longitude < 0 ? localizeString("West") : localizeString("East")
 		return String(format:localizeString("LocationFormat"), fabs(self.coordinate.longitude), suffix);
 	}
 	
-	var localizedAltitudeString:String
+	func getAltitudeString()->String
 	{
 		if self.verticalAccuracy < 0
 		{
@@ -47,7 +47,7 @@ extension CLLocation
 		return String(format: localizeString("AltitudeFormat"), suffix, fabs(self.altitude))
 	}
 	
-	var localizedHorizontalAccuracyString:String
+	func getHorizontalAccuracyString()->String
 	{
 		
 		if self.horizontalAccuracy < 0
@@ -58,7 +58,7 @@ extension CLLocation
 		return String(format:localizeString("AccuracyFormat"), self.horizontalAccuracy)
 	}
 	
-	var localizedVerticalAccuracyString:String
+	func getVerticalAccuracyString()->String
 	{
 		if self.verticalAccuracy < 0
 		{
@@ -68,7 +68,7 @@ extension CLLocation
 		return String(format:localizeString("AccuracyFormat"), self.verticalAccuracy)
 	}
 	
-	var localizedCourseString:String
+	func getCourseString()->String
 	{
 		if self.course < 0
 		{
@@ -78,7 +78,7 @@ extension CLLocation
 		return String(format:localizeString("AccuracyFormat"), self.course)
 	}
 	
-	var localizedSpeedString:String
+	func getSpeedString()->String
 	{
 		if self.speed < 0
 		{

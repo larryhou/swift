@@ -265,14 +265,14 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
 				
 				case .BestMeasurement:
 					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Measurement.toRaw()) as UITableViewCell
-					cell.textLabel.text = bestMeasurement.localizedCoordinateString
+					cell.textLabel.text = bestMeasurement.getCoordinateString()
 					cell.detailTextLabel.text = dateFormatter.stringFromDate(bestMeasurement.timestamp)
 					return cell
 				
 				case .Measurements:
 					var location = measurements[indexPath.row]
 					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Measurement.toRaw()) as UITableViewCell
-					cell.textLabel.text = location.localizedCoordinateString
+					cell.textLabel.text = location.getCoordinateString()
 					cell.detailTextLabel.text = dateFormatter.stringFromDate(location.timestamp)
 					return cell
 			}
