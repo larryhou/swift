@@ -14,46 +14,50 @@
 "Accuracy3000" = "3千米";
 
 /* Location Status */
-"Updating" = "Updating";
-"Tracking" = "Tracking";
-"Timeout" = "Timeout";
-"Acquired Location" = "Acquired";
-"Error" = "Error";
+"Updating" = "正在定位";
+"Tracking" = "正在追踪";
+"Timeout" = "超时";
+"Acquired Location" = "完成";
+"Error" = "错误";
 
 /* Section Labels */
-"Status" = "Status";
-"Best Measurement" = "Best Measurement";
-"All Measurements" = "All Measurements";
-"Attributes" = "Attributes";
-"Accuracy" = "Accuracy";
-"Course and Speed" = "Course and Speed";
+"Status" = "定位状态";
+"Best Measurement" = "最高精度定位";
+"All Measurements" = "所有定位";
 
 /* Location Value Labels */
-"timestamp" = "timestamp";
-"coordinate" = "coordinate";
-"altitude" = "altitude";
-"horizontal" = "horizontal";
-"vertical" = "vertical";
-"course" = "course";
-"speed" = "speed";
+"coordinate" = "坐标";
+"latitude" = "经度";
+"longitude" = "纬度";
+"altitude" = "海拔";
+"horizontal" = "水平半径";
+"vertical" = "垂直高度";
+"course" = "方向";
+"speed" = "速度";
+
+/* Table Section Title Labels */
+"Accuracy" = "定位精度";
+"Coordinate" = "坐标";
+"Altitude" = "海拔";
+"Movement" = "运动";
 
 /* Data unavailable messages */
-"DataUnavailable" = "Unavailable";
+"DataUnavailable" = "不可用";
 
 /* Formatting strings for location data output */
 "LatLongFormat" = "%.4f° %@, %.4f° %@";
 "LocationFormat" = "%.6f° %@";
-"AltitudeFormat" = "%@ %.2f m";
-"AccuracyFormat" = "%.2f m";
-"CourseFormat" = "%.4f° CW-N";
-"SpeedFormat" = "%.2f m/s";
+"AltitudeFormat" = "%@%.2f米";
+"AccuracyFormat" = "%.2f米";
+"CourseFormat" = "%.4f° 正北方向顺时针偏角";
+"SpeedFormat" = "%.2f米/秒";
 "DateFormat" = "EEE MMM-dd-yyyy HH:mm:ss.SSS";
 
 /* Directions */
-"North" = "N";
-"South" = "S";
-"East" = "E";
-"West" = "W";
+"North" = "北";
+"South" = "南";
+"East" = "东";
+"West" = "西";
 "AboveSeaLevel" = "+";
 "BelowSeaLevel" = "-";
 

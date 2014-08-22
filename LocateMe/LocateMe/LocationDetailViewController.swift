@@ -19,8 +19,7 @@ class LocationDetailViewController:UITableViewController
         case Accuracy = 0
 		case Coordinate = 1
         case Altitude = 2
-        case Course = 3
-        case Speed = 4
+        case Movement = 3
     }
 	
 	var location:CLLocation!
@@ -28,7 +27,7 @@ class LocationDetailViewController:UITableViewController
 	//MARK: 列表逻辑
 	override func numberOfSectionsInTableView(tableView: UITableView!) -> Int
 	{
-		return 5
+		return 4
 	}
 	
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
@@ -39,8 +38,7 @@ class LocationDetailViewController:UITableViewController
 			case .Accuracy:return 2
 			case .Altitude:return 1
 			case .Coordinate:return 2
-			case .Course:return 1
-			case .Speed:return 1
+			case .Movement:return 2
 		}
     }
     
@@ -51,9 +49,8 @@ class LocationDetailViewController:UITableViewController
         {
 			case .Accuracy:return localizeString("Accuracy")
 			case .Altitude:return localizeString("Altitude")
-			case .Course:return localizeString("Course")
+			case .Movement:return localizeString("Movement")
 			case .Coordinate:return localizeString("Coordinate")
-			case .Speed:return localizeString("Speed")
         }
     }
 	
@@ -114,13 +111,17 @@ class LocationDetailViewController:UITableViewController
 				cell.textLabel.text = localizeString("altitude")
 				cell.detailTextLabel.text = location.getAltitudeString()
 			
-			case .Course:
-				cell.textLabel.text = localizeString("course")
-				cell.detailTextLabel.text = location.getCourseString()
-			
-			case .Speed:
-				cell.textLabel.text = localizeString("speed")
-				cell.detailTextLabel.text = location.getSpeedString()
+			case .Movement:
+				if indexPath.row == 0
+				{
+					cell.textLabel.text = localizeString("course")
+					cell.detailTextLabel.text = location.getCourseString()
+				}
+				else
+				{
+					cell.textLabel.text = localizeString("speed")
+					cell.detailTextLabel.text = location.getSpeedString()
+				}
 		}
 		
 		return cell
