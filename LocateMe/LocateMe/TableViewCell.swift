@@ -17,3 +17,10 @@ class StatusTableViewCell:UITableViewCell
 	
 	@IBOutlet weak var timeTicker: UILabel!
 }
+
+class TrackStatusTableViewCell:UITableViewCell
+{
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var indicator: UIActivityIndicatorView!
+	
+}

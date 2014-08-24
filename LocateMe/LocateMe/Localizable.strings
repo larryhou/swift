@@ -24,6 +24,11 @@
 "Status" = "状态";
 "Best Measurement" = "最高精度定位";
 "All Measurements" = "所有定位";
+"Accuracy" = "定位精度";
+"Coordinate" = "坐标";
+"Altitude" = "海拔";
+"Movement" = "运动";
+"RTStats" = "实时数据";
 
 /* Location Value Labels */
 "coordinate" = "坐标";
@@ -34,12 +39,8 @@
 "vertical" = "垂直高度";
 "course" = "方向";
 "speed" = "速度";
-
-/* Table Section Title Labels */
-"Accuracy" = "定位精度";
-"Coordinate" = "坐标";
-"Altitude" = "海拔";
-"Movement" = "运动";
+"accuracy" = "精度";
+"time" = "时间";
 
 /* Data unavailable messages */
 "DataUnavailable" = "不可用";
@@ -49,9 +50,9 @@
 "LocationFormat" = "%.6f° %@";
 "AltitudeFormat" = "%@%.2f米";
 "AccuracyFormat" = "%.2f米";
-"CourseFormat" = "%.4f° 正北方向顺时针偏角";
-"SpeedFormat" = "%.2f米/秒";
-"DateFormat" = "EEE MM/dd/yyyy HH:mm:ss.SSS";
+"CourseFormat" = "%.1f° 北向顺时针";
+"SpeedFormat" = "%.1f米/秒";
+"DateFormat" = "MM/dd/yyyy HH:mm:ss.SSS";
 
 /* Directions */
 "North" = "北";

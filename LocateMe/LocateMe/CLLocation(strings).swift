@@ -70,21 +70,11 @@ extension CLLocation
 	
 	func getCourseString()->String
 	{
-		if self.course < 0
-		{
-			return localizeString("DataUnavailable")
-		}
-			
-		return String(format:localizeString("AccuracyFormat"), self.course)
+		return String(format:localizeString("CourseFormat"), self.course)
 	}
 	
 	func getSpeedString()->String
 	{
-		if self.speed < 0
-		{
-			return localizeString("DataUnavailable")
-		}
-			
-		return String(format:localizeString("AccuracyFormat"), self.speed)
+		return String(format:localizeString("SpeedFormat"), self.speed)
 	}
 }

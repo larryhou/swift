@@ -10,16 +10,6 @@ import Foundation
 import CoreLocation
 import UIKit
 
-enum LocationUpdateStatus:String
-{
-	case Updating = "Updating"
-	case Tracking = "Tracking"
-	case Timeout = "Timeout"
-	case Acquired = "Acquired Location"
-	case Error = "Error"
-    case None = "None"
-}
-
 extension CLAuthorizationStatus
 {
     var description:String
@@ -40,6 +30,15 @@ extension CLAuthorizationStatus
 
 class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocationManagerDelegate
 {
+	enum LocationUpdateStatus:String
+	{
+		case Updating = "Updating"
+		case Timeout = "Timeout"
+		case Acquired = "Acquired Location"
+		case Error = "Error"
+		case None = "None"
+	}
+
     enum SectionType:Int
     {
         case LocateStatus = 0
