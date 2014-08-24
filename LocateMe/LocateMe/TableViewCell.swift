@@ -15,4 +15,5 @@ class StatusTableViewCell:UITableViewCell
 	@IBOutlet weak var label: UILabel!
 	@IBOutlet weak var indicator: UIActivityIndicatorView!
 	
+	@IBOutlet weak var timeTicker: UILabel!
 }

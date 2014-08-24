@@ -10,12 +10,6 @@ import Foundation
 import CoreLocation
 import UIKit
 
-enum CellIdentifier:String
-{
-    case Status = "StatusCell"
-    case Measurement = "MeasurementCell"
-}
-
 enum LocationUpdateStatus:String
 {
 	case Updating = "Updating"
@@ -52,15 +46,24 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         case BestMeasurement = 1
         case Measurements = 2
     }
+
+	enum CellIdentifier:String
+	{
+		case Status = "StatusCell"
+		case Measurement = "MeasurementCell"
+	}
     
     private var setting:LocateSettingInfo!
     private var dateFormatter:NSDateFormatter!
+	private var leftFormatter:NSNumberFormatter!
 	
 	private var bestMeasurement:CLLocation!
 	private var measurements:[CLLocation]!
 	
 	private var locationManager:CLLocationManager!
 	private var timer:NSTimer!
+
+	private var remainTime:Float!
 	
 	private var status:LocationUpdateStatus!
     
@@ -73,6 +76,10 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
     {
         dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = localizeString("DateFormat")
+
+		leftFormatter = NSNumberFormatter()
+		leftFormatter.minimumIntegerDigits = 2
+		leftFormatter.maximumFractionDigits = 0
 		
         measurements = []
 		locationManager = CLLocationManager()
@@ -116,10 +123,10 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         
         println(setting)
         
-        var delay:NSTimeInterval = NSTimeInterval(setting.sliderValue)
-        timer = NSTimer.scheduledTimerWithTimeInterval(delay,
-            target: self, selector: "updateLocationTimeout",
-            userInfo: nil, repeats: false)
+        remainTime = setting.sliderValue
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0,
+            target: self, selector: "timeTickUpdate",
+            userInfo: nil, repeats: true)
         
         // FIXME: 无法使用带参数的selector，否则报错： [NSCFTimer copyWithZone:]: unrecognized selector sent to instance
         //			timer = NSTimer.scheduledTimerWithTimeInterval(delay,
@@ -154,9 +161,15 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         }
     }
     
-    func updateLocationTimeout()
+    func timeTickUpdate()
     {
-        stopUpdatingLocation(.Timeout)
+		remainTime!--
+		tableView.reloadData()
+		
+		if remainTime <= 0
+        {
+			stopUpdatingLocation(.Timeout)
+		}
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus)
@@ -169,7 +182,6 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
         for data in locations
         {
             var location = data as CLLocation
-            println("radius:\(location.horizontalAccuracy), altitude:\(location.verticalAccuracy)")
             
             measurements.append(location)
             
@@ -196,6 +208,15 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
 	override func numberOfSectionsInTableView(tableView: UITableView!) -> Int
 	{
 		return bestMeasurement != nil ? 3 : 1
+	}
+
+	override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat
+	{
+		switch SectionType.fromRaw(indexPath.section)!
+		{
+			case .LocateStatus:return 60.0 //FIXME: 自定义UITableViewCell需要手动指定高度
+			default:return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+		}
 	}
 	
 	override func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String!
@@ -245,22 +266,25 @@ class LocateViewController:UITableViewController, SetupSettingReceiver, CLLocati
 			switch type
 			{
 				case .LocateStatus:
-					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Status.toRaw()) as UITableViewCell
-					cell.textLabel.text = localizeString(status.toRaw())
-//					if status == .Updating
-//					{
-//						if !cell.indicator.isAnimating()
-//						{
-//							cell.indicator.startAnimating()
-//						}
-//					}
-//					else
-//					{
-//						if cell.indicator.isAnimating()
-//						{
-//							cell.indicator.stopAnimating()
-//						}
-//					}
+					var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier.Status.toRaw()) as StatusTableViewCell
+					cell.timeTicker.text = leftFormatter.stringFromNumber(remainTime)
+					cell.label.text = localizeString(status.toRaw())
+					if status == .Updating
+					{
+						cell.timeTicker.alpha = 1.0
+						if !cell.indicator.isAnimating()
+						{
+							cell.indicator.startAnimating()
+						}
+					}
+					else
+					{
+						cell.timeTicker.alpha = 0.0
+						if cell.indicator.isAnimating()
+						{
+							cell.indicator.stopAnimating()
+						}
+					}
 					return cell
 				
 				case .BestMeasurement:
