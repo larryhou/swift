@@ -7,22 +7,38 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate
 {
                             
+	@IBOutlet weak var map: MKMapView!
+	
+	private var locationManager:CLLocationManager!
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		locationManager = CLLocationManager()
+		locationManager.desiredAccuracy = kCLLocationAccuracyBest
+		locationManager.requestAlwaysAuthorization()
+		locationManager.delegate = self
+		locationManager.startUpdatingLocation()
 	}
 
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
-
-
+	
+	//MARK: 定位相关
+	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
+	{
+		map.setRegion(MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 1000.0, 1000.0), animated: true)
+	}
+	
+	//MARK: 地图相关
+	
 }
 
+	

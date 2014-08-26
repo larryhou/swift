@@ -12,6 +12,7 @@
 		DB84798319ACDB2F00927B02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB84798119ACDB2F00927B02 /* Main.storyboard */; };
 		DB84798519ACDB2F00927B02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB84798419ACDB2F00927B02 /* Images.xcassets */; };
 		DB84799119ACDB2F00927B02 /* RegionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB84799019ACDB2F00927B02 /* RegionsTests.swift */; };
+		DB84799B19ACE48A00927B02 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB84799A19ACE48A00927B02 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		DB84798A19ACDB2F00927B02 /* RegionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB84798F19ACDB2F00927B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB84799019ACDB2F00927B02 /* RegionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsTests.swift; sourceTree = "<group>"; };
+		DB84799A19ACE48A00927B02 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB84799B19ACE48A00927B02 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +60,7 @@
 		DB84796F19ACDB2F00927B02 = {
 			isa = PBXGroup;
 			children = (
+				DB84799A19ACE48A00927B02 /* MapKit.framework */,
 				DB84797A19ACDB2F00927B02 /* Regions */,
 				DB84798D19ACDB2F00927B02 /* RegionsTests */,
 				DB84797919ACDB2F00927B02 /* Products */,
