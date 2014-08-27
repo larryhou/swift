@@ -57,12 +57,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DB84796F19ACDB2F00927B02 = {
+		6BC8291B19ADA9D8004C742E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				DB84799A19ACE48A00927B02 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB84796F19ACDB2F00927B02 = {
+			isa = PBXGroup;
+			children = (
 				DB84797A19ACDB2F00927B02 /* Regions */,
 				DB84798D19ACDB2F00927B02 /* RegionsTests */,
+				6BC8291B19ADA9D8004C742E /* Frameworks */,
 				DB84797919ACDB2F00927B02 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -401,6 +409,7 @@
 				DB84799619ACDB2F00927B02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB84799719ACDB2F00927B02 /* Build configuration list for PBXNativeTarget "RegionsTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +418,7 @@
 				DB84799919ACDB2F00927B02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

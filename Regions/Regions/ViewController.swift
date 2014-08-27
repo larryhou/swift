@@ -19,6 +19,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		
+		map.delegate = self
+		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), 1000, 1000)
+		
 		locationManager = CLLocationManager()
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
 		locationManager.requestAlwaysAuthorization()
@@ -34,11 +38,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 	//MARK: 定位相关
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
-		map.setRegion(MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 1000.0, 1000.0), animated: true)
+		println(newLocation)
+//		map.setCenterCoordinate(newLocation.coordinate, animated: true)
 	}
 	
 	//MARK: 地图相关
-	
+	func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!)
+	{
+		println(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+		map.setCenterCoordinate(userLocation.coordinate, animated: true)
+	}
 }
 
 	
