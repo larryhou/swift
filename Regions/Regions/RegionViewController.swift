@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 import MapKit
 
 class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate
@@ -16,6 +17,8 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	
 	private var locationManager:CLLocationManager!
 	private var location:CLLocation!
+	
+	private var deviceAnnotation:DeviceAnnotation!
 	
 	override func viewDidLoad()
 	{
@@ -36,15 +39,46 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		super.didReceiveMemoryWarning()
 	}
 	
+	//MARK: 地图相关
+	func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView!
+	{
+		if annotation.isKindOfClass(DeviceAnnotation)
+		{
+			let identifier = "DeviceAnnotationView"
+			var annotionView = map.dequeueReusableAnnotationViewWithIdentifier(identifier) as MKPinAnnotationView!
+			if annotionView == nil
+			{
+				annotionView = MKPinAnnotationView(annotation: deviceAnnotation, reuseIdentifier: identifier)
+				annotionView.canShowCallout = true
+				annotionView.pinColor = MKPinAnnotationColor.Purple
+			}
+			else
+			{
+				annotionView.annotation = annotation
+			}
+			
+			return annotionView
+		}
+		
+		return nil
+	}
+	
 	//MARK: 定位相关
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
 		println("CLLocationManager", newLocation.coordinate.latitude, newLocation.coordinate.longitude)
-		if location == nil || location.horizontalAccuracy > newLocation.horizontalAccuracy
+		if deviceAnnotation == nil
 		{
-			location = newLocation
-			println(location)
+			deviceAnnotation = DeviceAnnotation(location: newLocation)
 		}
+		else
+		{
+			deviceAnnotation.coordinate = newLocation.coordinate
+			deviceAnnotation.location = newLocation
+		}
+		
+		map.addAnnotation(deviceAnnotation)
+		
 //FIXME: CLLocationManager得到的设备位置跟MKMapView不一致
 //		map.setCenterCoordinate(newLocation.coordinate, animated: true)
 	}
