@@ -15,6 +15,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	@IBOutlet weak var map: MKMapView!
 	
 	private var locationManager:CLLocationManager!
+	private var location:CLLocation!
 	
 	override func viewDidLoad()
 	{
@@ -38,7 +39,12 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	//MARK: 定位相关
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
-		println(newLocation)
+		println("CLLocationManager", newLocation.coordinate.latitude, newLocation.coordinate.longitude)
+		if location == nil || location.horizontalAccuracy > newLocation.horizontalAccuracy
+		{
+			location = newLocation
+			println(location)
+		}
 //FIXME: CLLocationManager得到的设备位置跟MKMapView不一致
 //		map.setCenterCoordinate(newLocation.coordinate, animated: true)
 	}
@@ -46,7 +52,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	//MARK: 地图相关
 	func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!)
 	{
-		println(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+		println("MKMapView", userLocation.coordinate.latitude, userLocation.coordinate.longitude)
 		map.setCenterCoordinate(userLocation.coordinate, animated: true)
 	}
 }

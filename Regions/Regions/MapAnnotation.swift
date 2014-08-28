@@ -8,3 +8,34 @@
 
 import Foundation
 import MapKit
+
+class RegionAnnotationView:MKAnnotationView
+{
+	
+}
+
+class RegionAnnotation:NSObject, MKAnnotation
+{
+	var coordinate:CLLocationCoordinate2D
+	
+	var title:String!
+	var subtitle:String!
+	
+	init(coordinate:CLLocationCoordinate2D)
+	{
+		self.coordinate = coordinate
+	}
+}
+
+class DeviceAnnotation:NSObject, MKAnnotation
+{
+	var coordinate:CLLocationCoordinate2D
+	
+	var title:String!
+	var subtitle:String!
+	
+	init(coordinate:CLLocationCoordinate2D)
+	{
+		self.coordinate = coordinate
+	}
+}
