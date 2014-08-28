@@ -69,14 +69,14 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		println("CLLocationManager", newLocation.coordinate.latitude, newLocation.coordinate.longitude)
 		if deviceAnnotation == nil
 		{
-			deviceAnnotation = DeviceAnnotation(location: newLocation)
+			deviceAnnotation = DeviceAnnotation(coordinate: newLocation.coordinate)
 		}
 		else
 		{
 			deviceAnnotation.coordinate = newLocation.coordinate
-			deviceAnnotation.location = newLocation
 		}
 		
+		deviceAnnotation.updateLocation(newLocation, refer: map.userLocation.location)
 		map.addAnnotation(deviceAnnotation)
 		
 //FIXME: CLLocationManager得到的设备位置跟MKMapView不一致

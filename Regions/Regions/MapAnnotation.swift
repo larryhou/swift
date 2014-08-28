@@ -30,33 +30,27 @@ class RegionAnnotation:NSObject, MKAnnotation
 class DeviceAnnotation:NSObject, MKAnnotation
 {
 	var coordinate:CLLocationCoordinate2D
-	var location:CLLocation
+	var location:CLLocation!
 	
 	var title:String
 	var subtitle:String!
 	
-	init(location:CLLocation)
+	init(coordinate:CLLocationCoordinate2D)
 	{
-		self.coordinate = location.coordinate
-		self.location = location
-		
-		self.title = "CLLocationManager定位"
-		self.subtitle = String(format:"纬度:%.6f° 经度:%.6f°", coordinate.latitude, coordinate.longitude)
-	}
-}
-
-class DeviceAnnotationView:MKAnnotationView
-{
-	var deviceAnnotation:DeviceAnnotation!
-	
-	init(annotation:DeviceAnnotation)
-	{
-		self.deviceAnnotation = annotation
-		super.init(annotation: annotation, reuseIdentifier: "DeviceAnnotationView")
+		self.coordinate = coordinate
+		self.title = "CL/API定位"
 	}
 	
-	required init(coder aDecoder: NSCoder)
+	func updateLocation(location:CLLocation, refer:CLLocation!)
 	{
-		super.init(coder: aDecoder)
+		if refer != nil
+		{
+			var offset = location.distanceFromLocation(refer)
+			self.subtitle = String(format:"纬度:%.6f° 经度:%.6f° 偏移:%.1f米", coordinate.latitude, coordinate.longitude, offset)
+		}
+		else
+		{
+			self.subtitle = String(format:"纬度:%.6f° 经度:%.6f°", coordinate.latitude, coordinate.longitude)
+		}
 	}
 }
