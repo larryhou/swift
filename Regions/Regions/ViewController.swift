@@ -39,6 +39,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
 		println(newLocation)
+//FIXME: CLLocationManager得到的设备位置跟MKMapView不一致
 //		map.setCenterCoordinate(newLocation.coordinate, animated: true)
 	}
 	
