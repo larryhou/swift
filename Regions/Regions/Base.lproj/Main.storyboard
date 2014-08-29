@@ -25,6 +25,11 @@
                                 <items>
                                     <navigationItem id="Xnn-Tg-2yA">
                                         <nil key="title"/>
+                                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="search" id="MHI-6g-Sbz">
+                                            <connections>
+                                                <action selector="showDeviceLocation:" destination="BYZ-38-t0r" id="hCS-2N-nQA"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="yIA-PK-Eea">
                                             <rect key="frame" x="200" y="27" width="201" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

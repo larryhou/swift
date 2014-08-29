@@ -46,11 +46,12 @@ class DeviceAnnotation:NSObject, MKAnnotation
 		if refer != nil
 		{
 			var offset = location.distanceFromLocation(refer)
-			self.subtitle = String(format:"纬度:%.6f° 经度:%.6f° 偏移:%.1f米", coordinate.latitude, coordinate.longitude, offset)
+			var radian = atan2(refer.coordinate.latitude - location.coordinate.latitude, refer.coordinate.longitude - location.coordinate.longitude)
+			self.subtitle = String(format:"纬:%.4f° 经:%.4f° 偏移:%.0f米/%.1f°", coordinate.latitude, coordinate.longitude, offset, radian * 180 / M_PI)
 		}
 		else
 		{
-			self.subtitle = String(format:"纬度:%.6f° 经度:%.6f°", coordinate.latitude, coordinate.longitude)
+			self.subtitle = String(format:"纬:%.4f° 经:%.4f°", coordinate.latitude, coordinate.longitude)
 		}
 	}
 }

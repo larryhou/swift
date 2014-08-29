@@ -19,6 +19,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	private var location:CLLocation!
 	
 	private var deviceAnnotation:DeviceAnnotation!
+	private var isUpdated:Bool!
 	
 	override func viewDidLoad()
 	{
@@ -39,6 +40,19 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		super.didReceiveMemoryWarning()
 	}
 	
+	override func viewWillAppear(animated: Bool)
+	{
+		isUpdated = false
+	}
+	
+	@IBAction func showDeviceLocation(sender: UIBarButtonItem)
+	{
+		if map.userLocation != nil
+		{
+			map.setCenterCoordinate(map.userLocation.coordinate, animated: true)
+		}
+	}
+
 	//MARK: 地图相关
 	func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView!
 	{
@@ -76,9 +90,10 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		{
 			deviceAnnotation.coordinate = newLocation.coordinate
 		}
-		map.removeAnnotation(deviceAnnotation)
-		
 		deviceAnnotation.updateLocation(newLocation, refer: map.userLocation.location)
+
+		map.removeAnnotation(deviceAnnotation)
+
 		map.addAnnotation(deviceAnnotation)
 		map.selectAnnotation(deviceAnnotation, animated: false)
 		
@@ -90,7 +105,11 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!)
 	{
 		println("MKMapView", userLocation.coordinate.latitude, userLocation.coordinate.longitude)
-		map.setCenterCoordinate(userLocation.coordinate, animated: true)
+		if !isUpdated
+		{
+			map.setCenterCoordinate(userLocation.coordinate, animated: true)
+			isUpdated = true
+		}
 	}
 }
 
