@@ -51,6 +51,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 				annotionView = MKPinAnnotationView(annotation: deviceAnnotation, reuseIdentifier: identifier)
 				annotionView.canShowCallout = true
 				annotionView.pinColor = MKPinAnnotationColor.Purple
+				
 			}
 			else
 			{
@@ -75,9 +76,11 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		{
 			deviceAnnotation.coordinate = newLocation.coordinate
 		}
+		map.removeAnnotation(deviceAnnotation)
 		
 		deviceAnnotation.updateLocation(newLocation, refer: map.userLocation.location)
 		map.addAnnotation(deviceAnnotation)
+		map.selectAnnotation(deviceAnnotation, animated: false)
 		
 //FIXME: CLLocationManager得到的设备位置跟MKMapView不一致
 //		map.setCenterCoordinate(newLocation.coordinate, animated: true)
