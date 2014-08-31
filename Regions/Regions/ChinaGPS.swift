@@ -15,7 +15,7 @@ class ChinaGPS
 	class private func transformLon(x:Double, _ y:Double)->Double
 	{
 		var lon = 300.0 + x + 2.0 * y + 0.1 * x * x
-			lon += 0.1 * x * y + 0.1 * sqrt(fabs(x))
+			lon += 0.1 * x * y + 0.1 * sqrt(fabs(x)) //FIXME: swift暂时不支持复杂的混合元算
 		lon += (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0
 		lon += (20.0 * sin(x * M_PI) + 40.0 * sin(x / 3.0 * M_PI)) * 2.0 / 3.0
 		lon += (150.0 * sin(x / 12.0 * M_PI) + 300.0 * sin(x / 30.0 * M_PI)) * 2.0 / 3.0
@@ -27,7 +27,7 @@ class ChinaGPS
 	{
 		var lat = -100.0 + 2.0 * x + 3.0 * y
 			lat += 0.2 * y * y + 0.1 * x * y
-			lat += 0.2 * sqrt(fabs(x))
+			lat += 0.2 * sqrt(fabs(x)) //FIXME: swift暂时不支持复杂的混合元算
 		lat += (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0
 		lat += (20.0 * sin(y * M_PI) + 40.0 * sin(y / 3.0 * M_PI)) * 2.0 / 3.0
 		lat += (160.0 * sin(y / 12.0 * M_PI) + 320 * sin(y * M_PI / 30.0)) * 2.0 / 3.0
