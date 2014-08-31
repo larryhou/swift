@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6BC8291D19AEC5C6004C742E /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8291C19AEC5C6004C742E /* MapAnnotation.swift */; };
+		DB192EC119B215A90070C9ED /* ChinaGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB192EC019B215A90070C9ED /* ChinaGPS.swift */; };
 		DB84797E19ACDB2F00927B02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB84797D19ACDB2F00927B02 /* AppDelegate.swift */; };
 		DB84798019ACDB2F00927B02 /* RegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB84797F19ACDB2F00927B02 /* RegionViewController.swift */; };
 		DB84798319ACDB2F00927B02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB84798119ACDB2F00927B02 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		6BC8291C19AEC5C6004C742E /* MapAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		DB192EC019B215A90070C9ED /* ChinaGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChinaGPS.swift; sourceTree = "<group>"; };
 		DB84797819ACDB2F00927B02 /* Regions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Regions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB84797C19ACDB2F00927B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB84797D19ACDB2F00927B02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				DB84797D19ACDB2F00927B02 /* AppDelegate.swift */,
 				DB84797F19ACDB2F00927B02 /* RegionViewController.swift */,
 				6BC8291C19AEC5C6004C742E /* MapAnnotation.swift */,
+				DB192EC019B215A90070C9ED /* ChinaGPS.swift */,
 			);
 			name = swift;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB192EC119B215A90070C9ED /* ChinaGPS.swift in Sources */,
 				DB84798019ACDB2F00927B02 /* RegionViewController.swift in Sources */,
 				DB84797E19ACDB2F00927B02 /* AppDelegate.swift in Sources */,
 				6BC8291D19AEC5C6004C742E /* MapAnnotation.swift in Sources */,

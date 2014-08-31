@@ -16,7 +16,6 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	@IBOutlet weak var map: MKMapView!
 	
 	private var locationManager:CLLocationManager!
-	private var location:CLLocation!
 	
 	private var deviceAnnotation:DeviceAnnotation!
 	private var isUpdated:Bool!
@@ -81,24 +80,24 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	//MARK: 定位相关
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
-		println("CLLocationManager", newLocation.coordinate.latitude, newLocation.coordinate.longitude)
+		var location = ChinaGPS.encrypt(newLocation)
+		println("CLLocationManager", location.coordinate.latitude, location.coordinate.longitude)
+		
 		if deviceAnnotation == nil
 		{
-			deviceAnnotation = DeviceAnnotation(coordinate: newLocation.coordinate)
+			deviceAnnotation = DeviceAnnotation(coordinate: location.coordinate)
 		}
 		else
 		{
-			deviceAnnotation.coordinate = newLocation.coordinate
+			deviceAnnotation.coordinate = location.coordinate
 		}
-		deviceAnnotation.updateLocation(newLocation, refer: map.userLocation.location)
+		
+		deviceAnnotation.updateLocation(location, refer: map.userLocation.location)
 
 		map.removeAnnotation(deviceAnnotation)
 
 		map.addAnnotation(deviceAnnotation)
 		map.selectAnnotation(deviceAnnotation, animated: false)
-		
-//FIXME: CLLocationManager得到的设备位置跟MKMapView不一致
-//		map.setCenterCoordinate(newLocation.coordinate, animated: true)
 	}
 	
 	//MARK: 地图相关
