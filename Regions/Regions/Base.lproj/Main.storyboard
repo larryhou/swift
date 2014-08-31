@@ -38,7 +38,11 @@
                                                 <segment title="监测" width="100"/>
                                             </segments>
                                         </segmentedControl>
-                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="G8x-wJ-6Y8"/>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="G8x-wJ-6Y8">
+                                            <connections>
+                                                <action selector="inertMonitorRegion:" destination="BYZ-38-t0r" id="NNZ-1P-Bxs"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
