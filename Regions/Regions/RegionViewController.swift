@@ -12,6 +12,8 @@ import MapKit
 
 class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate
 {
+	let LAT_SPAN:CLLocationDistance = 500.0
+	let LON_SPAN:CLLocationDistance = 500.0
                             
 	@IBOutlet weak var map: MKMapView!
 	
@@ -25,7 +27,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		super.viewDidLoad()
 		
 		map.delegate = self
-		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), 1000, 1000)
+		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), LAT_SPAN, LON_SPAN)
 		
 		locationManager = CLLocationManager()
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -48,7 +50,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	{
 		if map.userLocation != nil
 		{
-			map.setCenterCoordinate(map.userLocation.coordinate, animated: true)
+			map.setRegion(MKCoordinateRegionMakeWithDistance(map.userLocation.coordinate, LAT_SPAN, LON_SPAN), animated: true)
 		}
 	}
 
@@ -58,20 +60,20 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		if annotation.isKindOfClass(DeviceAnnotation)
 		{
 			let identifier = "DeviceAnnotationView"
-			var annotionView = map.dequeueReusableAnnotationViewWithIdentifier(identifier) as MKPinAnnotationView!
-			if annotionView == nil
+			var anView = map.dequeueReusableAnnotationViewWithIdentifier(identifier) as MKPinAnnotationView!
+			if anView == nil
 			{
-				annotionView = MKPinAnnotationView(annotation: deviceAnnotation, reuseIdentifier: identifier)
-				annotionView.canShowCallout = true
-				annotionView.pinColor = MKPinAnnotationColor.Purple
+				anView = MKPinAnnotationView(annotation: deviceAnnotation, reuseIdentifier: identifier)
+				anView.canShowCallout = true
+				anView.pinColor = MKPinAnnotationColor.Purple
 				
 			}
 			else
 			{
-				annotionView.annotation = annotation
+				anView.annotation = annotation
 			}
 			
-			return annotionView
+			return anView
 		}
 		
 		return nil
