@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.9" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
         <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
@@ -37,6 +37,9 @@
                                                 <segment title="地图" width="100"/>
                                                 <segment title="监测" width="100"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="segementChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="5OK-6q-yUg"/>
+                                            </connections>
                                         </segmentedControl>
                                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="G8x-wJ-6Y8">
                                             <connections>
@@ -49,25 +52,58 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4PS-fL-94D">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                             </mapView>
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ImR-KT-TYj">
+                                <rect key="frame" x="0.0" y="64" width="605" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RegionEventCell" textLabel="3LH-rP-Y86" style="IBUITableViewCellStyleDefault" id="I1J-li-kKx">
+                                        <rect key="frame" x="0.0" y="0.0" width="605" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I1J-li-kKx" id="hJo-xY-lY3">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3LH-rP-Y86">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="x7g-rI-92i"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="UXi-GH-eun"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ImR-KT-TYj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="9Qi-49-eFd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Cpr-lH-zgs" secondAttribute="trailing" constant="-16" id="CdO-mP-RGo"/>
                             <constraint firstItem="Cpr-lH-zgs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="D4o-k3-DfG"/>
                             <constraint firstItem="4PS-fL-94D" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="GBu-Jc-XIh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ImR-KT-TYj" secondAttribute="trailing" constant="-21" id="GqT-dH-jG3"/>
+                            <constraint firstItem="ImR-KT-TYj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="LYD-o5-Z7p"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4PS-fL-94D" secondAttribute="bottom" id="O7Z-mW-zbS"/>
                             <constraint firstItem="4PS-fL-94D" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="U0M-DY-4RC"/>
                             <constraint firstItem="Cpr-lH-zgs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="cTC-nU-pFD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ImR-KT-TYj" secondAttribute="bottom" id="eFn-2F-SDo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4PS-fL-94D" secondAttribute="trailing" constant="-16" id="epa-s0-5JI"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="insertButton" destination="G8x-wJ-6Y8" id="H85-cW-jiv"/>
                         <outlet property="map" destination="4PS-fL-94D" id="g4h-VX-iv9"/>
+                        <outlet property="navigationBar" destination="Cpr-lH-zgs" id="glx-hG-Zd0"/>
+                        <outlet property="searchButton" destination="MHI-6g-Sbz" id="iEt-Sh-nS0"/>
+                        <outlet property="tableView" destination="ImR-KT-TYj" id="0jH-oY-ixx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119" y="135.5"/>
+            <point key="canvasLocation" x="119" y="135"/>
         </scene>
     </scenes>
 </document>

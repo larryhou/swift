@@ -10,13 +10,31 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate
+class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource
 {
+	enum EventState
+	{
+		case Enter
+		case Exit
+	}
+	
+	struct RegionMonitorEvent
+	{
+		let region:CLCircularRegion
+		let timestamp:NSDate
+		let state:EventState
+	}
+	
 	let LAT_SPAN:CLLocationDistance = 500.0
 	let LON_SPAN:CLLocationDistance = 500.0
 	let MONITOR_RADIUS:CLLocationDistance = 50.0
                             
 	@IBOutlet weak var map: MKMapView!
+	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var navigationBar: UINavigationBar!
+	
+	@IBOutlet var insertButton: UIBarButtonItem!
+	@IBOutlet var searchButton: UIBarButtonItem!
 	
 	private var locationManager:CLLocationManager!
 	private var location:CLLocation!
@@ -24,9 +42,21 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	private var deviceAnnotation:DeviceAnnotation!
 	private var isUpdated:Bool!
 	
+	private var heading:CLHeading!
+	private var monitorEvents:[RegionMonitorEvent]!
+	
+	private var dateFormatter:NSDateFormatter!
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		
+		monitorEvents = []
+		dateFormatter = NSDateFormatter()
+		dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+		
+		tableView.alpha = 0.0
+		map.alpha = 1.0
 		
 		map.delegate = self
 		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), LAT_SPAN, LON_SPAN)
@@ -37,7 +67,16 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		locationManager.delegate = self
 		locationManager.startUpdatingLocation()
 		
-		println(locationManager.monitoredRegions)
+		if CLLocationManager.headingAvailable()
+		{
+			locationManager.headingFilter = 1.0
+			locationManager.startUpdatingHeading()
+		}
+		
+		for region in locationManager.monitoredRegions
+		{
+			locationManager.stopMonitoringForRegion(region as CLRegion)
+		}
 	}
 
 	override func didReceiveMemoryWarning()
@@ -48,6 +87,63 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	override func viewWillAppear(animated: Bool)
 	{
 		isUpdated = false
+	}
+	
+	//MARK: 滚动列表展示
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		var cell = tableView.dequeueReusableCellWithIdentifier("RegionEventCell") as UITableViewCell!
+		
+		var text = ""
+		var event = monitorEvents[indexPath.row]
+		
+		switch event.state
+		{
+			case .Enter:
+				text += "进入"
+			case .Exit:
+				text += "走出"
+		}
+		
+		text += " \(dateFormatter.stringFromDate(event.timestamp))"
+		cell.textLabel?.text = text
+		return cell
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return monitorEvents.count
+	}
+	
+	//MARK: 页签组件切换
+	@IBAction func segementChanged(sender: UISegmentedControl)
+	{
+		let duration:NSTimeInterval = 0.4
+		if sender.selectedSegmentIndex == 0
+		{
+			navigationBar.topItem?.setLeftBarButtonItem(searchButton, animated: true)
+			navigationBar.topItem?.setRightBarButtonItem(insertButton, animated: true)
+			
+			UIView.animateWithDuration(duration, animations:
+			{
+				self.map.alpha = 1.0
+				self.tableView.alpha = 0.0
+			})
+		}
+		else
+		{
+			navigationBar.topItem?.setLeftBarButtonItem(nil, animated: true)
+			navigationBar.topItem?.setRightBarButtonItem(nil, animated: true)
+			
+			tableView.reloadData()
+			UIView.animateWithDuration(duration / 2.0, animations:
+			{
+				self.map.alpha = 0.0
+				self.tableView.alpha = 1.0
+			})
+		}
+		
+		UIView.commitAnimations()
 	}
 	
 	//MARK: 按钮交互
@@ -141,6 +237,12 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		return nil
 	}
 	
+	//MARK: 方向定位
+	func locationManager(manager: CLLocationManager!, didUpdateHeading newHeading: CLHeading!)
+	{
+		heading = newHeading
+	}
+	
 	//MARK: 定位相关
 	func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
 	{
@@ -166,12 +268,22 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	
 	func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!)
 	{
-		
+		var event = RegionMonitorEvent(region: region as CLCircularRegion, timestamp: NSDate(), state: .Enter)
+		monitorEvents.append(event)
+		if tableView.alpha > 0.0
+		{
+			tableView.reloadData()
+		}
 	}
 	
 	func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!)
 	{
-		
+		var event = RegionMonitorEvent(region: region as CLCircularRegion, timestamp: NSDate(), state: .Exit)
+		monitorEvents.append(event)
+		if tableView.alpha > 0.0
+		{
+			tableView.reloadData()
+		}
 	}
 	
 	func locationManager(manager: CLLocationManager!, monitoringDidFailForRegion region: CLRegion!, withError error: NSError!)

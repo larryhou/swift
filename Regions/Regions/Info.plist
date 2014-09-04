@@ -24,6 +24,11 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>audio</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
