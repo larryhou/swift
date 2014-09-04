@@ -58,8 +58,6 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		tableView.alpha = 0.0
 		tableView.hidden = true
 		
-		map.alpha = 1.0
-		
 		map.delegate = self
 		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), LAT_SPAN, LON_SPAN)
 		
