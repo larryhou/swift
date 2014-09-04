@@ -56,6 +56,8 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
 		
 		tableView.alpha = 0.0
+		tableView.hidden = true
+		
 		map.alpha = 1.0
 		
 		map.delegate = self
@@ -124,10 +126,17 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 			navigationBar.topItem?.setLeftBarButtonItem(searchButton, animated: true)
 			navigationBar.topItem?.setRightBarButtonItem(insertButton, animated: true)
 			
-			UIView.animateWithDuration(duration, animations:
+			map.hidden = false
+			UIView.animateWithDuration(duration,
+			animations:
 			{
 				self.map.alpha = 1.0
 				self.tableView.alpha = 0.0
+			},
+			completion:
+			{
+				(flag) in
+				self.tableView.hidden = true
 			})
 		}
 		else
@@ -136,10 +145,17 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 			navigationBar.topItem?.setRightBarButtonItem(nil, animated: true)
 			
 			tableView.reloadData()
+			
+			tableView.hidden = false
 			UIView.animateWithDuration(duration / 2.0, animations:
 			{
 				self.map.alpha = 0.0
 				self.tableView.alpha = 1.0
+			},
+			completion:
+			{
+				(flag) in
+				self.map.hidden = true
 			})
 		}
 		
@@ -270,7 +286,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	{
 		var event = RegionMonitorEvent(region: region as CLCircularRegion, timestamp: NSDate(), state: .Enter)
 		monitorEvents.append(event)
-		if tableView.alpha > 0.0
+		if !tableView.hidden
 		{
 			tableView.reloadData()
 		}
@@ -280,7 +296,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	{
 		var event = RegionMonitorEvent(region: region as CLCircularRegion, timestamp: NSDate(), state: .Exit)
 		monitorEvents.append(event)
-		if tableView.alpha > 0.0
+		if !tableView.hidden
 		{
 			tableView.reloadData()
 		}
