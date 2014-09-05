@@ -31,7 +31,6 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                             
 	@IBOutlet weak var map: MKMapView!
 	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var navigationBar: UINavigationBar!
 	
 	@IBOutlet var insertButton: UIBarButtonItem!
 	@IBOutlet var searchButton: UIBarButtonItem!
@@ -41,24 +40,29 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	
 	private var deviceAnnotation:DeviceAnnotation!
 	private var isUpdated:Bool!
-	
+
 	private var heading:CLHeading!
 	private var monitorEvents:[RegionMonitorEvent]!
 	
 	private var dateFormatter:NSDateFormatter!
+	
+	private var geocoder:CLGeocoder!
+	private var prevTime:NSDate!
 	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
 		monitorEvents = []
+		
 		dateFormatter = NSDateFormatter()
 		dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+		
+		geocoder = CLGeocoder()
 		
 		tableView.alpha = 0.0
 		tableView.hidden = true
 		
-		map.delegate = self
 		map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 22.55, longitude: 113.94), LAT_SPAN, LON_SPAN)
 		
 		locationManager = CLLocationManager()
@@ -121,8 +125,8 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		let duration:NSTimeInterval = 0.4
 		if sender.selectedSegmentIndex == 0
 		{
-			navigationBar.topItem?.setLeftBarButtonItem(searchButton, animated: true)
-			navigationBar.topItem?.setRightBarButtonItem(insertButton, animated: true)
+			navigationItem.setLeftBarButtonItem(searchButton, animated: true)
+			navigationItem.setRightBarButtonItem(insertButton, animated: true)
 			
 			map.hidden = false
 			UIView.animateWithDuration(duration,
@@ -139,8 +143,8 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		}
 		else
 		{
-			navigationBar.topItem?.setLeftBarButtonItem(nil, animated: true)
-			navigationBar.topItem?.setRightBarButtonItem(nil, animated: true)
+			navigationItem.setLeftBarButtonItem(nil, animated: true)
+			navigationItem.setRightBarButtonItem(nil, animated: true)
 			
 			tableView.reloadData()
 			
@@ -207,6 +211,9 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 				anView.canShowCallout = true
 				anView.pinColor = MKPinAnnotationColor.Purple
 				
+				var button = UIButton.buttonWithType(.DetailDisclosure) as UIButton
+				button.addTarget(self, action: "displayLocationInfo", forControlEvents: UIControlEvents.TouchUpInside)
+				anView.rightCalloutAccessoryView = button
 			}
 			else
 			{
@@ -235,6 +242,11 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		}
 		
 		return nil
+	}
+	
+	func displayLocationInfo()
+	{
+		var detail = UITableViewController(nibName: nil, bundle: nil)
 	}
 	
 	func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer!
@@ -273,11 +285,37 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		}
 		
 		deviceAnnotation.updateLocation(chinaloc, refer: map.userLocation.location)
+		if prevTime == nil || fabs(prevTime.timeIntervalSinceNow) > 10.0
+		{
+			geocoder.reverseGeocodeLocation(newLocation,
+			completionHandler:
+			{
+				(placemarks, error) in
+				if error == nil
+				{
+					self.processPlacemark(placemarks as [CLPlacemark])
+				}
+				else
+				{
+					println(error)
+				}
+			});
+		}
 
 		map.removeAnnotation(deviceAnnotation)
 
 		map.addAnnotation(deviceAnnotation)
 		map.selectAnnotation(deviceAnnotation, animated: false)
+	}
+	
+	func processPlacemark(placemarks:[CLPlacemark])
+	{
+		var pm = placemarks.first!
+		for (key, value) in pm.addressDictionary
+		{
+			println(key, value)
+		}
+		println(pm.description)
 	}
 	
 	func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!)

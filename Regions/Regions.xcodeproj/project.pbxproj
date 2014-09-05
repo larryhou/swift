@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B37BCF219B98C9F007FD459 /* LocationInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B37BCF019B98C9F007FD459 /* LocationInfoView.xib */; };
 		6BC8291D19AEC5C6004C742E /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8291C19AEC5C6004C742E /* MapAnnotation.swift */; };
 		DB192EC119B215A90070C9ED /* ChinaGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB192EC019B215A90070C9ED /* ChinaGPS.swift */; };
 		DB84797E19ACDB2F00927B02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB84797D19ACDB2F00927B02 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B37BCF119B98C9F007FD459 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LocationInfoView.xib; sourceTree = "<group>"; };
 		6BC8291C19AEC5C6004C742E /* MapAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		DB192EC019B215A90070C9ED /* ChinaGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChinaGPS.swift; sourceTree = "<group>"; };
 		DB84797819ACDB2F00927B02 /* Regions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Regions.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 			children = (
 				6BC8291E19AEC5E2004C742E /* swift */,
 				DB84798119ACDB2F00927B02 /* Main.storyboard */,
+				6B37BCF019B98C9F007FD459 /* LocationInfoView.xib */,
 				DB84798419ACDB2F00927B02 /* Images.xcassets */,
 				DB84797B19ACDB2F00927B02 /* Supporting Files */,
 			);
@@ -215,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B37BCF219B98C9F007FD459 /* LocationInfoView.xib in Resources */,
 				DB84798319ACDB2F00927B02 /* Main.storyboard in Resources */,
 				DB84798519ACDB2F00927B02 /* Images.xcassets in Resources */,
 			);
@@ -260,6 +264,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		6B37BCF019B98C9F007FD459 /* LocationInfoView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B37BCF119B98C9F007FD459 /* Base */,
+			);
+			name = LocationInfoView.xib;
+			sourceTree = "<group>";
+		};
 		DB84798119ACDB2F00927B02 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
