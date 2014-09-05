@@ -41,7 +41,9 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	private var deviceAnnotation:DeviceAnnotation!
 	private var isUpdated:Bool!
 
+	private var placemark:CLPlacemark!
 	private var heading:CLHeading!
+	
 	private var monitorEvents:[RegionMonitorEvent]!
 	
 	private var dateFormatter:NSDateFormatter!
@@ -210,14 +212,21 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 				anView = MKPinAnnotationView(annotation: deviceAnnotation, reuseIdentifier: identifier)
 				anView.canShowCallout = true
 				anView.pinColor = MKPinAnnotationColor.Purple
-				
-				var button = UIButton.buttonWithType(.DetailDisclosure) as UIButton
-				button.addTarget(self, action: "displayLocationInfo", forControlEvents: UIControlEvents.TouchUpInside)
-				anView.rightCalloutAccessoryView = button
 			}
 			else
 			{
 				anView.annotation = annotation
+			}
+			
+			if placemark != nil
+			{
+				var button = UIButton.buttonWithType(.DetailDisclosure) as UIButton
+				button.addTarget(self, action: "displayPlacemarkInfo", forControlEvents: UIControlEvents.TouchUpInside)
+				anView.rightCalloutAccessoryView = button
+			}
+			else
+			{
+				anView.rightCalloutAccessoryView = nil
 			}
 			
 			return anView
@@ -244,9 +253,13 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		return nil
 	}
 	
-	func displayLocationInfo()
+	func displayPlacemarkInfo()
 	{
-		var detail = UITableViewController(nibName: nil, bundle: nil)
+		var locationCtrl = PlacemarkViewController(nibName: "PlacemarkInfoView", bundle: nil)
+		locationCtrl.placemark = placemark
+		
+		navigationController?.pushViewController(locationCtrl, animated: true)
+		
 	}
 	
 	func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer!
@@ -310,12 +323,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	
 	func processPlacemark(placemarks:[CLPlacemark])
 	{
-		var pm = placemarks.first!
-		for (key, value) in pm.addressDictionary
-		{
-			println(key, value)
-		}
-		println(pm.description)
+		self.placemark = placemarks.first!
 	}
 	
 	func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!)
