@@ -300,7 +300,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		deviceAnnotation.updateLocation(chinaloc, refer: map.userLocation.location)
 		if prevTime == nil || fabs(prevTime.timeIntervalSinceNow) > 10.0
 		{
-			geocoder.reverseGeocodeLocation(newLocation,
+			geocoder.reverseGeocodeLocation(chinaloc,
 			completionHandler:
 			{
 				(placemarks, error) in
