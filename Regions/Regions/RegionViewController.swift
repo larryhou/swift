@@ -291,13 +291,14 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		if deviceAnnotation == nil
 		{
 			deviceAnnotation = DeviceAnnotation(coordinate: chinaloc.coordinate)
+			map.addAnnotation(deviceAnnotation)
 		}
 		else
 		{
 			deviceAnnotation.coordinate = chinaloc.coordinate
 		}
 		
-		deviceAnnotation.updateLocation(chinaloc, refer: map.userLocation.location)
+		deviceAnnotation.update(location:chinaloc)
 		if prevTime == nil || fabs(prevTime.timeIntervalSinceNow) > 10.0
 		{
 			geocoder.reverseGeocodeLocation(chinaloc,
@@ -315,15 +316,26 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 			});
 		}
 
-		map.removeAnnotation(deviceAnnotation)
-
-		map.addAnnotation(deviceAnnotation)
 		map.selectAnnotation(deviceAnnotation, animated: false)
 	}
 	
 	func processPlacemark(placemarks:[CLPlacemark])
 	{
-		self.placemark = placemarks.first!
+		var initialized = !(self.placemark == nil)
+		
+		placemark = placemarks.first!
+		if placemark != nil && !initialized
+		{
+			map.removeAnnotation(deviceAnnotation)
+			
+			map.addAnnotation(deviceAnnotation)
+			map.selectAnnotation(deviceAnnotation, animated: true)
+		}
+		
+		if placemark != nil
+		{
+			deviceAnnotation.update(placemark: placemark)
+		}
 	}
 	
 	func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!)

@@ -11,11 +11,11 @@ import MapKit
 
 class RegionAnnotation:NSObject, MKAnnotation
 {
-	var coordinate:CLLocationCoordinate2D
+	dynamic var coordinate:CLLocationCoordinate2D
 	var region:CLCircularRegion
 	
-	var title:String!
-	var subtitle:String!
+	dynamic var title:String!
+	dynamic var subtitle:String!
 	
 	init(coordinate:CLLocationCoordinate2D, region:CLCircularRegion)
 	{
@@ -43,29 +43,33 @@ class RegionAnnotation:NSObject, MKAnnotation
 
 class DeviceAnnotation:NSObject, MKAnnotation
 {
-	var coordinate:CLLocationCoordinate2D
-	var location:CLLocation!
+	dynamic var coordinate:CLLocationCoordinate2D
+	dynamic var location:CLLocation!
 	
-	var title:String
-	var subtitle:String!
+	dynamic var title:String!
+	dynamic var subtitle:String!
 	
 	init(coordinate:CLLocationCoordinate2D)
 	{
 		self.coordinate = coordinate
-		self.title = "CL/API定位"
+		super.init()
+		
+		update(coordinate: coordinate)
 	}
 	
-	func updateLocation(location:CLLocation, refer:CLLocation!)
+	func update(#location:CLLocation)
 	{
-		if refer != nil
-		{
-			var offset = location.distanceFromLocation(refer)
-			var radian = atan2(refer.coordinate.latitude - location.coordinate.latitude, refer.coordinate.longitude - location.coordinate.longitude)
-			self.subtitle = String(format:"纬:%.4f° 经:%.4f° 偏移:%.0f米/%.1f°", coordinate.latitude, coordinate.longitude, offset, radian * 180 / M_PI)
-		}
-		else
-		{
-			self.subtitle = String(format:"纬:%.4f° 经:%.4f°", coordinate.latitude, coordinate.longitude)
-		}
+		self.location = location
+		update(coordinate: location.coordinate)
+	}
+	
+	func update(#coordinate:CLLocationCoordinate2D)
+	{
+		self.title = String(format:"纬:%.6f° 经:%.6f°", coordinate.latitude, coordinate.longitude)
+	}
+	
+	func update(#placemark:CLPlacemark)
+	{
+		self.subtitle = placemark.name.componentsSeparatedByString(placemark.administrativeArea).last
 	}
 }
