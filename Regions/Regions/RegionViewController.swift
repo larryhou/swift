@@ -49,7 +49,7 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 	private var dateFormatter:NSDateFormatter!
 	
 	private var geocoder:CLGeocoder!
-	private var prevTime:NSDate!
+	private var geotime:NSDate!
 	
 	override func viewDidLoad()
 	{
@@ -299,8 +299,11 @@ class RegionViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 		}
 		
 		deviceAnnotation.update(location:chinaloc)
-		if prevTime == nil || fabs(prevTime.timeIntervalSinceNow) > 10.0
+		if geotime == nil || fabs(geotime.timeIntervalSinceNow) > 10.0
 		{
+			geotime = NSDate()
+			
+			println("geocode", geotime.description)
 			geocoder.reverseGeocodeLocation(chinaloc,
 			completionHandler:
 			{
