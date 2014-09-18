@@ -10,19 +10,23 @@ import UIKit
 
 class ViewController: UIViewController
 {
-
+	@IBOutlet var magnitude: UILabel!
+	@IBOutlet var graph: UIView!
+	
+	@IBOutlet var teslaX: UILabel!
+	@IBOutlet var teslaY: UILabel!
+	@IBOutlet var teslaZ: UILabel!
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		
+		println("magnitude \(magnitude.frame)")
+		println("graph \(graph.frame)")
 	}
 
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
-
-
 }
-

@@ -13,6 +13,7 @@
 		6B019B7D19CABAFA00FAF0DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B019B7C19CABAFA00FAF0DF /* Images.xcassets */; };
 		6B019B8019CABAFA00FAF0DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B019B7E19CABAFA00FAF0DF /* LaunchScreen.xib */; };
 		6B019B8C19CABAFA00FAF0DF /* TeslameterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B019B8B19CABAFA00FAF0DF /* TeslameterTests.swift */; };
+		6B019B9619CB19DB00FAF0DF /* TeslaGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B019B9519CB19DB00FAF0DF /* TeslaGraphView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		6B019B8519CABAFA00FAF0DF /* TeslameterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeslameterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B019B8A19CABAFA00FAF0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B019B8B19CABAFA00FAF0DF /* TeslameterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeslameterTests.swift; sourceTree = "<group>"; };
+		6B019B9519CB19DB00FAF0DF /* TeslaGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeslaGraphView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				6B019B7519CABAFA00FAF0DF /* AppDelegate.swift */,
 				6B019B7719CABAFA00FAF0DF /* ViewController.swift */,
+				6B019B9519CB19DB00FAF0DF /* TeslaGraphView.swift */,
 				6B019B7919CABAFA00FAF0DF /* Main.storyboard */,
 				6B019B7C19CABAFA00FAF0DF /* Images.xcassets */,
 				6B019B7E19CABAFA00FAF0DF /* LaunchScreen.xib */,
@@ -214,6 +217,7 @@
 			files = (
 				6B019B7819CABAFA00FAF0DF /* ViewController.swift in Sources */,
 				6B019B7619CABAFA00FAF0DF /* AppDelegate.swift in Sources */,
+				6B019B9619CB19DB00FAF0DF /* TeslaGraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +345,7 @@
 				INFOPLIST_FILE = Teslameter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -351,6 +356,7 @@
 				INFOPLIST_FILE = Teslameter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
