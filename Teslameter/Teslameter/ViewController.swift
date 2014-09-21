@@ -25,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate
 	private var nagitiveAttr:[NSObject:AnyObject]!
 	
 	private var locationManager:CLLocationManager!
+	private var timestamp:NSDate!
 	
 	override func viewDidLoad()
 	{
@@ -70,6 +71,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate
 		setAttributedText(label: teslaX, title: "Xμ: ", style: attrX, value: newHeading.x)
 		setAttributedText(label: teslaY, title: "Yμ: ", style: attrY, value: newHeading.y)
 		setAttributedText(label: teslaZ, title: "Zμ: ", style: attrZ, value: newHeading.z)
+		
+		if timestamp == nil || newHeading.timestamp.timeIntervalSinceDate(timestamp) > 1
+		{
+			timestamp = newHeading.timestamp
+			//println(timestamp)
+		}
 	}
 	
 	func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!)
