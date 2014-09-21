@@ -413,6 +413,7 @@
 				6B019B9119CABAFA00FAF0DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B019B9219CABAFA00FAF0DF /* Build configuration list for PBXNativeTarget "TeslameterTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +422,7 @@
 				6B019B9419CABAFA00FAF0DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
