@@ -32,9 +32,9 @@ class TeslaGraphView:UIView
 			buffer.append([0.0,0.0,0.0])
 		}
 		
-		buffer[index][TeslaAxis.X.toRaw()] = x
-		buffer[index][TeslaAxis.Y.toRaw()] = y
-		buffer[index][TeslaAxis.Z.toRaw()] = z
+		buffer[index][TeslaAxis.X.rawValue] = x
+		buffer[index][TeslaAxis.Y.rawValue] = y
+		buffer[index][TeslaAxis.Z.rawValue] = z
 		index = (index + 1) % GRAPH_DENSITY
 		
 		setNeedsDisplay()
@@ -99,7 +99,7 @@ class TeslaGraphView:UIView
 		
 		CGContextSetLineWidth(context, 2.0)
 		CGContextSetLineJoin(context, kCGLineJoinRound)
-		switch TeslaAxis.fromRaw(axis)!
+		switch TeslaAxis(rawValue: axis)!
 		{
 			case .X:CGContextSetRGBStrokeColor(context, 1.0, 0.0, 1.0, 1.0)
 			case .Y:CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1.0)
