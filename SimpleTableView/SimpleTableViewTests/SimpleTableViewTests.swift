@@ -1,15 +1,15 @@
 //
-//  RegionsTests.swift
-//  RegionsTests
+//  SimpleTableViewTests.swift
+//  SimpleTableViewTests
 //
-//  Created by doudou on 8/26/14.
-//  Copyright (c) 2014 larryhou. All rights reserved.
+//  Created by larryhou on 3/11/15.
+//  Copyright (c) 2015 larryhou. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class RegionsTests: XCTestCase {
+class SimpleTableViewTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
