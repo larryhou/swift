@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B05D8851AB18E0A004E1C13 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9F24471AAFEAE50008B5C0 /* TableViewController.swift */; };
 		6B9F24461AAFEAE50008B5C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9F24451AAFEAE50008B5C0 /* AppDelegate.swift */; };
 		6B9F24481AAFEAE50008B5C0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9F24471AAFEAE50008B5C0 /* TableViewController.swift */; };
 		6B9F244B1AAFEAE50008B5C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B9F24491AAFEAE50008B5C0 /* Main.storyboard */; };
 		6B9F244D1AAFEAE50008B5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B9F244C1AAFEAE50008B5C0 /* Images.xcassets */; };
 		6B9F24501AAFEAE50008B5C0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B9F244E1AAFEAE50008B5C0 /* LaunchScreen.xib */; };
 		6B9F245C1AAFEAE50008B5C0 /* SimpleTableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9F245B1AAFEAE50008B5C0 /* SimpleTableViewTests.swift */; };
+		6BE634321AB2D127006C5541 /* TimeZoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE634311AB2D127006C5541 /* TimeZoneModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +37,7 @@
 		6B9F24551AAFEAE50008B5C0 /* SimpleTableViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleTableViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B9F245A1AAFEAE50008B5C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B9F245B1AAFEAE50008B5C0 /* SimpleTableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewTests.swift; sourceTree = "<group>"; };
+		6BE634311AB2D127006C5541 /* TimeZoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +79,7 @@
 		6B9F24421AAFEAE50008B5C0 /* SimpleTableView */ = {
 			isa = PBXGroup;
 			children = (
+				6BE634301AB2D106006C5541 /* model */,
 				6B9F24451AAFEAE50008B5C0 /* AppDelegate.swift */,
 				6B9F24471AAFEAE50008B5C0 /* TableViewController.swift */,
 				6B9F24491AAFEAE50008B5C0 /* Main.storyboard */,
@@ -111,6 +113,14 @@
 				6B9F245A1AAFEAE50008B5C0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6BE634301AB2D106006C5541 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				6BE634311AB2D127006C5541 /* TimeZoneModel.swift */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +225,7 @@
 			files = (
 				6B9F24481AAFEAE50008B5C0 /* TableViewController.swift in Sources */,
 				6B9F24461AAFEAE50008B5C0 /* AppDelegate.swift in Sources */,
+				6BE634321AB2D127006C5541 /* TimeZoneModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +234,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B9F245C1AAFEAE50008B5C0 /* SimpleTableViewTests.swift in Sources */,
-				6B05D8851AB18E0A004E1C13 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

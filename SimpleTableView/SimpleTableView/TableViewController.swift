@@ -8,75 +8,45 @@
 
 import UIKit
 
-class TableViewController: UITableViewController
+class GroupTableViewController: UITableViewController
 {
-    private var _names:[String]!
+    private var _list:[TimeZoneInfo]!
     
-    private var _indices:[String]!
-    private var _data:[String:[String]]!
+    private var _titles:[String]!
+    private var _dict:[String:[TimeZoneInfo]]!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        _names = NSTimeZone.knownTimeZoneNames() as [String]
-        _data = [:]
-        
-        _indices = []
-        for i in 0..<_names.count
-        {
-            let key = _names[i].substringToIndex(advance(_names[i].startIndex, 1))
-            
-            if _data[key] == nil
-            {
-                _data[key] = [String]()
-                _indices.append(key)
-            }
-            
-            _names[i] = formatTimeZone(_names[i]) + " " + _names[i]
-            _data[key]?.append(_names[i])
-        }
-        
-        _indices.sort({$0 < $1})
-        for (first, _) in _data
-        {
-            _data[first]?.sort({$0 < $1})
-        }
-        
-        print(_indices)
+		
+        _list = TimeZoneModel.model.list
+        _dict = TimeZoneModel.model.dict
+        _titles = TimeZoneModel.model.keys
     }
-    
-    private func formatTimeZone(name:String)->String
-    {
-        let zone = NSTimeZone(name: name)!
-        let offset = zone.secondsFromGMT
-        
-        let hours = abs(offset) / 3600
-        let minutes = abs(offset % 3600) / 60
-        
-        var result = NSString(format: "%02d:%02d", hours, minutes) as String
-        result = "UTC" + (offset >= 0 ? "+" : "-") + result
-        return result
-    }
-    
-    //MARK: table view
+	
+    //MARK: basic
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return _data.count
+        return _dict.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        var key = _indices[section]
-        return _data[key]!.count
+        var key = _titles[section]
+        return _dict[key]!.count
     }
-    
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		return 44
+	}
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var cell = tableView.dequeueReusableCellWithIdentifier("TimeZoneCell") as UITableViewCell
         
-        var key = _indices[indexPath.section]
-        cell.textLabel?.text = _data[key]![indexPath.row]
+        var key = _titles[indexPath.section]
+		(cell.viewWithTag(1) as UILabel).text = _dict[key]![indexPath.row].formattedString
         return cell
     }
     
@@ -88,20 +58,57 @@ class TableViewController: UITableViewController
     
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
     {
-        return _indices
+        return _titles
     }
     
     //MARK: header
-    
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        return _indices[section]
+        return _titles[section]
     }
-
+	
+	override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+	{
+		return 32
+	}
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+}
+
+class PlainTableViewController: UITableViewController
+{
+	private var _list:[TimeZoneInfo]!
+	
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
+		
+		_list = TimeZoneModel.model.list
+	}
+	
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	{
+		return 1
+	}
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		return 44
+	}
+	
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return _list.count
+	}
+	
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		var cell = tableView.dequeueReusableCellWithIdentifier("TimeZoneCell") as UITableViewCell
+		(cell.viewWithTag(1) as UILabel).text = _list[indexPath.row].formattedString
+		return cell
+	}
+	
 }
 
