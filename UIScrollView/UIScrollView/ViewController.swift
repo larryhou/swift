@@ -25,7 +25,7 @@ class ViewController: UIViewController, UIScrollViewDelegate
 		view.delegate = self
 		view.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
 		
-		zoomView = UIImageView(image: UIImage(named: "3.JPG"))
+		zoomView = UIImageView(image: UIImage(named: "4.jpg"))
 		zoomView.userInteractionEnabled = false
 		view.addSubview(zoomView)
 		
