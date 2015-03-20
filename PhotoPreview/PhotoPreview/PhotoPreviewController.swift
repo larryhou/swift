@@ -13,7 +13,7 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 {
 	private var background:UIImageView!
 	private var zoomView:UIImageView!
-	private var scroll:UIScrollView!
+	private var preview:UIScrollView!
 	
 	var dirty:Bool = true
 	var dataIndex:Int = -1
@@ -25,20 +25,31 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		
 		view.clipsToBounds = true
 		
-		scroll = UIScrollView()
-		scroll.frame = UIScreen.mainScreen().applicationFrame;
-		scroll.contentSize = scroll.frame.size
-		scroll.minimumZoomScale = 0.01
-		scroll.maximumZoomScale = 2.00
-		scroll.delegate = self
-		view.addSubview(scroll)
+		preview = UIScrollView()
+		preview.frame = UIScreen.mainScreen().applicationFrame;
+		preview.contentSize = preview.frame.size
+		preview.minimumZoomScale = 0.01
+		preview.maximumZoomScale = 2.00
+		preview.delegate = self
+		view.addSubview(preview)
 		
-		scroll.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
+		preview.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
+		setPreviewAutoLayout()
 		
 		var tap = UITapGestureRecognizer()
 		tap.numberOfTapsRequired = 2
 		tap.addTarget(self, action: "doubleTapZoom:")
-		scroll.addGestureRecognizer(tap)
+		preview.addGestureRecognizer(tap)
+	}
+	
+	func setPreviewAutoLayout()
+	{
+		var views:[NSObject:AnyObject] = [:]
+		views.updateValue(preview, forKey: "preview")
+		
+		preview.setTranslatesAutoresizingMaskIntoConstraints(false)
+		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[preview]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views))
+		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[preview]|", options: NSLayoutFormatOptions.AlignAllCenterY, metrics: nil, views: views))
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -55,8 +66,18 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		}
 		
 		zoomView = UIImageView(image: image)
-		scroll.addSubview(zoomView)
+		preview.addSubview(zoomView)
 		
+		updateBackgroundImage()
+		
+		preview.zoomScale = 0.01
+		
+		repairImageZoom(useAnimation: true)
+		alignImageAtCenter()
+	}
+	
+	func updateBackgroundImage()
+	{
 		if background != nil && background.superview != nil
 		{
 			background.removeFromSuperview()
@@ -69,11 +90,6 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		frame.origin.x = (view.frame.width - frame.width) / 2.0
 		frame.origin.y = (view.frame.height - frame.height) / 2.0
 		background.frame = frame
-		
-		scroll.zoomScale = 0.01
-		
-		repairImageZoom(useAnimation: true)
-		alignImageAtCenter()
 	}
 	
 	func createBackgroundImage(inputImage input:UIImage)->UIImage?
@@ -106,19 +122,19 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	func doubleTapZoom(gesture:UITapGestureRecognizer)
 	{
-		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / preview.zoomScale
 		
 		var scale:CGFloat
-		if zoomView.frame.width > scroll.frame.width + 0.0001
+		if zoomView.frame.width > preview.frame.width + 0.0001
 		{
-			scale = scroll.frame.width / MAX_SIZE_W
+			scale = preview.frame.width / MAX_SIZE_W
 		}
 		else
 		{
 			scale = 1.0 / UIScreen.mainScreen().scale
 		}
 		
-		scroll.setZoomScale(scale, animated: true)
+		preview.setZoomScale(scale, animated: true)
 	}
 	
 	func pinchUpdated(gesture:UIPinchGestureRecognizer)
@@ -126,10 +142,10 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		switch gesture.state
 		{
 			case .Began:
-				scroll.panGestureRecognizer.enabled = false
+				preview.panGestureRecognizer.enabled = false
 			
 			case .Ended:
-				scroll.panGestureRecognizer.enabled = true
+				preview.panGestureRecognizer.enabled = true
 				repairImageZoom()
 			
 			default:break
@@ -146,19 +162,19 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	func restoreImageZoom()
 	{
-		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / preview.zoomScale
 		
-		scroll.zoomScale = scroll.frame.width / MAX_SIZE_W
+		preview.zoomScale = preview.frame.width / MAX_SIZE_W
 	}
 	
 	func repairImageZoom(useAnimation flag:Bool = true)
 	{
-		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / preview.zoomScale
 		
 		var scale:CGFloat!
-		if zoomView.frame.width < scroll.frame.width
+		if zoomView.frame.width < view.frame.width
 		{
-			scale = scroll.frame.width / MAX_SIZE_W
+			scale = view.frame.width / MAX_SIZE_W
 		}
 		else
 		if zoomView.frame.width > (MAX_SIZE_W / UIScreen.mainScreen().scale)
@@ -170,11 +186,11 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		{
 			if flag
 			{
-				scroll.setZoomScale(scale, animated: true)
+				preview.setZoomScale(scale, animated: true)
 			}
 			else
 			{
-				scroll.zoomScale = scale
+				preview.zoomScale = scale
 			}
 		}
 	}
@@ -182,25 +198,25 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	func alignImageAtCenter()
 	{
 		var inset = UIEdgeInsetsMake(0, 0, 0, 0)
-		if zoomView.frame.width < scroll.frame.width
+		if zoomView.frame.width < view.frame.width
 		{
-			inset.left = (scroll.frame.width - zoomView.frame.width) / 2.0
+			inset.left = (view.frame.width - zoomView.frame.width) / 2.0
 		}
 		else
 		{
 			inset.left = 0.0
 		}
 		
-		if zoomView.frame.height < scroll.frame.height
+		if zoomView.frame.height < view.frame.height
 		{
-			inset.top = (scroll.frame.height - zoomView.frame.height) / 2.0
+			inset.top = (view.frame.height - zoomView.frame.height) / 2.0
 		}
 		else
 		{
 			inset.top = 0.0
 		}
 		
-		scroll.contentInset = inset
+		preview.contentInset = inset
 	}
 	
 	func scrollViewDidZoom(scrollView: UIScrollView)
@@ -210,6 +226,8 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)
 	{
+		updateBackgroundImage()
+		
 		repairImageZoom()
 		alignImageAtCenter()
 	}
@@ -221,6 +239,6 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	deinit
 	{
-		scroll.pinchGestureRecognizer.removeObserver(self, forKeyPath: "pinchUpdated:")
+		preview.pinchGestureRecognizer.removeObserver(self, forKeyPath: "pinchUpdated:")
 	}
 }
