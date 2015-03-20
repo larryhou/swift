@@ -11,6 +11,7 @@ import UIKit
 
 class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 {
+	private var background:UIImageView!
 	private var zoomView:UIImageView!
 	private var scroll:UIScrollView!
 	
@@ -28,6 +29,9 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		scroll.minimumZoomScale = 0.01
 		scroll.maximumZoomScale = 2.00
 		scroll.delegate = self
+		
+		background = UIImageView()
+		view.addSubview(background)
 		view.addSubview(scroll)
 		
 		scroll.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
@@ -54,10 +58,35 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		
 		zoomView = UIImageView(image: image)
 		scroll.addSubview(zoomView)
+		
+		//FIXME:unexpectedly found nil while unwrapping an Optional value
+//		background.image = createBackgroundImage(inputImage: image)
+//		background.sizeToFit()
+		
 		scroll.zoomScale = 0.01
 		
 		repairImageZoom(useAnimation: true)
 		alignImageAtCenter()
+	}
+	
+	func createBackgroundImage(inputImage input:UIImage)->UIImage
+	{
+		let bounds = UIScreen.mainScreen().bounds
+		let size = bounds.size
+		
+		let scale = max(size.width / input.size.width, size.height / input.size.height)
+		
+		UIGraphicsBeginImageContextWithOptions(size, false, 1.0 / scale)
+		input.drawInRect(bounds)
+		
+		var data:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+
+		UIGraphicsEndImageContext()
+		
+		var filter = CIFilter(name: "CIGaussianBlur")
+		filter.setValue(data.CIImage, forKey: kCIInputImageKey)
+		filter.setValue(10.0, forKey: kCIInputRadiusKey)
+		return UIImage(CIImage: filter.outputImage)!
 	}
 	
 	func doubleTapZoom(gesture:UITapGestureRecognizer)
