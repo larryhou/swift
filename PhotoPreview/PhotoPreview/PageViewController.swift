@@ -8,23 +8,43 @@
 
 import UIKit
 
-class PageViewController: UIPageViewController, UIPageViewControllerDataSource
+class PageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
-	private var ctrlist:[PhotoPreviewController]!
+	let PHOTO_COUNT = 4
+	
+	private var recycle:[PhotoPreviewController]!
 	private var dataIndex:Int = 0
 	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		dataSource = self
+		delegate = self
+		
+		recycle = []
+		for i in 0..<3
+		{
+			recycle.append(PhotoPreviewController())
+		}
+		
+		dataIndex = 0
+		setViewControllers([getPreviewController(dataIndex: dataIndex)], direction: .Forward, animated: false, completion: nil)
+	}
+	
+	func getPreviewController(dataIndex index:Int)->PhotoPreviewController
+	{
+		let viewIndex = index % 3
+		recycle[viewIndex].setImage(UIImage(named: "\(index + 1).jpg")!, dataIndex: index)
+		return recycle[viewIndex]
 	}
 	
 	func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
 	{
 		let current = viewController as PhotoPreviewController
-		if current.dataIndex < ctrlist.count
+		if current.dataIndex + 1 < PHOTO_COUNT
 		{
 			dataIndex = current.dataIndex + 1
-			return ctrlist[dataIndex]
+			return getPreviewController(dataIndex: dataIndex)
 		}
 		
 		return nil
@@ -36,7 +56,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource
 		if current.dataIndex > 0
 		{
 			dataIndex = current.dataIndex - 1
-			return ctrlist[dataIndex]
+			return getPreviewController(dataIndex: dataIndex)
 		}
 		
 		return nil
@@ -44,12 +64,19 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource
 	
 	func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
 	{
-		return ctrlist.count
+		return PHOTO_COUNT
 	}
 	
 	func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int
 	{
 		return dataIndex
+	}
+	
+	//MARK: reset state
+	func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool)
+	{
+		var prev = previousViewControllers.first! as PhotoPreviewController
+		prev.dirty = true
 	}
 
 	override func didReceiveMemoryWarning()

@@ -12,7 +12,10 @@ import UIKit
 class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 {
 	private var zoomView:UIImageView!
-	var dataIndex:Int = 0
+	
+	var dirty:Bool = true
+	var dataIndex:Int = -1
+	var image:UIImage!
 	
 	override func viewDidLoad()
 	{
@@ -23,12 +26,62 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		view.contentSize = view.frame.size
 		view.minimumZoomScale = 0.01
 		view.maximumZoomScale = 2.00
+		view.delegate = self
 		self.view = view
 		
-		zoomView = UIImageView()
+		zoomView = UIImageView(image: nil)
 		view.addSubview(zoomView)
 		
+		view.zoomScale = 0.01
 		view.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
+		
+		var tap = UITapGestureRecognizer()
+		tap.numberOfTapsRequired = 2
+		tap.addTarget(self, action: "doubleTapZoom:")
+		view.addGestureRecognizer(tap)
+	}
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		if !dirty
+		{
+			return
+		}
+		
+		dirty = false
+		if zoomView != nil
+		{
+			zoomView.removeFromSuperview()
+			zoomView = nil
+		}
+		
+		zoomView = UIImageView(image: image)
+		self.view.addSubview(zoomView)
+		
+		let view = self.view as UIScrollView
+		view.zoomScale = 0.01
+		
+		repairImageZoom(useAnimation: true)
+		alignImageAtCenter()
+	}
+	
+	func doubleTapZoom(gesture:UITapGestureRecognizer)
+	{
+		let view = self.view as UIScrollView
+		
+		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
+		
+		var scale:CGFloat
+		if zoomView.frame.width > view.frame.width + 0.0001
+		{
+			scale = view.frame.width / MAX_SIZE_W
+		}
+		else
+		{
+			scale = 1.0 / UIScreen.mainScreen().scale
+		}
+		
+		view.setZoomScale(scale, animated: true)
 	}
 	
 	func pinchUpdated(gesture:UIPinchGestureRecognizer)
@@ -50,20 +103,27 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	func setImage(image:UIImage, dataIndex index:Int)
 	{
-		self.zoomView.image = image
-		self.dataIndex = index
+		self.dirty = true
 		
-		alignImageAtCenter()
-		repairImageZoom()
+		self.dataIndex = index
+		self.image = image
 	}
 	
-	func repairImageZoom()
+	func restoreImageZoom()
+	{
+		let view = self.view as UIScrollView
+		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
+		
+		view.zoomScale = view.frame.width / MAX_SIZE_W
+	}
+	
+	func repairImageZoom(useAnimation flag:Bool = true)
 	{
 		let view = self.view as UIScrollView
 		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
 		
 		var scale:CGFloat!
-		if zoomView.frame.width < view.frame.width + 0.0001
+		if zoomView.frame.width < view.frame.width
 		{
 			scale = view.frame.width / MAX_SIZE_W
 		}
@@ -75,7 +135,14 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		
 		if scale != nil
 		{
-			view.setZoomScale(scale, animated: true)
+			if flag
+			{
+				view.setZoomScale(scale, animated: true)
+			}
+			else
+			{
+				view.zoomScale = scale
+			}
 		}
 	}
 	
