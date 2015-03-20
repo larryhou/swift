@@ -12,6 +12,7 @@ import UIKit
 class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 {
 	private var zoomView:UIImageView!
+	private var scroll:UIScrollView!
 	
 	var dirty:Bool = true
 	var dataIndex:Int = -1
@@ -21,20 +22,20 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	{
 		super.viewDidLoad()
 		
-		var view:UIScrollView = UIScrollView()
-		view.frame = UIScreen.mainScreen().applicationFrame;
-		view.contentSize = view.frame.size
-		view.minimumZoomScale = 0.01
-		view.maximumZoomScale = 2.00
-		view.delegate = self
-		self.view = view
+		scroll = UIScrollView()
+		scroll.frame = UIScreen.mainScreen().applicationFrame;
+		scroll.contentSize = scroll.frame.size
+		scroll.minimumZoomScale = 0.01
+		scroll.maximumZoomScale = 2.00
+		scroll.delegate = self
+		view.addSubview(scroll)
 		
-		view.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
+		scroll.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
 		
 		var tap = UITapGestureRecognizer()
 		tap.numberOfTapsRequired = 2
 		tap.addTarget(self, action: "doubleTapZoom:")
-		view.addGestureRecognizer(tap)
+		scroll.addGestureRecognizer(tap)
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -52,10 +53,8 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		}
 		
 		zoomView = UIImageView(image: image)
-		self.view.addSubview(zoomView)
-		
-		let view = self.view as UIScrollView
-		view.zoomScale = 0.01
+		scroll.addSubview(zoomView)
+		scroll.zoomScale = 0.01
 		
 		repairImageZoom(useAnimation: true)
 		alignImageAtCenter()
@@ -63,34 +62,30 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	func doubleTapZoom(gesture:UITapGestureRecognizer)
 	{
-		let view = self.view as UIScrollView
-		
-		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
 		
 		var scale:CGFloat
-		if zoomView.frame.width > view.frame.width + 0.0001
+		if zoomView.frame.width > scroll.frame.width + 0.0001
 		{
-			scale = view.frame.width / MAX_SIZE_W
+			scale = scroll.frame.width / MAX_SIZE_W
 		}
 		else
 		{
 			scale = 1.0 / UIScreen.mainScreen().scale
 		}
 		
-		view.setZoomScale(scale, animated: true)
+		scroll.setZoomScale(scale, animated: true)
 	}
 	
 	func pinchUpdated(gesture:UIPinchGestureRecognizer)
 	{
-		let view = self.view as UIScrollView
-		
 		switch gesture.state
 		{
 			case .Began:
-				view.panGestureRecognizer.enabled = false
+				scroll.panGestureRecognizer.enabled = false
 			
 			case .Ended:
-				view.panGestureRecognizer.enabled = true
+				scroll.panGestureRecognizer.enabled = true
 				repairImageZoom()
 			
 			default:break
@@ -107,21 +102,19 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	func restoreImageZoom()
 	{
-		let view = self.view as UIScrollView
-		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
 		
-		view.zoomScale = view.frame.width / MAX_SIZE_W
+		scroll.zoomScale = scroll.frame.width / MAX_SIZE_W
 	}
 	
 	func repairImageZoom(useAnimation flag:Bool = true)
 	{
-		let view = self.view as UIScrollView
-		let MAX_SIZE_W = zoomView.frame.width / view.zoomScale
+		let MAX_SIZE_W = zoomView.frame.width / scroll.zoomScale
 		
 		var scale:CGFloat!
-		if zoomView.frame.width < view.frame.width
+		if zoomView.frame.width < scroll.frame.width
 		{
-			scale = view.frame.width / MAX_SIZE_W
+			scale = scroll.frame.width / MAX_SIZE_W
 		}
 		else
 		if zoomView.frame.width > (MAX_SIZE_W / UIScreen.mainScreen().scale)
@@ -133,39 +126,37 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		{
 			if flag
 			{
-				view.setZoomScale(scale, animated: true)
+				scroll.setZoomScale(scale, animated: true)
 			}
 			else
 			{
-				view.zoomScale = scale
+				scroll.zoomScale = scale
 			}
 		}
 	}
 	
 	func alignImageAtCenter()
 	{
-		let view = self.view as UIScrollView
-		
 		var inset = UIEdgeInsetsMake(0, 0, 0, 0)
-		if zoomView.frame.width < view.frame.width
+		if zoomView.frame.width < scroll.frame.width
 		{
-			inset.left = (view.frame.width - zoomView.frame.width) / 2.0
+			inset.left = (scroll.frame.width - zoomView.frame.width) / 2.0
 		}
 		else
 		{
 			inset.left = 0.0
 		}
 		
-		if zoomView.frame.height < view.frame.height
+		if zoomView.frame.height < scroll.frame.height
 		{
-			inset.top = (view.frame.height - zoomView.frame.height) / 2.0
+			inset.top = (scroll.frame.height - zoomView.frame.height) / 2.0
 		}
 		else
 		{
 			inset.top = 0.0
 		}
 		
-		view.contentInset = inset
+		scroll.contentInset = inset
 	}
 	
 	func scrollViewDidZoom(scrollView: UIScrollView)
@@ -186,7 +177,6 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	deinit
 	{
-		let view = self.view as UIScrollView
-		view.pinchGestureRecognizer.removeObserver(self, forKeyPath: "pinchUpdated:")
+		scroll.pinchGestureRecognizer.removeObserver(self, forKeyPath: "pinchUpdated:")
 	}
 }
