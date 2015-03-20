@@ -29,10 +29,6 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		view.delegate = self
 		self.view = view
 		
-		zoomView = UIImageView(image: nil)
-		view.addSubview(zoomView)
-		
-		view.zoomScale = 0.01
 		view.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
 		
 		var tap = UITapGestureRecognizer()

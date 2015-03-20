@@ -73,10 +73,10 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
 	}
 	
 	//MARK: reset state
-	func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool)
+	func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [AnyObject])
 	{
-		var prev = previousViewControllers.first! as PhotoPreviewController
-		prev.dirty = true
+		var dst = pendingViewControllers.first! as PhotoPreviewController
+		dst.dirty = true
 	}
 
 	override func didReceiveMemoryWarning()
