@@ -23,15 +23,14 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	{
 		super.viewDidLoad()
 		
+		view.clipsToBounds = true
+		
 		scroll = UIScrollView()
 		scroll.frame = UIScreen.mainScreen().applicationFrame;
 		scroll.contentSize = scroll.frame.size
 		scroll.minimumZoomScale = 0.01
 		scroll.maximumZoomScale = 2.00
 		scroll.delegate = self
-		
-		background = UIImageView()
-		view.addSubview(background)
 		view.addSubview(scroll)
 		
 		scroll.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
@@ -50,18 +49,26 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		}
 		
 		dirty = false
-		if zoomView != nil
+		if zoomView != nil && zoomView.superview != nil
 		{
 			zoomView.removeFromSuperview()
-			zoomView = nil
 		}
 		
 		zoomView = UIImageView(image: image)
 		scroll.addSubview(zoomView)
 		
-		//FIXME:unexpectedly found nil while unwrapping an Optional value
-//		background.image = createBackgroundImage(inputImage: image)
-//		background.sizeToFit()
+		if background != nil && background.superview != nil
+		{
+			background.removeFromSuperview()
+		}
+		
+		background = UIImageView(image: createBackgroundImage(inputImage: image))
+		view.insertSubview(background, atIndex: 0)
+		
+		var frame = background.frame
+		frame.origin.x = (view.frame.width - frame.width) / 2.0
+		frame.origin.y = (view.frame.height - frame.height) / 2.0
+		background.frame = frame
 		
 		scroll.zoomScale = 0.01
 		
@@ -69,24 +76,32 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 		alignImageAtCenter()
 	}
 	
-	func createBackgroundImage(inputImage input:UIImage)->UIImage
+	func createBackgroundImage(inputImage input:UIImage)->UIImage?
 	{
 		let bounds = UIScreen.mainScreen().bounds
-		let size = bounds.size
+		let size = CGSizeMake(bounds.width / 2.0, bounds.height / 2.0)
 		
 		let scale = max(size.width / input.size.width, size.height / input.size.height)
 		
-		UIGraphicsBeginImageContextWithOptions(size, false, 1.0 / scale)
-		input.drawInRect(bounds)
+		UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+		let context = UIGraphicsGetCurrentContext()
+		
+		CGContextScaleCTM(context, scale, scale)
+		
+		let tx = (size.width / scale - input.size.width) / 2.0
+		let ty = (size.height / scale - input.size.height) / 2.0
+		CGContextTranslateCTM(context, tx, ty)
+		
+		input.drawAtPoint(CGPointMake(0, 0))
 		
 		var data:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 
 		UIGraphicsEndImageContext()
 		
 		var filter = CIFilter(name: "CIGaussianBlur")
-		filter.setValue(data.CIImage, forKey: kCIInputImageKey)
-		filter.setValue(10.0, forKey: kCIInputRadiusKey)
-		return UIImage(CIImage: filter.outputImage)!
+		filter.setValue(CIImage(image: data), forKey: kCIInputImageKey)
+		filter.setValue(20.0, forKey: kCIInputRadiusKey)
+		return UIImage(CIImage: filter.outputImage)
 	}
 	
 	func doubleTapZoom(gesture:UITapGestureRecognizer)
@@ -195,8 +210,8 @@ class PhotoPreviewController:UIViewController, UIScrollViewDelegate
 	
 	override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)
 	{
-		alignImageAtCenter()
 		repairImageZoom()
+		alignImageAtCenter()
 	}
 	
 	func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView?
