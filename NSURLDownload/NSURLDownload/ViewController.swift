@@ -37,6 +37,7 @@ class ViewController: NSViewController, NSURLDownloadDelegate
 		
 		var request = NSURLRequest(URL: url!, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 60.0)
 		var download = NSURLDownload(request: request, delegate: self)
+		download.deletesFileUponFailure = false
 		println(download)
 		
 		indicator.doubleValue = 0
