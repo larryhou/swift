@@ -26,14 +26,25 @@ class MusicAlbumCell:UITableViewCell
 class TableViewController: UITableViewController, UITableViewDataSource, XMLReaderDelegate
 {
 	private var _data:NSArray!
+	private var _indicator:UIActivityIndicatorView!
 	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
+		let bounds = UIScreen.mainScreen().bounds
+		
 		_data = NSArray()
+		_indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+		_indicator.center = CGPointMake(bounds.width / 2, bounds.height / 2)
+		_indicator.startAnimating()
 		
 		downloadRSSXML()
+	}
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		self.view.addSubview(_indicator)
 	}
 	
 	//MARK: download rss xml
@@ -61,6 +72,8 @@ class TableViewController: UITableViewController, UITableViewDataSource, XMLRead
 		dispatch_async(dispatch_get_main_queue(),
 		{
 			self.tableView.reloadData()
+			self._indicator.removeFromSuperview()
+			self._indicator.stopAnimating()
 		})
 		
 		println("elapse: \(elapse)")
@@ -117,6 +130,21 @@ class TableViewController: UITableViewController, UITableViewDataSource, XMLRead
 		return cell
 		
 	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	{
+		if segue.identifier == "showAlbum"
+		{
+			let indexPath = tableView.indexPathForSelectedRow()!
+			let item = _data[indexPath.row] as NSDictionary
+			
+			let dst = segue.destinationViewController as AlbumViewController
+			dst.path = item.valueForKeyPath("itms:albumLink.$") as String
+			
+			tableView.deselectRowAtIndexPath(indexPath, animated: false)
+		}
+	}
+	
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
