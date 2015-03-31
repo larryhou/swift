@@ -1,25 +1,120 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="an6-Yh-6Eb">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--iTunes New Releases-->
+        <scene sceneID="Trg-Er-WfT">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <tableViewController id="kAT-xx-Bvv" customClass="TableViewController" customModule="XMLParse" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="22" sectionFooterHeight="22" id="Yve-8d-OeL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MusicAlbumCell" rowHeight="110" id="sQT-Pc-w7y" customClass="MusicAlbumCell" customModule="XMLParse" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sQT-Pc-w7y" id="qyF-Bl-b52">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Shikari" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84T-Mt-zep">
+                                            <rect key="frame" x="113" y="5" width="454" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anaesthetist - Single" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XoQ-Is-6vO">
+                                            <rect key="frame" x="113" y="28" width="454" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cover.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LKc-1W-uuc">
+                                            <rect key="frame" x="5" y="5" width="100" height="100"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$199" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7C1-9J-sME">
+                                            <rect key="frame" x="113" y="90" width="91" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="84T-Mt-zep" secondAttribute="trailing" constant="-8" id="2dA-hJ-Kgg"/>
+                                        <constraint firstItem="XoQ-Is-6vO" firstAttribute="leading" secondItem="qyF-Bl-b52" secondAttribute="leadingMargin" constant="105" id="X45-8Y-sMA"/>
+                                        <constraint firstItem="XoQ-Is-6vO" firstAttribute="top" secondItem="qyF-Bl-b52" secondAttribute="topMargin" constant="20" id="eyE-hD-R8b"/>
+                                        <constraint firstItem="84T-Mt-zep" firstAttribute="top" secondItem="qyF-Bl-b52" secondAttribute="topMargin" constant="-3" id="nzy-NM-2Zt"/>
+                                        <constraint firstItem="84T-Mt-zep" firstAttribute="leading" secondItem="qyF-Bl-b52" secondAttribute="leadingMargin" constant="105" id="uqd-iD-Sfw"/>
+                                        <constraint firstItem="XoQ-Is-6vO" firstAttribute="trailing" secondItem="qyF-Bl-b52" secondAttribute="trailingMargin" constant="8" id="zu7-uX-pNW"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="albumCover" destination="LKc-1W-uuc" id="Qxe-hY-lWY"/>
+                                    <outlet property="albumName" destination="XoQ-Is-6vO" id="jca-se-WTo"/>
+                                    <outlet property="albumPrice" destination="7C1-9J-sME" id="FVL-CE-Q0k"/>
+                                    <outlet property="artist" destination="84T-Mt-zep" id="2GZ-GQ-yDl"/>
+                                    <segue destination="021-m9-gdl" kind="show" identifier="showAlbum" id="HJI-DB-jIn"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kAT-xx-Bvv" id="GK7-hA-C18"/>
+                            <outlet property="delegate" destination="kAT-xx-Bvv" id="faO-kZ-hfs"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="iTunes New Releases" id="MpS-gR-BuK"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ret-yq-acW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2338" y="182"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="hsQ-aY-el6">
+            <objects>
+                <tableViewController id="021-m9-gdl" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="aRj-AV-y9f">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumDetailCell" id="TJb-UZ-JnV">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TJb-UZ-JnV" id="g7j-PO-BkX">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="021-m9-gdl" id="Jwv-y9-cgK"/>
+                            <outlet property="delegate" destination="021-m9-gdl" id="ffP-xe-u5X"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7r6-en-UWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3199" y="186"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qIO-Ab-aEv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="an6-Yh-6Eb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CPi-RK-A81">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kAT-xx-Bvv" kind="relationship" relationship="rootViewController" id="sUd-U6-Juf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iLZ-UR-1mt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1526" y="186"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cover.jpg" width="100" height="100"/>
+    </resources>
 </document>
