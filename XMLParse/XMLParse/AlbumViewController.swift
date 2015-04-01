@@ -32,9 +32,10 @@ class AlbumViewController:UIViewController, UIWebViewDelegate
 			NSURLSession.sharedSession().dataTaskWithRequest(NSURLRequest(URL: url!))
 			{
 				(data:NSData!, response:NSURLResponse!, error:NSError!) in
+				
 				dispatch_async(dispatch_get_main_queue())
 				{
-					self.browser.loadData(data, MIMEType: "text/html", textEncodingName: "utf-8", baseURL: nil)
+					self.browser.loadData(data, MIMEType: "text/html", textEncodingName: response.textEncodingName, baseURL: nil)
 					self.loading.hidden = true
 				}
 			}.resume()
