@@ -14,6 +14,7 @@
 		6B04F8B71ACE3E4800C06A4C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B04F8B51ACE3E4800C06A4C /* LaunchScreen.xib */; };
 		6B04F8C31ACE3E4800C06A4C /* AVProgrammingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B04F8C21ACE3E4800C06A4C /* AVProgrammingTests.swift */; };
 		6B161A181ACE76DA007E5A76 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B161A171ACE76DA007E5A76 /* PhotoViewController.swift */; };
+		6B161A1A1ACEBC43007E5A76 /* AssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B161A191ACEBC43007E5A76 /* AssetViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		6B04F8C11ACE3E4800C06A4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B04F8C21ACE3E4800C06A4C /* AVProgrammingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVProgrammingTests.swift; sourceTree = "<group>"; };
 		6B161A171ACE76DA007E5A76 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		6B161A191ACEBC43007E5A76 /* AssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				6B04F8B31ACE3E4800C06A4C /* Images.xcassets */,
 				6B04F8B51ACE3E4800C06A4C /* LaunchScreen.xib */,
 				6B04F8AA1ACE3E4700C06A4C /* Supporting Files */,
+				6B161A191ACEBC43007E5A76 /* AssetViewController.swift */,
 			);
 			path = AVProgramming;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				6B04F8AF1ACE3E4700C06A4C /* PhotoAlbumViewController.swift in Sources */,
 				6B04F8AD1ACE3E4700C06A4C /* AppDelegate.swift in Sources */,
 				6B161A181ACE76DA007E5A76 /* PhotoViewController.swift in Sources */,
+				6B161A1A1ACEBC43007E5A76 /* AssetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

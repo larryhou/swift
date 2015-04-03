@@ -137,4 +137,20 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 			}
 		})
 	}
+	
+	//MARK: segue
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	{
+		if segue.identifier == "showAsset"
+		{
+			let indexPath = tableView.indexPathForSelectedRow()!
+			let row = (_numOfAssets - 1) - indexPath.row
+			
+			var dst = segue.destinationViewController as AssetViewController
+			dst.index = row
+			dst.url = url
+			
+			tableView.deselectRowAtIndexPath(indexPath, animated: false)
+		}
+	}
 }

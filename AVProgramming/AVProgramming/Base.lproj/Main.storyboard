@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Photo Albums-->
+        <!--Albums-->
         <scene sceneID="CGt-m4-lz1">
             <objects>
                 <tableViewController id="nsv-Zh-Buc" customClass="PhotoAlubmViewController" customModule="AVProgramming" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,7 +34,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Scroll" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMY-Kv-Yo8">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Roll" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMY-Kv-Yo8">
                                             <rect key="frame" x="93" y="5" width="459" height="22"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -67,18 +67,18 @@
                             <outlet property="delegate" destination="nsv-Zh-Buc" id="I2g-qN-Gbh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Photo Albums" id="MtP-Ie-RG7"/>
+                    <navigationItem key="navigationItem" title="Albums" id="MtP-Ie-RG7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3M-fo-C8n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1279" y="191"/>
         </scene>
-        <!--Photo View Controller-->
+        <!--Assets-->
         <scene sceneID="Yr3-YT-DUv">
             <objects>
-                <tableViewController id="Mqe-Nb-SZc" customClass="PhotoViewController" customModule="AVProgramming" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Assets" id="Mqe-Nb-SZc" customClass="PhotoViewController" customModule="AVProgramming" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5BN-lX-RXJ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -97,14 +97,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-01-10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4wW-vL-313">
-                                            <rect key="frame" x="93" y="36" width="474" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <rect key="frame" x="93" y="36" width="474" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MM1-3K-hk7">
-                                            <rect key="frame" x="93" y="57" width="474" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <rect key="frame" x="93" y="54" width="474" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -117,7 +117,7 @@
                                         <constraint firstItem="D3Y-MH-BdL" firstAttribute="top" secondItem="mT3-oj-7e2" secondAttribute="topMargin" constant="3" id="PXG-EZ-kOV"/>
                                         <constraint firstItem="MM1-3K-hk7" firstAttribute="leading" secondItem="mT3-oj-7e2" secondAttribute="leadingMargin" constant="85" id="RJl-ZK-9Nm"/>
                                         <constraint firstItem="D3Y-MH-BdL" firstAttribute="leading" secondItem="mT3-oj-7e2" secondAttribute="leadingMargin" constant="85" id="YVP-zP-T9o"/>
-                                        <constraint firstItem="MM1-3K-hk7" firstAttribute="top" secondItem="mT3-oj-7e2" secondAttribute="topMargin" constant="49" id="iCQ-BH-q08"/>
+                                        <constraint firstItem="MM1-3K-hk7" firstAttribute="top" secondItem="mT3-oj-7e2" secondAttribute="topMargin" constant="46" id="iCQ-BH-q08"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="4wW-vL-313" secondAttribute="trailing" constant="-8" id="vph-n6-TSA"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -126,6 +126,7 @@
                                     <outlet property="detail" destination="MM1-3K-hk7" id="uhg-20-RID"/>
                                     <outlet property="location" destination="D3Y-MH-BdL" id="TXg-Bg-j1u"/>
                                     <outlet property="thumbnail" destination="YFk-0D-bge" id="MZ0-sn-Pdi"/>
+                                    <segue destination="7UQ-Sj-h66" kind="show" identifier="showAsset" id="UlH-qu-n4B"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -138,6 +139,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cAE-mS-ZzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1987" y="185"/>
+        </scene>
+        <!--Asset View Controller-->
+        <scene sceneID="jiT-9p-qDE">
+            <objects>
+                <viewController id="7UQ-Sj-h66" customClass="AssetViewController" customModule="AVProgramming" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lJn-yP-G1H"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Ht-hP-57O"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fBz-f2-5yz" customClass="UIScrollView">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e40-JX-PSd">
+                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e40-JX-PSd" firstAttribute="leading" secondItem="fBz-f2-5yz" secondAttribute="leading" id="InB-tz-M2j"/>
+                            <constraint firstItem="e40-JX-PSd" firstAttribute="top" secondItem="lJn-yP-G1H" secondAttribute="bottom" id="VfU-ZU-Dna"/>
+                            <constraint firstAttribute="trailing" secondItem="e40-JX-PSd" secondAttribute="trailing" id="WLy-RA-SBt"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="e40-JX-PSd" secondAttribute="bottom" constant="-64" id="tSD-kq-Nck"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="container" destination="e40-JX-PSd" id="HwD-Qf-ulo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QQ6-g7-fTc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2686" y="185"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zrX-0M-R8D">
