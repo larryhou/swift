@@ -164,6 +164,9 @@
                             <constraint firstAttribute="trailing" secondItem="e40-JX-PSd" secondAttribute="trailing" id="WLy-RA-SBt"/>
                             <constraint firstAttribute="bottomMargin" secondItem="e40-JX-PSd" secondAttribute="bottom" constant="-64" id="tSD-kq-Nck"/>
                         </constraints>
+                        <connections>
+                            <outlet property="delegate" destination="7UQ-Sj-h66" id="sAD-2E-WzP"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="container" destination="e40-JX-PSd" id="HwD-Qf-ulo"/>
@@ -173,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="2686" y="185"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="zrX-0M-R8D">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TgC-uW-dem" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TgC-uW-dem" customClass="NavigationViewController" customModule="AVProgramming" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="M2v-Rv-ch0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

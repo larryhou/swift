@@ -83,8 +83,9 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 				let repr = asset.defaultRepresentation()
 				let date = asset.valueForProperty(ALAssetPropertyDate) as NSDate
 				let location = asset.valueForProperty(ALAssetPropertyLocation) as? CLLocation
+				let dimensions = repr.dimensions()
 				
-				var desc = NSString(format:"%d×%d", Int(repr.dimensions().width), Int(repr.dimensions().height)) as String
+				var desc = "\(Int(dimensions.width))×\(Int(dimensions.height))"
 				
 				let type = asset.valueForProperty(ALAssetPropertyType) as String
 				if type == ALAssetTypeVideo

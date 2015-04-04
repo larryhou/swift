@@ -20,6 +20,19 @@ class PhotoAlbumCell: UITableViewCell
 	@IBOutlet weak var albumID: UILabel!
 }
 
+class NavigationViewController:UINavigationController
+{
+	override func shouldAutorotate() -> Bool
+	{
+		return topViewController.shouldAutorotate()
+	}
+	
+	override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation
+	{
+		return topViewController.preferredInterfaceOrientationForPresentation()
+	}
+}
+
 class PhotoAlubmViewController: UITableViewController, UITableViewDataSource
 {
 	private var _groups:[NSURL]!
@@ -29,7 +42,6 @@ class PhotoAlubmViewController: UITableViewController, UITableViewDataSource
 	{
 		super.viewDidLoad()
 		tableView.separatorColor = UIColor(white: SEPARATOR_COLOR_WHITE, alpha: 1.0)
-		println(tableView.separatorColor)
 		
 		_groups = []
 		
