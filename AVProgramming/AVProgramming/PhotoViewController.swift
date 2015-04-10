@@ -64,7 +64,7 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 	{
-		let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCell") as PhotoCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCell") as! PhotoCell
 		let row = (_numOfAssets - 1) - indexPath.row
 		
 		_library.groupForURL(url, resultBlock:
@@ -81,20 +81,20 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 				let image = UIImage(CGImage: asset.thumbnail().takeUnretainedValue())
 				
 				let repr = asset.defaultRepresentation()
-				let date = asset.valueForProperty(ALAssetPropertyDate) as NSDate
+				let date = asset.valueForProperty(ALAssetPropertyDate) as! NSDate
 				let location = asset.valueForProperty(ALAssetPropertyLocation) as? CLLocation
 				let dimensions = repr.dimensions()
 				
 				var desc = "\(Int(dimensions.width))×\(Int(dimensions.height))"
 				
-				let type = asset.valueForProperty(ALAssetPropertyType) as String
+				let type = asset.valueForProperty(ALAssetPropertyType) as! String
 				if type == ALAssetTypeVideo
 				{
-					let duration = asset.valueForProperty(ALAssetPropertyDuration) as Double
+					let duration = asset.valueForProperty(ALAssetPropertyDuration) as! Double
 					let minutes = floor(duration / 60)
 					let seconds = duration % 60
 					
-					desc += NSString(format:" %02d:%06.3f", Int(minutes), seconds) as String
+					desc += String(format:" %02d:%06.3f", Int(minutes), seconds)
 				}
 				
 				dispatch_async(dispatch_get_main_queue())
@@ -103,7 +103,7 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 					cell.date.text = self._dateFormatter.stringFromDate(date)
 					if location != nil
 					{
-						cell.location.text = NSString(format:"%.4f°/%.4f°", location!.coordinate.latitude, location!.coordinate.longitude)
+						cell.location.text = String(format:"%.4f°/%.4f°", location!.coordinate.latitude, location!.coordinate.longitude)
 						self.geocode(location!, label: cell.location)
 					}
 					else
@@ -129,12 +129,16 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 		{ (result:[AnyObject]!, error:NSError!) -> Void in
 			if error == nil && result.count > 0
 			{
-				let placemark = result.first as CLPlacemark
-				let text = (placemark.addressDictionary["FormattedAddressLines"] as NSArray)[0] as String
-				dispatch_async(dispatch_get_main_queue())
+				let placemark = result.first as! CLPlacemark
+				let text = (placemark.addressDictionary["FormattedAddressLines"] as! [String])[0]
+				if text != ""
 				{
-					label.text = text
+					dispatch_async(dispatch_get_main_queue())
+					{
+						label.text = text
+					}
 				}
+				
 			}
 		})
 	}
@@ -147,7 +151,7 @@ class PhotoViewController: UITableViewController, UITableViewDataSource
 			let indexPath = tableView.indexPathForSelectedRow()!
 			let row = (_numOfAssets - 1) - indexPath.row
 			
-			var dst = segue.destinationViewController as AssetViewController
+			var dst = segue.destinationViewController as! AssetViewController
 			dst.index = row
 			dst.url = url
 			

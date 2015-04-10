@@ -51,7 +51,7 @@ class PhotoAlubmViewController: UITableViewController, UITableViewDataSource
 			(group:ALAssetsGroup!, stop:UnsafeMutablePointer<ObjCBool>) in
 			if group != nil
 			{
-				self._groups.append(group.valueForProperty(ALAssetsGroupPropertyURL) as NSURL)
+				self._groups.append(group.valueForProperty(ALAssetsGroupPropertyURL) as! NSURL)
 				dispatch_async(dispatch_get_main_queue())
 				{
 					self.tableView.reloadData()
@@ -80,12 +80,12 @@ class PhotoAlubmViewController: UITableViewController, UITableViewDataSource
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 	{
 		let url = _groups[indexPath.row]
-		let cell = tableView.dequeueReusableCellWithIdentifier("PhotoAlbumCell") as PhotoAlbumCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("PhotoAlbumCell") as! PhotoAlbumCell
 		_library.groupForURL(url, resultBlock:
 		{
 			(group:ALAssetsGroup!) in
-			cell.albumName.text = (group.valueForProperty(ALAssetsGroupPropertyName) as String)
-			cell.albumID.text = (group.valueForProperty(ALAssetsGroupPropertyPersistentID) as String)
+			cell.albumName.text = (group.valueForProperty(ALAssetsGroupPropertyName) as! String)
+			cell.albumID.text = (group.valueForProperty(ALAssetsGroupPropertyPersistentID) as! String)
 			cell.albumAssetsCount.text = "\(group.numberOfAssets())"
 			cell.posterImage.image = UIImage(CGImage: group.posterImage().takeUnretainedValue(), scale: UIScreen.mainScreen().scale, orientation: UIImageOrientation.Up)
 			
@@ -105,7 +105,7 @@ class PhotoAlubmViewController: UITableViewController, UITableViewDataSource
 		{
 			let indexPath = tableView.indexPathForSelectedRow()!
 			
-			var dst = segue.destinationViewController as PhotoViewController
+			var dst = segue.destinationViewController as! PhotoViewController
 			dst.url = _groups[indexPath.row]
 			
 			tableView.deselectRowAtIndexPath(indexPath, animated: false)

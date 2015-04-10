@@ -22,7 +22,7 @@ class MapPinAnnotation:NSObject, MKAnnotation
 		self.coordinate = coordinate
 		
 		self.title = ""
-		self.subtitle = NSString(format:"纬:%.4f° 经:%.4f°", coordinate.latitude, coordinate.latitude);
+		self.subtitle = String(format:"纬:%.4f° 经:%.4f°", coordinate.latitude, coordinate.latitude);
 	}
 }
 
@@ -45,7 +45,7 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 		
 		let bounds = UIScreen.mainScreen().bounds
 		
-		let view:UIScrollView = self.view as UIScrollView
+		let view:UIScrollView = self.view as! UIScrollView
 		
 		_map = MKMapView(frame: CGRectMake(0, bounds.height, bounds.width, bounds.width))
 		_map.userInteractionEnabled = true
@@ -68,7 +68,7 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 				
 				let repr = asset.defaultRepresentation()
 				let data = repr.fullScreenImage().takeUnretainedValue()
-				let type = asset.valueForProperty(ALAssetPropertyType) as String
+				let type = asset.valueForProperty(ALAssetPropertyType) as! String
 				
 				let bounds = UIScreen.mainScreen().bounds
 				let scale = max(CGFloat(CGImageGetWidth(data)) / bounds.width, CGFloat(CGImageGetHeight(data)) / bounds.height)
@@ -134,7 +134,7 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 	
 	func moveAnnotationInView(guesture:UILongPressGestureRecognizer)
 	{
-		let annotation = _map.annotations.first as MapPinAnnotation
+		let annotation = _map.annotations.first as! MapPinAnnotation
 		
 		_map.setRegion(MKCoordinateRegionMakeWithDistance(annotation.coordinate, MAP_REGION_SPAN, MAP_REGION_SPAN), animated: true)
 		_map.selectAnnotation(annotation, animated: true)
@@ -169,7 +169,7 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 		frame.origin.y = _photo.frame.height + 5
 		_map.frame = frame
 		
-		(view as UIScrollView).contentSize = CGSizeMake(size.width, frame.origin.y + frame.height)
+		(view as! UIScrollView).contentSize = CGSizeMake(size.width, frame.origin.y + frame.height)
 	}
 	
 	//MARK: Map Annotation
@@ -197,7 +197,7 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 	
 	func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!)
 	{
-		var view = views.first as MKPinAnnotationView
+		var view = views.first as! MKPinAnnotationView
 		let coordinate = view.annotation.coordinate
 		
 		_map.selectAnnotation(view.annotation, animated: true)
@@ -207,11 +207,11 @@ class AssetViewController:UIViewController, UIScrollViewDelegate, MKMapViewDeleg
 				
 			if result != nil && result.count > 0
 			{
-				let placemark = result.first as CLPlacemark
-				let title = (placemark.addressDictionary["FormattedAddressLines"] as NSArray)[0] as String
+				let placemark = result.first as! CLPlacemark
+				let title = (placemark.addressDictionary["FormattedAddressLines"] as! [String])[0]
 				dispatch_async(dispatch_get_main_queue())
 				{
-					(view.annotation as MapPinAnnotation).title = title
+					(view.annotation as! MapPinAnnotation).title = title
 				}
 			}
 		}

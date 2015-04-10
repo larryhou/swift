@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7B28FC67-2599-4430-8E6A-174BE622F9BB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>AVProgramming</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>CD17B85DD1B975D40720D97E46FD818042A29716</key>
 		<string>github.com:larryhou/swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AVProgramming/AVProgramming.xcodeproj</string>
+	<string>AVProgramming/AVProgramming.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>CD17B85DD1B975D40720D97E46FD818042A29716</key>
