@@ -17,6 +17,13 @@ func getQuoteRequest(ticket:String, #interval:Int, numOfDays:Int = 1, exchange:S
 	return NSURLRequest(URL: NSURL(string: url)!)
 }
 
+func getQuoteRequest(ticket:String, #exchange:String)->NSURLRequest
+{
+	let timestamp = UInt(NSDate().timeIntervalSince1970 * 1000)
+	let url = "http://www.google.com/finance/getprices?q=\(ticket)&x=\(exchange)&i=86400&p=40Y&f=d,c,v,k,o,h,l&df=cpct&auto=1&ts=\(timestamp)&ei=yW0qVam9A-f1igLUvIGQBw"
+	return NSURLRequest(URL: NSURL(string: url)!)
+}
+
 struct QuoteKey
 {
 	static let DATE = "DATE"
@@ -159,6 +166,7 @@ var interval = 60
 var ticket:String = "0700"
 var exchange = "HKG"
 var numOfDays:Int = 1
+var all = false
 
 var skip:Bool = false
 for i in 1..<Int(Process.argc)
@@ -199,7 +207,11 @@ for i in 1..<Int(Process.argc)
 		case "-v":
 			verbose = true
 			break
-			
+		
+		case "-a":
+			all = true
+			break
+		
 		case "-h":
 			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME]"
 			println(msg)
@@ -212,5 +224,11 @@ for i in 1..<Int(Process.argc)
 	}
 }
 
-
-fetchQuote(getQuoteRequest(ticket, interval: interval, numOfDays: numOfDays, exchange:exchange))
+if !all
+{
+	fetchQuote(getQuoteRequest(ticket, interval: interval, numOfDays: numOfDays, exchange:exchange))
+}
+else
+{
+	fetchQuote(getQuoteRequest(ticket, exchange: exchange))
+}
