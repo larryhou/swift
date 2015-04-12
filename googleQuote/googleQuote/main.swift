@@ -31,7 +31,7 @@ func formatQuote(text:String)->String
 }
 
 func parseQuote(rawlist:[String])
-{	
+{
 	var ready = false
 	var step, offset:Int!
 	
@@ -107,6 +107,11 @@ func parseQuote(rawlist:[String])
 			let msg = "\(formatter.stringFromDate(date)),\(open),\(high),\(low),\(close),\(volume)"
 			println(msg)
 		}
+	}
+	
+	if verbose
+	{
+		println(QuoteKey.DATE + "," + QuoteKey.OPEN + "," + QuoteKey.HIGH + "," + QuoteKey.LOW + "," + QuoteKey.CLOSE + "," + QuoteKey.VOLUME)
 	}
 }
 
