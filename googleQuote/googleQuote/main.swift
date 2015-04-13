@@ -239,7 +239,7 @@ for i in 1..<Int(Process.argc)
 			break
 		
 		case "-h":
-			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME] [-z ZONE_ADJUST]"
+			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME] [-z TIME_ZONE_ADJUST] [-a ALL_HISTORICAL_QUOTES]"
 			println(msg)
 			exit(0)
 			break
