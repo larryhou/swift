@@ -9,6 +9,7 @@
 import Foundation
 
 var verbose = false
+var zoneAdjust = false
 
 func getQuoteRequest(ticket:String, #interval:Int, numOfDays:Int = 1, exchange:String = "HKG")->NSURLRequest
 {
@@ -37,12 +38,27 @@ func formatQuote(text:String)->String
 	return String(format: "%6.2f", value)
 }
 
+func dateOffset(date:NSDate, minuteOffset:Int)->NSDate
+{
+	if zoneAdjust
+	{
+		let interval:NSTimeInterval = date.timeIntervalSince1970 + NSTimeInterval(minuteOffset) * 60 -
+			NSTimeInterval(NSTimeZone.localTimeZone().secondsFromGMT)
+		return NSDate(timeIntervalSince1970: interval)
+	}
+	else
+	{
+		return date
+	}
+}
+
 func parseQuote(rawlist:[String])
 {
 	var ready = false
-	var step, offset:Int!
+	var step:Int = 0, offset:Int = 0
 	
-	let regex = NSPredicate(format: "SELF MATCHES %@", "^a\\d{10},.*")
+	let dateMatch = NSPredicate(format: "SELF MATCHES %@", "^a\\d{10},.*")
+	let zoneMatch = NSPredicate(format: "SELF MATCHES %@", "^TIMEZONE_OFFSET=-?\\d+$")
 	var cols:[String]!
 	
 	var formatter = NSDateFormatter()
@@ -69,8 +85,7 @@ func parseQuote(rawlist:[String])
 					step = NSString(string: params[1]).integerValue
 					break
 					
-				case "TIMEZONE_OFFSET":
-					offset = NSString(string: params[1]).integerValue
+				case "DATA":
 					ready = true
 					break
 				case "COLUMNS":
@@ -82,13 +97,19 @@ func parseQuote(rawlist:[String])
 		}
 		else
 		{
+			if zoneMatch.evaluateWithObject(line)
+			{
+				var params = line.componentsSeparatedByString("=")
+				offset = NSString(string: params[1]).integerValue
+			}
+			
 			var components = line.componentsSeparatedByString(",")
 			if line == "" || components.count < 5
 			{
 				continue
 			}
 			
-			if regex.evaluateWithObject(line)
+			if dateMatch.evaluateWithObject(line)
 			{
 				var first = components.first!
 				first = first.substringFromIndex(advance(first.startIndex, 1))
@@ -103,7 +124,8 @@ func parseQuote(rawlist:[String])
 			}
 			
 			let index = NSString(string: item[QuoteKey.DATE]!).integerValue
-			let date = NSDate(timeIntervalSince1970: NSTimeInterval(time + index * step))
+			var date = NSDate(timeIntervalSince1970: NSTimeInterval(time + index * step))
+			date = dateOffset(date, offset)
 			
 			let open = formatQuote(item[QuoteKey.OPEN]!)
 			let high = formatQuote(item[QuoteKey.HIGH]!)
@@ -212,8 +234,12 @@ for i in 1..<Int(Process.argc)
 			all = true
 			break
 		
+		case "-z":
+			zoneAdjust = true
+			break
+		
 		case "-h":
-			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME]"
+			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME] [-z ZONE_ADJUST]"
 			println(msg)
 			exit(0)
 			break
