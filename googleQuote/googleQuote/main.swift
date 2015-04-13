@@ -46,7 +46,7 @@ func parseQuote(rawlist:[String])
 	var cols:[String]!
 	
 	var formatter = NSDateFormatter()
-	formatter.dateFormat = "YYYY-MM-dd,HH:mm:SS"
+	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
 	
 	var time = 0
 	for i in 0..<rawlist.count
