@@ -77,7 +77,7 @@ struct CoorpAction:Printable
 {
 	let date:NSDate
 	let type:CooprActionType
-	let value:Double
+	var value:Double
 	
 	var description:String
 		{
@@ -108,15 +108,17 @@ func parseQuote(rawlist:[String])
 	var ready = false
 	var step:Int = 0, offset:Int = 0
 	
-	let dateMatch = NSPredicate(format: "SELF MATCHES %@", "^a\\d{10},.*")
+	let dateMatch = NSPredicate(format: "SELF MATCHES %@", "^a\\d{8,},.*")
 	let zoneMatch = NSPredicate(format: "SELF MATCHES %@", "^TIMEZONE_OFFSET=-?\\d+$")
 	var cols:[String]!
 	
 	var formatter = NSDateFormatter()
-	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
+	formatter.dateFormat = "yyyy-MM-dd"
 	
 	var dmap:[String:CoorpAction] = createActionMap(dividends, formatter: formatter)
-	var split = 1.0
+	var splitAction:CoorpAction!
+	
+	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
 	
 	var time = 0
 	for i in 0..<rawlist.count
@@ -189,25 +191,39 @@ func parseQuote(rawlist:[String])
 			let volume = NSString(string: item[QuoteKey.VOLUME]!).integerValue
 			
 			var msg = "\(dateString),\(open),\(high),\(low),\(close)," + String(format:"%10d", volume)
-			while splits != nil && splits.count > 0
+			if splits != nil && splits.count > 0
 			{
-				if date.timeIntervalSinceDate(splits.first!.date) >= 0
+				while splits.count > 0
 				{
-					split *= splits.first!.value
+					if (splitAction == nil || date.timeIntervalSinceDate(splitAction.date) >= 0)
+						&& date.timeIntervalSinceDate(splits[0].date) < 0
+					{
+						splitAction = splits.first!
+					}
+					else
+					{
+						break
+					}
+					
+					splits.removeAtIndex(0)
 				}
-				else
-				{
-					break
-				}
-				
-				splits.removeAtIndex(0)
+
 			}
-			msg += "," + String(format:"%.6f", split)
+			else
+			{
+				if splitAction != nil && date.timeIntervalSinceDate(splitAction.date) >= 0
+				{
+					splitAction = nil
+				}
+			}
+			
+			msg += "," + String(format:"%.6f", splitAction != nil ? splitAction.value : 1.0)
 			
 			var dividend = 0.0
-			if dmap[dateString] != nil
+			let key = dateString.componentsSeparatedByString(",").first!
+			if dmap[key] != nil
 			{
-				dividend = dmap[dateString]!.value
+				dividend = dmap[key]!.value
 			}
 			msg += "," + String(format:"%.6f", dividend)
 			println(msg)
@@ -303,12 +319,15 @@ func fetchCooprActions(ticket:String, #exchange:String)
 	if coorpActions != nil
 	{
 		coorpActions.sort({$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
+		
+		var values:[Double] = []
 		for i in 0..<coorpActions.count
 		{
 			if coorpActions[i].type == CooprActionType.SPLIT
 			{
 				splits = splits ?? []
 				splits.append(coorpActions[i])
+				values.append(coorpActions[i].value)
 			}
 			else
 			if coorpActions[i].type == CooprActionType.DIVIDEND
@@ -317,17 +336,28 @@ func fetchCooprActions(ticket:String, #exchange:String)
 				dividends.append(coorpActions[i])
 			}
 		}
+		
+		for i in 0..<splits.count
+		{
+			var multiple = values[i]
+			for j in (i + 1)..<splits.count
+			{
+				multiple *= values[j]
+			}
+			
+			splits[i].value = multiple
+		}
+		
+		if verbose
+		{
+			println(dividends)
+			println(splits)
+		}
 	}
 	else
 	{
 		dividends = nil
 		splits = nil
-	}
-	
-	if verbose
-	{
-		println(dividends)
-		println(splits)
 	}
 }
 
