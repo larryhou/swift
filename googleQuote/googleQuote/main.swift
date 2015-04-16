@@ -188,9 +188,9 @@ func parseQuote(rawlist:[String])
 			let high = formatQuote(item[QuoteKey.HIGH]!)
 			let low  = formatQuote(item[QuoteKey.LOW]!)
 			let close = formatQuote(item[QuoteKey.CLOSE]!)
-			let volume = NSString(string: item[QuoteKey.VOLUME]!).integerValue
+			let volume = NSString(string: item[QuoteKey.VOLUME]!).doubleValue
 			
-			var msg = "\(dateString),\(open),\(high),\(low),\(close)," + String(format:"%10d", volume)
+			var msg = "\(dateString),\(open),\(high),\(low),\(close)," + String(format:"%10.0f", volume)
 			if splits != nil && splits.count > 0
 			{
 				while splits.count > 0
@@ -368,15 +368,24 @@ func fetchQuote(request:NSURLRequest)
 		println(request.URL!)
 	}
 	
-	var response:NSURLResponse?
-	var error:NSError?
-	
+	var response:NSURLResponse?, error:NSError?
 	let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
 	if error == nil
 	{
 		let text = NSString(data: data!, encoding: NSUTF8StringEncoding)!
 		let list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
-		parseQuote(list)
+		
+		if (response as! NSHTTPURLResponse).statusCode == 200
+		{
+			parseQuote(list)
+		}
+		else
+		{
+			if verbose
+			{
+				println(response)
+			}
+		}
 	}
 	else
 	{
