@@ -269,7 +269,10 @@ func fetchQuote(request:NSURLRequest)
 	}
 	else
 	{
-		println(error!)
+		if verbose
+		{
+			println(error!)
+		}
 	}
 }
 
