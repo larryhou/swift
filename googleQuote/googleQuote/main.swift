@@ -32,6 +32,21 @@ struct QuoteKey
 	static let VOLUME = "VOLUME"
 }
 
+struct StockExchange
+{
+	struct ExchangeInfo
+	{
+		let name:String
+		let abbr:String
+	}
+	
+	static let NASDAQ = ExchangeInfo(name: "NASDAQ", abbr: "NASQ")
+	static let NYSE = ExchangeInfo(name: "NYSE", abbr: "NYSE")
+	static let HKG = ExchangeInfo(name: "HKG", abbr: "HK")
+	static let SHA = ExchangeInfo(name: "SHA", abbr: "SS")
+	static let SHE = ExchangeInfo(name: "SHE", abbr: "SZ")
+}
+
 func formatQuote(text:String)->String
 {
 	let value = NSString(string: text).doubleValue
@@ -52,6 +67,42 @@ func dateOffset(date:NSDate, minuteOffset:Int)->NSDate
 	}
 }
 
+enum CooprActionType:String
+{
+	case SPLIT = "SPLIT"
+	case DIVIDEND = "DIVIDEND"
+}
+
+struct CoorpAction:Printable
+{
+	let date:NSDate
+	let type:CooprActionType
+	let value:Double
+	
+	var description:String
+		{
+			let vstr = String(format:"%.6f", value)
+			return "\(Int(date.timeIntervalSince1970))-\(vstr)-\(type.rawValue)"
+	}
+}
+
+func createActionMap(list:[CoorpAction]?, #formatter:NSDateFormatter)->[String:CoorpAction]
+{
+	var map:[String:CoorpAction] = [:]
+	if list == nil
+	{
+		return map
+	}
+	
+	for i in 0..<list!.count
+	{
+		let key = formatter.stringFromDate(list![i].date)
+		map[key] = list![i]
+	}
+	
+	return map
+}
+
 func parseQuote(rawlist:[String])
 {
 	var ready = false
@@ -63,6 +114,9 @@ func parseQuote(rawlist:[String])
 	
 	var formatter = NSDateFormatter()
 	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
+	
+	var dmap:[String:CoorpAction] = createActionMap(dividends, formatter: formatter)
+	var split = 1.0
 	
 	var time = 0
 	for i in 0..<rawlist.count
@@ -126,21 +180,154 @@ func parseQuote(rawlist:[String])
 			let index = NSString(string: item[QuoteKey.DATE]!).integerValue
 			var date = NSDate(timeIntervalSince1970: NSTimeInterval(time + index * step))
 			date = dateOffset(date, offset)
+			let dateString = formatter.stringFromDate(date)
 			
 			let open = formatQuote(item[QuoteKey.OPEN]!)
 			let high = formatQuote(item[QuoteKey.HIGH]!)
 			let low  = formatQuote(item[QuoteKey.LOW]!)
 			let close = formatQuote(item[QuoteKey.CLOSE]!)
-			let volume = item[QuoteKey.VOLUME]!
+			let volume = NSString(string: item[QuoteKey.VOLUME]!).integerValue
 			
-			let msg = "\(formatter.stringFromDate(date)),\(open),\(high),\(low),\(close),\(volume)"
+			var msg = "\(dateString),\(open),\(high),\(low),\(close)," + String(format:"%10d", volume)
+			while splits != nil && splits.count > 0
+			{
+				if date.timeIntervalSinceDate(splits.first!.date) >= 0
+				{
+					split *= splits.first!.value
+				}
+				else
+				{
+					break
+				}
+				
+				splits.removeAtIndex(0)
+			}
+			msg += "," + String(format:"%.6f", split)
+			
+			var dividend = 0.0
+			if dmap[dateString] != nil
+			{
+				dividend = dmap[dateString]!.value
+			}
+			msg += "," + String(format:"%.6f", dividend)
 			println(msg)
 		}
 	}
 	
 	if verbose
 	{
-		println(QuoteKey.DATE + "," + QuoteKey.OPEN + "," + QuoteKey.HIGH + "," + QuoteKey.LOW + "," + QuoteKey.CLOSE + "," + QuoteKey.VOLUME)
+		println(QuoteKey.DATE + "," + QuoteKey.OPEN + "," + QuoteKey.HIGH + "," + QuoteKey.LOW + "," + QuoteKey.CLOSE + "," + QuoteKey.VOLUME + "," + CooprActionType.SPLIT.rawValue + "," + CooprActionType.DIVIDEND.rawValue)
+	}
+}
+
+var splits, dividends:[CoorpAction]!
+func fetchCooprActions(ticket:String, #exchange:String)
+{
+	var coorpActions:[CoorpAction]!
+	
+	var suffix:String
+	switch exchange
+	{
+		case StockExchange.SHA.name:
+			suffix = StockExchange.SHA.abbr
+		
+		case StockExchange.SHE.name:
+			suffix = StockExchange.SHE.abbr
+		
+		case StockExchange.HKG.name:
+			suffix = StockExchange.HKG.abbr
+		
+		default:
+			suffix = ""
+	}
+	
+	if suffix != ""
+	{
+		suffix = ".\(suffix)"
+	}
+	
+	var formatter = NSDateFormatter()
+	formatter.dateFormat = "MM-dd-yyyy"
+	
+	var date = formatter.stringFromDate(NSDate()).componentsSeparatedByString("-")
+	let url = "http://ichart.finance.yahoo.com/x?s=\(ticket)\(suffix)&d=\(date[0])&e=\(date[1])&f=\(date[2])&g=v"
+	
+	formatter.dateFormat = "yyyyMMdd"
+	
+	var response:NSURLResponse?
+	var error:NSError?
+	let data = NSURLConnection.sendSynchronousRequest(NSURLRequest(URL: NSURL(string: url)!), returningResponse: &response, error: &error)
+	if error == nil
+	{
+		coorpActions = []
+		let list = (NSString(data: data!, encoding: NSUTF8StringEncoding) as! String).componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+		for i in 1..<list.count
+		{
+			let line = list[i].stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.ForcedOrderingSearch, range: nil)
+			let cols = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))
+			if cols.count < 3
+			{
+				continue
+			}
+			
+			let type = CooprActionType(rawValue: cols[0])
+			let date = formatter.dateFromString(cols[1])
+			
+			let value:Double
+			let digits = cols[2].componentsSeparatedByString(":").map({NSString(string:$0).doubleValue})
+			if type == CooprActionType.SPLIT
+			{
+				value = digits[0] / digits[1]
+			}
+			else
+			{
+				value = digits[0]
+			}
+			
+			if type != nil && date != nil
+			{
+				coorpActions.append(CoorpAction(date: date!, type: type!, value: value))
+			}
+		}
+		
+		if coorpActions.count == 0
+		{
+			coorpActions = nil
+		}
+	}
+	else
+	{
+		coorpActions = nil
+	}
+	
+	if coorpActions != nil
+	{
+		coorpActions.sort({$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
+		for i in 0..<coorpActions.count
+		{
+			if coorpActions[i].type == CooprActionType.SPLIT
+			{
+				splits = splits ?? []
+				splits.append(coorpActions[i])
+			}
+			else
+			if coorpActions[i].type == CooprActionType.DIVIDEND
+			{
+				dividends = dividends ?? []
+				dividends.append(coorpActions[i])
+			}
+		}
+	}
+	else
+	{
+		dividends = nil
+		splits = nil
+	}
+	
+	if verbose
+	{
+		println(dividends)
+		println(splits)
 	}
 }
 
@@ -249,6 +436,8 @@ for i in 1..<Int(Process.argc)
 			exit(2)
 	}
 }
+
+fetchCooprActions(ticket, exchange: exchange)
 
 if !all
 {
