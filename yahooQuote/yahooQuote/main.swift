@@ -180,7 +180,7 @@ func parseQuote(data:[String])
 	var dmap = createActionMap(dividends, formatter: formatter)
 	var splitAction:CoorpAction!
 	
-	for i in 1..<data.count
+	for i in 0..<data.count
 	{
 		let cols = data[i].componentsSeparatedByString(",")
 		if cols.count < 7
@@ -249,11 +249,12 @@ func fetchQuote(request:NSURLRequest)
 	if error == nil
 	{
 		let text = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-		let list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
+		var list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
 		
 		if (response as! NSHTTPURLResponse).statusCode == 200
 		{
-			parseQuote(list)
+			list.removeAtIndex(0)
+			parseQuote(list.reverse())
 		}
 		else
 		{
