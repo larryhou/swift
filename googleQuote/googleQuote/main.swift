@@ -11,6 +11,9 @@ import Foundation
 var verbose = false
 var zoneAdjust = false
 
+var eventTimeFormatter = NSDateFormatter()
+eventTimeFormatter.dateFormat = "yyyy-MM-dd"
+
 func getQuoteRequest(ticket:String, #interval:Int, numOfDays:Int = 1, exchange:String = "HKG")->NSURLRequest
 {
 	let timestamp = UInt(NSDate().timeIntervalSince1970 * 1000)
@@ -80,9 +83,9 @@ struct CoorpAction:Printable
 	var value:Double
 	
 	var description:String
-		{
-			let vstr = String(format:"%.6f", value)
-			return "\(Int(date.timeIntervalSince1970))-\(vstr)-\(type.rawValue)"
+	{
+		let vstr = String(format:"%.6f", value)
+		return "\(eventTimeFormatter.stringFromDate(date))|\(vstr)|\(type.rawValue)"
 	}
 }
 
@@ -337,6 +340,12 @@ func fetchCooprActions(ticket:String, #exchange:String)
 			}
 		}
 		
+		if verbose
+		{
+			println(dividends)
+			println(splits)
+		}
+		
 		for i in 0..<splits.count
 		{
 			var multiple = values[i]
@@ -346,12 +355,6 @@ func fetchCooprActions(ticket:String, #exchange:String)
 			}
 			
 			splits[i].value = multiple
-		}
-		
-		if verbose
-		{
-			println(dividends)
-			println(splits)
 		}
 	}
 	else

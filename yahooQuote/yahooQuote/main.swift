@@ -10,6 +10,9 @@ import Foundation
 
 var verbose = false
 
+var eventTimeFormatter = NSDateFormatter()
+eventTimeFormatter.dateFormat = "yyyy-MM-dd"
+
 enum CooprActionType:String
 {
 	case SPLIT = "SPLIT"
@@ -23,9 +26,9 @@ struct CoorpAction:Printable
 	var value:Double
 	
 	var description:String
-		{
-			let vstr = String(format:"%.6f", value)
-			return "\(Int(date.timeIntervalSince1970))-\(vstr)-\(type.rawValue)"
+	{
+		let vstr = String(format:"%.6f", value)
+		return "\(eventTimeFormatter.stringFromDate(date))|\(vstr)|\(type.rawValue)"
 	}
 }
 
@@ -125,6 +128,12 @@ func fetchCooprActions(request:NSURLRequest)
 			}
 		}
 		
+		if verbose
+		{
+			println(dividends)
+			println(splits)
+		}
+		
 		for i in 0..<splits.count
 		{
 			var multiple = values[i]
@@ -134,12 +143,6 @@ func fetchCooprActions(request:NSURLRequest)
 			}
 			
 			splits[i].value = multiple
-		}
-		
-		if verbose
-		{
-			println(dividends)
-			println(splits)
 		}
 	}
 	else
