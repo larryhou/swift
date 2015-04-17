@@ -122,6 +122,7 @@ func parseQuote(rawlist:[String])
 	var splitAction:CoorpAction!
 	
 	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
+	println("date,time,open,high,low,close,volume,split,dividend")
 	
 	var time = 0
 	for i in 0..<rawlist.count
@@ -270,13 +271,17 @@ func fetchCooprActions(ticket:String, #exchange:String)
 	
 	var date = formatter.stringFromDate(NSDate()).componentsSeparatedByString("-")
 	let url = "http://ichart.finance.yahoo.com/x?s=\(ticket)\(suffix)&d=\(date[0])&e=\(date[1])&f=\(date[2])&g=v"
+	if verbose
+	{
+		println(url)
+	}
 	
 	formatter.dateFormat = "yyyyMMdd"
 	
 	var response:NSURLResponse?
 	var error:NSError?
 	let data = NSURLConnection.sendSynchronousRequest(NSURLRequest(URL: NSURL(string: url)!), returningResponse: &response, error: &error)
-	if error == nil
+	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
 	{
 		coorpActions = []
 		let list = (NSString(data: data!, encoding: NSUTF8StringEncoding) as! String).componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
@@ -317,6 +322,10 @@ func fetchCooprActions(ticket:String, #exchange:String)
 	else
 	{
 		coorpActions = nil
+		if verbose
+		{
+			println(response == nil ? error! : response!)
+		}
 	}
 	
 	if coorpActions != nil
@@ -346,15 +355,18 @@ func fetchCooprActions(ticket:String, #exchange:String)
 			println(splits)
 		}
 		
-		for i in 0..<splits.count
+		if splits != nil
 		{
-			var multiple = values[i]
-			for j in (i + 1)..<splits.count
+			for i in 0..<splits.count
 			{
-				multiple *= values[j]
+				var multiple = values[i]
+				for j in (i + 1)..<splits.count
+				{
+					multiple *= values[j]
+				}
+				
+				splits[i].value = multiple
 			}
-			
-			splits[i].value = multiple
 		}
 	}
 	else
@@ -373,28 +385,19 @@ func fetchQuote(request:NSURLRequest)
 	
 	var response:NSURLResponse?, error:NSError?
 	let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-	if error == nil
+	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
 	{
 		let text = NSString(data: data!, encoding: NSUTF8StringEncoding)!
 		let list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
 		
-		if (response as! NSHTTPURLResponse).statusCode == 200
-		{
-			parseQuote(list)
-		}
-		else
-		{
-			if verbose
-			{
-				println(response)
-			}
-		}
+		parseQuote(list)
+		
 	}
 	else
 	{
 		if verbose
 		{
-			println(error!)
+			println(response == nil ? error! : response!)
 		}
 	}
 }

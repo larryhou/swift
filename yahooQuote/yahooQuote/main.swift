@@ -57,6 +57,11 @@ func getCoorpActionRequest(ticket:String)->NSURLRequest
 var splits, dividends:[CoorpAction]!
 func fetchCooprActions(request:NSURLRequest)
 {
+	if verbose
+	{
+		println(request.URL!)
+	}
+	
 	var coorpActions:[CoorpAction]!
 	
 	var formatter = NSDateFormatter()
@@ -64,7 +69,7 @@ func fetchCooprActions(request:NSURLRequest)
 	
 	var response:NSURLResponse?, error:NSError?
 	let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-	if error == nil
+	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
 	{
 		coorpActions = []
 		let list = (NSString(data: data!, encoding: NSUTF8StringEncoding) as! String).componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
@@ -105,6 +110,10 @@ func fetchCooprActions(request:NSURLRequest)
 	else
 	{
 		coorpActions = nil
+		if verbose
+		{
+			println(response == nil ? error! : response!)
+		}
 	}
 	
 	if coorpActions != nil
@@ -121,10 +130,10 @@ func fetchCooprActions(request:NSURLRequest)
 				values.append(coorpActions[i].value)
 			}
 			else
-				if coorpActions[i].type == CooprActionType.DIVIDEND
-				{
-					dividends = dividends ?? []
-					dividends.append(coorpActions[i])
+			if coorpActions[i].type == CooprActionType.DIVIDEND
+			{
+				dividends = dividends ?? []
+				dividends.append(coorpActions[i])
 			}
 		}
 		
@@ -134,15 +143,18 @@ func fetchCooprActions(request:NSURLRequest)
 			println(splits)
 		}
 		
-		for i in 0..<splits.count
+		if splits != nil
 		{
-			var multiple = values[i]
-			for j in (i + 1)..<splits.count
+			for i in 0..<splits.count
 			{
-				multiple *= values[j]
+				var multiple = values[i]
+				for j in (i + 1)..<splits.count
+				{
+					multiple *= values[j]
+				}
+				
+				splits[i].value = multiple
 			}
-			
-			splits[i].value = multiple
 		}
 	}
 	else
@@ -182,6 +194,8 @@ func parseQuote(data:[String])
 	
 	var dmap = createActionMap(dividends, formatter: formatter)
 	var splitAction:CoorpAction!
+	
+	println("date,open,high,low,close,volume,split,dividend,adjclose")
 	
 	for i in 0..<data.count
 	{
@@ -249,29 +263,19 @@ func fetchQuote(request:NSURLRequest)
 	
 	var response:NSURLResponse?, error:NSError?
 	let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-	if error == nil
+	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
 	{
 		let text = NSString(data: data!, encoding: NSUTF8StringEncoding)!
 		var list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
 		
-		if (response as! NSHTTPURLResponse).statusCode == 200
-		{
-			list.removeAtIndex(0)
-			parseQuote(list.reverse())
-		}
-		else
-		{
-			if verbose
-			{
-				println(response)
-			}
-		}
+		list.removeAtIndex(0)
+		parseQuote(list.reverse())
 	}
 	else
 	{
 		if verbose
 		{
-			println(error!)
+			println(response == nil ? error! : response!)
 		}
 	}
 }
