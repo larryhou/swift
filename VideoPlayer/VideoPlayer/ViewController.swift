@@ -65,7 +65,7 @@ class ViewController: UIViewController, AVAssetResourceLoaderDelegate
 	{
 		super.viewDidLoad()
 		
-		let url = NSURL(string: "http://10.64.200.54/videos/01.mp4")!
+		let url = NSURL(string: "http://localhost/videos/01.mp4")!
 		self.title = url.absoluteString
 		
 		let asset = AVURLAsset(URL: url, options: nil)
