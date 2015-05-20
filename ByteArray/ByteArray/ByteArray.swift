@@ -16,17 +16,22 @@ class ByteArray
         case BIG_ENIDAN = 2 // NS_BigEndian
     }
     
-    //MARK: properties
-    var data:NSMutableData!
-    var length:Int {return data == nil ? 0 : data.length }
+    var endian:Endian
+    var data:NSMutableData
+    var position:Int
     
-    var endian:Endian  = Endian.LITTLE_ENDIAN
-    var position:Int = 0
+    private var range:NSRange
     
+    var length:Int {return data.length }
     var bytesAvailable:Bool {return position < length}
     
-    //MARK: position
-    private var range:NSRange = NSRange(location: 0, length: 0)
+    init()
+    {
+        data = NSMutableData()
+        endian = Endian.LITTLE_ENDIAN
+        range = NSRange(location: 0, length: 0)
+        position = 0
+    }
     
     //MARK: subscript
     subscript(index:Int)->UInt8
@@ -34,6 +39,13 @@ class ByteArray
         var value:UInt8 = 0
         data.getBytes(&value, range: NSRange(location: index, length: 1))
         return value
+    }
+    
+    //MARK: clear
+    func clear()
+    {
+        data = NSMutableData()
+        position = 0
     }
     
     //MARK: ByteArray read
@@ -253,7 +265,7 @@ class ByteArray
     
     //MARK: dump
     
-    func dump<T>(var target:T)->[UInt8]
+    class func dump<T>(var target:T)->[UInt8]
     {
         return withUnsafePointer(&target)
         {
@@ -275,7 +287,7 @@ class ByteArray
         let num = 8
         if endian == Endian.BIG_ENIDAN
         {
-            var bytes = self.dump(value)
+            var bytes = ByteArray.dump(value)
             bytes.reverse()
             
             data.appendBytes(&bytes, length: bytes.count)
@@ -293,7 +305,7 @@ class ByteArray
         let num = 4
         if endian == Endian.BIG_ENIDAN
         {
-            var bytes = self.dump(value)
+            var bytes = ByteArray.dump(value)
             bytes.reverse()
             
             data.appendBytes(&bytes, length: bytes.count)
@@ -393,6 +405,11 @@ class ByteArray
     func writeUTF(var value:String)
     {
         var num = UInt16(count(value.utf8))
+        if endian == Endian.BIG_ENIDAN
+        {
+            num = num.bigEndian
+        }
+        
         data.appendBytes(&num, length: 2)
         position += 2
         
