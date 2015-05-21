@@ -13,7 +13,7 @@ class ByteArray
     enum Endian:Int
     {
         case LITTLE_ENDIAN = 1 // NS_LittleEndian
-        case BIG_ENIDAN = 2 // NS_BigEndian
+        case BIG_ENDIAN = 2 // NS_BigEndian
     }
     
     var endian:Endian
@@ -31,6 +31,12 @@ class ByteArray
         endian = Endian.LITTLE_ENDIAN
         range = NSRange(location: 0, length: 0)
         position = 0
+    }
+    
+    convenience init(data:NSData)
+    {
+        self.init()
+        self.data.appendData(data)
     }
     
     //MARK: subscript
@@ -66,11 +72,11 @@ class ByteArray
         range.length = 8
         
         var value:Double = 0.0
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             var bytes = [UInt8](count: range.length, repeatedValue: 0)
             data.getBytes(&bytes, range: range)
-            bytes.reverse()
+            bytes = bytes.reverse()
             
             value = UnsafePointer<Double>(bytes).memory
         }
@@ -89,11 +95,11 @@ class ByteArray
         range.length = 4
         
         var value:Float32 = 0.0
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             var bytes = [UInt8](count: range.length, repeatedValue: 0)
             data.getBytes(&bytes, range: range)
-            bytes.reverse()
+            bytes = bytes.reverse()
             
             value = UnsafePointer<Float32>(bytes).memory
         }
@@ -125,7 +131,7 @@ class ByteArray
         var value:Int16 = 0
         data.getBytes(&value, range: range)
         position += range.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readInt32()->Int32
@@ -136,7 +142,7 @@ class ByteArray
         var value:Int32 = 0
         data.getBytes(&value, range: range)
         position += range.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readInt64()->Int
@@ -147,7 +153,7 @@ class ByteArray
         var value:Int = 0
         data.getBytes(&value, range: range)
         position += range.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readUInt8()->UInt8
@@ -169,7 +175,7 @@ class ByteArray
         var value:UInt16 = 0
         data.getBytes(&value, range: range)
         position += data.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readUInt32()->UInt32
@@ -180,7 +186,7 @@ class ByteArray
         var value:UInt32 = 0
         data.getBytes(&value, range: range)
         position += data.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readUInt64()->UInt
@@ -191,7 +197,7 @@ class ByteArray
         var value:UInt = 0
         data.getBytes(&value, range: range)
         position += data.length
-        return endian == Endian.BIG_ENIDAN ? value.bigEndian : value
+        return endian == Endian.BIG_ENDIAN ? value.bigEndian : value
     }
     
     func readBytes(bytes:ByteArray, offset:Int = 0, var length:Int = 0)
@@ -214,8 +220,8 @@ class ByteArray
         var bin = bytes.data
         if offset > bytes.length
         {
-            var zero = 0
-            bin.replaceBytesInRange(NSRange(location: bytes.length, length: offset - bytes.length), withBytes: &zero)
+            var zeros = [UInt8](count: offset - bytes.length, repeatedValue: 0)
+            bin.replaceBytesInRange(NSRange(location: bytes.length, length: zeros.count), withBytes: &zeros)
         }
         
         bin.replaceBytesInRange(NSRange(location: offset, length: length), withBytes: &list)
@@ -247,7 +253,7 @@ class ByteArray
         return value
     }
     
-    //MARK: dump
+    //MARK: class tools
     
     class func dump<T>(var target:T)->[UInt8]
     {
@@ -256,6 +262,34 @@ class ByteArray
             let bufpt = UnsafeBufferPointer(start: UnsafePointer<UInt8>($0), count: sizeof(T))
             return Array(bufpt)
         }
+    }
+    
+    class func hexe(bytes:ByteArray, var range:NSRange, column:Int = 4)->String
+    {
+        if range.location + range.length > bytes.length
+        {
+            range.length = bytes.length - range.location
+        }
+        
+        var list = [UInt8](count: range.length, repeatedValue: 0)
+        bytes.data.getBytes(&list, range: range)
+        
+        var result = ""
+        var data = list.map({String(format:"%02x", $0).uppercaseString})
+        for i in 0..<data.count
+        {
+            result += data[i] + " "
+            if (i + 1) % 4 == 0
+            {
+                result += " "
+                if (i + 1) % (4 * column) == 0
+                {
+                    result += "\n"
+                }
+            }
+        }
+        
+        return result
     }
     
     //MARK: ByteArray write
@@ -274,10 +308,10 @@ class ByteArray
         range.location = position
         range.length = 8
         
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             var bytes = ByteArray.dump(value)
-            bytes.reverse()
+            bytes = bytes.reverse()
             
             data.replaceBytesInRange(range, withBytes: &bytes)
         }
@@ -294,10 +328,10 @@ class ByteArray
         range.location = position
         range.length = 4
         
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             var bytes = ByteArray.dump(value)
-            bytes.reverse()
+            bytes = bytes.reverse()
             
             data.replaceBytesInRange(range, withBytes: &bytes)
         }
@@ -320,7 +354,7 @@ class ByteArray
     
     func writeInt16(var value:Int16)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -334,7 +368,7 @@ class ByteArray
     
     func writeInt32(var value:Int32)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -348,7 +382,7 @@ class ByteArray
     
     func writeInt64(var value:Int)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -371,7 +405,7 @@ class ByteArray
     
     func writeUInt16(var value:UInt16)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -385,7 +419,7 @@ class ByteArray
     
     func writeUInt32(var value:UInt32)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -397,9 +431,9 @@ class ByteArray
         position += range.length
     }
     
-    func writeUInt64(var value:UInt64)
+    func writeUInt64(var value:UInt)
     {
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             value = value.bigEndian
         }
@@ -414,7 +448,7 @@ class ByteArray
     func writeUTF(var value:String)
     {
         var num = UInt16(count(value.utf8))
-        if endian == Endian.BIG_ENIDAN
+        if endian == Endian.BIG_ENDIAN
         {
             num = num.bigEndian
         }
