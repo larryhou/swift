@@ -14,6 +14,7 @@
 		6B7C0B6B1B0C81910027431F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B7C0B691B0C81910027431F /* LaunchScreen.xib */; };
 		6B7C0B771B0C81910027431F /* ByteArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7C0B761B0C81910027431F /* ByteArrayTests.swift */; };
 		6B7C0B811B0C82350027431F /* ByteArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7C0B801B0C82350027431F /* ByteArray.swift */; };
+		6B7C0B821B0D7E210027431F /* ByteArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7C0B801B0C82350027431F /* ByteArray.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B7C0B771B0C81910027431F /* ByteArrayTests.swift in Sources */,
+				6B7C0B821B0D7E210027431F /* ByteArray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
