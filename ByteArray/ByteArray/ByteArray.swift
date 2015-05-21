@@ -207,34 +207,18 @@ class ByteArray
         range.location = position
         range.length = length
         
-        let data = self.data.subdataWithRange(range)
+        var list = [UInt8](count: range.length, repeatedValue: 0)
+        data.getBytes(&list, range: range)
         position += range.length
         
-        var buffer = NSMutableData()
-        if offset >= bytes.length
+        var bin = bytes.data
+        if offset > bytes.length
         {
-            buffer.appendData(bytes.data)
-            if offset > bytes.length
-            {
-                var padding = [UInt8](count: offset - bytes.length, repeatedValue: 0)
-                buffer.appendBytes(&padding, length: padding.count)
-            }
-            
-            buffer.appendData(data)
-        }
-        else
-        {
-            let head = bytes.data.subdataWithRange(NSRange(location: 0, length: offset))
-            buffer.appendData(head)
-            buffer.appendData(data)
-            if offset + length < bytes.length
-            {
-                let tail = bytes.data.subdataWithRange(NSRange(location: offset + length, length: bytes.length - (offset + length)))
-                buffer.appendData(tail)
-            }
+            var zero = 0
+            bin.replaceBytesInRange(NSRange(location: bytes.length, length: offset - bytes.length), withBytes: &zero)
         }
         
-        bytes.data = buffer
+        bin.replaceBytesInRange(NSRange(location: offset, length: length), withBytes: &list)
     }
     
     func readUTF()->String
@@ -278,50 +262,60 @@ class ByteArray
     
     func writeBoolean(var value:Bool)
     {
-        data.appendBytes(&value, length: 1)
-        position++
+        range.location = position
+        range.length = 1
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeDouble(var value:Double)
     {
-        let num = 8
+        range.location = position
+        range.length = 8
+        
         if endian == Endian.BIG_ENIDAN
         {
             var bytes = ByteArray.dump(value)
             bytes.reverse()
             
-            data.appendBytes(&bytes, length: bytes.count)
+            data.replaceBytesInRange(range, withBytes: &bytes)
         }
         else
         {
-            data.appendBytes(&value, length: num)
+            data.replaceBytesInRange(range, withBytes: &value)
         }
         
-        position += num
+        position += range.length
     }
     
     func writeFloat(var value:Float32)
     {
-        let num = 4
+        range.location = position
+        range.length = 4
+        
         if endian == Endian.BIG_ENIDAN
         {
             var bytes = ByteArray.dump(value)
             bytes.reverse()
             
-            data.appendBytes(&bytes, length: bytes.count)
+            data.replaceBytesInRange(range, withBytes: &bytes)
         }
         else
         {
-            data.appendBytes(&value, length: num)
+            data.replaceBytesInRange(range, withBytes: &value)
         }
         
-        position += num
+        position += range.length
     }
     
     func writeInt8(var value:Int8)
     {
-        data.appendBytes(&value, length: 1)
-        position++
+        range.location = position
+        range.length = 1
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeInt16(var value:Int16)
@@ -331,9 +325,11 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 2
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 2
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeInt32(var value:Int32)
@@ -343,9 +339,11 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 4
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 4
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeInt64(var value:Int)
@@ -355,15 +353,20 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 8
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 8
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeUInt8(var value:UInt8)
     {
-        data.appendBytes(&value, length: 1)
-        position++
+        range.location = position
+        range.length = 1
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeUInt16(var value:UInt16)
@@ -373,9 +376,11 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 2
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 2
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeUInt32(var value:UInt32)
@@ -385,9 +390,11 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 4
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 4
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeUInt64(var value:UInt64)
@@ -397,9 +404,11 @@ class ByteArray
             value = value.bigEndian
         }
         
-        let num = 8
-        data.appendBytes(&value, length: num)
-        position += num
+        range.location = position
+        range.length = 8
+        
+        data.replaceBytesInRange(range, withBytes: &value)
+        position += range.length
     }
     
     func writeUTF(var value:String)
@@ -410,27 +419,39 @@ class ByteArray
             num = num.bigEndian
         }
         
-        data.appendBytes(&num, length: 2)
-        position += 2
+        range.location = position
+        range.length = 2
+        
+        data.replaceBytesInRange(range, withBytes: &num)
+        position += range.length
         
         writeUTFBytes(value)
     }
     
     func writeUTFBytes(var value:String)
     {
-        let data = NSString(string: value).dataUsingEncoding(NSUTF8StringEncoding)!
-        self.data.appendData(data)
+        var bytes = [UInt8](value.utf8)
         
-        position += data.length
+        range.location = position
+        range.length = bytes.count
+        
+        data.replaceBytesInRange(range, withBytes: &bytes)
+        position += range.length
     }
     
     func writeMultiBytes(var value:String, encoding:CFStringEncoding)
     {
         let chatset = CFStringConvertEncodingToNSStringEncoding(encoding)
-        let data = NSString(string: value).dataUsingEncoding(chatset)!
-        self.data.appendData(data)
+        let bin = NSString(string: value).dataUsingEncoding(chatset)!
         
-        position += data.length
+        var bytes = [UInt8](count: bin.length, repeatedValue: 0)
+        bin.getBytes(&bytes, length: bytes.count)
+        
+        range.location = position
+        range.length = bin.length
+        
+        data.replaceBytesInRange(range, withBytes: &bytes)
+        position += range.length
     }
     
     func writeBytes(bytes:ByteArray, offset:Int = 0, var length:Int = 0)
@@ -440,9 +461,16 @@ class ByteArray
         length = length == 0 ? remain : min(length, remain)
         if length > 0
         {
-            let data = bytes.data.subdataWithRange(NSRange(location: offset, length: length))
-            self.data.appendData(data)
-            position += data.length
+            let bin = bytes.data.subdataWithRange(NSRange(location: offset, length: length))
+            
+            var bytes = [UInt8](count: bin.length, repeatedValue: 0)
+            bin.getBytes(&bytes, length: bytes.count)
+            
+            range.location = position
+            range.length = bin.length
+            
+            data.replaceBytesInRange(range, withBytes: &bytes)
+            position += range.length
         }
     }
 }
