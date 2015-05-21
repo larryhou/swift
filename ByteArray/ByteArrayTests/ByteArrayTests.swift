@@ -243,6 +243,33 @@ class ByteArrayTests: XCTestCase
         XCTAssertEqual(text, bytes.readUTFBytes(data.length))
     }
     
+    func testReadMultiBytes()
+    {
+        var text = "侯坤峰侯坤峰侯坤峰侯坤峰"
+        
+        var bytes = ByteArray()
+        var encoding = CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)
+        var charset = CFStringConvertEncodingToNSStringEncoding(encoding)
+        
+        var data = NSString(string: text).dataUsingEncoding(charset)!
+        bytes.data.appendData(data)
+        
+        bytes.position = 0
+        XCTAssertEqual(text, bytes.readMultiByte(data.length, encoding: encoding))
+    }
+    
+    func testWriteMultiBytes()
+    {
+        var text = "侯坤峰侯坤峰侯坤峰侯坤峰"
+        var bytes = ByteArray()
+        
+        var encoding = CFStringEncoding(CFStringEncodings.EUC_TW.rawValue)
+        bytes.writeMultiBytes(text, encoding: encoding)
+        
+        bytes.position = 0
+        XCTAssertEqual(text, bytes.readMultiByte(bytes.length, encoding: encoding))
+    }
+    
     func testReadBytes()
     {
         var data = NSString(string: "侯坤峰侯坤峰侯坤峰侯坤峰").dataUsingEncoding(NSUTF8StringEncoding)!
