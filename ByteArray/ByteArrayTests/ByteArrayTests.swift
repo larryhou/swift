@@ -335,6 +335,8 @@ class ByteArrayTests: XCTestCase
     {
         var value = M_PI
         
+        var data = NSData(bytes: &value, length: sizeof(Double))
+        
         var mem1 = ByteArray.dump(&value)
         var mem2 = ByteArray.dump(value)
         
@@ -342,6 +344,10 @@ class ByteArrayTests: XCTestCase
         
         for i in 0..<mem1.count
         {
+            var byte:UInt8 = 0
+            data.getBytes(&byte, range: NSRange(location: i, length: 1))
+            
+            XCTAssertEqual(byte, mem1[i])
             XCTAssertEqual(mem1[i], mem2[i])
         }
     }
