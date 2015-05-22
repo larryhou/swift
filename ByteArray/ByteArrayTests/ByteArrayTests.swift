@@ -331,6 +331,21 @@ class ByteArrayTests: XCTestCase
         }
     }
     
+    func testValueDump()
+    {
+        var value = M_PI
+        
+        var mem1 = ByteArray.dump(&value)
+        var mem2 = ByteArray.dump(value)
+        
+        XCTAssertEqual(mem1.count, mem2.count)
+        
+        for i in 0..<mem1.count
+        {
+            XCTAssertEqual(mem1[i], mem2[i])
+        }
+    }
+    
     func testPerformanceExample()
     {
         self.measureBlock()

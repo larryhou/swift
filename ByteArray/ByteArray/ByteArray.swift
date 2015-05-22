@@ -264,6 +264,12 @@ class ByteArray
         }
     }
     
+    class func dump<T>(pointer:UnsafePointer<T>)->[UInt8]
+    {
+        let bufpt = UnsafeBufferPointer(start: UnsafePointer<UInt8>(pointer), count: sizeof(T))
+        return Array(bufpt)
+    }
+    
     class func hexe(bytes:ByteArray, var range:NSRange, column:Int = 4)->String
     {
         if range.location + range.length > bytes.length
