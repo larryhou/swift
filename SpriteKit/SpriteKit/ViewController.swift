@@ -16,6 +16,9 @@ class ViewController: UIViewController, XMLReaderDelegate
     private var _scene:SKScene!
     private var _ninja:NinjaPresenter!
     
+    private var _assets:[String]!
+    private var _index:Int = 0
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -31,14 +34,11 @@ class ViewController: UIViewController, XMLReaderDelegate
         _scene.scaleMode = SKSceneScaleMode.ResizeFill
         skView.presentScene(_scene)
         
+        _assets = ["10000101", "10000201", "10000301", "10000501", "11000141", "11000171"]
+        _index = 0
+        
         self.view.addSubview(skView)
 
-        let url = NSBundle.mainBundle().URLForResource("ninja", withExtension: "xml")
-        if url != nil
-        {
-            XMLReader().read(NSData(contentsOfURL: url!)!, delegate: self)
-        }
-        
         var tap:UITapGestureRecognizer
         tap = UITapGestureRecognizer()
         tap.addTarget(self, action: "playNextNinjaAction")
@@ -46,19 +46,26 @@ class ViewController: UIViewController, XMLReaderDelegate
         
         tap = UITapGestureRecognizer()
         tap.numberOfTapsRequired = 2
-        tap.addTarget(self, action: "switchToAnotherNinja")
+        tap.addTarget(self, action: "changeToAnotherNinja")
         view.addGestureRecognizer(tap)
+        
+        changeToAnotherNinja()
     }
     
     func playNextNinjaAction()
     {
         _ninja.playNextAction()
-        println("tap")
     }
     
-    func switchToAnotherNinja()
+    func changeToAnotherNinja()
     {
-        println("doubleTap")
+        let url = NSBundle.mainBundle().URLForResource(_assets[_index], withExtension: "xml")
+        if url != nil
+        {
+            XMLReader().read(NSData(contentsOfURL: url!)!, delegate: self)
+        }
+        
+        _index++
     }
     
     func readerDidFinishDocument(reader: XMLReader, data: NSDictionary, elapse: NSTimeInterval)
@@ -75,8 +82,15 @@ class ViewController: UIViewController, XMLReaderDelegate
             _actions.append(action)
         }
         
-        _ninja = NinjaPresenter(atlas: SKTextureAtlas(named: "ninja"), actionInfos: _actions)
-        _ninja.play("A_1hit")
+        if _ninja != nil
+        {
+            _ninja.removeAllChildren()
+            _ninja.removeFromParent()
+            _ninja = nil
+        }
+        
+        _ninja = NinjaPresenter(atlas: SKTextureAtlas(named: _assets[_index]), actionInfos: _actions)
+        _ninja.play(_actions[0].name)
         
         _scene.addChild(_ninja)
     }

@@ -1,0 +1,2987 @@
+<actions compressType="PNG" compressParamJPG="0" compressParamPNG="32" frameRate="24" backgroundColor="cccccc" external="" version="3.2.1">
+    <action id="0" name="A_1hit" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="3">
+                <element x="1" y="-1" filename="2nrtnxi0_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="6" y="-1" filename="2nrtnxi0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="10" y="-1" filename="2nrtnxi0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="15" event="hit">
+                <element x="10" y="-1" filename="2nrtnxi0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="174" name="结印" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="659" name="青年-影分身术" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_dead" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="4">
+                <element x="0" y="0" filename="2nrtlos2_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="4">
+                <element x="0" y="0" filename="2nrtlos2_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="3">
+                <element x="0" y="0" filename="2nrtlos2_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="2">
+                <element x="0" y="0" filename="2nrtlos2_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="2">
+                <element x="0" y="0" filename="2nrtlos2_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="0" y="0" filename="2nrtlos2_0011.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="11"/>
+            <frame index="11" length="1">
+                <sound id="170" name="fall_mini" volume="58"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_dead1" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="0" y="0" filename="2nrtlos2_0011.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_defaultAttackPoint" hide="false">
+        <layer id="1" name="新建层1" visible="true" lock="false">
+            <frame index="0" length="1">
+                <pointElement x="0" y="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_defaultDefencePoint" hide="false">
+        <layer id="1" name="新建层2" visible="true" lock="false">
+            <frame index="0" length="1">
+                <pointElement x="0" y="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_entry" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="-224" y="-360" filename="2nrtent0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="-101" y="-133" filename="2nrtent0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="-13" y="55" filename="2nrtent0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="-34" y="-3" filename="2nrtent0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="-24" y="-3" filename="2nrtent0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="5">
+                <element x="-20" y="-3" filename="2nrtent0_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="3">
+                <element x="-13" y="-3" filename="2nrtent0_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="3">
+                <element x="2" y="-2" filename="2nrtent0_0016.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="288" name="att_hand_2" volume="100"/>
+            </frame>
+            <frame index="1" length="1"/>
+            <frame index="2" length="1">
+                <sound id="172" name="jump_down" volume="37"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="286" name="cloth3" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_exeunt" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="-5" y="0" filename="2nrtout0_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="4">
+                <element x="-5" y="0" filename="2nrtout0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="-5" y="0" filename="2nrtout0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="-55" y="-180" filename="2nrtout0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="-115" y="-380" filename="2nrtout0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="6"/>
+            <frame index="6" length="1">
+                <sound id="285" name="cloth2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="6"/>
+            <frame index="6" length="1">
+                <sound id="287" name="att_hand_1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="6"/>
+            <frame index="6" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_idle" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="3">
+                <element x="0" y="0" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="5">
+                <element x="0" y="0" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="3">
+                <element x="0" y="0" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="3">
+                <element x="0" y="0" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="3">
+                <element x="0" y="0" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="17" length="4">
+                <element x="0" y="0" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="3">
+                <element x="0" y="0" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_run1_1" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="1" y="0" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="0" filename="2nrtdsf1_0028.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="285" name="cloth2" volume="83"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="287" name="att_hand_1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="286" name="cloth3" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_run1_2" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="3">
+                <element x="81" y="-38" filename="2nrtdsh0l_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_run1_3" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="-13" y="0" filename="2nrtdsf1_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="-4" y="-1" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="113" name="jump_down2" volume="17"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_run2_1" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="1" y="0" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="286" name="cloth3" volume="57"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="288" name="att_hand_2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_run2_2" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="3">
+                <element x="31" y="-5" filename="2nrtjmp0_0020.png" scaleX="1.00" scaleY="1.00" rotation="-7.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="C_run2_3" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="5" y="0" filename="2nrtdsf1_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="1" y="-1" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1">
+                <sound id="113" name="jump_down2" volume="21"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_skillIdle_1" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="3">
+                <element x="1" y="-1" filename="2nrtnxi0_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="6" y="-1" filename="2nrtnxi0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="11" y="-1" filename="2nrtnxi0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="11" y="-1" filename="2nrtnxi0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="174" name="结印" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="C_skillIdle_2" hide="false">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="11" y="-1" filename="2nrtnxi0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_HPSite" hide="false">
+        <layer id="1" name="新建层3" visible="true" lock="false">
+            <frame index="0" length="1">
+                <pointElement x="0" y="-148"/>
+            </frame>
+        </layer>
+        <layer id="2" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_air_air1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="4" y="-140" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="3" y="-212" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="4" y="-253" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="7" y="-284" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="12" y="-324" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="15" y="-339" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="17" y="-341" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="16" y="-348" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="38" y="-360" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="332.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="44" y="-371" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="325.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="44" y="-376" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="325.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="53" y="-388" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="316.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="53" y="-391" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="316.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="62" y="-403" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="306.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="62" y="-404" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="306.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="74" y="-414" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="1">
+                <element x="74" y="-407" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="17" length="1">
+                <element x="78" y="-420" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="279.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="1">
+                <element x="78" y="-416" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="279.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="19" length="1">
+                <element x="84" y="-421" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="20" length="1">
+                <element x="84" y="-412" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="1">
+                <element x="83" y="-400" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="1">
+                <element x="83" y="-388" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="1">
+                <element x="82" y="-370" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="24" length="1">
+                <element x="-13" y="-316" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="25" length="1">
+                <element x="-15" y="-287" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="1">
+                <element x="-15" y="-253" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="27" length="2">
+                <element x="0" y="-232" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="29" length="1">
+                <element x="0" y="-180" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="287" name="att_hand_1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="285" name="cloth2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="3" name="D_air_air2" hide="false">
+        <layer id="3" name="人物层" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="3" y="-140" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="2" y="-281" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="0" y="-385" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="2" y="-456" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="4" y="-511" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="4" y="-555" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="2">
+                <element x="6" y="-589" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="2">
+                <element x="8" y="-626" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="2">
+                <element x="8" y="-679" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="2">
+                <element x="23" y="-705" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="340.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="2">
+                <element x="31" y="-715" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="330.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="54" y="-729" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="305.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="3">
+                <element x="61" y="-745" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="2">
+                <element x="66" y="-757" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="285.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="2">
+                <element x="66" y="-736" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="285.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="25" length="2">
+                <element x="70" y="-747" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="260.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="27" length="2">
+                <element x="70" y="-734" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="260.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="29" length="2">
+                <element x="-6" y="-652" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="31" length="2">
+                <element x="-6" y="-621" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="33" length="1">
+                <element x="-6" y="-583" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="34" length="1">
+                <element x="-6" y="-535" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="35" length="1">
+                <element x="-6" y="-481" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="36" length="1">
+                <element x="-6" y="-414" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="1">
+                <element x="-6" y="-344" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="38" length="1">
+                <element x="-6" y="-268" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="1">
+                <element x="-6" y="-180" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="288" name="att_hand_2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="6" name="♪•6" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="7" name="♪•7" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_behit1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="13" y="-145" filename="1cmndga3_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="4" y="-146" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="10" y="-141" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="12" y="-141" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="13" y="-145" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_behit2" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="13" y="-134" filename="1cmndga0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="8" y="-138" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="13" y="-134" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="13" y="-134" filename="1cmndga0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="13" y="-134" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_behit3" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2" event="playEffect">
+                <element x="13" y="-134" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_air_behit4" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="12" y="-141" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="13" y="-145" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_land" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="-3" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="-19" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="0" y="-25" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="0" y="-20" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="0" y="-11" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="0" y="-12" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="0" y="-9" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="0" y="-3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="0" y="-4" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="4">
+                <element x="0" y="0" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="170" name="fall_mini" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="169" name="fall_mid" volume="76"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_land1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2" event="playEffect">
+                <element x="81" y="-196" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="-89.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="88" y="3" filename="1cmncol2_0008.png" scaleX="1.00" scaleY="1.00" rotation="-88.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="0" y="6" filename="1cmnsdg0_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="0" y="-19" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="-25" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="0" y="-20" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="0" y="-11" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="0" y="3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="0" y="-12" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="0" y="-9" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="0" y="-3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="0" y="-4" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="4">
+                <element x="0" y="0" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="2"/>
+            <frame index="2" length="1">
+                <sound id="169" name="fall_mid" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="2"/>
+            <frame index="2" length="1">
+                <sound id="170" name="fall_mini" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_stand" hide="false">
+        <layer id="1" name="新建层1" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="84" y="-184" filename="1cmnret0_0001.png" scaleX="1.00" scaleY="1.00" rotation="-99.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="2">
+                <element x="-8" y="-268" filename="1cmnret0_0010.png" scaleX="1.00" scaleY="1.00" rotation="170.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="-54" y="-225" filename="1cmnret0_0016.png" scaleX="1.00" scaleY="1.00" rotation="146.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="-94" y="-181" filename="1cmnret0_0016.png" scaleX="1.00" scaleY="1.00" rotation="109.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="-73" y="-56" filename="1cmnret0_0016.png" scaleX="1.00" scaleY="1.00" rotation="51.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="-31" y="-17" filename="1cmnret0_0018.png" scaleX="1.00" scaleY="1.00" rotation="24.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="-2" y="14" filename="1cmnret0_0018.png" scaleX="1.00" scaleY="1.00" rotation="8.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="-4" y="1" filename="1cmndxn1_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="-4" y="3" filename="1cmndxn1_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="5">
+                <element x="-4" y="1" filename="1cmndxn1_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="0" y="0" filename="1cmndxn1_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="9"/>
+            <frame index="9" length="1">
+                <sound id="172" name="jump_down" volume="75"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_upair" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="5" y="-123" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="7" y="-130" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="6" y="-169" filename="1cmndmr0_0006.png" scaleX="1.00" scaleY="1.00" rotation="17.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="1" y="-166" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="-1" y="-185" filename="1cmnsdg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="10" y="-187" filename="1cmndml0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="5" y="-172" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="5" y="-187" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="4" y="-225" filename="1cmndml0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="6" y="-229" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="6" y="-259" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="134" name="du_hit" volume="50"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="286" name="cloth3" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_air_upair1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="4" y="-140" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="3" y="-191" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="4" y="-224" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_beatback1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="true">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="-140" filename="1cmndga3_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="新建层3" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_beatback2" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="true">
+            <frame index="0" length="3">
+                <element x="0" y="-140" filename="1cmnsdg0fe_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_beatback3" hide="false" relevanceNames="0,1,2">
+        <layer id="1" name="图层0" visible="true" lock="true">
+            <frame index="0" length="1">
+                <element x="0" y="-140" filename="1cmncol2_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="12" event="playShake:2">
+                <element x="0" y="-140" filename="1cmncol2_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="-25" y="-140" filename="1cmncol2_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="-36" y="-114" filename="1cmncol2_0018.png" scaleX="1.00" scaleY="1.00" rotation="7.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="-53" y="-91" filename="1cmncol2_0018.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="1">
+                <element x="-69" y="-70" filename="1cmncol2_0018.png" scaleX="1.00" scaleY="1.00" rotation="30.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="17" length="1">
+                <element x="-9" y="-49" filename="1cmncol2_0022.png" scaleX="1.00" scaleY="1.00" rotation="350.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="1">
+                <element x="-40" y="-38" filename="1cmncol2_0022.png" scaleX="1.00" scaleY="1.00" rotation="25.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="170" name="fall_mini" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="236" name="nidalee_pounce_land" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_beatback4" hide="false" relevanceNames="0,1">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="32" y="-42" filename="1cmndxn1_0010.png" scaleX="1.00" scaleY="1.00" rotation="280.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="13" y="1" filename="1cmndxn1_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="-13" y="2" filename="1cmndxn1_0010.png" scaleX="1.00" scaleY="1.00" rotation="45.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="-22" y="-7" filename="1cmndxn1_0010.png" scaleX="1.00" scaleY="1.00" rotation="68.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="-31" y="-32" filename="1cmndxn1_0010.png" scaleX="1.00" scaleY="1.00" rotation="110.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_beatback5" hide="false" relevanceNames="0,1,2">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="-4" y="-3" filename="1cmndxn1_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="-3" y="-4" filename="1cmndxn1_0025.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="2"/>
+            <frame index="2" length="1">
+                <sound id="114" name="jump_down3" volume="30"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="1" name="D_land" hide="false">
+        <layer id="1" name="人物层" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="-2" y="5" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_land_land" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="-3" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="-19" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="0" y="-25" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="0" y="-20" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="0" y="-11" filename="1cmnddg0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="0" y="-12" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="0" y="-9" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="0" y="-3" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="0" y="-4" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="0" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="4">
+                <element x="0" y="0" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="236" name="nidalee_pounce_land" volume="64"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="5"/>
+            <frame index="5" length="1">
+                <sound id="170" name="fall_mini" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_land_stand" hide="false" relevanceNames="0,1">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="0" y="0" filename="1cmnresd_e_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="0" y="0" filename="1cmnresd_e_0012.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="3">
+                <element x="0" y="0" filename="1cmnresd_e_0022.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_land_twitch" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2" event="playEffect">
+                <element x="0" y="0" filename="1cmnsdg0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="0" y="0" filename="1cmnsdg0_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_stand_air" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="2" event="playEffect">
+                <element x="0" y="-77" filename="1cmndmb1_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_stand_air1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="0" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="-15" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="0" y="-55" filename="1cmndmr0_0006.png" scaleX="1.00" scaleY="1.00" rotation="17.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="-2" y="-49" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="-7" y="-78" filename="1cmnsdg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="15" y="-91" filename="1cmndml0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="0" y="-86" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="0" y="-94" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="14" y="-126" filename="1cmndml0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="7" y="-131" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="6" y="-134" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="134" name="du_hit" volume="50"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="286" name="cloth3" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit1" hide="false">
+        <layer id="1" name="新建层2" visible="true" lock="false">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="2" name="图层0" visible="true" lock="false">
+            <frame index="0" length="3" event="playEffect">
+                <element x="0" y="0" filename="1cmndml0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="0" y="0" filename="1cmndml0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="0" filename="1cmndml0_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit2" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="3" event="playEffect">
+                <element x="0" y="0" filename="1cmndmr0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="0" y="0" filename="1cmndmr0_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="0" filename="1cmndmr0_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit3" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="3" event="playEffect">
+                <element x="0" y="0" filename="1cmndmf0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="0" y="0" filename="1cmndmf0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="0" filename="1cmndmf0_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit4" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="0" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="0" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit5" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="0" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="-3" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="0" y="-9" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="0" y="-13" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="0" y="-19" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="-25" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="35" y="-53" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="-21.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="36" y="-60" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="-26.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="30" y="-55" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="-26.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="2">
+                <element x="2" y="-42" filename="1cmndga3_0020.png" scaleX="1.00" scaleY="1.00" rotation="3.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="2" y="-30" filename="1cmndga3_0020.png" scaleX="1.00" scaleY="1.00" rotation="3.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="2" y="-5" filename="1cmndga3_0020.png" scaleX="1.00" scaleY="1.00" rotation="3.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="-9" y="4" filename="1cmndxn1_0016.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="-9" y="2" filename="1cmndxn1_0016.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="-9" y="2" filename="1cmndxn1_0016.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="0" y="0" filename="1cmnresd_e_0022.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="13"/>
+            <frame index="13" length="1">
+                <sound id="172" name="jump_down" volume="53"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit6" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="3" event="playEffect">
+                <element x="0" y="0" filename="1cmndmb1_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="0" y="0" filename="1cmndmb1_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="0" y="0" filename="1cmndmb1_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit7" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="10" y="-10" filename="1cmndga3_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="0" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="-2" y="-2" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="0" y="0" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="0" y="0" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit8" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="0" filename="1cmndga0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="0" y="0" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="-7" y="-2" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="0" y="0" filename="1cmndga0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="0" y="0" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_stand_behit9" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="0" y="0" filename="1cmndml0_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="4" name="D_stand_land" hide="false">
+        <layer id="1" name="人物层" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="-10" y="3" filename="1cmnsdg0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="-10" y="3" filename="1cmnsdg0_0003.png" scaleX="1.00" scaleY="1.00" rotation="350.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="3" y="1" filename="1cmnsdg0_0003.png" scaleX="1.00" scaleY="1.00" rotation="330.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="2">
+                <element x="-24" y="-7" filename="1cmnsdg0_0024.png" scaleX="1.00" scaleY="1.00" rotation="10.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="-15" y="5" filename="1cmnsdg0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="-15" y="-2" filename="1cmnsdg0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="-15" y="-2" filename="1cmnsdg0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="-26" y="-12" filename="1cmnsdg0_0036.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="-26" y="-6" filename="1cmnsdg0_0036.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="-17" y="-4" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="-17" y="-4" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="-17" y="0" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="-17" y="1" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="-17" y="0" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="-17" y="2" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="6">
+                <element x="-17" y="1" filename="1cmnddg0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="7"/>
+            <frame index="7" length="1">
+                <sound id="236" name="nidalee_pounce_land" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="7"/>
+            <frame index="7" length="1">
+                <sound id="121" name="fall_big" volume="54"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="3" name="D_upair_air" hide="false">
+        <layer id="3" name="人物层" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="38" y="-296" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="330.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="68" y="-296" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="305.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="2">
+                <element x="76" y="-283" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="82" y="-255" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="285.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="-4" y="-152" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="D_upair_air1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="9" y="-277" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="4" y="-279" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="7" y="-299" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="12" y="-324" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="15" y="-339" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="17" y="-341" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="1">
+                <element x="16" y="-348" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="38" y="-360" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="332.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1">
+                <element x="44" y="-371" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="325.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1">
+                <element x="44" y="-376" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="325.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="1">
+                <element x="53" y="-388" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="316.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="11" length="1">
+                <element x="53" y="-391" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="316.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="62" y="-403" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="306.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="62" y="-404" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="306.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="74" y="-414" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="74" y="-407" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="1">
+                <element x="78" y="-420" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="279.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="17" length="1">
+                <element x="78" y="-416" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="279.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="1">
+                <element x="84" y="-421" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="19" length="1">
+                <element x="84" y="-412" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="20" length="1">
+                <element x="83" y="-400" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="1">
+                <element x="83" y="-388" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="1">
+                <element x="82" y="-370" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="270.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="1">
+                <element x="-13" y="-316" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="24" length="1">
+                <element x="-15" y="-287" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="25" length="1">
+                <element x="-15" y="-253" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="20.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="2">
+                <element x="0" y="-232" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="28" length="1">
+                <element x="0" y="-180" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="285" name="cloth2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="288" name="att_hand_2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="3" name="D_upair_air2" hide="false">
+        <layer id="3" name="人物层" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="12" y="-283" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="2" y="-375" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="1">
+                <element x="3" y="-438" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="1">
+                <element x="3" y="-484" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="1">
+                <element x="3" y="-539" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="1">
+                <element x="4" y="-578" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="2">
+                <element x="5" y="-607" filename="1cmndmd0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="2">
+                <element x="8" y="-626" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="2">
+                <element x="8" y="-679" filename="1cmndmd0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="2">
+                <element x="23" y="-705" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="340.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="2">
+                <element x="31" y="-715" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="330.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="54" y="-729" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="305.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="3">
+                <element x="61" y="-745" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="295.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="2">
+                <element x="66" y="-757" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="285.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="2">
+                <element x="66" y="-736" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="285.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="25" length="2">
+                <element x="70" y="-747" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="260.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="27" length="2">
+                <element x="70" y="-734" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="260.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="29" length="2">
+                <element x="-6" y="-652" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="31" length="2">
+                <element x="-6" y="-621" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="33" length="1">
+                <element x="-6" y="-583" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="34" length="1">
+                <element x="-6" y="-535" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="35" length="1">
+                <element x="-6" y="-481" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="36" length="1">
+                <element x="-6" y="-414" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="1">
+                <element x="-6" y="-344" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="38" length="1">
+                <element x="-6" y="-268" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="1">
+                <element x="-6" y="-180" filename="1cmncol0_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="284" name="cloth1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="286" name="cloth3" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="6" name="♪•6" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="288" name="att_hand_2" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="7" name="♪•7" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="937" name="鸣人-受击100" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_upair_behit1" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="9" y="-282" filename="1cmndga3_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="4" y="-287" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="9" y="-282" filename="1cmndga3_0004.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="9" y="-282" filename="1cmndga3_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="9" y="-282" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_upair_behit2" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="5" y="-277" filename="1cmndga0_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="2" y="-280" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="5" y="-277" filename="1cmndga0_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="2">
+                <element x="5" y="-277" filename="1cmndga0_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="2">
+                <element x="5" y="-277" filename="1cmndga0_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_upair_behit3" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1" event="playEffect">
+                <element x="3" y="-262" filename="1cmndga3_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="1" length="1">
+                <element x="6" y="-261" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+        </layer>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="934" name="鸣人-受击" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="D_upair_behit4" hide="false">
+        <layer id="1" name="图层0" visible="true" lock="false">
+            <frame index="0" length="1">
+                <element x="9" y="-282" filename="1cmndga3_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+    </action>
+    <action id="0" name="SP_skill_1" hide="false" relevanceNames="0,1">
+        <layer id="1" name="新建层1" visible="true" lock="false">
+            <frame index="0" length="113">
+                <pointElement name="skillEffectPoint" x="28" y="-4"/>
+            </frame>
+        </layer>
+        <layer id="2" name="新建层1" visible="true" lock="false">
+            <frame index="0" length="1"/>
+            <frame index="1" length="48"/>
+            <frame index="49" length="34"/>
+            <frame index="83" length="1"/>
+            <frame index="84" length="1">
+                <element x="286" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="85" length="5">
+                <element x="286" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="90" length="3">
+                <element x="286" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="93" length="3">
+                <element x="286" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="96" length="3">
+                <element x="286" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="99" length="4">
+                <element x="286" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="103" length="3">
+                <element x="286" y="13" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="106" length="3">
+                <element x="286" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="109" length="4">
+                <element x="286" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="3" name="C" visible="true" lock="false">
+            <frame index="0" length="3" event="playSkillEffect,playFaceEffect">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="3" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="24" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="27" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="30" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="33" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="36" length="3">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="1">
+                <element x="43" y="-2" filename="2nrtsklchg_l_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="40" length="2">
+                <element x="59" y="-3" filename="2nrtskl2_s_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="42" length="1">
+                <element x="116" y="9" filename="2nrtskl2_l_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="43" length="1">
+                <element x="164" y="3" filename="2nrtskl2_l_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="44" length="1">
+                <element x="171" y="0" filename="2nrtskl2_l_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="45" length="1">
+                <element x="201" y="0" filename="2nrtskl2_l_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="1">
+                <element x="216" y="9" filename="2nrtskl2_l_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="47" length="1">
+                <element x="237" y="9" filename="2nrtskl2_l_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="48" length="1">
+                <element x="221" y="9" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="49" length="1">
+                <element x="230" y="9" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="50" length="1">
+                <element x="240" y="9" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="51" length="1">
+                <element x="241" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="52" length="1">
+                <element x="242" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="53" length="1">
+                <element x="243" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="54" length="1">
+                <element x="244" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="55" length="1">
+                <element x="245" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="56" length="1">
+                <element x="247" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="57" length="1">
+                <element x="248" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="58" length="1">
+                <element x="250" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="59" length="1">
+                <element x="250" y="8" filename="2nrtskl2_cut_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="60" length="1">
+                <element x="347" y="7" filename="2nrtskl2_atk_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="61" length="1" event="hit">
+                <element x="347" y="7" filename="2nrtskl2_atk_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="62" length="2">
+                <element x="347" y="7" filename="2nrtskl2_atk_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="64" length="3">
+                <element x="347" y="7" filename="2nrtskl2_atk_0016.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="67" length="4">
+                <element x="347" y="7" filename="2nrtskl2_atk_0022.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="71" length="8">
+                <element x="347" y="7" filename="2nrtskl2_atk_0028.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="79" length="2" event="hit">
+                <element x="349" y="7" filename="2nrtskl2_atk_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="81" length="3">
+                <element x="352" y="7" filename="2nrtskl2_atk_0037.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="84" length="1">
+                <element x="318" y="-1" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="85" length="5">
+                <element x="318" y="-1" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="90" length="3">
+                <element x="318" y="-1" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="93" length="3">
+                <element x="318" y="-1" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="96" length="3">
+                <element x="318" y="-1" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="99" length="4">
+                <element x="318" y="-1" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="103" length="3">
+                <element x="318" y="-1" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="106" length="3">
+                <element x="318" y="-1" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="109" length="4">
+                <element x="318" y="-1" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound"/>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="61"/>
+            <frame index="61" length="1">
+                <sound id="177" name="rasen螺旋丸" volume="91"/>
+            </frame>
+        </layer>
+        <layer id="6" name="♪•6" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+            <frame index="3" length="1">
+                <sound id="175" name="adv_rasen1螺旋丸发动" volume="50"/>
+            </frame>
+        </layer>
+        <layer id="7" name="♪•7" visible="true" lock="true" type="sound">
+            <frame index="0" length="26"/>
+            <frame index="26" length="4"/>
+            <frame index="30" length="10"/>
+            <frame index="40" length="1">
+                <sound id="196" name="默认脚步声_走02" volume="100"/>
+            </frame>
+            <frame index="41" length="5"/>
+            <frame index="46" length="1">
+                <sound id="197" name="默认脚步声_走03" volume="100"/>
+            </frame>
+            <frame index="47" length="1"/>
+            <frame index="48" length="2"/>
+        </layer>
+        <layer id="8" name="♪•8" visible="true" lock="true" type="sound">
+            <frame index="0" length="40"/>
+            <frame index="40" length="1">
+                <sound id="686" name="青年-大玉螺旋丸" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="SP_skill_2" hide="false">
+        <layer id="1" name="C" visible="true" lock="true">
+            <frame index="0" length="40"/>
+            <frame index="40" length="1">
+                <element x="-5" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="41" length="5">
+                <element x="-5" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="31">
+                <element x="-5" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="77" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="80" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="83" length="4">
+                <element x="-5" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="87" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="90" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="93" length="5">
+                <element x="-5" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="98" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="101" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="104" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="107" length="4">
+                <element x="-5" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="111" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="114" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="117" length="5">
+                <element x="-5" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="122" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="125" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="128" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="131" length="4">
+                <element x="-5" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="135" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="138" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="141" length="5">
+                <element x="-5" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="146" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="149" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="152" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="155" length="4">
+                <element x="-5" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="159" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="162" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="165" length="5">
+                <element x="-5" y="13" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="170" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="173" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="176" length="3">
+                <element x="-5" y="13" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="179" length="2">
+                <element x="-5" y="13" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="新建层1" visible="true" lock="true">
+            <frame index="0" length="18"/>
+            <frame index="18" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="19" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="20" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="24" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="25" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="27" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="28" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="29" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="30" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="31" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="32" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="33" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="34" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="35" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="36" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="38" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="1">
+                <element x="-40" y="0" filename="2nrtspl1_cut_nc_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="3" name="C" visible="true" lock="false">
+            <frame index="0" length="2" event="playSkillEffect,playFaceEffect">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="4" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="6" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="-41" y="1" filename="2nrtspl1_cut_nc_0020.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="1"/>
+            <frame index="19" length="1"/>
+            <frame index="20" length="1"/>
+            <frame index="21" length="1"/>
+            <frame index="22" length="1"/>
+            <frame index="23" length="1"/>
+            <frame index="24" length="1"/>
+            <frame index="25" length="1"/>
+            <frame index="26" length="1"/>
+            <frame index="27" length="1"/>
+            <frame index="28" length="1"/>
+            <frame index="29" length="1"/>
+            <frame index="30" length="10"/>
+            <frame index="40" length="2">
+                <element x="-12" y="0" filename="2nrtspl1_s_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="42" length="1">
+                <element x="26" y="-14" filename="2nrtspl1_l_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="43" length="1">
+                <element x="57" y="0" filename="2nrtspl1_l_0007.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="44" length="1">
+                <element x="121" y="11" filename="2nrtspl1_l_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="45" length="1">
+                <element x="164" y="20" filename="2nrtspl1_l_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="29" event="playFaceEffect">
+                <element x="187" y="4" filename="2nrtspl1_l_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="75" length="2">
+                <element x="213" y="0" filename="2nrtspl1_e_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="77" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="78" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="79" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="80" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="81" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="82" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="83" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="84" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="85" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="86" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="87" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="88" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="89" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="90" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="91" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="92" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="93" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="94" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="95" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="96" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="97" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="98" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="99" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="100" length="1">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="101" length="1" event="hit">
+                <element x="223" y="0" filename="2nrtspl1_e_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="102" length="2">
+                <element x="223" y="0" filename="2nrtspl1_e_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="104" length="2">
+                <element x="223" y="0" filename="2nrtspl1_e_0022.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="106" length="2">
+                <element x="223" y="0" filename="2nrtspl1_e_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="108" length="2">
+                <element x="100" y="-11" filename="2nrtcmb13b_0000.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="110" length="2">
+                <element x="51" y="-17" filename="2nrtcmb13b_0002.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="112" length="1">
+                <element x="-9" y="-15" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="113" length="1">
+                <element x="-60" y="-15" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="114" length="1">
+                <element x="-88" y="-8" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="115" length="2">
+                <element x="-86" y="-8" filename="2nrtcmb13b_0015.png" scaleX="0.99" scaleY="0.99" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="117" length="1">
+                <element x="44" y="0" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="118" length="4">
+                <element x="44" y="0" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="122" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="125" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="128" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="131" length="4">
+                <element x="44" y="0" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="135" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="138" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="141" length="5">
+                <element x="44" y="0" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="146" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="149" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="152" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="155" length="4">
+                <element x="44" y="0" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="159" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="162" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="165" length="5">
+                <element x="44" y="0" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="170" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="173" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="176" length="3">
+                <element x="44" y="0" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="179" length="2">
+                <element x="44" y="0" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="C" visible="true" lock="true">
+            <frame index="0" length="40"/>
+            <frame index="40" length="1">
+                <element x="29" y="-5" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="41" length="5">
+                <element x="29" y="-5" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="31">
+                <element x="29" y="-5" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="77" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="80" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="83" length="4">
+                <element x="29" y="-5" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="87" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="90" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="93" length="5">
+                <element x="29" y="-5" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="98" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="101" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="104" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="107" length="4">
+                <element x="29" y="-5" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="111" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="114" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="117" length="5">
+                <element x="29" y="-5" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="122" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="125" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="128" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="131" length="4">
+                <element x="29" y="-5" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="135" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="138" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="141" length="5">
+                <element x="29" y="-5" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="146" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="149" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="152" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="155" length="4">
+                <element x="29" y="-5" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="159" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="162" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="165" length="5">
+                <element x="29" y="-5" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="170" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="173" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="176" length="3">
+                <element x="29" y="-5" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="179" length="2">
+                <element x="29" y="-5" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="44"/>
+            <frame index="44" length="1">
+                <sound id="149" name="shan" volume="100"/>
+            </frame>
+            <frame index="45" length="32"/>
+            <frame index="77" length="1">
+                <sound id="133" name="dandao2" volume="100"/>
+            </frame>
+            <frame index="78" length="25"/>
+            <frame index="103" length="1">
+                <sound id="153" name="shan4" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="6" name="♪•6" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+            <frame index="3" length="1">
+                <sound id="175" name="adv_rasen1螺旋丸发动" volume="50"/>
+            </frame>
+            <frame index="4" length="73"/>
+            <frame index="77" length="1">
+                <sound id="139" name="pym_ice" volume="100"/>
+            </frame>
+            <frame index="78" length="25"/>
+            <frame index="103" length="1">
+                <sound id="158" name="skill3" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="7" name="♪•7" visible="true" lock="true" type="sound">
+            <frame index="0" length="26"/>
+            <frame index="26" length="4"/>
+            <frame index="30" length="11"/>
+            <frame index="41" length="3"/>
+            <frame index="44" length="1">
+                <sound id="196" name="默认脚步声_走02" volume="100"/>
+            </frame>
+            <frame index="45" length="1"/>
+            <frame index="46" length="1">
+                <sound id="197" name="默认脚步声_走03" volume="100"/>
+            </frame>
+            <frame index="47" length="1"/>
+            <frame index="48" length="29"/>
+            <frame index="77" length="1">
+                <sound id="146" name="ski" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="8" name="♪•8" visible="true" lock="true" type="sound">
+            <frame index="0" length="4"/>
+            <frame index="4" length="8"/>
+            <frame index="12" length="3"/>
+            <frame index="15" length="2"/>
+            <frame index="17" length="1">
+                <sound id="663" name="青年-风遁" volume="100"/>
+            </frame>
+            <frame index="18" length="26"/>
+            <frame index="44" length="1">
+                <sound id="662" name="青年-螺旋手里剑" volume="100"/>
+            </frame>
+            <frame index="45" length="32"/>
+            <frame index="77" length="1">
+                <sound id="660" name="青年-投掷螺旋手里剑叫声" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="SP_skill_3" hide="false">
+        <layer id="1" name="C" visible="true" lock="true">
+            <frame index="0" length="2">
+                <element x="-23" y="30" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="-23" y="30" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="3">
+                <element x="-23" y="30" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="4">
+                <element x="-23" y="30" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="-49" y="39" filename="2nrtcmb01b_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="-9" y="39" filename="2nrtcmb01b_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="15" y="20" filename="2nrtcmb01b_0005.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="30" y="20" filename="2nrtcmb01b_0005.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="2">
+                <element x="35" y="20" filename="2nrtcmb01b_0005.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="18" length="2" event="hit">
+                <element x="18" y="21" filename="2nrtcmb01b_0007.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="20" length="2" tween="true">
+                <element x="6" y="20" filename="2nrtcmb01b_0013.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="4">
+                <element x="-4" y="21" filename="2nrtcmb01b_0013.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="2">
+                <element x="-20" y="20" filename="2nrtcmb01b_0034.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="28" length="2">
+                <element x="-26" y="16" filename="2nrtcmb12a_0002.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="30" length="2">
+                <element x="-27" y="16" filename="2nrtcmb12a_0004.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="32" length="1">
+                <element x="-36" y="0" filename="2nrtcmb12a_0010.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="33" length="2">
+                <element x="-36" y="-8" filename="2nrtcmb12a_0010.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="35" length="2">
+                <element x="-42" y="-1" filename="2nrtcmb12a_0010.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="2">
+                <element x="-57" y="16" filename="2nrtcmb12a_0017.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="2">
+                <element x="-84" y="16" filename="2nrtcmb12a_0020.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="41" length="2">
+                <element x="-59" y="16" filename="2nrtcmb13b_0000.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="43" length="2">
+                <element x="-106" y="16" filename="2nrtcmb13b_0002.png" scaleX="0.96" scaleY="0.96" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="45" length="1">
+                <element x="-128" y="16" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="1">
+                <element x="-167" y="16" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="47" length="1">
+                <element x="-226" y="16" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="48" length="3">
+                <element x="-231" y="16" filename="2nrtcmb13b_0015.png" scaleX="0.99" scaleY="0.99" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="51" length="1">
+                <element x="44" y="-8" filename="2nrtdsh0l_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="52" length="1">
+                <element x="30" y="15" filename="2nrtdsf1_0028.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="53" length="1">
+                <element x="45" y="16" filename="2nrtdsf1_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="54" length="2">
+                <element x="56" y="16" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="56" length="1">
+                <element x="58" y="15" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="57" length="5">
+                <element x="58" y="15" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="62" length="3">
+                <element x="58" y="15" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="65" length="3">
+                <element x="58" y="15" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="68" length="3">
+                <element x="58" y="15" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="C" visible="true" lock="false">
+            <frame index="0" length="2">
+                <element x="22" y="0" filename="2nrtcmb00_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="5">
+                <element x="22" y="0" filename="2nrtcmb00_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="7" length="1">
+                <element x="41" y="0" filename="2nrtcmb00_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="1" event="playSkillEffect">
+                <element x="54" y="0" filename="2nrtcmb00_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="9" length="1" event="hit">
+                <element x="46" y="0" filename="2nrtcmb00_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="10" length="2">
+                <element x="22" y="0" filename="2nrtcmb00_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="12" length="1">
+                <element x="-31" y="0" filename="2nrtcmb01a_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="1">
+                <element x="-68" y="0" filename="2nrtcmb01a_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="14" length="1">
+                <element x="-112" y="0" filename="2nrtcmb01a_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="15" length="1">
+                <element x="-133" y="0" filename="2nrtcmb01a_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="4">
+                <element x="-141" y="0" filename="2nrtcmb01a_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="20" length="1">
+                <element x="-138" y="0" filename="2nrtcmb01a_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="21" length="1">
+                <element x="-114" y="0" filename="2nrtcmb01a_0010.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="1">
+                <element x="-130" y="0" filename="2nrtcmb01a_0012.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="23" length="3" event="hit" tween="true">
+                <element x="-123" y="-11" filename="2nrtcmb01a_0014.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="2">
+                <element x="-156" y="2" filename="2nrtcmb01a_0014.png" scaleX="0.98" scaleY="0.98" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="28" length="2">
+                <element x="-222" y="-9" filename="2nrtcmb01a_0021.png" scaleX="0.95" scaleY="0.95" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="30" length="2">
+                <element x="-263" y="-17" filename="2nrtcmb01a_0023.png" scaleX="0.95" scaleY="0.95" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="32" length="2" event="hit">
+                <element x="-267" y="-16" filename="2nrtcmb01a_0025.png" scaleX="0.95" scaleY="0.95" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="34" length="3">
+                <element x="-264" y="-16" filename="2nrtcmb01a_0034.png" scaleX="0.95" scaleY="0.95" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="2">
+                <element x="4" y="3" filename="2nrtcmb13a_0002.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="2">
+                <element x="19" y="1" filename="2nrtcmb13a_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="41" length="1">
+                <element x="-8" y="59" filename="2nrtcmb13a_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="42" length="1" event="hit">
+                <element x="12" y="-1" filename="2nrtcmb13a_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="43" length="1">
+                <element x="19" y="-11" filename="2nrtcmb13a_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="44" length="1">
+                <element x="12" y="-1" filename="2nrtcmb13a_0012.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="45" length="2">
+                <element x="15" y="-6" filename="2nrtcmb13a_0012.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="47" length="2">
+                <element x="12" y="-1" filename="2nrtcmb13a_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="49" length="2">
+                <element x="12" y="-1" filename="2nrtcmb13a_0022.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="51" length="2">
+                <element x="12" y="-1" filename="2nrtcmb14a_0001.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="53" length="2">
+                <element x="12" y="-2" filename="2nrtcmb14a_0012.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="55" length="1">
+                <element x="12" y="-21" filename="2nrtcmb14a_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="56" length="1" event="hit">
+                <element x="12" y="8" filename="2nrtcmb14a_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="57" length="2">
+                <element x="12" y="-1" filename="2nrtcmb14a_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="59" length="2">
+                <element x="12" y="-1" filename="2nrtcmb14a_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="61" length="1">
+                <element x="73" y="0" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="62" length="5">
+                <element x="73" y="0" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="67" length="3">
+                <element x="73" y="0" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="70" length="1">
+                <element x="73" y="0" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="3" name="C" visible="true" lock="true">
+            <frame index="0" length="2">
+                <element x="-15" y="-27" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="8" length="5">
+                <element x="-15" y="-27" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="13" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0019.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="16" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0024.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="19" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0026.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="22" length="4">
+                <element x="-15" y="-27" filename="2nrtnut0_0030.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="26" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0038.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="29" length="3">
+                <element x="-15" y="-27" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="32" length="5">
+                <element x="-15" y="-27" filename="2nrtnut0_0014.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="37" length="1">
+                <element x="-213" y="-25" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="38" length="1">
+                <element x="-305" y="-35" filename="2nrtcmb13b_0004.png" scaleX="0.97" scaleY="0.97" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="39" length="1">
+                <element x="-33" y="-26" filename="2nrtcmb14c_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="40" length="1">
+                <element x="-41" y="-26" filename="2nrtcmb14c_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="41" length="5">
+                <element x="-45" y="-26" filename="2nrtcmb14c_0000.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="46" length="2">
+                <element x="-20" y="13" filename="2nrtcmb14c_0003.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="48" length="1">
+                <element x="-3" y="7" filename="2nrtcmb14c_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="49" length="1">
+                <element x="-3" y="11" filename="2nrtcmb14c_0005.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="50" length="1">
+                <element x="-16" y="19" filename="2nrtcmb14c_0007.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="51" length="1">
+                <element x="-8" y="8" filename="2nrtcmb14c_0009.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="52" length="1">
+                <element x="-1" y="-6" filename="2nrtcmb14c_0011.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="53" length="1">
+                <element x="5" y="9" filename="2nrtcmb14c_0011.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="54" length="1">
+                <element x="0" y="17" filename="2nrtcmb14c_0013.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="55" length="1">
+                <element x="-30" y="26" filename="2nrtcmb14c_0015.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="56" length="1">
+                <element x="-42" y="33" filename="2nrtcmb14c_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="57" length="2">
+                <element x="-62" y="33" filename="2nrtcmb14c_0018.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="59" length="2">
+                <element x="-87" y="37" filename="2nrtcmb14c_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="61" length="2">
+                <element x="-91" y="47" filename="2nrtcmb14c_0027.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="63" length="1">
+                <element x="-118" y="55" filename="2nrtcmb14c_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="64" length="1">
+                <element x="-125" y="113" filename="2nrtcmb14c_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="65" length="1">
+                <element x="-125" y="163" filename="2nrtcmb14c_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="66" length="2">
+                <element x="72" y="-14" filename="2nrtdsf1_0033.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="68" length="2">
+                <element x="72" y="-14" filename="2nrtdsf1_0035.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="70" length="1">
+                <element x="71" y="-14" filename="2nrtnut0_0010.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="4" name="♪•4" visible="true" lock="true" type="sound">
+            <frame index="0" length="9"/>
+            <frame index="9" length="1">
+                <sound id="44" name="01_Meat1" volume="100"/>
+            </frame>
+            <frame index="10" length="9"/>
+            <frame index="19" length="1">
+                <sound id="10" name="attack2" volume="100"/>
+            </frame>
+            <frame index="20" length="7"/>
+            <frame index="27" length="1">
+                <sound id="47" name="02_Meat1" volume="100"/>
+            </frame>
+            <frame index="28" length="6"/>
+            <frame index="34" length="1">
+                <sound id="52" name="A01_Meat1" volume="100"/>
+            </frame>
+            <frame index="35" length="7"/>
+            <frame index="42" length="1">
+                <sound id="20" name="Swords_att_impact" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="5" name="♪•5" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+            <frame index="3" length="6"/>
+            <frame index="9" length="1">
+                <sound id="94" name="woosh4" volume="58"/>
+            </frame>
+            <frame index="10" length="1"/>
+            <frame index="11" length="3"/>
+            <frame index="14" length="2"/>
+            <frame index="16" length="1"/>
+            <frame index="17" length="2"/>
+            <frame index="19" length="1">
+                <sound id="47" name="02_Meat1" volume="53"/>
+            </frame>
+            <frame index="20" length="5"/>
+            <frame index="25" length="2"/>
+            <frame index="27" length="1">
+                <sound id="92" name="woosh2" volume="100"/>
+            </frame>
+            <frame index="28" length="6"/>
+            <frame index="34" length="1">
+                <sound id="92" name="woosh2" volume="100"/>
+            </frame>
+            <frame index="35" length="7"/>
+            <frame index="42" length="1">
+                <sound id="47" name="02_Meat1" volume="100"/>
+            </frame>
+            <frame index="43" length="14"/>
+            <frame index="57" length="1">
+                <sound id="79" name="att" volume="100"/>
+            </frame>
+            <frame index="58" length="8"/>
+            <frame index="66" length="1">
+                <sound id="113" name="jump_down2" volume="16"/>
+            </frame>
+        </layer>
+        <layer id="6" name="♪•6" visible="true" lock="true" type="sound">
+            <frame index="0" length="3"/>
+            <frame index="3" length="6"/>
+            <frame index="9" length="1">
+                <sound id="92" name="woosh2" volume="65"/>
+            </frame>
+            <frame index="10" length="3"/>
+            <frame index="13" length="14"/>
+            <frame index="27" length="1">
+                <sound id="160" name="wing2" volume="50"/>
+            </frame>
+            <frame index="28" length="29"/>
+            <frame index="57" length="1">
+                <sound id="160" name="wing2" volume="47"/>
+            </frame>
+        </layer>
+        <layer id="7" name="♪•7" visible="true" lock="true" type="sound">
+            <frame index="0" length="57"/>
+            <frame index="57" length="1">
+                <sound id="190" name="punch_swing攻击_挥拳" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="8" name="♪•8" visible="true" lock="true" type="sound">
+            <frame index="0" length="57"/>
+            <frame index="57" length="1">
+                <sound id="52" name="A01_Meat1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="9" name="♪•9" visible="true" lock="true" type="sound">
+            <frame index="0" length="57"/>
+            <frame index="57" length="1">
+                <sound id="64" name="armor_underwear_1" volume="100"/>
+            </frame>
+        </layer>
+        <layer id="10" name="♪•10" visible="true" lock="true" type="sound">
+            <frame index="0" length="55"/>
+            <frame index="55" length="1">
+                <sound id="685" name="青年-啊啊！！（大攻击）" volume="100"/>
+            </frame>
+        </layer>
+    </action>
+    <action id="0" name="SP_skill_4" hide="false" relevanceNames="0,1">
+        <layer id="1" name="C" visible="true" lock="false">
+            <frame index="0" length="2" event="playSkillEffect">
+                <element x="0" y="0" filename="2nrtlos2_0011.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="2" length="3" event="hit">
+                <element x="0" y="0" filename="2nrtlos2_0008.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+            <frame index="5" length="3">
+                <element x="0" y="0" filename="2nrtlos2_0006.png" scaleX="1.00" scaleY="1.00" rotation="0.00" alpha="1.00" assetId="0"/>
+            </frame>
+        </layer>
+        <layer id="2" name="♪•2" visible="true" lock="true" type="sound"/>
+        <layer id="3" name="♪•3" visible="true" lock="true" type="sound">
+            <frame index="0" length="1"/>
+            <frame index="1" length="1">
+                <sound id="157" name="skill2" volume="100"/>
+            </frame>
+            <frame index="2" length="6"/>
+        </layer>
+    </action>
+</actions>

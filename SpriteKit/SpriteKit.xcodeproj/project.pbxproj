@@ -7,11 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BC9E9D31B11E3B6007794B2 /* ninja.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D21B11E3B6007794B2 /* ninja.atlas */; };
 		6BC9E9D81B11EAC6007794B2 /* NinjaActionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D71B11EAC6007794B2 /* NinjaActionInfo.swift */; };
 		6BC9E9DA1B11F002007794B2 /* XMLReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D91B11F002007794B2 /* XMLReader.swift */; };
-		6BC9E9DC1B11F27C007794B2 /* ninja.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9DB1B11F27C007794B2 /* ninja.xml */; };
 		6BC9E9DE1B12EC46007794B2 /* NinjaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9DD1B12EC46007794B2 /* NinjaPresenter.swift */; };
+		6BC9E9FF1B135D27007794B2 /* 10000101.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F31B135D27007794B2 /* 10000101.atlasc */; };
+		6BC9EA001B135D27007794B2 /* 10000101.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F41B135D27007794B2 /* 10000101.xml */; };
+		6BC9EA011B135D27007794B2 /* 10000201.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F51B135D27007794B2 /* 10000201.atlasc */; };
+		6BC9EA021B135D27007794B2 /* 10000201.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F61B135D27007794B2 /* 10000201.xml */; };
+		6BC9EA031B135D27007794B2 /* 10000301.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F71B135D27007794B2 /* 10000301.atlasc */; };
+		6BC9EA041B135D27007794B2 /* 10000301.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F81B135D27007794B2 /* 10000301.xml */; };
+		6BC9EA051B135D27007794B2 /* 10000501.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9F91B135D27007794B2 /* 10000501.atlasc */; };
+		6BC9EA061B135D27007794B2 /* 10000501.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9FA1B135D27007794B2 /* 10000501.xml */; };
+		6BC9EA071B135D27007794B2 /* 11000141.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9FB1B135D27007794B2 /* 11000141.atlasc */; };
+		6BC9EA081B135D27007794B2 /* 11000141.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9FC1B135D27007794B2 /* 11000141.xml */; };
+		6BC9EA091B135D27007794B2 /* 11000171.atlasc in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9FD1B135D27007794B2 /* 11000171.atlasc */; };
+		6BC9EA0A1B135D27007794B2 /* 11000171.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9FE1B135D27007794B2 /* 11000171.xml */; };
 		6BD89BB41B09DE9000C5C03A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD89BB31B09DE9000C5C03A /* AppDelegate.swift */; };
 		6BD89BB61B09DE9000C5C03A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD89BB51B09DE9000C5C03A /* ViewController.swift */; };
 		6BD89BB91B09DE9000C5C03A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BB71B09DE9000C5C03A /* Main.storyboard */; };
@@ -31,11 +41,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6BC9E9D21B11E3B6007794B2 /* ninja.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ninja.atlas; sourceTree = "<group>"; };
 		6BC9E9D71B11EAC6007794B2 /* NinjaActionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NinjaActionInfo.swift; sourceTree = "<group>"; };
 		6BC9E9D91B11F002007794B2 /* XMLReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLReader.swift; sourceTree = "<group>"; };
-		6BC9E9DB1B11F27C007794B2 /* ninja.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ninja.xml; sourceTree = "<group>"; };
 		6BC9E9DD1B12EC46007794B2 /* NinjaPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NinjaPresenter.swift; sourceTree = "<group>"; };
+		6BC9E9F31B135D27007794B2 /* 10000101.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 10000101.atlasc; sourceTree = "<group>"; };
+		6BC9E9F41B135D27007794B2 /* 10000101.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 10000101.xml; sourceTree = "<group>"; };
+		6BC9E9F51B135D27007794B2 /* 10000201.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 10000201.atlasc; sourceTree = "<group>"; };
+		6BC9E9F61B135D27007794B2 /* 10000201.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 10000201.xml; sourceTree = "<group>"; };
+		6BC9E9F71B135D27007794B2 /* 10000301.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 10000301.atlasc; sourceTree = "<group>"; };
+		6BC9E9F81B135D27007794B2 /* 10000301.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 10000301.xml; sourceTree = "<group>"; };
+		6BC9E9F91B135D27007794B2 /* 10000501.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 10000501.atlasc; sourceTree = "<group>"; };
+		6BC9E9FA1B135D27007794B2 /* 10000501.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 10000501.xml; sourceTree = "<group>"; };
+		6BC9E9FB1B135D27007794B2 /* 11000141.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 11000141.atlasc; sourceTree = "<group>"; };
+		6BC9E9FC1B135D27007794B2 /* 11000141.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 11000141.xml; sourceTree = "<group>"; };
+		6BC9E9FD1B135D27007794B2 /* 11000171.atlasc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 11000171.atlasc; sourceTree = "<group>"; };
+		6BC9E9FE1B135D27007794B2 /* 11000171.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 11000171.xml; sourceTree = "<group>"; };
 		6BD89BAE1B09DE9000C5C03A /* SpriteKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD89BB21B09DE9000C5C03A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BD89BB31B09DE9000C5C03A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,8 +89,18 @@
 		6BC9E9CF1B11E1C9007794B2 /* Texture Atlas */ = {
 			isa = PBXGroup;
 			children = (
-				6BC9E9DB1B11F27C007794B2 /* ninja.xml */,
-				6BC9E9D21B11E3B6007794B2 /* ninja.atlas */,
+				6BC9E9F31B135D27007794B2 /* 10000101.atlasc */,
+				6BC9E9F41B135D27007794B2 /* 10000101.xml */,
+				6BC9E9F51B135D27007794B2 /* 10000201.atlasc */,
+				6BC9E9F61B135D27007794B2 /* 10000201.xml */,
+				6BC9E9F71B135D27007794B2 /* 10000301.atlasc */,
+				6BC9E9F81B135D27007794B2 /* 10000301.xml */,
+				6BC9E9F91B135D27007794B2 /* 10000501.atlasc */,
+				6BC9E9FA1B135D27007794B2 /* 10000501.xml */,
+				6BC9E9FB1B135D27007794B2 /* 11000141.atlasc */,
+				6BC9E9FC1B135D27007794B2 /* 11000141.xml */,
+				6BC9E9FD1B135D27007794B2 /* 11000171.atlasc */,
+				6BC9E9FE1B135D27007794B2 /* 11000171.xml */,
 			);
 			name = "Texture Atlas";
 			sourceTree = "<group>";
@@ -216,10 +246,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BC9E9DC1B11F27C007794B2 /* ninja.xml in Resources */,
+				6BC9EA091B135D27007794B2 /* 11000171.atlasc in Resources */,
+				6BC9EA061B135D27007794B2 /* 10000501.xml in Resources */,
+				6BC9E9FF1B135D27007794B2 /* 10000101.atlasc in Resources */,
+				6BC9EA0A1B135D27007794B2 /* 11000171.xml in Resources */,
+				6BC9EA011B135D27007794B2 /* 10000201.atlasc in Resources */,
+				6BC9EA031B135D27007794B2 /* 10000301.atlasc in Resources */,
+				6BC9EA081B135D27007794B2 /* 11000141.xml in Resources */,
 				6BD89BB91B09DE9000C5C03A /* Main.storyboard in Resources */,
+				6BC9EA041B135D27007794B2 /* 10000301.xml in Resources */,
 				6BD89BBE1B09DE9000C5C03A /* LaunchScreen.xib in Resources */,
-				6BC9E9D31B11E3B6007794B2 /* ninja.atlas in Resources */,
+				6BC9EA071B135D27007794B2 /* 11000141.atlasc in Resources */,
+				6BC9EA051B135D27007794B2 /* 10000501.atlasc in Resources */,
+				6BC9EA021B135D27007794B2 /* 10000201.xml in Resources */,
+				6BC9EA001B135D27007794B2 /* 10000101.xml in Resources */,
 				6BD89BBB1B09DE9000C5C03A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

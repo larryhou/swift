@@ -84,6 +84,7 @@ class NinjaPresenter:SKSpriteNode
                 }
             }
             
+            list.append(SKAction.removeFromParent())
             sprite.runAction(SKAction.sequence(list))
         }
         
