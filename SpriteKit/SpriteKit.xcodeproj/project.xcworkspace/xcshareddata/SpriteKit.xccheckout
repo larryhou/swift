@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>17B7BD56-8EB6-4EC2-9E2E-BE3FD3081A66</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>SpriteKit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>CD17B85DD1B975D40720D97E46FD818042A29716</key>
 		<string>github.com:larryhou/swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SpriteKit/SpriteKit.xcodeproj/project.xcworkspace</string>
+	<string>SpriteKit/SpriteKit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>CD17B85DD1B975D40720D97E46FD818042A29716</key>

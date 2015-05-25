@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B2575491B09E588008D210C /* stars.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 6B2575471B09E588008D210C /* stars.scnp */; };
-		6B25754A1B09E588008D210C /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2575481B09E588008D210C /* star.png */; };
+		6BC9E9D31B11E3B6007794B2 /* ninja.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D21B11E3B6007794B2 /* ninja.atlas */; };
+		6BC9E9D81B11EAC6007794B2 /* NinjaActionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D71B11EAC6007794B2 /* NinjaActionInfo.swift */; };
+		6BC9E9DA1B11F002007794B2 /* XMLReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9D91B11F002007794B2 /* XMLReader.swift */; };
+		6BC9E9DC1B11F27C007794B2 /* ninja.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6BC9E9DB1B11F27C007794B2 /* ninja.xml */; };
+		6BC9E9DE1B12EC46007794B2 /* NinjaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC9E9DD1B12EC46007794B2 /* NinjaPresenter.swift */; };
 		6BD89BB41B09DE9000C5C03A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD89BB31B09DE9000C5C03A /* AppDelegate.swift */; };
 		6BD89BB61B09DE9000C5C03A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD89BB51B09DE9000C5C03A /* ViewController.swift */; };
 		6BD89BB91B09DE9000C5C03A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BB71B09DE9000C5C03A /* Main.storyboard */; };
 		6BD89BBB1B09DE9000C5C03A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BBA1B09DE9000C5C03A /* Images.xcassets */; };
 		6BD89BBE1B09DE9000C5C03A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BBC1B09DE9000C5C03A /* LaunchScreen.xib */; };
 		6BD89BCA1B09DE9000C5C03A /* SpriteKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD89BC91B09DE9000C5C03A /* SpriteKitTests.swift */; };
-		6BD89BD51B09DF1900C5C03A /* smoke.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BD31B09DF1900C5C03A /* smoke.scnp */; };
-		6BD89BD61B09DF1900C5C03A /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD89BD41B09DF1900C5C03A /* smoke.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,8 +31,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6B2575471B09E588008D210C /* stars.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = stars.scnp; sourceTree = "<group>"; };
-		6B2575481B09E588008D210C /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		6BC9E9D21B11E3B6007794B2 /* ninja.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ninja.atlas; sourceTree = "<group>"; };
+		6BC9E9D71B11EAC6007794B2 /* NinjaActionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NinjaActionInfo.swift; sourceTree = "<group>"; };
+		6BC9E9D91B11F002007794B2 /* XMLReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLReader.swift; sourceTree = "<group>"; };
+		6BC9E9DB1B11F27C007794B2 /* ninja.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ninja.xml; sourceTree = "<group>"; };
+		6BC9E9DD1B12EC46007794B2 /* NinjaPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NinjaPresenter.swift; sourceTree = "<group>"; };
 		6BD89BAE1B09DE9000C5C03A /* SpriteKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD89BB21B09DE9000C5C03A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BD89BB31B09DE9000C5C03A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,8 +46,6 @@
 		6BD89BC31B09DE9000C5C03A /* SpriteKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpriteKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD89BC81B09DE9000C5C03A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BD89BC91B09DE9000C5C03A /* SpriteKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitTests.swift; sourceTree = "<group>"; };
-		6BD89BD31B09DF1900C5C03A /* smoke.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = smoke.scnp; sourceTree = "<group>"; };
-		6BD89BD41B09DF1900C5C03A /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6BC9E9CF1B11E1C9007794B2 /* Texture Atlas */ = {
+			isa = PBXGroup;
+			children = (
+				6BC9E9DB1B11F27C007794B2 /* ninja.xml */,
+				6BC9E9D21B11E3B6007794B2 /* ninja.atlas */,
+			);
+			name = "Texture Atlas";
+			sourceTree = "<group>";
+		};
 		6BD89BA51B09DE9000C5C03A = {
 			isa = PBXGroup;
 			children = (
@@ -86,13 +97,13 @@
 			isa = PBXGroup;
 			children = (
 				6BD89BB31B09DE9000C5C03A /* AppDelegate.swift */,
-				6BD89BD31B09DF1900C5C03A /* smoke.scnp */,
-				6BD89BD41B09DF1900C5C03A /* smoke.png */,
-				6B2575471B09E588008D210C /* stars.scnp */,
-				6B2575481B09E588008D210C /* star.png */,
 				6BD89BB51B09DE9000C5C03A /* ViewController.swift */,
+				6BC9E9D91B11F002007794B2 /* XMLReader.swift */,
+				6BC9E9D71B11EAC6007794B2 /* NinjaActionInfo.swift */,
+				6BC9E9DD1B12EC46007794B2 /* NinjaPresenter.swift */,
 				6BD89BB71B09DE9000C5C03A /* Main.storyboard */,
 				6BD89BBA1B09DE9000C5C03A /* Images.xcassets */,
+				6BC9E9CF1B11E1C9007794B2 /* Texture Atlas */,
 				6BD89BBC1B09DE9000C5C03A /* LaunchScreen.xib */,
 				6BD89BB11B09DE9000C5C03A /* Supporting Files */,
 			);
@@ -205,13 +216,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC9E9DC1B11F27C007794B2 /* ninja.xml in Resources */,
 				6BD89BB91B09DE9000C5C03A /* Main.storyboard in Resources */,
-				6B2575491B09E588008D210C /* stars.scnp in Resources */,
 				6BD89BBE1B09DE9000C5C03A /* LaunchScreen.xib in Resources */,
-				6BD89BD61B09DF1900C5C03A /* smoke.png in Resources */,
-				6B25754A1B09E588008D210C /* star.png in Resources */,
+				6BC9E9D31B11E3B6007794B2 /* ninja.atlas in Resources */,
 				6BD89BBB1B09DE9000C5C03A /* Images.xcassets in Resources */,
-				6BD89BD51B09DF1900C5C03A /* smoke.scnp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +239,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BD89BB61B09DE9000C5C03A /* ViewController.swift in Sources */,
+				6BC9E9DE1B12EC46007794B2 /* NinjaPresenter.swift in Sources */,
+				6BC9E9D81B11EAC6007794B2 /* NinjaActionInfo.swift in Sources */,
+				6BC9E9DA1B11F002007794B2 /* XMLReader.swift in Sources */,
 				6BD89BB41B09DE9000C5C03A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
