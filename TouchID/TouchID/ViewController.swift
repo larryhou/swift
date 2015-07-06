@@ -22,6 +22,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var picker: UIPickerView!
     
     private var sacFlags:[PickerItemInfo]!
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        unlockWithTouchID()
+    }
 
     override func viewDidLoad()
     {
@@ -33,7 +39,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         sacFlags.append(PickerItemInfo(label: "TouchIDCurrentSet", value: SecAccessControlCreateFlags.TouchIDCurrentSet))
         sacFlags.append(PickerItemInfo(label: "DevicePasscode", value: SecAccessControlCreateFlags.DevicePasscode))
         sacFlags.append(PickerItemInfo(label: "ApplicationPassword", value: SecAccessControlCreateFlags.ApplicationPassword))
-        unlockWithTouchID()
     }
     
     //MARK: UIPickerView
