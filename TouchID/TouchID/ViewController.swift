@@ -126,7 +126,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             let alert = UIAlertController(title: "status", message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
             let action = UIAlertAction(title: "我知道了", style: UIAlertActionStyle.Cancel)
-                { (target:UIAlertAction) in
+            { (target:UIAlertAction) in
                     
             }
             
