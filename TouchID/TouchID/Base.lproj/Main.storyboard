@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="指纹测试" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8e7-Rg-q7a">
+                                <rect key="frame" x="0.0" y="169" width="600" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="xCV-v4-bvR"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="5zP-Fy-zpl"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IeS-fh-Vj8">
+                                <rect key="frame" x="200" y="395" width="80" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="更新密码"/>
+                                <connections>
+                                    <action selector="actionUpdatePassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NCQ-z0-cQq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOK-8f-0ze">
+                                <rect key="frame" x="320" y="395" width="80" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="读取密码"/>
+                                <connections>
+                                    <action selector="actionReadPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hMi-iD-rUT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="top" secondItem="8e7-Rg-q7a" secondAttribute="bottom" constant="10" id="FZf-Pi-Gwx"/>
+                            <constraint firstItem="8e7-Rg-q7a" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="149" id="HcA-BC-CPG"/>
+                            <constraint firstItem="SOK-8f-0ze" firstAttribute="top" secondItem="IeS-fh-Vj8" secondAttribute="top" id="J1F-oJ-HKV"/>
+                            <constraint firstAttribute="trailing" secondItem="8e7-Rg-q7a" secondAttribute="trailing" id="gfU-bw-ZCG"/>
+                            <constraint firstItem="SOK-8f-0ze" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="20" id="kzU-8Z-N3g"/>
+                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-20" id="qmu-B7-5Kp"/>
+                            <constraint firstItem="8e7-Rg-q7a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="sQR-VG-kZk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="picker" destination="8e7-Rg-q7a" id="ZzI-cb-Gvr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="455" y="315"/>
+        </scene>
+    </scenes>
+</document>
