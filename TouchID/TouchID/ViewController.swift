@@ -55,14 +55,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         model = [[], []]
         
         var data:[PickerItemInfo] = []
-        data.append(PickerItemInfo(label: "UserPresence", flags: SecAccessControlCreateFlags.UserPresence))
-        data.append(PickerItemInfo(label: "TouchIDAny", flags: SecAccessControlCreateFlags.TouchIDAny))
-        data.append(PickerItemInfo(label: "TouchIDCurrentSet", flags: SecAccessControlCreateFlags.TouchIDCurrentSet))
-        data.append(PickerItemInfo(label: "DevicePasscode", flags: SecAccessControlCreateFlags.DevicePasscode))
-        data.append(PickerItemInfo(label: "ApplicationPassword", flags: SecAccessControlCreateFlags.ApplicationPassword))
-        model[PickerComponent.SACFlags.rawValue] = data
-        
-        data = []
         data.append(PickerItemInfo(label: "WhenUnlocked", protection: kSecAttrAccessibleWhenUnlocked))
         data.append(PickerItemInfo(label: "AfterFirstUnlock", protection: kSecAttrAccessibleAfterFirstUnlock))
         data.append(PickerItemInfo(label: "Always", protection: kSecAttrAccessibleAlways))
@@ -71,6 +63,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         data.append(PickerItemInfo(label: "AfterFirstUnlockThisDeviceOnly", protection: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly))
         data.append(PickerItemInfo(label: "AlwaysThisDeviceOnly", protection: kSecAttrAccessibleAlwaysThisDeviceOnly))
         model[PickerComponent.Protection.rawValue] = data
+        
+        data = []
+        data.append(PickerItemInfo(label: "UserPresence", flags: SecAccessControlCreateFlags.UserPresence))
+        data.append(PickerItemInfo(label: "TouchIDAny", flags: SecAccessControlCreateFlags.TouchIDAny))
+        data.append(PickerItemInfo(label: "TouchIDCurrentSet", flags: SecAccessControlCreateFlags.TouchIDCurrentSet))
+        data.append(PickerItemInfo(label: "DevicePasscode", flags: SecAccessControlCreateFlags.DevicePasscode))
+        data.append(PickerItemInfo(label: "ApplicationPassword", flags: SecAccessControlCreateFlags.ApplicationPassword))
+        model[PickerComponent.SACFlags.rawValue] = data
+        
     }
     
     //MARK: UIPickerView
