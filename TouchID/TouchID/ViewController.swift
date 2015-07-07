@@ -13,15 +13,34 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 {
     struct PickerItemInfo
     {
-        let label:String, value:SecAccessControlCreateFlags
+        let label:String
+        let flags:SecAccessControlCreateFlags!, protection:CFString!
+        init(label:String, flags:SecAccessControlCreateFlags)
+        {
+            self.label = label
+            self.flags = flags
+            self.protection = nil
+        }
+        
+        init(label:String, protection:CFString)
+        {
+            self.label = label
+            self.protection = protection
+            self.flags = nil
+        }
     }
     
     let SERVICE_PSSW = "LARRYHOU-PASSWORD-TEXT"
     let SERVICE_NAME = "TouchID.app"
     
+    enum PickerComponent:Int
+    {
+        case Protection = 0, SACFlags
+    }
+    
     @IBOutlet weak var picker: UIPickerView!
     
-    private var sacFlags:[PickerItemInfo]!
+    private var model:[[PickerItemInfo]]!
     
     override func viewWillAppear(animated: Bool)
     {
@@ -33,28 +52,73 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         super.viewDidLoad()
         
-        sacFlags = []
-        sacFlags.append(PickerItemInfo(label: "UserPresence", value: SecAccessControlCreateFlags.UserPresence))
-        sacFlags.append(PickerItemInfo(label: "TouchIDAny", value: SecAccessControlCreateFlags.TouchIDAny))
-        sacFlags.append(PickerItemInfo(label: "TouchIDCurrentSet", value: SecAccessControlCreateFlags.TouchIDCurrentSet))
-        sacFlags.append(PickerItemInfo(label: "DevicePasscode", value: SecAccessControlCreateFlags.DevicePasscode))
-        sacFlags.append(PickerItemInfo(label: "ApplicationPassword", value: SecAccessControlCreateFlags.ApplicationPassword))
+        model = [[], []]
+        
+        var data:[PickerItemInfo] = []
+        data.append(PickerItemInfo(label: "UserPresence", flags: SecAccessControlCreateFlags.UserPresence))
+        data.append(PickerItemInfo(label: "TouchIDAny", flags: SecAccessControlCreateFlags.TouchIDAny))
+        data.append(PickerItemInfo(label: "TouchIDCurrentSet", flags: SecAccessControlCreateFlags.TouchIDCurrentSet))
+        data.append(PickerItemInfo(label: "DevicePasscode", flags: SecAccessControlCreateFlags.DevicePasscode))
+        data.append(PickerItemInfo(label: "ApplicationPassword", flags: SecAccessControlCreateFlags.ApplicationPassword))
+        model[PickerComponent.SACFlags.rawValue] = data
+        
+        data = []
+        data.append(PickerItemInfo(label: "WhenUnlocked", protection: kSecAttrAccessibleWhenUnlocked))
+        data.append(PickerItemInfo(label: "AfterFirstUnlock", protection: kSecAttrAccessibleAfterFirstUnlock))
+        data.append(PickerItemInfo(label: "Always", protection: kSecAttrAccessibleAlways))
+        data.append(PickerItemInfo(label: "WhenPasscodeSetThisDeviceOnly", protection: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly))
+        data.append(PickerItemInfo(label: "WhenUnlockedThisDeviceOnly", protection: kSecAttrAccessibleWhenUnlockedThisDeviceOnly))
+        data.append(PickerItemInfo(label: "AfterFirstUnlockThisDeviceOnly", protection: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly))
+        data.append(PickerItemInfo(label: "AlwaysThisDeviceOnly", protection: kSecAttrAccessibleAlwaysThisDeviceOnly))
+        model[PickerComponent.Protection.rawValue] = data
     }
     
     //MARK: UIPickerView
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
     {
-        return 1
+        return model.count
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
-        return sacFlags.count
+        return model[component].count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+//    {
+//        return model[component][row].label
+//    }
+    
+//    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
+//    {
+//        let text:String = model[component][row].label
+//        
+//        let format:[String:AnyObject] = [NSFontAttributeName:UIFont.systemFontOfSize(12)]
+//        return NSAttributedString(string: text, attributes: format)
+//    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
     {
-        return sacFlags[row].label
+        var labelView:UILabel
+        if view != nil
+        {
+            labelView = view as! UILabel
+        }
+        else
+        {
+            labelView = UILabel()
+            labelView.font = UIFont.systemFontOfSize(20)
+            labelView.textAlignment = NSTextAlignment.Center
+        }
+        
+        labelView.text = model[component][row].label
+        return labelView
+    }
+    
+    func getComponentItemInfo(component:Int)->PickerItemInfo
+    {
+        let row = picker.selectedRowInComponent(component)
+        return model[component][row]
     }
     
     //MARK: IBActions
@@ -63,11 +127,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         resetPassword()
         
-        let row = picker.selectedRowInComponent(0)
-        let flags = sacFlags[row].value
+        let protection = getComponentItemInfo(PickerComponent.Protection.rawValue).protection
+        let flags = getComponentItemInfo(PickerComponent.SACFlags.rawValue).flags
         
         var error:Unmanaged<CFErrorRef>?
-        let sac = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, flags, &error)
+        let sac = SecAccessControlCreateWithFlags(kCFAllocatorDefault, protection, flags, &error)
         if error != nil || sac == nil
         {
             print(error)
