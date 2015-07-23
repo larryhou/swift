@@ -144,11 +144,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         data[kSecAttrService as String] = SERVICE_NAME
         data[kSecValueData as String] = SERVICE_PSSW.dataUsingEncoding(NSUTF8StringEncoding)!
         data[kSecUseAuthenticationUI as String] = kSecUseAuthenticationUIAllow
-        data[kSecAttrAccessControl as String] = sac.takeUnretainedValue()
+        data[kSecAttrAccessControl as String] = sac
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
         {
-            var result:Unmanaged<AnyObject>?
+            var result:AnyObject?
             let status = SecItemAdd(data, &result)
             
             print("add: " + self.status2string(status))
@@ -177,7 +177,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
         {
-            var result:Unmanaged<AnyObject>?
+            var result:AnyObject?
             let status = SecItemCopyMatching(query, &result)
             
             print("match: " + self.status2string(status))
@@ -185,7 +185,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             var message:String = self.status2string(status)
             if status == errSecSuccess
             {
-                let pssw = result!.takeUnretainedValue() as! NSData
+                let pssw = result as! NSData
                 message += ": " + (NSString(data: pssw, encoding: NSUTF8StringEncoding) as! String)
             }
             
