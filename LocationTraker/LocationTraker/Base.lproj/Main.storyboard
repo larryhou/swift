@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rSO-pH-WcT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="t6t-ws-odS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Track Time-->
         <scene sceneID="Opo-53-ncL">
             <objects>
-                <tableViewController id="rSO-pH-WcT" sceneMemberID="viewController">
+                <tableViewController id="rSO-pH-WcT" customClass="TrackTimeTableViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gjj-9t-wzw">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DateTableViewCell" textLabel="wtO-sE-NB7" style="IBUITableViewCellStyleDefault" id="39Z-cE-OCT">
-                                <rect key="frame" x="0.0" y="22" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TrackTimeCell" textLabel="wtO-sE-NB7" style="IBUITableViewCellStyleDefault" id="39Z-cE-OCT">
+                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="39Z-cE-OCT" id="QX9-pi-JYB">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -40,8 +40,28 @@
                             <outlet property="delegate" destination="rSO-pH-WcT" id="Zhi-FL-JJW"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Track Time" id="vjZ-IJ-ue0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Erz-lz-1tP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1602" y="266"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pD8-nT-woi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="t6t-ws-odS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qL4-RA-nWr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rSO-pH-WcT" kind="relationship" relationship="rootViewController" id="smF-tS-6S4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0M3-1C-W93" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="790" y="266"/>
         </scene>

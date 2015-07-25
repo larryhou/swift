@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController
+class TrackTimeTableViewController: UITableViewController
 {
     var managedObjectContext:NSManagedObjectContext!
 

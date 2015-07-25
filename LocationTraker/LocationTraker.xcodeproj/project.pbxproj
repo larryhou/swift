@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B405BAF1B6388E900C43C54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BAE1B6388E900C43C54 /* AppDelegate.swift */; };
-		6B405BB11B6388E900C43C54 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BB01B6388E900C43C54 /* ViewController.swift */; };
+		6B405BB11B6388E900C43C54 /* TrackTimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BB01B6388E900C43C54 /* TrackTimeTableViewController.swift */; };
 		6B405BB41B6388E900C43C54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B405BB21B6388E900C43C54 /* Main.storyboard */; };
 		6B405BB71B6388E900C43C54 /* LocationTraker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BB51B6388E900C43C54 /* LocationTraker.xcdatamodeld */; };
 		6B405BB91B6388E900C43C54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B405BB81B6388E900C43C54 /* Assets.xcassets */; };
@@ -41,7 +41,7 @@
 /* Begin PBXFileReference section */
 		6B405BAB1B6388E900C43C54 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B405BAE1B6388E900C43C54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6B405BB01B6388E900C43C54 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6B405BB01B6388E900C43C54 /* TrackTimeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTimeTableViewController.swift; sourceTree = "<group>"; };
 		6B405BB31B6388E900C43C54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B405BB61B6388E900C43C54 /* LocationTraker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationTraker.xcdatamodel; sourceTree = "<group>"; };
 		6B405BB81B6388E900C43C54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 			children = (
 				6B405BDF1B6388F100C43C54 /* CoreData */,
 				6B405BAE1B6388E900C43C54 /* AppDelegate.swift */,
-				6B405BB01B6388E900C43C54 /* ViewController.swift */,
+				6B405BB01B6388E900C43C54 /* TrackTimeTableViewController.swift */,
 				6B405BB21B6388E900C43C54 /* Main.storyboard */,
 				6B405BB81B6388E900C43C54 /* Assets.xcassets */,
 				6B405BBA1B6388E900C43C54 /* LaunchScreen.storyboard */,
@@ -281,7 +281,7 @@
 				6B405BF11B639AB200C43C54 /* TrackTime.swift in Sources */,
 				6B405BF01B639AB200C43C54 /* TrackTime+CoreDataProperties.swift in Sources */,
 				6B405BF21B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift in Sources */,
-				6B405BB11B6388E900C43C54 /* ViewController.swift in Sources */,
+				6B405BB11B6388E900C43C54 /* TrackTimeTableViewController.swift in Sources */,
 				6B405BB71B6388E900C43C54 /* LocationTraker.xcdatamodeld in Sources */,
 				6B405BAF1B6388E900C43C54 /* AppDelegate.swift in Sources */,
 				6B405BF31B639AB200C43C54 /* LocationInfo.swift in Sources */,
