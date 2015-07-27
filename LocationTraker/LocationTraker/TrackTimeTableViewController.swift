@@ -76,8 +76,6 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         {
             addUpdatedLocation(location)
         }
-        
-//        tableView.reloadData()
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
@@ -91,21 +89,26 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         return CLLocation(latitude: location.latitude!.doubleValue, longitude: location.longitude!.doubleValue)
     }
     
-    func addUpdatedLocation(newloc:CLLocation)
+    func addUpdatedLocation(newloc:CLLocation) -> Bool
     {
+        var contextChanged = false
+        
         formatter.dateFormat = "yyyy-MM-dd"
         let date = formatter.stringFromDate(newloc.timestamp)
         if currentTime == nil || date != currentTime.date
         {
+            contextChanged = true
             currentTime = NSEntityDescription.insertNewObjectForEntityForName("TrackTime", inManagedObjectContext: managedObjectContext) as! TrackTime
             currentTime.date = date
             
             data.append(currentTime)
+            
             tableView.reloadData()
         }
         
         if currentLocation == nil || getCLLocation(currentLocation).distanceFromLocation(newloc) >= 1.0
         {
+            contextChanged = true
             let location = NSEntityDescription.insertNewObjectForEntityForName("LocationInfo", inManagedObjectContext: managedObjectContext) as! LocationInfo
             location.date = currentTime
             
@@ -116,21 +119,23 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
             currentLocation.course = newloc.course
             currentLocation.horizontalAccuracy = newloc.horizontalAccuracy
             currentLocation.verticalAccuracy = newloc.verticalAccuracy
+            currentLocation.altitude = newloc.altitude
             currentLocation.timestamp = newloc.timestamp
         }
-        else
+        
+        if contextChanged
         {
-            currentLocation.hitCount = currentLocation.hitCount!.integerValue + 1
+            do
+            {
+                try managedObjectContext.save()
+            }
+            catch
+            {
+                print(error)
+            }
         }
         
-        do
-        {
-            try managedObjectContext.save()
-        }
-        catch
-        {
-            print(error)
-        }
+        return contextChanged
     }
     
     //MARK: table
