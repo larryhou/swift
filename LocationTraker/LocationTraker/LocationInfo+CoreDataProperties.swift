@@ -2,7 +2,7 @@
 //  LocationInfo+CoreDataProperties.swift
 //  LocationTraker
 //
-//  Created by larryhou on 26/7/2015.
+//  Created by larryhou on 27/7/2015.
 //  Copyright © 2015 larryhou. All rights reserved.
 //
 //  Delete this file and regenerate it using "Create NSManagedObject Subclass…"
@@ -21,7 +21,7 @@ extension LocationInfo {
     @NSManaged var speed: NSNumber?
     @NSManaged var timestamp: NSDate?
     @NSManaged var verticalAccuracy: NSNumber?
-    @NSManaged var hitCount: NSNumber?
+    @NSManaged var altitude: NSNumber?
     @NSManaged var date: TrackTime?
 
 }
