@@ -2,7 +2,7 @@
 //  TrackTime+CoreDataProperties.swift
 //  LocationTraker
 //
-//  Created by larryhou on 25/7/2015.
+//  Created by larryhou on 26/7/2015.
 //  Copyright © 2015 larryhou. All rights reserved.
 //
 //  Delete this file and regenerate it using "Create NSManagedObject Subclass…"
@@ -14,7 +14,7 @@ import CoreData
 
 extension TrackTime {
 
-    @NSManaged var name: String?
+    @NSManaged var date: String?
     @NSManaged var locations: NSSet?
 
 }

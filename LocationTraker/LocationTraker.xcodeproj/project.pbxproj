@@ -19,6 +19,8 @@
 		6B405BF11B639AB200C43C54 /* TrackTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BED1B639AB200C43C54 /* TrackTime.swift */; };
 		6B405BF21B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BEE1B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift */; };
 		6B405BF31B639AB200C43C54 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B405BEF1B639AB200C43C54 /* LocationInfo.swift */; };
+		6B405BF51B63E7EB00C43C54 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B405BF41B63E7EB00C43C54 /* MapKit.framework */; };
+		6B8BEA331B6608240081A771 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8BEA321B6608240081A771 /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,9 @@
 		6B405BED1B639AB200C43C54 /* TrackTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTime.swift; sourceTree = "<group>"; };
 		6B405BEE1B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocationInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6B405BEF1B639AB200C43C54 /* LocationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
+		6B405BF41B63E7EB00C43C54 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6B8BEA321B6608240081A771 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		6B8BEA341B6608240081A771 /* Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tracker.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B405BF51B63E7EB00C43C54 /* MapKit.framework in Frameworks */,
+				6B8BEA331B6608240081A771 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +94,7 @@
 		6B405BA21B6388E900C43C54 = {
 			isa = PBXGroup;
 			children = (
+				6B8BEA351B6608FD0081A771 /* Frameworks */,
 				6B405BAD1B6388E900C43C54 /* LocationTraker */,
 				6B405BC51B6388EA00C43C54 /* LocationTrakerTests */,
 				6B405BD01B6388EA00C43C54 /* LocationTrakerUITests */,
@@ -107,6 +115,7 @@
 		6B405BAD1B6388E900C43C54 /* LocationTraker */ = {
 			isa = PBXGroup;
 			children = (
+				6B8BEA341B6608240081A771 /* Tracker.entitlements */,
 				6B405BDF1B6388F100C43C54 /* CoreData */,
 				6B405BAE1B6388E900C43C54 /* AppDelegate.swift */,
 				6B405BB01B6388E900C43C54 /* TrackTimeTableViewController.swift */,
@@ -146,6 +155,15 @@
 				6B405BB51B6388E900C43C54 /* LocationTraker.xcdatamodeld */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		6B8BEA351B6608FD0081A771 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B8BEA321B6608240081A771 /* HealthKit.framework */,
+				6B405BF41B63E7EB00C43C54 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +233,21 @@
 				TargetAttributes = {
 					6B405BAA1B6388E900C43C54 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = PRLP6W5S32;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					6B405BC11B6388E900C43C54 = {
 						CreatedOnToolsVersion = 7.0;
@@ -432,12 +465,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LocationTraker/Tracker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LocationTraker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MOMC_SUPPRESS_INVERSE_TRANSIENT_ERROR = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.LocationTraker;
 				PRODUCT_NAME = Tracker;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -445,12 +482,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LocationTraker/Tracker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LocationTraker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MOMC_SUPPRESS_INVERSE_TRANSIENT_ERROR = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.LocationTraker;
 				PRODUCT_NAME = Tracker;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -521,6 +562,7 @@
 				6B405BD81B6388EA00C43C54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B405BD91B6388EA00C43C54 /* Build configuration list for PBXNativeTarget "LocationTrakerTests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +571,7 @@
 				6B405BDB1B6388EA00C43C54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B405BDC1B6388EA00C43C54 /* Build configuration list for PBXNativeTarget "LocationTrakerUITests" */ = {
 			isa = XCConfigurationList;
@@ -537,6 +580,7 @@
 				6B405BDE1B6388EA00C43C54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
