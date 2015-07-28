@@ -61,7 +61,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.stopUpdatingLocation()
         
         locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.allowDeferredLocationUpdatesUntilTraveled(10.0, timeout: 60.0)
+        locationManager.allowDeferredLocationUpdatesUntilTraveled(10.0, timeout: 10.0)
     }
     
     func enterForegroundMode()
@@ -124,7 +124,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
             currentTime = NSEntityDescription.insertNewObjectForEntityForName("TrackTime", inManagedObjectContext: managedObjectContext) as! TrackTime
             currentTime.date = date
             
-            data.append(currentTime)
+            data.insert(currentTime, atIndex: 0)
             
             tableView.reloadData()
         }

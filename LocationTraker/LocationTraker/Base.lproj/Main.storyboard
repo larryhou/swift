@@ -59,25 +59,28 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="Bir-SF-ALn" style="IBUITableViewCellStyleDefault" id="G9u-DE-0rx">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="Bir-SF-ALn" style="IBUITableViewCellStyleDefault" id="G9u-DE-0rx">
                                 <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G9u-DE-0rx" id="uB6-yr-t1Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bir-SF-ALn">
-                                            <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="518" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <segue destination="JZb-L3-GFl" kind="show" identifier="ShowLocationDetail" trigger="accessoryAction" id="Lxl-8f-37z"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -89,6 +92,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1c-hq-gt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2331" y="266"/>
+        </scene>
+        <!--Location Detail Table View Controller-->
+        <scene sceneID="dD4-me-EbQ">
+            <objects>
+                <viewController id="JZb-L3-GFl" customClass="LocationDetailTableViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zth-m0-XYy"/>
+                        <viewControllerLayoutGuide type="bottom" id="itu-GQ-BjY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1o6-Q3-0H7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oQo-o0-rHM">
+                                <rect key="frame" x="0.0" y="64" width="600" height="446"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="JZb-L3-GFl" id="8gx-2N-TcR"/>
+                                </connections>
+                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aJG-Ym-taB">
+                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="uMe-q2-ecu"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationDetailCell" textLabel="Dxh-oa-2RW" detailTextLabel="AiU-p3-kq2" style="IBUITableViewCellStyleValue2" id="ERp-Tg-4K1">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ERp-Tg-4K1" id="wXe-5H-0Ff">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Speed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dxh-oa-2RW">
+                                                    <rect key="frame" x="15" y="15" width="91" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AiU-p3-kq2">
+                                                    <rect key="frame" x="112" y="15" width="22" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="JZb-L3-GFl" id="bcN-H3-buo"/>
+                                    <outlet property="delegate" destination="JZb-L3-GFl" id="nq8-Oh-FNQ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aJG-Ym-taB" firstAttribute="top" secondItem="oQo-o0-rHM" secondAttribute="bottom" id="FcK-M0-G8p"/>
+                            <constraint firstItem="oQo-o0-rHM" firstAttribute="trailing" secondItem="aJG-Ym-taB" secondAttribute="trailing" id="JM1-jT-OTT"/>
+                            <constraint firstItem="aJG-Ym-taB" firstAttribute="bottom" secondItem="itu-GQ-BjY" secondAttribute="top" id="Pni-xJ-yTM"/>
+                            <constraint firstAttribute="trailing" secondItem="oQo-o0-rHM" secondAttribute="trailing" id="Ych-Yr-DJs"/>
+                            <constraint firstItem="aJG-Ym-taB" firstAttribute="leading" secondItem="1o6-Q3-0H7" secondAttribute="leading" id="ZFk-SG-qs7"/>
+                            <constraint firstItem="oQo-o0-rHM" firstAttribute="leading" secondItem="aJG-Ym-taB" secondAttribute="leading" id="kah-R3-vNB"/>
+                            <constraint firstItem="oQo-o0-rHM" firstAttribute="top" secondItem="Zth-m0-XYy" secondAttribute="bottom" id="l3D-Mj-vkh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="oQo-o0-rHM" id="uau-4z-ppe"/>
+                        <outlet property="tableView" destination="aJG-Ym-taB" id="ygg-hS-u6m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vvC-bM-Pn4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3025" y="266"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pD8-nT-woi">
