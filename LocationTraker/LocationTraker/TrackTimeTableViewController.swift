@@ -21,7 +21,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
     private var currentLocation:LocationInfo!
     
     private var locationManager:CLLocationManager!
-    private var monitering:Bool = false
+    private var backgroundMode:Bool = false
 
     override func viewDidLoad()
     {
@@ -30,9 +30,10 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         formatter = NSDateFormatter()
         
         let request = NSFetchRequest(entityName: "TrackTime")
-        request.fetchBatchSize = 20
+        request.fetchBatchSize = 30
         request.resultType = NSFetchRequestResultType.ManagedObjectResultType
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        request.returnsObjectsAsFaults = true
         
         do
         {
@@ -49,17 +50,20 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
+        backgroundMode = false
     }
     
     //MARK: states change
     func enterBackgroundMode()
     {
+        backgroundMode = true
         locationManager.stopUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func enterForegroundMode()
     {
+        backgroundMode = false
         locationManager.stopMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
     }
@@ -72,9 +76,22 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
+        var changed = false
         for location in locations
         {
-            addUpdatedLocation(location)
+            changed = addUpdatedLocation(location) || changed
+        }
+        
+        if changed
+        {
+            do
+            {
+                try managedObjectContext.save()
+            }
+            catch
+            {
+                print(error)
+            }
         }
     }
     
@@ -106,7 +123,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
             tableView.reloadData()
         }
         
-        if currentLocation == nil || getCLLocation(currentLocation).distanceFromLocation(newloc) >= 1.0
+        if currentLocation == nil || backgroundMode || getCLLocation(currentLocation).distanceFromLocation(newloc) >= 1.0 && newloc.timestamp.timeIntervalSinceDate(currentLocation.timestamp!) >= 1.0
         {
             contextChanged = true
             let location = NSEntityDescription.insertNewObjectForEntityForName("LocationInfo", inManagedObjectContext: managedObjectContext) as! LocationInfo
@@ -121,18 +138,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
             currentLocation.verticalAccuracy = newloc.verticalAccuracy
             currentLocation.altitude = newloc.altitude
             currentLocation.timestamp = newloc.timestamp
-        }
-        
-        if contextChanged
-        {
-            do
-            {
-                try managedObjectContext.save()
-            }
-            catch
-            {
-                print(error)
-            }
+            currentLocation.backgroundMode = backgroundMode
         }
         
         return contextChanged
@@ -155,6 +161,19 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         let cell = tableView.dequeueReusableCellWithIdentifier("TrackTimeCell")!
         cell.textLabel?.text = data[indexPath.row].date
         return cell
+    }
+    
+    //MARK: segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "ShowLocations"
+        {
+            let indexPath = tableView.indexPathForSelectedRow!
+            let time = data[indexPath.row]
+            
+            let dst = segue.destinationViewController as! LocationTableViewController
+            dst.currentTime = time
+        }
     }
 
     override func didReceiveMemoryWarning()

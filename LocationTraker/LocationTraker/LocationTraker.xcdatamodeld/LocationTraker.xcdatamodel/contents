@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="15A226f" minimumToolsVersion="Automatic">
     <entity name="LocationInfo" representedClassName="LocationInfo" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="backgroundMode" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="course" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="horizontalAccuracy" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -16,7 +17,7 @@
         <relationship name="locations" toMany="YES" deletionRule="Nullify" destinationEntity="LocationInfo" inverseName="date" inverseEntity="LocationInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocationInfo" positionX="-938" positionY="-0" width="128" height="180"/>
+        <element name="LocationInfo" positionX="-938" positionY="-0" width="128" height="195"/>
         <element name="TrackTime" positionX="-1244" positionY="230" width="146" height="75"/>
     </elements>
 </model>

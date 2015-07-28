@@ -22,6 +22,7 @@ extension LocationInfo {
     @NSManaged var timestamp: NSDate?
     @NSManaged var verticalAccuracy: NSNumber?
     @NSManaged var altitude: NSNumber?
+    @NSManaged var backgroundMode: NSNumber?
     @NSManaged var date: TrackTime?
 
 }
