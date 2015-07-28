@@ -48,6 +48,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
+        
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         backgroundMode = false
@@ -58,13 +59,18 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
     {
         backgroundMode = true
         locationManager.stopUpdatingLocation()
+        
         locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.allowDeferredLocationUpdatesUntilTraveled(10.0, timeout: 60.0)
     }
     
     func enterForegroundMode()
     {
         backgroundMode = false
+        
         locationManager.stopMonitoringSignificantLocationChanges()
+        locationManager.disallowDeferredLocationUpdates()
+        
         locationManager.startUpdatingLocation()
     }
     
