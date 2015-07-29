@@ -29,14 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         
         formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd E HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd E HH:mm:ss.SSS"
         
         trackController = (window!.rootViewController as! UINavigationController).topViewController as! TrackTimeTableViewController
         trackController.managedObjectContext = managedObjectContext
         
         insertAPPStatus(APPStatusType.Launch)
-        
-//        cleanUpStatus()
         return true
     }
     
@@ -58,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func cleanUpStatus()
     {
         let request = NSFetchRequest(entityName: "APPStatus")
-        request.predicate = NSPredicate(format: "date == nil")
+        request.predicate = NSPredicate(format: "date != nil")
         request.resultType = NSFetchRequestResultType.ManagedObjectIDResultType
         
         do
@@ -90,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print(__FUNCTION__)
         trackController.enterBackgroundMode()
-        insertAPPStatus(APPStatusType.EnterForeground)
+        insertAPPStatus(APPStatusType.EnterBackground)
     }
 
     func applicationWillEnterForeground(application: UIApplication)
