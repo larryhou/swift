@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="15A226f" minimumToolsVersion="Automatic">
+    <entity name="APPStatus" representedClassName="APPStatus" syncable="YES">
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="LocationInfo" representedClassName="LocationInfo" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="backgroundMode" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -17,7 +21,8 @@
         <relationship name="locations" toMany="YES" deletionRule="Nullify" destinationEntity="LocationInfo" inverseName="date" inverseEntity="LocationInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocationInfo" positionX="-938" positionY="-0" width="128" height="193"/>
-        <element name="TrackTime" positionX="-1244" positionY="230" width="146" height="73"/>
+        <element name="LocationInfo" positionX="-938" positionY="-0" width="128" height="195"/>
+        <element name="TrackTime" positionX="-1244" positionY="230" width="146" height="75"/>
+        <element name="APPStatus" positionX="-1080" positionY="144" width="128" height="75"/>
     </elements>
 </model>

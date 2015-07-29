@@ -15,13 +15,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
     var window: UIWindow?
     var trackController:TrackTimeTableViewController!
+    var formatter:NSDateFormatter!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
+        if launchOptions != nil
+        {
+            for (key, value) in launchOptions!
+            {
+                print("\(key): \(value)")
+            }
+        }
+        
+        formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd E HH:mm:ss"
+        
         trackController = (window!.rootViewController as! UINavigationController).topViewController as! TrackTimeTableViewController
         trackController.managedObjectContext = managedObjectContext
+        
+        insertAPPStatus(APPStatusType.Launch)
         return true
+    }
+    
+    func insertAPPStatus(type:APPStatusType)
+    {
+        let date = NSDate()
+        let status = NSEntityDescription.insertNewObjectForEntityForName("APPStatus", inManagedObjectContext: managedObjectContext) as! APPStatus
+        status.timestamp = formatter.stringFromDate(date)
+        status.status = type.rawValue
+        status.date = date
+        
+        do
+        {
+            try managedObjectContext.save()
+        }
+        catch {}
     }
 
     func applicationWillResignActive(application: UIApplication)
@@ -29,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         print(__FUNCTION__)
+        insertAPPStatus(APPStatusType.ResignActive)
     }
 
     func applicationDidEnterBackground(application: UIApplication)
@@ -37,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print(__FUNCTION__)
         trackController.enterBackgroundMode()
+        insertAPPStatus(APPStatusType.EnterForeground)
     }
 
     func applicationWillEnterForeground(application: UIApplication)
@@ -44,12 +75,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         print(__FUNCTION__)
         trackController.enterForegroundMode()
+        insertAPPStatus(APPStatusType.EnterForeground)
     }
 
     func applicationDidBecomeActive(application: UIApplication)
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print(__FUNCTION__)
+        insertAPPStatus(APPStatusType.BecomeActive)
     }
 
     func applicationWillTerminate(application: UIApplication)
@@ -58,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Saves changes in the application's managed object context before the application terminates.
         print(__FUNCTION__)
         self.saveContext()
+        insertAPPStatus(APPStatusType.Terminate)
     }
 
     // MARK: - Core Data stack
@@ -85,7 +119,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         var failureReason = "There was an error creating or loading the application's saved data."
         do
         {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            var params:[String:AnyObject] = [:]
+            params.updateValue(true, forKey: NSMigratePersistentStoresAutomaticallyOption)
+            params.updateValue(true, forKey: NSInferMappingModelAutomaticallyOption)
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: params)
         }
         catch
         {

@@ -24,6 +24,8 @@
 		6B8BEA371B6627DE0081A771 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BEA361B6627DE0081A771 /* LocationTableViewController.swift */; };
 		6B8BEA391B6785E50081A771 /* LocationDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BEA381B6785E50081A771 /* LocationDetailTableViewController.swift */; };
 		6BDCEB6F1B67DABF00D348B8 /* ChinaGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDCEB6E1B67DABF00D348B8 /* ChinaGPS.swift */; };
+		6BDCEB7C1B68B55700D348B8 /* APPStatus+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDCEB7A1B68B55700D348B8 /* APPStatus+CoreDataProperties.swift */; };
+		6BDCEB7D1B68B55700D348B8 /* APPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDCEB7B1B68B55700D348B8 /* APPStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,10 @@
 		6B8BEA361B6627DE0081A771 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		6B8BEA381B6785E50081A771 /* LocationDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDetailTableViewController.swift; sourceTree = "<group>"; };
 		6BDCEB6E1B67DABF00D348B8 /* ChinaGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChinaGPS.swift; sourceTree = "<group>"; };
+		6BDCEB751B68A98600D348B8 /* LocationTraker_v_1_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationTraker_v_1_1.xcdatamodel; sourceTree = "<group>"; };
+		6BDCEB7A1B68B55700D348B8 /* APPStatus+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APPStatus+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6BDCEB7B1B68B55700D348B8 /* APPStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APPStatus.swift; sourceTree = "<group>"; };
+		6BDCEB801B68C11400D348B8 /* LocationTraker_v_1_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationTraker_v_1_2.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +163,8 @@
 		6B405BDF1B6388F100C43C54 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				6BDCEB7A1B68B55700D348B8 /* APPStatus+CoreDataProperties.swift */,
+				6BDCEB7B1B68B55700D348B8 /* APPStatus.swift */,
 				6B405BEC1B639AB200C43C54 /* TrackTime+CoreDataProperties.swift */,
 				6B405BED1B639AB200C43C54 /* TrackTime.swift */,
 				6B405BEE1B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift */,
@@ -323,12 +331,14 @@
 				6B405BF11B639AB200C43C54 /* TrackTime.swift in Sources */,
 				6B405BF01B639AB200C43C54 /* TrackTime+CoreDataProperties.swift in Sources */,
 				6B405BF21B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift in Sources */,
+				6BDCEB7D1B68B55700D348B8 /* APPStatus.swift in Sources */,
 				6B8BEA391B6785E50081A771 /* LocationDetailTableViewController.swift in Sources */,
 				6B405BB11B6388E900C43C54 /* TrackTimeTableViewController.swift in Sources */,
 				6B8BEA371B6627DE0081A771 /* LocationTableViewController.swift in Sources */,
 				6B405BB71B6388E900C43C54 /* LocationTraker.xcdatamodeld in Sources */,
 				6B405BAF1B6388E900C43C54 /* AppDelegate.swift in Sources */,
 				6BDCEB6F1B67DABF00D348B8 /* ChinaGPS.swift in Sources */,
+				6BDCEB7C1B68B55700D348B8 /* APPStatus+CoreDataProperties.swift in Sources */,
 				6B405BF31B639AB200C43C54 /* LocationInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,9 +610,11 @@
 		6B405BB51B6388E900C43C54 /* LocationTraker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6BDCEB801B68C11400D348B8 /* LocationTraker_v_1_2.xcdatamodel */,
+				6BDCEB751B68A98600D348B8 /* LocationTraker_v_1_1.xcdatamodel */,
 				6B405BB61B6388E900C43C54 /* LocationTraker.xcdatamodel */,
 			);
-			currentVersion = 6B405BB61B6388E900C43C54 /* LocationTraker.xcdatamodel */;
+			currentVersion = 6BDCEB801B68C11400D348B8 /* LocationTraker_v_1_2.xcdatamodel */;
 			path = LocationTraker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
