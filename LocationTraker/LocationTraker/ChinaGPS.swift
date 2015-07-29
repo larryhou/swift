@@ -38,7 +38,7 @@ class ChinaGPS
         return ret
     }
     
-    private class func encrpyt_lon(x:Double, y:Double) -> Double
+    private class func encrypt_lon(x:Double, y:Double) -> Double
     {
         var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y
         ret += 0.1 * sqrt(abs(x))
@@ -66,7 +66,7 @@ class ChinaGPS
     ///
     ///  WGS-84 到 GCJ-02 的转换
     ///
-    class func encrpyt_WGS_2_GCJ(loc:GPSLocation) -> GPSLocation
+    class func encrypt_WGS_2_GCJ(loc:GPSLocation) -> GPSLocation
     {
         if outOfChina(loc.lat, lon: loc.lon)
         {
@@ -74,7 +74,7 @@ class ChinaGPS
         }
         
         var lat = encrypt_lat(loc.lon - 105.0, y: loc.lat - 35.0)
-        var lon = encrpyt_lon(loc.lon - 105.0, y: loc.lat - 35.0)
+        var lon = encrypt_lon(loc.lon - 105.0, y: loc.lat - 35.0)
         
         let radian = loc.lat / 180.0 * pi
         let magic = 1 - ee * sin(radian) * sin(radian)
@@ -89,7 +89,7 @@ class ChinaGPS
     class func encrypt_WGS_2_GCJ(latitude latitude:Double, longitude:Double) -> CLLocation
     {
         let loc = GPSLocation(lon: longitude, lat: latitude)
-        let ret = encrpyt_WGS_2_GCJ(loc)
+        let ret = encrypt_WGS_2_GCJ(loc)
         
         return CLLocation(latitude: ret.lat, longitude: ret.lon)
     }
