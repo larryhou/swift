@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         trackController.managedObjectContext = managedObjectContext
         
         insertAPPStatus(APPStatusType.Launch)
+        
+//        cleanUpStatus()
         return true
     }
     
@@ -51,6 +53,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             try managedObjectContext.save()
         }
         catch {}
+    }
+    
+    func cleanUpStatus()
+    {
+        let request = NSFetchRequest(entityName: "APPStatus")
+        request.predicate = NSPredicate(format: "date == nil")
+        request.resultType = NSFetchRequestResultType.ManagedObjectIDResultType
+        
+        do
+        {
+            let ids = try managedObjectContext.executeFetchRequest(request) as! [NSManagedObjectID]
+            if ids.count > 0
+            {
+                let deleteRequest = NSBatchDeleteRequest(objectIDs: ids)
+                try managedObjectContext.executeRequest(deleteRequest)
+            }
+        }
+        catch
+        {
+            print(error)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication)
