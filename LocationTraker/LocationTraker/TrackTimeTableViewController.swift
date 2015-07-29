@@ -60,6 +60,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         backgroundMode = true
         locationManager.stopUpdatingLocation()
         
+        locationManager.delegate = self
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.allowDeferredLocationUpdatesUntilTraveled(10.0, timeout: 10.0)
     }
@@ -71,6 +72,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.stopMonitoringSignificantLocationChanges()
         locationManager.disallowDeferredLocationUpdates()
         
+        locationManager.delegate = self
         locationManager.startUpdatingLocation()
     }
     

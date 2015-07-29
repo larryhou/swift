@@ -113,11 +113,11 @@
                                 </connections>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aJG-Ym-taB">
-                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
+                                <rect key="frame" x="0.0" y="512" width="600" height="88"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="uMe-q2-ecu"/>
+                                    <constraint firstAttribute="height" constant="88" id="uMe-q2-ecu"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationDetailCell" textLabel="Dxh-oa-2RW" detailTextLabel="AiU-p3-kq2" style="IBUITableViewCellStyleValue2" id="ERp-Tg-4K1">
@@ -158,7 +158,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aJG-Ym-taB" firstAttribute="top" secondItem="oQo-o0-rHM" secondAttribute="bottom" id="FcK-M0-G8p"/>
+                            <constraint firstItem="aJG-Ym-taB" firstAttribute="top" secondItem="oQo-o0-rHM" secondAttribute="bottom" constant="2" id="FcK-M0-G8p"/>
                             <constraint firstItem="oQo-o0-rHM" firstAttribute="trailing" secondItem="aJG-Ym-taB" secondAttribute="trailing" id="JM1-jT-OTT"/>
                             <constraint firstItem="aJG-Ym-taB" firstAttribute="bottom" secondItem="itu-GQ-BjY" secondAttribute="top" id="Pni-xJ-yTM"/>
                             <constraint firstAttribute="trailing" secondItem="oQo-o0-rHM" secondAttribute="trailing" id="Ych-Yr-DJs"/>

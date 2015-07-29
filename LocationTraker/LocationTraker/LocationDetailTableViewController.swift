@@ -21,24 +21,6 @@ class PinAnnotation:NSObject, MKAnnotation
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.title = String(format: "%.7f°,%.7f°",latitude, longitude)
     }
-    
-    func geocode()
-    {
-        let loc = CLLocation(latitude: coordinate.latitude, longitude:coordinate.longitude)
-        CLGeocoder().reverseGeocodeLocation(loc)
-        { (list:[CLPlacemark]?, error:NSError?) in
-            if error == nil
-            {
-                for placemark in list!
-                {
-                    print(placemark.addressDictionary!)
-                }
-                
-                let placemark = list!.first!
-                self.subtitle = (placemark.addressDictionary?["Name"] as! String)
-            }
-        }
-    }
 }
 
 class LocationDetailTableViewController:UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate
@@ -104,8 +86,29 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
     func autoCallout(annotation:PinAnnotation)
     {
         mapView.selectAnnotation(annotation, animated: true)
-        annotation.geocode()
+        
+        let loc = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(loc)
+        { (list:[CLPlacemark]?, error:NSError?) in
+            if error == nil
+            {
+                for placemark in list!
+                {
+                    print(placemark.addressDictionary!)
+                }
+                
+                let placemark = list!.first!
+                annotation.subtitle = (placemark.addressDictionary?["Name"] as! String)
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Geocode: \(error!.code)", message: error?.description, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert.addAction(UIAlertAction(title: "", style: UIAlertActionStyle.Destructive, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
+    
     
     //MARK: table
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -122,5 +125,11 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("LocationDetailCell")!
         return cell
+    }
+    
+    //MARK: gc
+    deinit
+    {
+        mapView.removeAnnotations(mapView.annotations)
     }
 }
