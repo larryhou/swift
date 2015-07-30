@@ -38,7 +38,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
         
         marsloc = ChinaGPS.encrypt_WGS_2_GCJ(latitude: location.latitude!.doubleValue, longitude: location.longitude!.doubleValue)
         
-        let region = MKCoordinateRegionMakeWithDistance(marsloc.coordinate, 500, 500)
+        let region = MKCoordinateRegionMakeWithDistance(marsloc.coordinate, 300, 300)
         mapView.setRegion(region, animated: true)
         
         performSelector("pinAnnotation", withObject: nil, afterDelay: 0.5)
