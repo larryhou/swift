@@ -15,6 +15,9 @@ class PinAnnotation:NSObject, MKAnnotation
     dynamic var title:String?
     dynamic var subtitle:String?
     dynamic var coordinate: CLLocationCoordinate2D
+    var removable = false
+    
+    var tintColor:UIColor?
     
     init(latitude:Double, longitude:Double)
     {
@@ -25,12 +28,16 @@ class PinAnnotation:NSObject, MKAnnotation
 
 class LocationDetailTableViewController:UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate
 {
+    var MAP_TAP_CONTEXT:String?
+    var PIN_COORDINATE_CHANGE_CONTEXT:String?
+    
     var location:LocationInfo!
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     
     private var marsloc:CLLocation!
+    private var mapTap:UILongPressGestureRecognizer!
     
     override func viewDidLoad()
     {
@@ -41,16 +48,67 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
         let region = MKCoordinateRegionMakeWithDistance(marsloc.coordinate, 200, 200)
         mapView.setRegion(region, animated: true)
         
-        performSelector("pinAnnotation", withObject: nil, afterDelay: 0.5)
+        performSelector("placeInitAnnotation:", withObject: marsloc, afterDelay: 0.5)
+        
+        mapTap = UILongPressGestureRecognizer()
+        mapTap.addObserver(self, forKeyPath: "state", options: NSKeyValueObservingOptions.New, context: &MAP_TAP_CONTEXT
+        )
+        mapView.addGestureRecognizer(mapTap)
     }
     
-    func pinAnnotation()
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
-        let annotation = PinAnnotation(latitude: marsloc.coordinate.latitude, longitude: marsloc.coordinate.longitude)
+        if context == &MAP_TAP_CONTEXT
+        {
+            let state = object?.valueForKey(keyPath!) as! Int
+            if state == UIGestureRecognizerState.Began.rawValue
+            {
+                mapViewTapped(object as! UILongPressGestureRecognizer)
+            }
+        }
+        else
+        if context == &PIN_COORDINATE_CHANGE_CONTEXT
+        {
+            let annotation = object as! PinAnnotation
+            showAnnotationCallout(annotation)
+        }
+    }
+    
+    func placeInitAnnotation(location:CLLocation)
+    {
+        dropPinAnnotation(marsloc, tintColor: UIColor.redColor())
+    }
+    
+    func dropPinAnnotation(location:CLLocation, tintColor:UIColor? = nil, removable:Bool = false)
+    {
+        let annotation = PinAnnotation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        annotation.tintColor = tintColor
+        annotation.removable = removable
         mapView.addAnnotation(annotation)
     }
     
     //MARK: map
+    func mapViewTapped(gesture:UILongPressGestureRecognizer)
+    {
+        let touchPoint = gesture.locationInView(mapView)
+        let coord = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+        
+        clearUserAnnotation()
+        dropPinAnnotation(CLLocation(latitude: coord.latitude, longitude: coord.longitude), tintColor: UIColor.blueColor(), removable: true)
+    }
+    
+    func clearUserAnnotation()
+    {
+        for item in mapView.annotations
+        {
+            if item is PinAnnotation && (item as! PinAnnotation).removable
+            {
+                mapView.removeAnnotation(item)
+                (item as! PinAnnotation).removeObserver(self, forKeyPath: "coordinate", context: &PIN_COORDINATE_CHANGE_CONTEXT)
+            }
+        }
+    }
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
     {
         if annotation is PinAnnotation
@@ -60,6 +118,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
             if anView == nil
             {
                 let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: PIN_INDENTIFIER)
+                view.pinTintColor = (annotation as! PinAnnotation).tintColor
                 view.canShowCallout = true
                 view.animatesDrop = true
                 anView = view
@@ -78,12 +137,19 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
             if anView.annotation is PinAnnotation
             {
                 let annotation = anView.annotation as! PinAnnotation
-                performSelector("showAnnotationBubble:", withObject: annotation, afterDelay: 0.5)
+                performSelector("showAnnotationCallout:", withObject: annotation, afterDelay: 0.5)
+                
+                anView.draggable = annotation.removable
+                if annotation.removable
+                {
+                    annotation.addObserver(self, forKeyPath: "coordinate", options: NSKeyValueObservingOptions.New, context: &PIN_COORDINATE_CHANGE_CONTEXT
+                    )
+                }
             }
         }
     }
     
-    func showAnnotationBubble(annotation:PinAnnotation)
+    func showAnnotationCallout(annotation:PinAnnotation)
     {
         mapView.selectAnnotation(annotation, animated: true)
         
@@ -98,12 +164,12 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
                 }
                 
                 let placemark = list!.first!
-                annotation.subtitle = (placemark.addressDictionary?["Name"] as! String)
+                annotation.subtitle = placemark.name
             }
             else
             {
                 let alert = UIAlertController(title: "Geocode: \(error!.code)", message: error?.description, preferredStyle: UIAlertControllerStyle.ActionSheet)
-                alert.addAction(UIAlertAction(title: "", style: UIAlertActionStyle.Destructive, handler: nil))
+                alert.addAction(UIAlertAction(title: "I've got it!", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
@@ -130,6 +196,8 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
     //MARK: gc
     deinit
     {
+        clearUserAnnotation()
         mapView.removeAnnotations(mapView.annotations)
+        mapTap.removeObserver(self, forKeyPath: "state", context: &MAP_TAP_CONTEXT)
     }
 }
