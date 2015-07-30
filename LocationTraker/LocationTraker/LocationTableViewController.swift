@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import UIKit
 
 class LocationTableViewController:UITableViewController
@@ -74,6 +75,70 @@ class LocationTableViewController:UITableViewController
         cell.textLabel?.text = text
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let info = data[indexPath.row]
+        let location = ChinaGPS.encrypt_WGS_2_GCJ(latitude: info.latitude!.doubleValue, longitude: info.longitude!.doubleValue)
+        
+        CLGeocoder().reverseGeocodeLocation(location)
+        { (ret:[CLPlacemark]?, error:NSError?) in
+            if error == nil
+            {
+                self.alertPlacemark(CLLocation(latitude: info.latitude!.doubleValue, longitude: info.longitude!.doubleValue), marsloc:location, placemarks: ret!)
+            }
+            else
+            {
+                print(error)
+            }
+        }
+    }
+    
+    func alertPlacemark(location:CLLocation, marsloc:CLLocation, placemarks:[CLPlacemark])
+    {
+        func loc2str(location:CLLocation) -> String
+        {
+            return String(format: "%.10f°, %.10f°", location.coordinate.latitude, location.coordinate.longitude)
+        }
+        
+        let biduloc = ChinaGPS.baidu_encrypt(latitude: marsloc.coordinate.latitude, longitude: marsloc.coordinate.longitude)
+        
+        let message = loc2str(location)
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let operation:(UIAlertAction -> Void) = { self.setClipboard($0.title!)}
+        
+        for item in placemarks
+        {
+            let addrs = item.addressDictionary?["FormattedAddressLines"] as! [String]
+            print(addrs)
+            
+            var actions:[UIAlertAction] = []
+            actions.append(UIAlertAction(title: loc2str(marsloc), style: UIAlertActionStyle.Default, handler: operation))
+            actions.append(UIAlertAction(title: loc2str(biduloc), style: UIAlertActionStyle.Default, handler: operation))
+            actions.append(UIAlertAction(title: addrs.first, style: UIAlertActionStyle.Default, handler: operation))
+            if item.areasOfInterest != nil
+            {
+                actions += item.areasOfInterest!.map
+                {
+                     return UIAlertAction(title: $0, style: UIAlertActionStyle.Default, handler: operation)
+                }
+            }
+            actions.append(UIAlertAction(title: "I've got it!", style: UIAlertActionStyle.Cancel, handler: { _ in self.setClipboard(message) }))
+            for action in actions
+            {
+                alert.addAction(action)
+            }
+        }
+        
+        presentViewController(alert, animated: true
+            , completion: nil)
+    }
+    
+    func setClipboard(text:String)
+    {
+        UIPasteboard.generalPasteboard().string = text
     }
     
     //MARK: segue
