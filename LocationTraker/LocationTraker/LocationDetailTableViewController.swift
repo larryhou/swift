@@ -38,7 +38,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
         
         marsloc = ChinaGPS.encrypt_WGS_2_GCJ(latitude: location.latitude!.doubleValue, longitude: location.longitude!.doubleValue)
         
-        let region = MKCoordinateRegionMakeWithDistance(marsloc.coordinate, 300, 300)
+        let region = MKCoordinateRegionMakeWithDistance(marsloc.coordinate, 200, 200)
         mapView.setRegion(region, animated: true)
         
         performSelector("pinAnnotation", withObject: nil, afterDelay: 0.5)
@@ -78,12 +78,12 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
             if anView.annotation is PinAnnotation
             {
                 let annotation = anView.annotation as! PinAnnotation
-                performSelector("autoCallout:", withObject: annotation, afterDelay: 0.5)
+                performSelector("showAnnotationBubble:", withObject: annotation, afterDelay: 0.5)
             }
         }
     }
     
-    func autoCallout(annotation:PinAnnotation)
+    func showAnnotationBubble(annotation:PinAnnotation)
     {
         mapView.selectAnnotation(annotation, animated: true)
         

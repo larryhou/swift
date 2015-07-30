@@ -71,7 +71,7 @@ class LocationTableViewController:UITableViewController
         let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell")!
         
         var text = formatter.stringFromDate(location.timestamp!)
-        text += String(format: " %.7f°,%.7f°", location.latitude!.doubleValue, location.longitude!.doubleValue)
+        text += String(format: " %.5f°,%.5f°", location.latitude!.doubleValue, location.longitude!.doubleValue)
         cell.textLabel?.text = text
         
         return cell
