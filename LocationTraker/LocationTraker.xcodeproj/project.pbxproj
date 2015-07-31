@@ -65,6 +65,7 @@
 		6B405BEE1B639AB200C43C54 /* LocationInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocationInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6B405BEF1B639AB200C43C54 /* LocationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		6B405BF41B63E7EB00C43C54 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6B870FF61B6B252A00E9888C /* LocationTraker_v_1_3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LocationTraker_v_1_3.xcdatamodel"; sourceTree = "<group>"; };
 		6B8BEA321B6608240081A771 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		6B8BEA341B6608240081A771 /* Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tracker.entitlements; sourceTree = "<group>"; };
 		6B8BEA361B6627DE0081A771 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
@@ -610,11 +611,12 @@
 		6B405BB51B6388E900C43C54 /* LocationTraker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6B870FF61B6B252A00E9888C /* LocationTraker_v_1_3.xcdatamodel */,
 				6BDCEB801B68C11400D348B8 /* LocationTraker_v_1_2.xcdatamodel */,
 				6BDCEB751B68A98600D348B8 /* LocationTraker_v_1_1.xcdatamodel */,
 				6B405BB61B6388E900C43C54 /* LocationTraker.xcdatamodel */,
 			);
-			currentVersion = 6BDCEB801B68C11400D348B8 /* LocationTraker_v_1_2.xcdatamodel */;
+			currentVersion = 6B870FF61B6B252A00E9888C /* LocationTraker_v_1_3.xcdatamodel */;
 			path = LocationTraker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

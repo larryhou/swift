@@ -34,17 +34,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         trackController = (window!.rootViewController as! UINavigationController).topViewController as! TrackTimeTableViewController
         trackController.managedObjectContext = managedObjectContext
         
-        insertAPPStatus(APPStatusType.Launch)
+        let binaryOptions:NSData? = launchOptions == nil ? nil : NSKeyedArchiver.archivedDataWithRootObject(launchOptions!)
+        insertAPPStatus(APPStatusType.Launch, data:binaryOptions)
         return true
     }
     
-    func insertAPPStatus(type:APPStatusType)
+    func insertAPPStatus(type:APPStatusType, data:NSData? = nil)
     {
         let date = NSDate()
         let status = NSEntityDescription.insertNewObjectForEntityForName("APPStatus", inManagedObjectContext: managedObjectContext) as! APPStatus
         status.timestamp = formatter.stringFromDate(date)
         status.status = type.rawValue
         status.date = date
+        status.data = data
         
         do
         {

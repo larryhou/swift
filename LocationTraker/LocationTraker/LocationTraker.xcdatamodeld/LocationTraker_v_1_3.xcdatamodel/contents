@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="15A235d" minimumToolsVersion="Automatic">
+    <entity name="APPStatus" representedClassName="APPStatus" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="LocationInfo" representedClassName="LocationInfo" syncable="YES">
+        <attribute name="altitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="backgroundMode" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="course" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="horizontalAccuracy" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="verticalAccuracy" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="date" maxCount="1" deletionRule="Nullify" destinationEntity="TrackTime" inverseName="locations" inverseEntity="TrackTime" syncable="YES"/>
+    </entity>
+    <entity name="TrackTime" representedClassName="TrackTime" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="locations" toMany="YES" deletionRule="Nullify" destinationEntity="LocationInfo" inverseName="date" inverseEntity="LocationInfo" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="APPStatus" positionX="-1071" positionY="153" width="128" height="105"/>
+        <element name="LocationInfo" positionX="-938" positionY="-0" width="128" height="193"/>
+        <element name="TrackTime" positionX="-1244" positionY="230" width="146" height="73"/>
+    </elements>
+</model>
