@@ -18,7 +18,8 @@ let manager = ArgumentsManager()
 manager.insertOption("--encode-mode", abbr: "-e", help: "Use url encode mode to process", hasValue: false) { decodeMode = false }
 manager.insertOption("--decode-mode", abbr: "-d", help: "Use url decode mode to process", hasValue: false) { decodeMode = true }
 manager.insertOption("--verbose", abbr: "-v", help: "Enable verbose printing", hasValue: false) { verbose = true }
-manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false) {
+manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false)
+{
     manager.getHelpMessage(true)
     exit(0)
 }
@@ -64,7 +65,7 @@ if arguments.count > 0
 }
 else
 {
-    fputs("No Strings To Codec!\n", stderr)
+    fputs("Nothing To Codec!\n", stderr)
     manager.getHelpMessage(true)
     exit(1)
 }
