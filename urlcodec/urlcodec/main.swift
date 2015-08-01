@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Darwin
 
 var decodeMode = true, verbose = false
 
@@ -20,7 +19,7 @@ manager.insertOption("--decode-mode", abbr: "-d", help: "Use url decode mode to 
 manager.insertOption("--verbose", abbr: "-v", help: "Enable verbose printing", hasValue: false) { verbose = true }
 manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false)
 {
-    manager.getHelpMessage(true)
+    manager.showHelpMessage()
     exit(0)
 }
 
@@ -66,7 +65,7 @@ if arguments.count > 0
 else
 {
     fputs("NOTHING TO CODEC!\n", stderr)
-    fputs("\n".join(manager.getHelpMessage(false)), stderr)
+    manager.showHelpMessage(stderr)
     exit(1)
 }
 

@@ -87,7 +87,7 @@ class ArgumentsManager
         return value
     }
     
-    func getHelpMessage(print2stdout:Bool = true) -> [String]
+    func showHelpMessage(stream:UnsafeMutablePointer<FILE> = stdout)
     {
         var maxNameLength = 0
         var maxAbbrLength = 0
@@ -100,26 +100,15 @@ class ArgumentsManager
             abbrs.append(options[i].abbr)
         }
         
-        var help:[String] = ["urlcodec " + " ".join(abbrs) + " String ..."]
-        if print2stdout
-        {
-            print(help.last!)
-        }
+        fputs("urlcodec " + " ".join(abbrs) + " String ...\n", stream)
         
         for i in 0 ..< options.count
         {
             let item = options[i]
-            var line = padding(item.abbr, length: maxAbbrLength)
-            line += item.name == "" || item.abbr == "" ? " " : ","
-            line += " " + padding(item.name, length: maxNameLength) + "\t" + item.help
-            help.append(line)
-            if print2stdout
-            {
-                print(help.last!)
-            }
+            var help = padding(item.abbr, length: maxAbbrLength)
+            help += item.name == "" || item.abbr == "" ? " " : ","
+            help += " " + padding(item.name, length: maxNameLength) + "\t" + item.help
+            fputs(help + "\n", stream)
         }
-        
-        help.append("")
-        return help
     }
 }
