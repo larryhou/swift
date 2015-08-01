@@ -64,7 +64,6 @@ if arguments.count > 0
 }
 else
 {
-    fputs("NOTHING TO CODEC!\n", stderr)
     manager.showHelpMessage(stderr)
     exit(1)
 }
