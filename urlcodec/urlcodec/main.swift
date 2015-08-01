@@ -9,65 +9,30 @@
 import Foundation
 import Darwin
 
-var arguments = Process.arguments
-arguments.removeAtIndex(0)
-
-struct ArgumentOption
-{
-    let name:String, abbr:String, description:String, trigger:()->Void
-}
-
-func padding(var value:String, length:Int) -> String
-{
-    while NSString(string: value).length < length
-    {
-        value += " "
-    }
-    
-    return value
-}
-
 var decodeMode = true, verbose = false
 
-var options:[ArgumentOption] = []
-options.append(ArgumentOption(name: "--encode-mode", abbr: "-e", description: "Use url encode mode to process", trigger:{ decodeMode = false }))
-options.append(ArgumentOption(name: "--decode-mode", abbr: "-d", description: "Use url decode mode to process", trigger:{ decodeMode = true }))
-options.append(ArgumentOption(name: "--verbose", abbr: "-v", description: "Enable verbose printing", trigger:{ verbose = true }))
-options.append(ArgumentOption(name: "--help", abbr: "-h", description: "Show help message", trigger:{
-    
-    var length = 0
-    for item in options
-    {
-        length = max(length, NSString(string: item.name + item.abbr).length + 2)
-    }
-    
-    for item in options
-    {
-        var name = "\(item.abbr),\(item.name)"
-        print(padding(name, length: length) + "\t" + item.description)
-    }
+var arguments = Process.arguments
+arguments = Array(arguments[1..<arguments.count])
+
+let manager = ArgumentsManager()
+manager.insertOption("--encode-mode", abbr: "-e", help: "Use url encode mode to process", hasValue: false) { decodeMode = false }
+manager.insertOption("--decode-mode", abbr: "-d", help: "Use url decode mode to process", hasValue: false) { decodeMode = true }
+manager.insertOption("--verbose", abbr: "-v", help: "Enable verbose printing", hasValue: false) { verbose = true }
+manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false) {
+    manager.getHelpMessage(true)
     exit(0)
-}))
-
-var map:[String:ArgumentOption] = [:]
-for item in options
-{
-    map.updateValue(item, forKey: item.name)
-    map.updateValue(item, forKey: item.abbr)
 }
-
-let regex = try NSRegularExpression(pattern: "-[a-z]|--[a-z_-]{2,}", options: NSRegularExpressionOptions.CaseInsensitive)
 
 while arguments.count > 0
 {
     let text = arguments[0]
-    let matches = regex.matchesInString(text,
-        options: NSMatchingOptions.ReportProgress,
-        range: NSRange(location: 0, length: NSString(string: text).length))
-    if matches.count == 1
+    if manager.recognizeOption(text, triggerWhenMatch: true)
     {
         arguments.removeAtIndex(0)
-        map[text]?.trigger()
+        if let hasValue = manager.getOption(text)?.hasValue where hasValue
+        {
+            //TODO: parsing argument value
+        }
     }
     else
     {
@@ -100,6 +65,7 @@ if arguments.count > 0
 else
 {
     fputs("No Strings To Codec!\n", stderr)
+    manager.getHelpMessage(true)
     exit(1)
 }
 
