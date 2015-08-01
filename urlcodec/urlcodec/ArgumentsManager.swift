@@ -87,7 +87,7 @@ class ArgumentsManager
         return value
     }
     
-    func getHelpMessage(stdout:Bool = true) -> [String]
+    func getHelpMessage(print2stdout:Bool = true) -> [String]
     {
         var maxNameLength = 0
         var maxAbbrLength = 0
@@ -101,7 +101,7 @@ class ArgumentsManager
         }
         
         var help:[String] = ["urlcodec " + " ".join(abbrs) + " String ..."]
-        if stdout
+        if print2stdout
         {
             print(help.last!)
         }
@@ -113,9 +113,13 @@ class ArgumentsManager
             line += item.name == "" || item.abbr == "" ? " " : ","
             line += " " + padding(item.name, length: maxNameLength) + "\t" + item.help
             help.append(line)
-            print(help.last!)
+            if print2stdout
+            {
+                print(help.last!)
+            }
         }
         
+        help.append("")
         return help
     }
 }

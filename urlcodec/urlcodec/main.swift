@@ -65,8 +65,8 @@ if arguments.count > 0
 }
 else
 {
-    fputs("Nothing To Codec!\n", stderr)
-    manager.getHelpMessage(true)
+    fputs("NOTHING TO CODEC!\n", stderr)
+    fputs("\n".join(manager.getHelpMessage(false)), stderr)
     exit(1)
 }
 
