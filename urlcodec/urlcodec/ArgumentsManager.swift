@@ -34,6 +34,11 @@ class ArgumentsManager
     
     func insertOption(name:String, abbr:String, help:String, hasValue:Bool, trigger:()->Void)
     {
+        if name == "" && abbr == ""
+        {
+            return
+        }
+        
         let argOption = ArgumentOption(name: name, abbr: abbr, help: help, hasValue: hasValue, trigger: trigger)
         options.append(argOption)
         
