@@ -51,10 +51,14 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         
-        locationManager.delegate = self
-        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = true
+        locationManager.activityType = CLActivityType.AutomotiveNavigation
+        
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
+        
+        locationManager.delegate = self
         locationManager.startUpdatingLocation()
         backgroundMode = false
     }
@@ -66,7 +70,6 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.stopUpdatingLocation()
         
         locationManager.delegate = self
-        locationManager.activityType = CLActivityType.AutomotiveNavigation
         locationManager.startUpdatingLocation()
     }
     
@@ -148,7 +151,7 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
             tableView.reloadData()
         }
         
-        if currentLocation == nil || backgroundMode || getCLLocation(currentLocation).distanceFromLocation(newloc) >= 1.0 && newloc.timestamp.timeIntervalSinceDate(currentLocation.timestamp!) >= 1.0
+        if currentLocation == nil || getCLLocation(currentLocation).distanceFromLocation(newloc) >= 1.0 && newloc.timestamp.timeIntervalSinceDate(currentLocation.timestamp!) >= 1.0
         {
             contextChanged = true
             let location = NSEntityDescription.insertNewObjectForEntityForName("LocationInfo", inManagedObjectContext: managedObjectContext) as! LocationInfo

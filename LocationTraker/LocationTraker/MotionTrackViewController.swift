@@ -15,9 +15,9 @@ class MotionTrackViewController:UIViewController, MKMapViewDelegate
     
     var locations:[LocationInfo]!
     
-    override func viewDidLoad()
+    override func viewWillAppear(animated: Bool)
     {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         
         var center = CLLocationCoordinate2D()
         var minCoord = CLLocationCoordinate2D(latitude: +180, longitude: +180)
