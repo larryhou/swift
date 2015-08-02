@@ -143,6 +143,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
                 anView = view
             }
             
+            anView?.annotation = annotation
             return anView
         }
         
