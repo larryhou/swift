@@ -94,6 +94,14 @@ class ChinaGPS
         return CLLocation(latitude: ret.lat, longitude: ret.lon)
     }
     
+    class func encrypt_WGS_2_GCJ(latitude latitude:Double, longitude:Double) -> CLLocationCoordinate2D
+    {
+        let loc = GPSLocation(lon: longitude, lat: latitude)
+        let ret = encrypt_WGS_2_GCJ(loc)
+        
+        return CLLocationCoordinate2D(latitude: ret.lat, longitude: ret.lon)
+    }
+    
     ///
     ///  GCJ-02 坐标转换成 BD-09 坐标
     ///

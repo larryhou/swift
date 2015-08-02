@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
     </dependencies>
     <scenes>
-        <!--Track Time-->
+        <!--追踪日期-->
         <scene sceneID="Opo-53-ncL">
             <objects>
                 <tableViewController id="rSO-pH-WcT" customClass="TrackTimeTableViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -43,13 +43,13 @@
                             <outlet property="delegate" destination="rSO-pH-WcT" id="Zhi-FL-JJW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Track Time" id="vjZ-IJ-ue0"/>
+                    <navigationItem key="navigationItem" title="追踪日期" id="vjZ-IJ-ue0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Erz-lz-1tP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1602" y="266"/>
         </scene>
-        <!--Location Table View Controller-->
+        <!--单日记录-->
         <scene sceneID="8FN-P3-N3k">
             <objects>
                 <tableViewController id="fRo-gN-snU" customClass="LocationTableViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -88,10 +88,55 @@
                             <outlet property="delegate" destination="fRo-gN-snU" id="rJ1-NX-2tX"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="单日记录" id="GKA-Dj-7eQ">
+                        <barButtonItem key="rightBarButtonItem" title="轨迹图" id="y9Z-Or-xvQ">
+                            <connections>
+                                <segue destination="9lY-al-JvP" kind="show" identifier="ShowMotionTrack" id="TYE-Pp-bhY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1c-hq-gt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2331" y="266"/>
+        </scene>
+        <!--轨迹图-->
+        <scene sceneID="2wm-qM-huX">
+            <objects>
+                <viewController id="9lY-al-JvP" customClass="MotionTrackViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Ln-9e-HaW"/>
+                        <viewControllerLayoutGuide type="bottom" id="zE4-K7-1jd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lsf-ac-EQq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2pr-F3-qni">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="9lY-al-JvP" id="6xc-Cx-XCq"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2pr-F3-qni" firstAttribute="leading" secondItem="Lsf-ac-EQq" secondAttribute="leading" id="YWJ-gf-hyA"/>
+                            <constraint firstItem="2pr-F3-qni" firstAttribute="bottom" secondItem="zE4-K7-1jd" secondAttribute="top" id="gFa-f0-Uld"/>
+                            <constraint firstItem="2pr-F3-qni" firstAttribute="top" secondItem="3Ln-9e-HaW" secondAttribute="bottom" id="ies-Cv-r0t"/>
+                            <constraint firstAttribute="trailing" secondItem="2pr-F3-qni" secondAttribute="trailing" id="zDF-Gq-xQr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="轨迹图" id="TiK-kW-iQZ"/>
+                    <connections>
+                        <outlet property="mapView" destination="2pr-F3-qni" id="U36-jp-6nW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G3j-5e-M5k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2926" y="-559"/>
         </scene>
         <!--Location Detail Table View Controller-->
         <scene sceneID="dD4-me-EbQ">

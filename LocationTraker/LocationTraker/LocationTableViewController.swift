@@ -80,7 +80,7 @@ class LocationTableViewController:UITableViewController
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let info = data[indexPath.row]
-        let location = ChinaGPS.encrypt_WGS_2_GCJ(latitude: info.latitude!.doubleValue, longitude: info.longitude!.doubleValue)
+        let location:CLLocation = ChinaGPS.encrypt_WGS_2_GCJ(latitude: info.latitude!.doubleValue, longitude: info.longitude!.doubleValue)
         
         CLGeocoder().reverseGeocodeLocation(location)
         { (ret:[CLPlacemark]?, error:NSError?) in
@@ -151,6 +151,12 @@ class LocationTableViewController:UITableViewController
             
             let dstCtrl = segue.destinationViewController as! LocationDetailTableViewController
             dstCtrl.location = location
+        }
+        else
+        if segue.identifier == "ShowMotionTrack"
+        {
+            let dstCtrl = segue.destinationViewController as! MotionTrackViewController
+            dstCtrl.locations = data
         }
     }
     
