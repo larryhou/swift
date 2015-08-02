@@ -21,7 +21,9 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
     private var currentLocation:LocationInfo!
     
     private var locationManager:CLLocationManager!
-    private var backgroundMode:Bool = false
+    
+    private var backgroundMode = false
+    private var deffering = false
 
     override func viewDidLoad()
     {
@@ -50,6 +52,9 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.requestAlwaysAuthorization()
         
         locationManager.delegate = self
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
         backgroundMode = false
     }
@@ -61,15 +66,16 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.stopUpdatingLocation()
         
         locationManager.delegate = self
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.allowDeferredLocationUpdatesUntilTraveled(10.0, timeout: 10.0)
+        locationManager.activityType = CLActivityType.AutomotiveNavigation
+        locationManager.startUpdatingLocation()
     }
     
     func enterForegroundMode()
     {
         backgroundMode = false
+        deffering = false
         
-        locationManager.stopMonitoringSignificantLocationChanges()
+        locationManager.stopUpdatingLocation()
         locationManager.disallowDeferredLocationUpdates()
         
         locationManager.delegate = self
@@ -101,6 +107,17 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
                 print(error)
             }
         }
+        
+        if backgroundMode && !deffering
+        {
+            deffering = true
+            locationManager.allowDeferredLocationUpdatesUntilTraveled(CLLocationDistanceMax, timeout: 10.0)
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?)
+    {
+        deffering = false
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError)

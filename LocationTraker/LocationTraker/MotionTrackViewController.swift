@@ -45,7 +45,7 @@ class MotionTrackViewController:UIViewController, MKMapViewDelegate
         
         let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
         mapView.addOverlay(polyline)
-    }   
+    }
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
     {
