@@ -10,12 +10,21 @@ import Foundation
 import MapKit
 import UIKit
 
+enum PinAnnotationSource
+{
+    case Initial
+    case Intetrest
+    case UserPress
+}
+
 class PinAnnotation:NSObject, MKAnnotation
 {
     dynamic var title:String?
     dynamic var subtitle:String?
     dynamic var coordinate: CLLocationCoordinate2D
     let removable:Bool
+    
+    var source:PinAnnotationSource?
     
     var tintColor:UIColor?
     
@@ -85,13 +94,14 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
     
     func placeInitAnnotation(location:CLLocation)
     {
-        dropPinAnnotation(marsloc, tintColor: UIColor.redColor())
+        dropPinAnnotation(marsloc, tintColor: UIColor.redColor(), source:PinAnnotationSource.Initial)
     }
     
-    func dropPinAnnotation(location:CLLocation, tintColor:UIColor? = nil, removable:Bool = false)
+    func dropPinAnnotation(location:CLLocation, tintColor:UIColor? = nil, removable:Bool = false, source:PinAnnotationSource? = nil)
     {
         let annotation = PinAnnotation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, removable:removable)
         annotation.tintColor = tintColor
+        annotation.source = source
         mapView.addAnnotation(annotation)
         
         if annotation.removable
@@ -99,7 +109,10 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
             annotation.addObserver(self, forKeyPath: "coordinate", options: NSKeyValueObservingOptions.New, context: &PIN_COORDINATE_CHANGE_CONTEXT
             )
             
-            mapView.setRegion(MKCoordinateRegionMakeWithDistance(annotation.coordinate, 50, 50), animated: true)
+            if source != PinAnnotationSource.UserPress
+            {
+                mapView.setRegion(MKCoordinateRegionMakeWithDistance(annotation.coordinate, 50, 50), animated: true)
+            }
         }
         
         performSelector("showAnnotationCallout:", withObject: annotation, afterDelay: 0.5)
@@ -112,7 +125,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
         let coord = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
         
         clearUserAnnotation()
-        dropPinAnnotation(CLLocation(latitude: coord.latitude, longitude: coord.longitude), tintColor: UIColor.blueColor(), removable: true)
+        dropPinAnnotation(CLLocation(latitude: coord.latitude, longitude: coord.longitude), tintColor: UIColor.blueColor(), removable: true, source:PinAnnotationSource.UserPress)
     }
     
     func clearUserAnnotation()
@@ -318,7 +331,7 @@ class LocationDetailTableViewController:UIViewController, UITableViewDataSource,
             case TableSection.Nearby.rawValue:
                 let location = interests[indexPath.row].placemark.location!
                 clearUserAnnotation()
-                dropPinAnnotation(location, tintColor: UIColor.purpleColor(), removable: true)
+                dropPinAnnotation(location, tintColor: UIColor.purpleColor(), removable: true, source:PinAnnotationSource.Intetrest)
             default:break
         }
         

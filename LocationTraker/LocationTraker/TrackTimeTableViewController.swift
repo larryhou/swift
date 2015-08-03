@@ -52,8 +52,8 @@ class TrackTimeTableViewController: UITableViewController, CLLocationManagerDele
         locationManager.requestAlwaysAuthorization()
         
         locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = true
-        locationManager.activityType = CLActivityType.AutomotiveNavigation
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.activityType = CLActivityType.Fitness
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
