@@ -82,14 +82,14 @@ else
 
 for i in 0..<bitmap.length
 {
-    var byte:UInt8 = 0
+    var byte = 0
     bitmap.getBytes(&byte, range: NSRange(location: i, length: 1))
-    for n:UInt8 in 0..<8
+    for n in 0..<8
     {
-        let mask:UInt8 = 1 << n
+        let mask = 1 << n
         if (mask & byte) > 0
         {
-            let unicode = i * 8 + Int(n)
+            let unicode = i * 8 + n
             var message = String(format:"%04X  ", unicode)
             if renderUnicodeAsText
             {
