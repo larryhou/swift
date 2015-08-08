@@ -41,8 +41,8 @@ while arguments.count > 0
         arguments.removeAtIndex(0)
         if var option = manager.getOption(text) where option.hasValue
         {
-            let value = arguments[0]
-            if manager.recognizeOption(value) == false
+            let value:String! = arguments.count > 0 ? arguments[0] : nil
+            if value != nil && manager.recognizeOption(value) == false
             {
                 arguments.removeAtIndex(0)
                 option.value = value
@@ -50,6 +50,7 @@ while arguments.count > 0
             else
             {
                 fputs("\(text): missing argument value\n", stderr)
+                manager.showHelpMessage(stderr)
                 exit(1)
             }
         }
@@ -67,6 +68,7 @@ let valueObject = NSCharacterSet.valueForKeyPath(name)
 if !(valueObject is NSCharacterSet)
 {
     fputs("NSCharacterSet.\(name): not exist!", stderr)
+    manager.showHelpMessage(stderr)
     exit(2)
 }
 

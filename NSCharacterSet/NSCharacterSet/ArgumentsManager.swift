@@ -115,7 +115,7 @@ class ArgumentsManager
             abbrs.append(options[i].abbr)
         }
         
-        fputs("urlcodec " + " ".join(abbrs) + " String ...\n", stream)
+        fputs("Usage: urlcodec " + " ".join(abbrs) + " String ...\n", stream)
         
         for i in 0 ..< options.count
         {
