@@ -17,7 +17,7 @@ var column = 16
 var inverse = false
 var verbose = false
 
-let manager = ArgumentsManager()
+let manager = ArgumentsManager(name: "NSCharacterSet")
 manager.insertOption("--character-set", abbr: "-s", help: "Property name of NSCharacterSet class", hasValue: true) { name = manager.getOption("-s")!.value! }
 manager.insertOption("--render-unicode", abbr: "-u", help: "Render unicode as text", hasValue: false) { renderUnicodeAsText = true }
 manager.insertOption("--inverse", abbr: "-i", help: "Inverse current character set", hasValue: false) { inverse = true }

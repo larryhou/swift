@@ -29,9 +29,11 @@ class ArgumentsManager
     private var options:[ArgumentOption]
     
     private var pattern:NSRegularExpression!
+    private var name:String
     
-    init()
+    init(name:String)
     {
+        self.name = name
         self.options = []
         self.map = [:]
         
@@ -115,7 +117,7 @@ class ArgumentsManager
             abbrs.append(options[i].abbr)
         }
         
-        fputs("Usage: urlcodec " + " ".join(abbrs) + " String ...\n", stream)
+        fputs("Usage: \(self.name) " + " ".join(abbrs) + " String ...\n", stream)
         
         for i in 0 ..< options.count
         {
