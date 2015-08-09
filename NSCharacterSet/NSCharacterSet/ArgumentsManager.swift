@@ -30,10 +30,13 @@ class ArgumentsManager
     
     private var pattern:NSRegularExpression!
     private var name:String
+    private var usageAppending:String
     
-    init(name:String)
+    init(name:String, usageAppending:String = "")
     {
         self.name = name
+        self.usageAppending = usageAppending
+        
         self.options = []
         self.map = [:]
         
@@ -114,10 +117,10 @@ class ArgumentsManager
         {
             maxNameLength = max(maxNameLength, NSString(string: options[i].name).length)
             maxAbbrLength = max(maxAbbrLength, NSString(string: options[i].abbr).length)
-            abbrs.append(options[i].abbr)
+            abbrs.append(options[i].abbr + (options[i].hasValue ? " OPTION_VALUE" : ""))
         }
         
-        fputs("Usage: \(self.name) " + " ".join(abbrs) + " String ...\n", stream)
+        fputs("Usage: \(self.name) " + " ".join(abbrs) + " \(usageAppending)\n", stream)
         
         for i in 0 ..< options.count
         {
