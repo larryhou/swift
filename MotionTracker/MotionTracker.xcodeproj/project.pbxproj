@@ -487,6 +487,7 @@
 				6B381DB11B7C3B2C00FC0D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B381DB21B7C3B2C00FC0D29 /* Build configuration list for PBXNativeTarget "MotionTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +496,7 @@
 				6B381DB41B7C3B2C00FC0D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B381DB51B7C3B2C00FC0D29 /* Build configuration list for PBXNativeTarget "MotionTrackerUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +505,7 @@
 				6B381DB71B7C3B2C00FC0D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
