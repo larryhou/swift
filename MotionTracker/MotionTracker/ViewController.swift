@@ -160,12 +160,12 @@ class ViewController: UITableViewController
             {
 //                self.state.count++
                 
-                self.updateMagneticField(data!.magneticField, section:TableSection.Magnetometer.rawValue)
+                self.updateMagnetometer(data!.magneticField, section:TableSection.Magnetometer.rawValue)
             }
         }
     }
     
-    func updateMagneticField(field:CMMagneticField, section:Int)
+    func updateMagnetometer(field:CMMagneticField, section:Int)
     {
         let format = "%18.12fμT"
         
@@ -193,12 +193,12 @@ class ViewController: UITableViewController
             if error == nil
             {
                 self.state.count++
-                self.updateAccelerometer(data!.acceleration, section:TableSection.Accelerometer.rawValue)
+                self.updateAcceleration(data!.acceleration, section:TableSection.Accelerometer.rawValue)
             }
         }
     }
     
-    func updateAccelerometer(acceleration:CMAcceleration, section:Int)
+    func updateAcceleration(acceleration:CMAcceleration, section:Int)
     {
         let format = "%10.6f × 9.81m/s²"
         
@@ -227,9 +227,9 @@ class ViewController: UITableViewController
             {
 //                self.state.count++
                 self.updateGyroscope(data!.rotationRate, section:TableSection.OptGyroscope.rawValue)
-                self.updateMagneticField(data!.magneticField.field, section:TableSection.OptMagnetometer.rawValue)
-                self.updateAccelerometer(data!.userAcceleration, section: TableSection.UserAccelerometer.rawValue)
-                self.updateAccelerometer(data!.gravity, section: TableSection.Gravity.rawValue)
+                self.updateMagnetometer(data!.magneticField.field, section:TableSection.OptMagnetometer.rawValue)
+                self.updateAcceleration(data!.userAcceleration, section: TableSection.UserAccelerometer.rawValue)
+                self.updateAcceleration(data!.gravity, section: TableSection.Gravity.rawValue)
                 
                 let attitude:CMAttitude = data!.attitude
                 
