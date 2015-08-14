@@ -126,12 +126,12 @@ class ViewController: UITableViewController
             {
 //                self.state.count++
                 
-                self.updateGyro(data!.rotationRate, section:TableSection.Gyroscrope.rawValue)
+                self.updateGyroscope(data!.rotationRate, section:TableSection.Gyroscrope.rawValue)
             }
         }
     }
     
-    func updateGyro(rate:CMRotationRate, section:Int)
+    func updateGyroscope(rate:CMRotationRate, section:Int)
     {
         let format = "%18.14f°/s"
         
@@ -226,7 +226,7 @@ class ViewController: UITableViewController
             if error == nil
             {
 //                self.state.count++
-                self.updateGyro(data!.rotationRate, section:TableSection.OptGyroscope.rawValue)
+                self.updateGyroscope(data!.rotationRate, section:TableSection.OptGyroscope.rawValue)
                 self.updateMagneticField(data!.magneticField.field, section:TableSection.OptMagnetometer.rawValue)
                 self.updateAccelerometer(data!.userAcceleration, section: TableSection.UserAccelerometer.rawValue)
                 self.updateAccelerometer(data!.gravity, section: TableSection.Gravity.rawValue)
