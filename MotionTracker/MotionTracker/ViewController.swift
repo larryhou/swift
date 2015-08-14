@@ -48,7 +48,7 @@ struct UpdateState
 
 enum TableSection:Int
 {
-    case Gyro, OptGyro
+    case Gyroscrope, OptGyroscope
     case Magnetometer, OptMagnetometer
     case Accelerometer
     case UserAccelerometer
@@ -126,7 +126,7 @@ class ViewController: UITableViewController
             {
 //                self.state.count++
                 
-                self.updateGyro(data!.rotationRate, section:TableSection.Gyro.rawValue)
+                self.updateGyro(data!.rotationRate, section:TableSection.Gyroscrope.rawValue)
             }
         }
     }
@@ -226,7 +226,7 @@ class ViewController: UITableViewController
             if error == nil
             {
 //                self.state.count++
-                self.updateGyro(data!.rotationRate, section:TableSection.OptGyro.rawValue)
+                self.updateGyro(data!.rotationRate, section:TableSection.OptGyroscope.rawValue)
                 self.updateMagneticField(data!.magneticField.field, section:TableSection.OptMagnetometer.rawValue)
                 self.updateAccelerometer(data!.userAcceleration, section: TableSection.UserAccelerometer.rawValue)
                 self.updateAccelerometer(data!.gravity, section: TableSection.Gravity.rawValue)
@@ -293,12 +293,12 @@ class ViewController: UITableViewController
     {
         switch section
         {
-            case TableSection.Gyro.rawValue:return "Gyro"
-            case TableSection.OptGyro.rawValue:return "Gyro Without Bias"
+            case TableSection.Gyroscrope.rawValue:return "Gyroscope"
+            case TableSection.OptGyroscope.rawValue:return "Gyroscope Without Bias"
             case TableSection.Magnetometer.rawValue:return "Magnetometer"
             case TableSection.OptMagnetometer.rawValue:return "Magnetometer Without Bias"
-            case TableSection.Accelerometer.rawValue:return "Accelerometer"
-            case TableSection.UserAccelerometer.rawValue:return "User Accelerometer"
+            case TableSection.Accelerometer.rawValue:return "Acceleration"
+            case TableSection.UserAccelerometer.rawValue:return "User Acceleration"
             case TableSection.AttitudeEuler.rawValue:return "Attitude Euler Angles"
             case TableSection.AttitudeQuaternion.rawValue:return "Attitude Quaternion Angles"
             case TableSection.Gravity.rawValue:return "Gravity"
