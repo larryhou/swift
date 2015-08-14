@@ -110,7 +110,7 @@ class ViewController: UITableViewController
             print(String(format: "fps:%d, average:%.2f", state.fps, state.average))
         }
         
-        if timer.fireDate.timeIntervalSinceReferenceDate - timestamp > 0.02
+        if timer.fireDate.timeIntervalSinceReferenceDate - timestamp > 1.0 / 10
         {
             timestamp = timer.fireDate.timeIntervalSinceReferenceDate
             tableView.reloadData()
