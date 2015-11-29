@@ -1,0 +1,530 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B023D301C0AE9F000408248 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D2F1C0AE9F000408248 /* AppDelegate.swift */; };
+		6B023D321C0AE9F000408248 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D311C0AE9F000408248 /* CaptureViewController.swift */; };
+		6B023D351C0AE9F000408248 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B023D331C0AE9F000408248 /* Main.storyboard */; };
+		6B023D381C0AE9F000408248 /* CarolCamera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D361C0AE9F000408248 /* CarolCamera.xcdatamodeld */; };
+		6B023D3A1C0AE9F000408248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B023D391C0AE9F000408248 /* Assets.xcassets */; };
+		6B023D3D1C0AE9F000408248 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B023D3B1C0AE9F000408248 /* LaunchScreen.storyboard */; };
+		6B023D481C0AE9F000408248 /* CarolCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D471C0AE9F000408248 /* CarolCameraTests.swift */; };
+		6B023D531C0AE9F000408248 /* CarolCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D521C0AE9F000408248 /* CarolCameraUITests.swift */; };
+		6B023D611C0AF9C000408248 /* LivePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B023D601C0AF9C000408248 /* LivePreviewView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6B023D441C0AE9F000408248 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B023D241C0AE9F000408248 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B023D2B1C0AE9F000408248;
+			remoteInfo = CarolCamera;
+		};
+		6B023D4F1C0AE9F000408248 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B023D241C0AE9F000408248 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B023D2B1C0AE9F000408248;
+			remoteInfo = CarolCamera;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6B023D2C1C0AE9F000408248 /* CarolCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarolCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B023D2F1C0AE9F000408248 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6B023D311C0AE9F000408248 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		6B023D341C0AE9F000408248 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6B023D371C0AE9F000408248 /* CarolCamera.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarolCamera.xcdatamodel; sourceTree = "<group>"; };
+		6B023D391C0AE9F000408248 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B023D3C1C0AE9F000408248 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6B023D3E1C0AE9F000408248 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B023D431C0AE9F000408248 /* CarolCameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolCameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B023D471C0AE9F000408248 /* CarolCameraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolCameraTests.swift; sourceTree = "<group>"; };
+		6B023D491C0AE9F000408248 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B023D4E1C0AE9F000408248 /* CarolCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B023D521C0AE9F000408248 /* CarolCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolCameraUITests.swift; sourceTree = "<group>"; };
+		6B023D541C0AE9F000408248 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B023D601C0AF9C000408248 /* LivePreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePreviewView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B023D291C0AE9F000408248 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D401C0AE9F000408248 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D4B1C0AE9F000408248 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B023D231C0AE9F000408248 = {
+			isa = PBXGroup;
+			children = (
+				6B023D2E1C0AE9F000408248 /* CarolCamera */,
+				6B023D461C0AE9F000408248 /* CarolCameraTests */,
+				6B023D511C0AE9F000408248 /* CarolCameraUITests */,
+				6B023D2D1C0AE9F000408248 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6B023D2D1C0AE9F000408248 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B023D2C1C0AE9F000408248 /* CarolCamera.app */,
+				6B023D431C0AE9F000408248 /* CarolCameraTests.xctest */,
+				6B023D4E1C0AE9F000408248 /* CarolCameraUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B023D2E1C0AE9F000408248 /* CarolCamera */ = {
+			isa = PBXGroup;
+			children = (
+				6B023D2F1C0AE9F000408248 /* AppDelegate.swift */,
+				6B023D311C0AE9F000408248 /* CaptureViewController.swift */,
+				6B023D601C0AF9C000408248 /* LivePreviewView.swift */,
+				6B023D331C0AE9F000408248 /* Main.storyboard */,
+				6B023D391C0AE9F000408248 /* Assets.xcassets */,
+				6B023D3B1C0AE9F000408248 /* LaunchScreen.storyboard */,
+				6B023D3E1C0AE9F000408248 /* Info.plist */,
+				6B023D361C0AE9F000408248 /* CarolCamera.xcdatamodeld */,
+			);
+			path = CarolCamera;
+			sourceTree = "<group>";
+		};
+		6B023D461C0AE9F000408248 /* CarolCameraTests */ = {
+			isa = PBXGroup;
+			children = (
+				6B023D471C0AE9F000408248 /* CarolCameraTests.swift */,
+				6B023D491C0AE9F000408248 /* Info.plist */,
+			);
+			path = CarolCameraTests;
+			sourceTree = "<group>";
+		};
+		6B023D511C0AE9F000408248 /* CarolCameraUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6B023D521C0AE9F000408248 /* CarolCameraUITests.swift */,
+				6B023D541C0AE9F000408248 /* Info.plist */,
+			);
+			path = CarolCameraUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B023D2B1C0AE9F000408248 /* CarolCamera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B023D571C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCamera" */;
+			buildPhases = (
+				6B023D281C0AE9F000408248 /* Sources */,
+				6B023D291C0AE9F000408248 /* Frameworks */,
+				6B023D2A1C0AE9F000408248 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CarolCamera;
+			productName = CarolCamera;
+			productReference = 6B023D2C1C0AE9F000408248 /* CarolCamera.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6B023D421C0AE9F000408248 /* CarolCameraTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B023D5A1C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCameraTests" */;
+			buildPhases = (
+				6B023D3F1C0AE9F000408248 /* Sources */,
+				6B023D401C0AE9F000408248 /* Frameworks */,
+				6B023D411C0AE9F000408248 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B023D451C0AE9F000408248 /* PBXTargetDependency */,
+			);
+			name = CarolCameraTests;
+			productName = CarolCameraTests;
+			productReference = 6B023D431C0AE9F000408248 /* CarolCameraTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6B023D4D1C0AE9F000408248 /* CarolCameraUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B023D5D1C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCameraUITests" */;
+			buildPhases = (
+				6B023D4A1C0AE9F000408248 /* Sources */,
+				6B023D4B1C0AE9F000408248 /* Frameworks */,
+				6B023D4C1C0AE9F000408248 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B023D501C0AE9F000408248 /* PBXTargetDependency */,
+			);
+			name = CarolCameraUITests;
+			productName = CarolCameraUITests;
+			productReference = 6B023D4E1C0AE9F000408248 /* CarolCameraUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B023D241C0AE9F000408248 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = larryhou;
+				TargetAttributes = {
+					6B023D2B1C0AE9F000408248 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					6B023D421C0AE9F000408248 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 6B023D2B1C0AE9F000408248;
+					};
+					6B023D4D1C0AE9F000408248 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 6B023D2B1C0AE9F000408248;
+					};
+				};
+			};
+			buildConfigurationList = 6B023D271C0AE9F000408248 /* Build configuration list for PBXProject "CarolCamera" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6B023D231C0AE9F000408248;
+			productRefGroup = 6B023D2D1C0AE9F000408248 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6B023D2B1C0AE9F000408248 /* CarolCamera */,
+				6B023D421C0AE9F000408248 /* CarolCameraTests */,
+				6B023D4D1C0AE9F000408248 /* CarolCameraUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6B023D2A1C0AE9F000408248 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B023D3D1C0AE9F000408248 /* LaunchScreen.storyboard in Resources */,
+				6B023D3A1C0AE9F000408248 /* Assets.xcassets in Resources */,
+				6B023D351C0AE9F000408248 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D411C0AE9F000408248 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D4C1C0AE9F000408248 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B023D281C0AE9F000408248 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B023D321C0AE9F000408248 /* CaptureViewController.swift in Sources */,
+				6B023D611C0AF9C000408248 /* LivePreviewView.swift in Sources */,
+				6B023D381C0AE9F000408248 /* CarolCamera.xcdatamodeld in Sources */,
+				6B023D301C0AE9F000408248 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D3F1C0AE9F000408248 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B023D481C0AE9F000408248 /* CarolCameraTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B023D4A1C0AE9F000408248 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B023D531C0AE9F000408248 /* CarolCameraUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B023D451C0AE9F000408248 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B023D2B1C0AE9F000408248 /* CarolCamera */;
+			targetProxy = 6B023D441C0AE9F000408248 /* PBXContainerItemProxy */;
+		};
+		6B023D501C0AE9F000408248 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B023D2B1C0AE9F000408248 /* CarolCamera */;
+			targetProxy = 6B023D4F1C0AE9F000408248 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6B023D331C0AE9F000408248 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B023D341C0AE9F000408248 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6B023D3B1C0AE9F000408248 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B023D3C1C0AE9F000408248 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6B023D551C0AE9F000408248 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6B023D561C0AE9F000408248 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6B023D581C0AE9F000408248 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CarolCamera/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCamera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6B023D591C0AE9F000408248 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CarolCamera/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCamera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6B023D5B1C0AE9F000408248 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CarolCameraTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCameraTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarolCamera.app/CarolCamera";
+			};
+			name = Debug;
+		};
+		6B023D5C1C0AE9F000408248 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CarolCameraTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCameraTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarolCamera.app/CarolCamera";
+			};
+			name = Release;
+		};
+		6B023D5E1C0AE9F000408248 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CarolCameraUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCameraUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CarolCamera;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		6B023D5F1C0AE9F000408248 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CarolCameraUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.CarolCameraUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CarolCamera;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B023D271C0AE9F000408248 /* Build configuration list for PBXProject "CarolCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B023D551C0AE9F000408248 /* Debug */,
+				6B023D561C0AE9F000408248 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B023D571C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B023D581C0AE9F000408248 /* Debug */,
+				6B023D591C0AE9F000408248 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6B023D5A1C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCameraTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B023D5B1C0AE9F000408248 /* Debug */,
+				6B023D5C1C0AE9F000408248 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6B023D5D1C0AE9F000408248 /* Build configuration list for PBXNativeTarget "CarolCameraUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B023D5E1C0AE9F000408248 /* Debug */,
+				6B023D5F1C0AE9F000408248 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6B023D361C0AE9F000408248 /* CarolCamera.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6B023D371C0AE9F000408248 /* CarolCamera.xcdatamodel */,
+			);
+			currentVersion = 6B023D371C0AE9F000408248 /* CarolCamera.xcdatamodel */;
+			path = CarolCamera.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6B023D241C0AE9F000408248 /* Project object */;
+}
