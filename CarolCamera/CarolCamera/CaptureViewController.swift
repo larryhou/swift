@@ -94,13 +94,6 @@ class CaptureViewController: UIViewController
         
         addObserver(self, forKeyPath: "recording", options: .New, context: &CONTEXT_MOVIE_RECORDING)
         
-        do
-        {
-            try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
-        }
-        catch {}
-        
-        changeVolume(0.5)
         AVAudioSession.sharedInstance().addObserver(self, forKeyPath: "outputVolume", options: [.New, .Old], context: &CONTEXT_OUTPUT_VOLUME)
     }
     
@@ -343,7 +336,7 @@ class CaptureViewController: UIViewController
         else
         if context == &CONTEXT_SESSION_RUNNING
         {
-            print("running", session.running, camera.lowLightBoostEnabled)
+            print("running", session.running)
             
             if session.running
             {
@@ -352,6 +345,12 @@ class CaptureViewController: UIViewController
                     try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
                 }
                 catch {}
+                
+                let volume = AVAudioSession.sharedInstance().outputVolume
+                if volume == 1.0 || volume == 0.0
+                {
+                    changeVolume(0.5)
+                }
             }
         }
         else
