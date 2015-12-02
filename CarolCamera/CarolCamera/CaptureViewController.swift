@@ -24,6 +24,8 @@ class CaptureViewController: UIViewController
     @IBOutlet var flashView:UIView!
     
     @IBOutlet weak var recordingView: UIView!
+    @IBOutlet weak var elapseMeter: UILabel!
+    
     private var session:AVCaptureSession!
     private var sessionQueue:dispatch_queue_t!
     
@@ -32,6 +34,9 @@ class CaptureViewController: UIViewController
     private var imageOutput:AVCaptureStillImageOutput!
     
     private var changeVolume:Float->Void = {volume in}
+    
+    private var startTime:NSDate!
+    private var timer:NSTimer!
     
     dynamic
     var recording = false
@@ -59,6 +64,7 @@ class CaptureViewController: UIViewController
         super.viewDidLoad()
         
         recordingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        recordingView.alpha = 0.0
         
         let volumeView = MPVolumeView(frame: CGRect(x: -100, y: 0, width: 10, height: 0))
         volumeView.sizeToFit()
@@ -311,11 +317,61 @@ class CaptureViewController: UIViewController
         if context == &CONTEXT_MOVIE_RECORDING
         {
             print("recording", recording)
+            if recording
+            {
+                startRecording()
+            }
+            else
+            {
+                stopRecording()
+            }
         }
         else
         if context == &CONTEXT_SESSION_RUNNING
         {
             print("running", session.running)
+        }
+    }
+    
+    func updateElapseMeter(interval:NSTimeInterval)
+    {
+        let time = Int(interval)
+        
+        let sec = time % 60
+        let min = (time / 60) % 60
+        let hur = (time / 60) / 60
+        
+        elapseMeter.text = String(format: "%02d:%02d:%02d", hur, min, sec)
+    }
+    
+    func timerUpdate(timer:NSTimer)
+    {
+        updateElapseMeter(timer.fireDate.timeIntervalSinceDate(startTime))
+    }
+    
+    func startRecording()
+    {
+        recordingView.layer.removeAllAnimations()
+        recordingView.alpha = 0.5
+        
+        UIView.animateWithDuration(0.2)
+        {
+            self.recordingView.alpha = 1.0
+        }
+        
+        startTime = NSDate()
+        updateElapseMeter(0)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerUpdate:", userInfo: elapseMeter, repeats: true)
+    }
+    
+    func stopRecording()
+    {
+        timer.invalidate()
+        
+        recordingView.layer.removeAllAnimations()
+        UIView.animateWithDuration(0.5)
+        {
+            self.recordingView.alpha = 0.0
         }
     }
     

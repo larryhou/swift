@@ -27,7 +27,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:59:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmT-hz-f4t">
                                         <rect key="frame" x="204" y="10" width="193" height="47"/>
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="40"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -61,6 +61,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="elapseMeter" destination="CmT-hz-f4t" id="tHl-mZ-5GK"/>
                         <outlet property="flashView" destination="hCa-9T-kTn" id="XWa-yx-9GH"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="ReC-hS-2gj"/>
                         <outlet property="recordingView" destination="jlf-Sc-uup" id="dcJ-aD-PWS"/>
