@@ -17,9 +17,13 @@ class CaptureViewController: UIViewController
     var CONTEXT_ISO:Int = 0
     var CONTEXT_EXPOSURE_DURATION:Int = 0
     var CONTEXT_OUTPUT_VOLUME:Int = 0
+    var CONTEXT_MOVIE_RECORDING:Int = 0
+    var CONTEXT_SESSION_RUNNING:Int = 0
     
     @IBOutlet var previewView: LivePreivewView!
+    @IBOutlet var flashView:UIView!
     
+    @IBOutlet weak var recordingView: UIView!
     private var session:AVCaptureSession!
     private var sessionQueue:dispatch_queue_t!
     
@@ -27,7 +31,10 @@ class CaptureViewController: UIViewController
     private var cameraInput:AVCaptureDeviceInput!
     private var imageOutput:AVCaptureStillImageOutput!
     
-    private var changeVolume:(Float)->Void = {volume in}
+    private var changeVolume:Float->Void = {volume in}
+    
+    dynamic
+    var recording = false
     
     class func deviceWithMediaType(mediaType:String, position:AVCaptureDevicePosition)->AVCaptureDevice
     {
@@ -50,10 +57,13 @@ class CaptureViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        recordingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        
         let volumeView = MPVolumeView(frame: CGRect(x: -100, y: 0, width: 10, height: 0))
         volumeView.sizeToFit()
         
-        self.view.addSubview(volumeView)
+        view.addSubview(volumeView)
         
         for view in volumeView.subviews
         {
@@ -74,16 +84,13 @@ class CaptureViewController: UIViewController
         
         do
         {
-            try AVAudioSession.sharedInstance().setActive(true)
+            try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
         }
         catch {}
         
-        if AVAudioSession.sharedInstance().outputVolume == 1.0
-        {
-            changeVolume(1.0 - 1.0 / 16.0)
-        }
-        
+        changeVolume(0.5)
         AVAudioSession.sharedInstance().addObserver(self, forKeyPath: "outputVolume", options: [.New, .Old], context: &CONTEXT_OUTPUT_VOLUME)
+        addObserver(self, forKeyPath: "recording", options: .New, context: &CONTEXT_MOVIE_RECORDING)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -91,6 +98,8 @@ class CaptureViewController: UIViewController
         super.viewDidAppear(animated)
         
         session = AVCaptureSession()
+        session.addObserver(self, forKeyPath: "running", options: .New, context: &CONTEXT_SESSION_RUNNING)
+        
         previewView.session = session
         
         sessionQueue = dispatch_queue_create("CaptureSessionQueue", DISPATCH_QUEUE_SERIAL)
@@ -273,22 +282,68 @@ class CaptureViewController: UIViewController
         else
         if context == &CONTEXT_OUTPUT_VOLUME
         {
-            if let newVolume = change?[NSKeyValueChangeNewKey] as? Float,
-                oldVolume = change?[NSKeyValueChangeOldKey] as? Float where newVolume > oldVolume
+            let newVolume = change?[NSKeyValueChangeNewKey] as! Float
+            let oldVolume = change?[NSKeyValueChangeOldKey] as! Float
+            if abs(newVolume - oldVolume) == 0.5 || !session.running
             {
-                snapCamera()
+                return
             }
             
-            if AVAudioSession.sharedInstance().outputVolume == 1.0
+            ++snapEventIndex
+            print("snap", String(format: "%03d %@ %.3f %.3f", snapEventIndex, newVolume > oldVolume ? "+" : "-", newVolume, oldVolume))
+            
+            if newVolume > oldVolume
             {
-                changeVolume(1.0 - 1.0 / 16.0)
+                twenkleScreen()
+                snapCamera(snapEventIndex >= 0)
             }
+            else
+            {
+                recording = !recording
+            }
+            
+            if abs(AVAudioSession.sharedInstance().outputVolume - 0.5) == 0.5
+            {
+                changeVolume(0.5)
+            }
+        }
+        else
+        if context == &CONTEXT_MOVIE_RECORDING
+        {
+            print("recording", recording)
+        }
+        else
+        if context == &CONTEXT_SESSION_RUNNING
+        {
+            print("running", session.running)
         }
     }
     
-    func snapCamera()
+    var snapEventIndex = 0
+    
+    func twenkleScreen()
     {
-        print("snapCamera")
+        flashView.layer.removeAllAnimations()
+        flashView.hidden = false
+        flashView.alpha = 1.0
+        
+        let animations = {
+            self.flashView.alpha = 0.0
+        }
+        
+        UIView.animateWithDuration(0.2, animations:animations)
+        { success in
+            self.flashView.hidden = true
+        }
+    }
+    
+    func snapCamera(ignoreCurrentSnap:Bool = false)
+    {
+        if ignoreCurrentSnap
+        {
+            return
+        }
+        
         dispatch_async(self.sessionQueue)
         {
             let imageConnection = self.imageOutput.connectionWithMediaType(AVMediaTypeVideo)
@@ -347,6 +402,11 @@ class CaptureViewController: UIViewController
         {
             (previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation = AVCaptureVideoOrientation(rawValue: deviceOrientation.rawValue)!
         }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool
+    {
+        return true
     }
 
     override func didReceiveMemoryWarning()
