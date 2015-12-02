@@ -27,15 +27,24 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:59:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmT-hz-f4t">
                                         <rect key="frame" x="204" y="10" width="193" height="47"/>
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="40"/>
-                                        <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Recording" translatesAutoresizingMaskIntoConstraints="NO" id="CuR-mS-bJ9">
+                                        <rect key="frame" x="184" y="28" width="10" height="10"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="10" id="HBY-kP-Jm1"/>
+                                            <constraint firstAttribute="width" constant="10" id="goN-eS-Aa8"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="CuR-mS-bJ9" firstAttribute="top" secondItem="jlf-Sc-uup" secondAttribute="top" constant="28" id="3pV-ux-OKu"/>
                                     <constraint firstItem="CmT-hz-f4t" firstAttribute="centerX" secondItem="jlf-Sc-uup" secondAttribute="centerX" id="ByP-1s-32g"/>
                                     <constraint firstItem="CmT-hz-f4t" firstAttribute="bottom" secondItem="jlf-Sc-uup" secondAttribute="bottomMargin" id="LTO-eb-uSv"/>
                                     <constraint firstAttribute="height" constant="65" id="THC-K6-ZDM"/>
+                                    <constraint firstItem="CmT-hz-f4t" firstAttribute="leading" secondItem="CuR-mS-bJ9" secondAttribute="trailing" constant="10" id="Vgc-2K-pja"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -61,9 +70,10 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="elapseMeter" destination="CmT-hz-f4t" id="tHl-mZ-5GK"/>
                         <outlet property="flashView" destination="hCa-9T-kTn" id="XWa-yx-9GH"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="ReC-hS-2gj"/>
+                        <outlet property="recordingIndicator" destination="CuR-mS-bJ9" id="lmQ-33-rNd"/>
+                        <outlet property="recordingMeter" destination="CmT-hz-f4t" id="AlP-jV-mKx"/>
                         <outlet property="recordingView" destination="jlf-Sc-uup" id="dcJ-aD-PWS"/>
                     </connections>
                 </viewController>
@@ -73,4 +83,7 @@
             <point key="canvasLocation" x="325" y="303"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Recording" width="10" height="10"/>
+    </resources>
 </document>

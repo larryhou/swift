@@ -19,12 +19,14 @@ class CaptureViewController: UIViewController
     var CONTEXT_OUTPUT_VOLUME:Int = 0
     var CONTEXT_MOVIE_RECORDING:Int = 0
     var CONTEXT_SESSION_RUNNING:Int = 0
+    var CONTEXT_LIGHT_BOOST:Int = 0
     
     @IBOutlet var previewView: LivePreivewView!
     @IBOutlet var flashView:UIView!
     
     @IBOutlet weak var recordingView: UIView!
-    @IBOutlet weak var elapseMeter: UILabel!
+    @IBOutlet weak var recordingMeter: UILabel!
+    @IBOutlet weak var recordingIndicator: UIImageView!
     
     private var session:AVCaptureSession!
     private var sessionQueue:dispatch_queue_t!
@@ -63,7 +65,9 @@ class CaptureViewController: UIViewController
     {
         super.viewDidLoad()
         
-        recordingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        view.backgroundColor = UIColor.blackColor()
+        
+        recordingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         recordingView.alpha = 0.0
         
         let volumeView = MPVolumeView(frame: CGRect(x: -100, y: 0, width: 10, height: 0))
@@ -88,6 +92,8 @@ class CaptureViewController: UIViewController
             }
         }
         
+        addObserver(self, forKeyPath: "recording", options: .New, context: &CONTEXT_MOVIE_RECORDING)
+        
         do
         {
             try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
@@ -96,7 +102,6 @@ class CaptureViewController: UIViewController
         
         changeVolume(0.5)
         AVAudioSession.sharedInstance().addObserver(self, forKeyPath: "outputVolume", options: [.New, .Old], context: &CONTEXT_OUTPUT_VOLUME)
-        addObserver(self, forKeyPath: "recording", options: .New, context: &CONTEXT_MOVIE_RECORDING)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -105,6 +110,7 @@ class CaptureViewController: UIViewController
         
         session = AVCaptureSession()
         session.addObserver(self, forKeyPath: "running", options: .New, context: &CONTEXT_SESSION_RUNNING)
+        session.sessionPreset = AVCaptureSessionPresetPhoto
         
         previewView.session = session
         
@@ -194,29 +200,35 @@ class CaptureViewController: UIViewController
             self.camera.addObserver(self, forKeyPath: "lensPosition", options: .New, context: &self.CONTEXT_LENS_LENGTH)
             self.camera.addObserver(self, forKeyPath: "ISO", options: .New, context: &self.CONTEXT_ISO)
             self.camera.addObserver(self, forKeyPath: "exposureDuration", options: .New, context: &self.CONTEXT_EXPOSURE_DURATION)
+            self.camera.addObserver(self, forKeyPath: "lowLightBoostEnabled", options: .New, context: &self.CONTEXT_LIGHT_BOOST)
             self.session.startRunning()
             
             self.setupCamera(self.camera)
         }
     }
     
-    func setupCamera(camera:AVCaptureDevice)
+    func setupCamera(device:AVCaptureDevice)
     {
         do
         {
-            try camera.lockForConfiguration()
+            try device.lockForConfiguration()
         }
         catch
         {
             return
         }
         
-        if camera.smoothAutoFocusSupported
+        if device.smoothAutoFocusSupported
         {
-            camera.smoothAutoFocusEnabled = true
+            device.smoothAutoFocusEnabled = true
         }
         
-        camera.unlockForConfiguration()
+        if device.lowLightBoostSupported
+        {
+            device.automaticallyEnablesLowLightBoostWhenAvailable = true
+        }
+        
+        device.unlockForConfiguration()
         
         focusWithMode(.ContinuousAutoFocus, exposureMode: .ContinuousAutoExposure, pointOfInterest: CGPoint(x: 0.5, y: 0.5))
     }
@@ -319,21 +331,37 @@ class CaptureViewController: UIViewController
             print("recording", recording)
             if recording
             {
+                session.sessionPreset = AVCaptureSessionPresetHigh
                 startRecording()
             }
             else
             {
+                session.sessionPreset = AVCaptureSessionPresetPhoto
                 stopRecording()
             }
         }
         else
         if context == &CONTEXT_SESSION_RUNNING
         {
-            print("running", session.running)
+            print("running", session.running, camera.lowLightBoostEnabled)
+            
+            if session.running
+            {
+                do
+                {
+                    try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
+                }
+                catch {}
+            }
+        }
+        else
+        if context == &CONTEXT_LIGHT_BOOST
+        {
+            print("lowLightBoostEnabled", camera.lowLightBoostEnabled)
         }
     }
     
-    func updateElapseMeter(interval:NSTimeInterval)
+    func updateRecordingMeter(interval:NSTimeInterval)
     {
         let time = Int(interval)
         
@@ -341,12 +369,13 @@ class CaptureViewController: UIViewController
         let min = (time / 60) % 60
         let hur = (time / 60) / 60
         
-        elapseMeter.text = String(format: "%02d:%02d:%02d", hur, min, sec)
+        recordingMeter.text = String(format: "%02d:%02d:%02d", hur, min, sec)
     }
     
     func timerUpdate(timer:NSTimer)
     {
-        updateElapseMeter(timer.fireDate.timeIntervalSinceDate(startTime))
+        updateRecordingMeter(timer.fireDate.timeIntervalSinceDate(startTime))
+        recordingIndicator.hidden = !recordingIndicator.hidden
     }
     
     func startRecording()
@@ -360,8 +389,9 @@ class CaptureViewController: UIViewController
         }
         
         startTime = NSDate()
-        updateElapseMeter(0)
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerUpdate:", userInfo: elapseMeter, repeats: true)
+        
+        updateRecordingMeter(0)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerUpdate:", userInfo: recordingMeter, repeats: true)
     }
     
     func stopRecording()
