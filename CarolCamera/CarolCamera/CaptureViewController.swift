@@ -41,10 +41,13 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
     
     private var backgroundRecordingID:UIBackgroundTaskIdentifier!
     
-    private var changeVolume:Float->Void = {volume in}
+    private var originVolume:Float = 1.0
+    private var restoring = false
     
     private var timestamp:NSDate!
     private var timer:NSTimer!
+    
+    private var changeVolume:Float->Void = {volume in}
     
     dynamic
     var recording = false
@@ -67,11 +70,23 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
         
     }
     
+    func restoreVolume()
+    {
+        if originVolume != AVAudioSession.sharedInstance().outputVolume
+        {
+            restoring = true
+            changeVolume(originVolume)
+        }
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.blackColor()
+        
+        focusIndicator.hidden = true
+        isoMeter.hidden = true
         
         recordingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         recordingView.alpha = 0.0
@@ -106,6 +121,8 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
+        
+        originVolume = AVAudioSession.sharedInstance().outputVolume
         
         session = AVCaptureSession()
         session.addObserver(self, forKeyPath: "running", options: .New, context: &CONTEXT_SESSION_RUNNING)
@@ -343,6 +360,12 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
             let oldVolume = change?[NSKeyValueChangeOldKey] as! Float
             if abs(newVolume - oldVolume) == 0.5 || !session.running
             {
+                return
+            }
+            
+            if restoring
+            {
+                restoring = false
                 return
             }
             
