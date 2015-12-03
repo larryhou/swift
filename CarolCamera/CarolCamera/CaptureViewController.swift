@@ -316,6 +316,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
         }
     }
     
+    var snapIndex = 0
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
         if context == &CONTEXT_LENS_LENGTH
@@ -347,18 +348,14 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
             
             if newVolume > oldVolume
             {
-                twenkleScreen()
-                snapCamera(snapIndex >= 0)
+                snapCamera()
             }
             else
             {
                 recording = !recording
             }
             
-            if abs(AVAudioSession.sharedInstance().outputVolume - 0.5) == 0.5
-            {
-                changeVolume(0.5)
-            }
+            checkVolumeButton()
         }
         else
         if context == &CONTEXT_MOVIE_RECORDING
@@ -373,18 +370,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
             if session.running
             {
                 setupCamera(camera)
-                
-                do
-                {
-                    try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
-                }
-                catch {}
-                
-                let volume = AVAudioSession.sharedInstance().outputVolume
-                if volume == 1.0 || volume == 0.0
-                {
-                    changeVolume(0.5)
-                }
+                checkVolumeButton()
             }
         }
         else
@@ -441,8 +427,6 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
         }
     }
     
-    var snapIndex = 0
-    
     func twenkleScreen()
     {
         flashView.layer.removeAllAnimations()
@@ -460,13 +444,9 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
     }
     
     //MARK: take still image
-    func snapCamera(ignoreCurrentSnap:Bool = false)
+    func snapCamera()
     {
-        if ignoreCurrentSnap
-        {
-            return
-        }
-        
+        twenkleScreen()
         dispatch_async(self.sessionQueue)
         {
             let imageConnection = self.photoOutput.connectionWithMediaType(AVMediaTypeVideo)
@@ -501,6 +481,22 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
                     }
                 }
             }
+        }
+    }
+    
+    //MARK: check volume button
+    func checkVolumeButton()
+    {
+        do
+        {
+            try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
+        }
+        catch {}
+        
+        let volume = AVAudioSession.sharedInstance().outputVolume
+        if volume == 1.0 || volume == 0.0
+        {
+            changeVolume(0.5)
         }
     }
     
@@ -541,6 +537,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
         }
         
         session.sessionPreset = AVCaptureSessionPresetPhoto
+        checkVolumeButton()
         
         //MARK: write movie file
         let backgroundTaskID = self.backgroundRecordingID
