@@ -21,6 +21,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.15000000599999999" green="0.15000000599999999" blue="0.15000000599999999" alpha="1" colorSpace="deviceRGB"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1600" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qd-81-gje">
+                                <rect key="frame" x="564" y="87" width="34" height="16.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="NLR-EX-gmQ"/>
+                                    <constraint firstAttribute="width" constant="82" id="Tg4-XR-MF7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NLR-EX-gmQ"/>
+                                        <exclude reference="Tg4-XR-MF7"/>
+                                    </mask>
+                                </variation>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-Sc-uup">
                                 <rect key="frame" x="0.0" y="20" width="600" height="65"/>
                                 <subviews>
@@ -54,6 +70,8 @@
                             <constraint firstItem="jlf-Sc-uup" firstAttribute="leading" secondItem="hCa-9T-kTn" secondAttribute="trailing" constant="-600" id="80T-y0-HFx"/>
                             <constraint firstAttribute="trailing" secondItem="hCa-9T-kTn" secondAttribute="trailing" id="8oJ-so-fkt"/>
                             <constraint firstItem="hCa-9T-kTn" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Nee-Xl-etV"/>
+                            <constraint firstItem="0qd-81-gje" firstAttribute="top" secondItem="jlf-Sc-uup" secondAttribute="bottom" constant="2" id="Pv7-et-TiA"/>
+                            <constraint firstAttribute="trailing" secondItem="0qd-81-gje" secondAttribute="trailing" constant="2" id="Y7U-3C-L73"/>
                             <constraint firstItem="hCa-9T-kTn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZWc-dX-ZBX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jlf-Sc-uup" secondAttribute="trailing" constant="-20" id="Zg6-Jz-wDD"/>
                             <constraint firstItem="jlf-Sc-uup" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kln-Ze-Lh6"/>
@@ -71,6 +89,7 @@
                     </view>
                     <connections>
                         <outlet property="flashView" destination="hCa-9T-kTn" id="XWa-yx-9GH"/>
+                        <outlet property="isoMeter" destination="0qd-81-gje" id="k4u-lz-dTE"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="ReC-hS-2gj"/>
                         <outlet property="recordingIndicator" destination="CuR-mS-bJ9" id="lmQ-33-rNd"/>
                         <outlet property="recordingMeter" destination="CmT-hz-f4t" id="AlP-jV-mKx"/>

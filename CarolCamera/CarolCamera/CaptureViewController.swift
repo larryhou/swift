@@ -11,7 +11,7 @@ import AVFoundation
 import MediaPlayer
 import Photos
 
-class CaptureViewController: UIViewController
+class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDelegate
 {
     var CONTEXT_LENS_LENGTH:Int = 0
     var CONTEXT_ISO:Int = 0
@@ -27,17 +27,21 @@ class CaptureViewController: UIViewController
     @IBOutlet weak var recordingView: UIView!
     @IBOutlet weak var recordingMeter: UILabel!
     @IBOutlet weak var recordingIndicator: UIImageView!
+    @IBOutlet weak var isoMeter:UILabel!
     
     private var session:AVCaptureSession!
     private var sessionQueue:dispatch_queue_t!
     
     private var camera:AVCaptureDevice!
-    private var cameraInput:AVCaptureDeviceInput!
-    private var imageOutput:AVCaptureStillImageOutput!
+    
+    private var photoOutput:AVCaptureStillImageOutput!
+    private var movieOutput:AVCaptureMovieFileOutput!
+    
+    private var backgroundRecordingID:UIBackgroundTaskIdentifier!
     
     private var changeVolume:Float->Void = {volume in}
     
-    private var startTime:NSDate!
+    private var timestamp:NSDate!
     private var timer:NSTimer!
     
     dynamic
@@ -136,11 +140,15 @@ class CaptureViewController: UIViewController
                 return
             }
             
-            let videoDevice = CaptureViewController.deviceWithMediaType(AVMediaTypeVideo, position: .Back)
+            self.backgroundRecordingID = UIBackgroundTaskInvalid
+            
+            //MARK: camera input
+            let cameraDevice = CaptureViewController.deviceWithMediaType(AVMediaTypeVideo, position: .Back)
+            var cameraInput:AVCaptureDeviceInput! = nil
+            
             do
             {
-                let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
-                self.cameraInput = videoDeviceInput
+                cameraInput = try AVCaptureDeviceInput(device: cameraDevice)
             }
             catch
             {
@@ -148,12 +156,12 @@ class CaptureViewController: UIViewController
                 return
             }
             
-            self.camera = videoDevice
+            self.camera = cameraDevice
             self.session.beginConfiguration()
             
-            if self.session.canAddInput(self.cameraInput)
+            if self.session.canAddInput(cameraInput)
             {
-                self.session.addInput(self.cameraInput)
+                self.session.addInput(cameraInput)
                 
                 dispatch_async(dispatch_get_main_queue())
                 {
@@ -170,22 +178,58 @@ class CaptureViewController: UIViewController
             }
             else
             {
-                self.showAlertMessage("Could not add vedio input")
+                self.showAlertMessage("Could not add camera input")
                 return
             }
             
-            let imageOutput = AVCaptureStillImageOutput()
-            if self.session.canAddOutput(imageOutput)
+            //MARK: microphone input
+            let audio = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
+            var audioInput:AVCaptureDeviceInput! = nil
+            do
             {
-                self.session.addOutput(imageOutput)
-                self.imageOutput = imageOutput
-                imageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-                imageOutput.highResolutionStillImageOutputEnabled = true
+                audioInput = try AVCaptureDeviceInput(device: audio)
+            }
+            catch {}
+            
+            if audioInput != nil && self.session.canAddInput(audioInput)
+            {
+                self.session.addInput(audioInput)
             }
             else
             {
-                self.showAlertMessage("Could not add image output")
-                return
+                self.showAlertMessage("Could not add microphone input")
+            }
+            
+            //MARK: photo output
+            let photoOutput = AVCaptureStillImageOutput()
+            if self.session.canAddOutput(photoOutput)
+            {
+                self.session.addOutput(photoOutput)
+                self.photoOutput = photoOutput
+                photoOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+                photoOutput.highResolutionStillImageOutputEnabled = true
+            }
+            else
+            {
+                self.showAlertMessage("Could not add photo output")
+            }
+            
+            //MARK: movie output
+            let movieOutput = AVCaptureMovieFileOutput()
+            if self.session.canAddOutput(movieOutput)
+            {
+                self.session.addOutput(movieOutput)
+                self.movieOutput = movieOutput
+                
+                let movieConnnection = movieOutput.connectionWithMediaType(AVMediaTypeVideo)
+                if  movieConnnection.supportsVideoStabilization
+                {
+                    movieConnnection.preferredVideoStabilizationMode = .Auto
+                }
+            }
+            else
+            {
+                self.showAlertMessage("Could not add movie output")
             }
             
             self.session.commitConfiguration()
@@ -195,8 +239,6 @@ class CaptureViewController: UIViewController
             self.camera.addObserver(self, forKeyPath: "exposureDuration", options: .New, context: &self.CONTEXT_EXPOSURE_DURATION)
             self.camera.addObserver(self, forKeyPath: "lowLightBoostEnabled", options: .New, context: &self.CONTEXT_LIGHT_BOOST)
             self.session.startRunning()
-            
-            self.setupCamera(self.camera)
         }
     }
     
@@ -288,7 +330,7 @@ class CaptureViewController: UIViewController
         else
         if context == &CONTEXT_ISO
         {
-//            print("ISO", camera.ISO)
+            isoMeter.text = String(format: "ISO:%04d", Int(camera.ISO))
         }
         else
         if context == &CONTEXT_OUTPUT_VOLUME
@@ -300,13 +342,13 @@ class CaptureViewController: UIViewController
                 return
             }
             
-            ++snapEventIndex
-            print("snap", String(format: "%03d %@ %.3f %.3f", snapEventIndex, newVolume > oldVolume ? "+" : "-", newVolume, oldVolume))
+            ++snapIndex
+            print("snap", String(format: "%03d %@ %.3f %.3f", snapIndex, newVolume > oldVolume ? "+" : "-", newVolume, oldVolume))
             
             if newVolume > oldVolume
             {
                 twenkleScreen()
-                snapCamera(snapEventIndex >= 0)
+                snapCamera(snapIndex >= 0)
             }
             else
             {
@@ -321,17 +363,7 @@ class CaptureViewController: UIViewController
         else
         if context == &CONTEXT_MOVIE_RECORDING
         {
-            print("recording", recording)
-            if recording
-            {
-                session.sessionPreset = AVCaptureSessionPresetHigh
-                startRecording()
-            }
-            else
-            {
-                session.sessionPreset = AVCaptureSessionPresetPhoto
-                stopRecording()
-            }
+            toggleRecording()
         }
         else
         if context == &CONTEXT_SESSION_RUNNING
@@ -340,6 +372,8 @@ class CaptureViewController: UIViewController
             
             if session.running
             {
+                setupCamera(camera)
+                
                 do
                 {
                     try AVAudioSession.sharedInstance().setActive(true, withOptions: .NotifyOthersOnDeactivation)
@@ -373,38 +407,41 @@ class CaptureViewController: UIViewController
     
     func timerUpdate(timer:NSTimer)
     {
-        updateRecordingMeter(timer.fireDate.timeIntervalSinceDate(startTime))
+        updateRecordingMeter(timer.fireDate.timeIntervalSinceDate(timestamp))
         recordingIndicator.hidden = !recordingIndicator.hidden
     }
     
-    func startRecording()
+    func toggleRecording()
     {
-        recordingView.layer.removeAllAnimations()
-        recordingView.alpha = 0.5
-        
-        UIView.animateWithDuration(0.2)
+        dispatch_async(sessionQueue)
         {
-            self.recordingView.alpha = 1.0
+            if !self.movieOutput.recording
+            {
+                print("recording", true)
+                self.session.sessionPreset = AVCaptureSessionPresetHigh
+                
+                if UIDevice.currentDevice().multitaskingSupported
+                {
+                    self.backgroundRecordingID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
+                }
+                
+                let movieConnection = self.movieOutput.connectionWithMediaType(AVMediaTypeVideo)
+                movieConnection.videoOrientation = (self.view.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation
+                
+                let movieFileName = NSString(string: NSProcessInfo.processInfo().globallyUniqueString).stringByAppendingPathExtension("mov")!
+                let movieFilePath = NSString(string: NSTemporaryDirectory()).stringByAppendingPathComponent(movieFileName)
+                
+                self.movieOutput.startRecordingToOutputFileURL(NSURL.fileURLWithPath(movieFilePath), recordingDelegate: self)
+            }
+            else
+            {
+                print("recording", false)
+                self.movieOutput.stopRecording()
+            }
         }
-        
-        startTime = NSDate()
-        
-        updateRecordingMeter(0)
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerUpdate:", userInfo: recordingMeter, repeats: true)
     }
     
-    func stopRecording()
-    {
-        timer.invalidate()
-        
-        recordingView.layer.removeAllAnimations()
-        UIView.animateWithDuration(0.5)
-        {
-            self.recordingView.alpha = 0.0
-        }
-    }
-    
-    var snapEventIndex = 0
+    var snapIndex = 0
     
     func twenkleScreen()
     {
@@ -422,6 +459,7 @@ class CaptureViewController: UIViewController
         }
     }
     
+    //MARK: take still image
     func snapCamera(ignoreCurrentSnap:Bool = false)
     {
         if ignoreCurrentSnap
@@ -431,10 +469,10 @@ class CaptureViewController: UIViewController
         
         dispatch_async(self.sessionQueue)
         {
-            let imageConnection = self.imageOutput.connectionWithMediaType(AVMediaTypeVideo)
+            let imageConnection = self.photoOutput.connectionWithMediaType(AVMediaTypeVideo)
             imageConnection.videoOrientation = (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation
             
-            self.imageOutput.captureStillImageAsynchronouslyFromConnection(imageConnection)
+            self.photoOutput.captureStillImageAsynchronouslyFromConnection(imageConnection)
             { (buffer:CMSampleBuffer!, error:NSError!) in
                 if error != nil
                 {
@@ -463,6 +501,103 @@ class CaptureViewController: UIViewController
                     }
                 }
             }
+        }
+    }
+    
+    //MARK: record delegate
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!)
+    {
+        print(__FUNCTION__)
+        
+        dispatch_async(dispatch_get_main_queue())
+        {
+            self.recordingView.layer.removeAllAnimations()
+            self.recordingView.alpha = 0.5
+            
+            UIView.animateWithDuration(0.2)
+            {
+                self.recordingView.alpha = 1.0
+            }
+            
+            self.timestamp = NSDate()
+            
+            self.updateRecordingMeter(0)
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerUpdate:", userInfo: nil, repeats: true)
+        }
+    }
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!)
+    {
+        print(__FUNCTION__)
+        
+        timer.invalidate()
+        dispatch_async(dispatch_get_main_queue())
+        {
+            self.recordingView.layer.removeAllAnimations()
+            UIView.animateWithDuration(0.5)
+            {
+                self.recordingView.alpha = 0.0
+            }
+        }
+        
+        session.sessionPreset = AVCaptureSessionPresetPhoto
+        
+        //MARK: write movie file
+        let backgroundTaskID = self.backgroundRecordingID
+        self.backgroundRecordingID = UIBackgroundTaskInvalid
+        
+        let cleanup = {
+            do
+            {
+                try NSFileManager.defaultManager().removeItemAtURL(outputFileURL)
+            }
+            catch {}
+            
+            if backgroundTaskID != UIBackgroundTaskInvalid
+            {
+                UIApplication.sharedApplication().endBackgroundTask(backgroundTaskID)
+            }
+        }
+        
+        var success = true
+        if error != nil
+        {
+           success = error.userInfo[AVErrorRecordingSuccessfullyFinishedKey] as! Bool
+        }
+        
+        if success
+        {
+            PHPhotoLibrary.requestAuthorization
+            { (status:PHAuthorizationStatus) in
+                if status == PHAuthorizationStatus.Authorized
+                {
+                    let movieWriting = {
+                        let options = PHAssetResourceCreationOptions()
+                        options.shouldMoveFile = true
+                        
+                        let request = PHAssetCreationRequest.creationRequestForAsset()
+                        request.addResourceWithType(.Video, fileURL: outputFileURL, options: options)
+                    }
+                    
+                    PHPhotoLibrary.sharedPhotoLibrary().performChanges(movieWriting)
+                    { (success:Bool, error:NSError?) in
+                        if !success
+                        {
+                            self.showAlertMessage(String(format: "Could not save movie to photo library: %@", error!))
+                        }
+                        
+                        cleanup()
+                    }
+                }
+                else
+                {
+                    cleanup()
+                }
+            }
+        }
+        else
+        {
+            cleanup()
         }
     }
     
