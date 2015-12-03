@@ -20,6 +20,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
     var CONTEXT_MOVIE_RECORDING:Int = 0
     var CONTEXT_SESSION_RUNNING:Int = 0
     var CONTEXT_LIGHT_BOOST:Int = 0
+    var CONTEXT_ADJUSTING_FOCUS:Int = 0
     
     @IBOutlet var previewView: LivePreivewView!
     @IBOutlet var flashView:UIView!
@@ -28,6 +29,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
     @IBOutlet weak var recordingMeter: UILabel!
     @IBOutlet weak var recordingIndicator: UIImageView!
     @IBOutlet weak var isoMeter:UILabel!
+    @IBOutlet weak var focusIndicator: UIImageView!
     
     private var session:AVCaptureSession!
     private var sessionQueue:dispatch_queue_t!
@@ -238,6 +240,7 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
             self.camera.addObserver(self, forKeyPath: "ISO", options: .New, context: &self.CONTEXT_ISO)
             self.camera.addObserver(self, forKeyPath: "exposureDuration", options: .New, context: &self.CONTEXT_EXPOSURE_DURATION)
             self.camera.addObserver(self, forKeyPath: "lowLightBoostEnabled", options: .New, context: &self.CONTEXT_LIGHT_BOOST)
+            self.camera.addObserver(self, forKeyPath: "adjustingFocus", options: .New, context: &self.CONTEXT_ADJUSTING_FOCUS)
             self.session.startRunning()
         }
     }
@@ -377,6 +380,44 @@ class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDeleg
         if context == &CONTEXT_LIGHT_BOOST
         {
             print("lowLightBoostEnabled", camera.lowLightBoostEnabled)
+        }
+        else
+        if context == &CONTEXT_ADJUSTING_FOCUS
+        {
+            focusIndicator.hidden = !camera.adjustingFocus
+            if camera.adjustingFocus
+            {
+                focusIndex = 0
+                NSTimer.scheduledTimerWithTimeInterval(0.15, target:self, selector: "twinkleFocusBox:", userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
+    var focusIndex = 0
+    func twinkleFocusBox(timer:NSTimer)
+    {
+        if !camera.adjustingFocus
+        {
+            timer.invalidate()
+            return
+        }
+        
+        focusIndex++
+        
+        let alpha:CGFloat
+        if focusIndex % 2 == 1
+        {
+            alpha = 1.0
+        }
+        else
+        {
+            alpha = 0.5
+        }
+        
+        focusIndicator.layer.removeAllAnimations()
+        UIView.animateWithDuration(0.1)
+        {
+            self.focusIndicator.alpha = alpha
         }
     }
     

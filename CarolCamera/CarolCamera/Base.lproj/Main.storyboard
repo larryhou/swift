@@ -17,12 +17,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Focus" translatesAutoresizingMaskIntoConstraints="NO" id="T2I-37-Ulj">
+                                <rect key="frame" x="240" y="240" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="5Bm-5g-M16"/>
+                                    <constraint firstAttribute="height" constant="120" id="hfX-Hj-pDp"/>
+                                </constraints>
+                            </imageView>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCa-9T-kTn">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.15000000599999999" green="0.15000000599999999" blue="0.15000000599999999" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1600" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qd-81-gje">
-                                <rect key="frame" x="564" y="87" width="34" height="16.5"/>
+                                <rect key="frame" x="564" y="87" width="34" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="NLR-EX-gmQ"/>
                                     <constraint firstAttribute="width" constant="82" id="Tg4-XR-MF7"/>
@@ -67,6 +74,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="T2I-37-Ulj" firstAttribute="centerX" secondItem="jlf-Sc-uup" secondAttribute="centerX" id="1mj-FW-MUL"/>
                             <constraint firstItem="jlf-Sc-uup" firstAttribute="leading" secondItem="hCa-9T-kTn" secondAttribute="trailing" constant="-600" id="80T-y0-HFx"/>
                             <constraint firstAttribute="trailing" secondItem="hCa-9T-kTn" secondAttribute="trailing" id="8oJ-so-fkt"/>
                             <constraint firstItem="hCa-9T-kTn" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Nee-Xl-etV"/>
@@ -76,6 +84,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="jlf-Sc-uup" secondAttribute="trailing" constant="-20" id="Zg6-Jz-wDD"/>
                             <constraint firstItem="jlf-Sc-uup" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kln-Ze-Lh6"/>
                             <constraint firstItem="hCa-9T-kTn" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nW9-n1-cnh"/>
+                            <constraint firstItem="T2I-37-Ulj" firstAttribute="centerY" secondItem="hCa-9T-kTn" secondAttribute="centerY" id="p2A-aF-xFr"/>
                             <constraint firstItem="jlf-Sc-uup" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="tRM-DD-94T"/>
                         </constraints>
                         <variation key="default">
@@ -89,6 +98,7 @@
                     </view>
                     <connections>
                         <outlet property="flashView" destination="hCa-9T-kTn" id="XWa-yx-9GH"/>
+                        <outlet property="focusIndicator" destination="T2I-37-Ulj" id="XDE-0c-frf"/>
                         <outlet property="isoMeter" destination="0qd-81-gje" id="k4u-lz-dTE"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="ReC-hS-2gj"/>
                         <outlet property="recordingIndicator" destination="CuR-mS-bJ9" id="lmQ-33-rNd"/>
@@ -103,6 +113,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Focus" width="120" height="120"/>
         <image name="Recording" width="10" height="10"/>
     </resources>
 </document>
