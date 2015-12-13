@@ -113,12 +113,12 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         
         if camera.autoFocusRangeRestrictionSupported
         {
-            camera.autoFocusRangeRestriction = .Near
+//            camera.autoFocusRangeRestriction = .Near
         }
         
         if camera.smoothAutoFocusSupported
         {
-            camera.smoothAutoFocusEnabled = false
+            camera.smoothAutoFocusEnabled = true
         }
         
         camera.unlockForConfiguration()

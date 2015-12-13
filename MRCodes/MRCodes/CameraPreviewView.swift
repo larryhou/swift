@@ -34,6 +34,7 @@ class CameraPreviewView:UIView
 class CameraOverlayView:UIView
 {
     @IBOutlet weak var label:UILabel!
+    @IBOutlet weak var type:UILabel!
     
     private var codes:[AVMetadataMachineReadableCodeObject]!
     private var faces:[AVMetadataFaceObject]!
@@ -80,8 +81,10 @@ class CameraOverlayView:UIView
         let context = UIGraphicsGetCurrentContext()
         var target:CGPath!
         
-        label.text = ""
         label.textColor = UIColor.whiteColor()
+        label.text = ""
+        
+        type.text = ""
         if codes != nil && codes.count > 0
         {
             CGContextSaveGState(context)
@@ -97,8 +100,12 @@ class CameraOverlayView:UIView
                 if target == nil
                 {
                     target = path
-                    label.text = mrc.stringValue != nil ? mrc.stringValue : ""
+                    type.text = mrc.type
+                    
+                    label.text = mrc.stringValue
                     label.sizeToFit()
+                    
+                    UIPasteboard.generalPasteboard().string = mrc.stringValue
                 }
             }
             
