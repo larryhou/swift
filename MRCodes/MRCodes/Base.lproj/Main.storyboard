@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Read View Controller-->
@@ -21,21 +20,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C2e-tG-9fp" customClass="CameraOverlayView" customModule="MRCodes" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQj-Fu-ywK">
-                                        <rect key="frame" x="8" y="265" width="584" height="69"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="69" id="fG0-RM-PBa"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQj-Fu-ywK">
+                                        <rect key="frame" x="265" y="282" width="71" height="36"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="leading" secondItem="C2e-tG-9fp" secondAttribute="leadingMargin" id="EXq-nA-Djo"/>
-                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="centerY" secondItem="C2e-tG-9fp" secondAttribute="centerY" id="jIH-4s-Sen"/>
-                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="trailing" secondItem="C2e-tG-9fp" secondAttribute="trailingMargin" id="pbG-kF-1iR"/>
+                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="C2e-tG-9fp" secondAttribute="leading" constant="20" id="VKs-2q-aCj"/>
+                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="centerX" secondItem="C2e-tG-9fp" secondAttribute="centerX" id="i9Y-39-hoX"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mQj-Fu-ywK" secondAttribute="trailing" constant="20" id="oZ5-65-Whj"/>
+                                    <constraint firstItem="mQj-Fu-ywK" firstAttribute="centerY" secondItem="C2e-tG-9fp" secondAttribute="centerY" id="rZW-yd-QL8"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="label" destination="mQj-Fu-ywK" id="0BO-It-GQU"/>

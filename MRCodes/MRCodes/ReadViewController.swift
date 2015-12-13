@@ -42,6 +42,15 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         }
     }
     
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        if !session.running
+        {
+            session.startRunning()
+        }
+    }
+    
     func findCamera(position:AVCaptureDevicePosition)->AVCaptureDevice!
     {
         let list = AVCaptureDevice.devices() as! [AVCaptureDevice]
@@ -153,13 +162,22 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         let orientation = UIDevice.currentDevice().orientation
         if orientation.isLandscape || orientation.isPortrait
         {
-            (previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+            let layer = previewView.layer as! AVCaptureVideoPreviewLayer
+            if layer.connection != nil
+            {
+                layer.connection.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+            }
         }
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
     {
         return .All
+    }
+    
+    override func prefersStatusBarHidden() -> Bool
+    {
+        return true
     }
 
     override func didReceiveMemoryWarning()

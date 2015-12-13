@@ -98,6 +98,7 @@ class CameraOverlayView:UIView
                 {
                     target = path
                     label.text = mrc.stringValue != nil ? mrc.stringValue : ""
+                    label.sizeToFit()
                 }
             }
             
