@@ -105,7 +105,10 @@ class CameraOverlayView:UIView
                     label.text = mrc.stringValue
                     label.sizeToFit()
                     
-                    UIPasteboard.generalPasteboard().string = mrc.stringValue
+                    if mrc.stringValue != nil
+                    {
+                        UIPasteboard.generalPasteboard().string = mrc.stringValue
+                    }
                 }
             }
             
