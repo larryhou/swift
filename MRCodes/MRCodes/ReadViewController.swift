@@ -87,7 +87,18 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         {
             session.addOutput(metadata)
             metadata.setMetadataObjectsDelegate(self, queue: metadataQueue)
-            metadata.metadataObjectTypes = metadata.availableMetadataObjectTypes
+            
+            var metadataTypes = metadata.availableMetadataObjectTypes as! [String]
+            for i in 0..<metadataTypes.count
+            {
+                if metadataTypes[i] == "face"
+                {
+                    metadataTypes.removeAtIndex(i)
+                    break
+                }
+            }
+            
+            metadata.metadataObjectTypes = metadataTypes
             print(metadata.availableMetadataObjectTypes)
         }
         
