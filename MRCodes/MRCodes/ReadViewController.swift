@@ -51,6 +51,11 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         }
     }
     
+    func applicationWillEnterForeground()
+    {
+        overlay.setMetadataObjects([], faces: [])
+    }
+    
     func findCamera(position:AVCaptureDevicePosition)->AVCaptureDevice!
     {
         let list = AVCaptureDevice.devices() as! [AVCaptureDevice]
