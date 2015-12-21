@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="QRCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nI5-Wh-II2" customClass="QRImageView" customModule="QRCode" customModuleProvider="target">
+                                <rect key="frame" x="50" y="161" width="500" height="500"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="nI5-Wh-II2" secondAttribute="height" multiplier="1:1" id="EyB-mq-Dsh"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="侯坤峰"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xDY-MQ-bz2">
+                                <rect key="frame" x="20" y="25" width="560" height="131"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="bnT-Gh-QWL"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="D5d-HR-qls"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nI5-Wh-II2" secondAttribute="trailing" constant="30" id="Hz2-Da-JAa"/>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="30" id="Reu-DI-O5P"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="S2S-B9-G0b"/>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZeP-0E-Wci"/>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="bau-aU-urH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xDY-MQ-bz2" secondAttribute="bottom" constant="444" id="eta-Ve-FKu"/>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="top" secondItem="xDY-MQ-bz2" secondAttribute="bottom" constant="5" id="jbF-Xl-sBV"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="centerX" secondItem="nI5-Wh-II2" secondAttribute="centerX" id="rJL-uw-Tms"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="woc-oV-dWo"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="D5d-HR-qls"/>
+                                <exclude reference="bau-aU-urH"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="inputQRView" destination="nI5-Wh-II2" id="XAg-Gt-3Yb"/>
+                        <outlet property="inputTextView" destination="xDY-MQ-bz2" id="aJH-9L-1GZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="320" y="372"/>
+        </scene>
+    </scenes>
+</document>
