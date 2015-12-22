@@ -20,6 +20,9 @@ class ViewController: UIViewController, UITextViewDelegate
         
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        
+        inputQRView.layer.borderWidth = 1.0
+        inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
     }
     
     func textViewDidChange(textView: UITextView)

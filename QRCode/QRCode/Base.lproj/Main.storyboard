@@ -19,18 +19,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nI5-Wh-II2" customClass="QRImageView" customModule="QRCode" customModuleProvider="target">
-                                <rect key="frame" x="50" y="161" width="500" height="500"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nI5-Wh-II2" customClass="QRImageView" customModule="QRCode" customModuleProvider="target">
+                                <rect key="frame" x="10" y="10" width="580" height="580"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="nI5-Wh-II2" secondAttribute="height" multiplier="1:1" id="EyB-mq-Dsh"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="侯坤峰"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="useCoreGraphics" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xDY-MQ-bz2">
-                                <rect key="frame" x="20" y="25" width="560" height="131"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="sdfsfdadsfsdfsdfasdfsfdadsfssdfsfdadsfsdfsdfasdfsfdadsfssdfsfdadsfsdfsdfasdfsfdadsfs" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xDY-MQ-bz2">
+                                <rect key="frame" x="10" y="40" width="580" height="70"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Xom-5t-EKZ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
@@ -40,21 +44,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="6xk-vv-sZU"/>
                             <constraint firstItem="nI5-Wh-II2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="D5d-HR-qls"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="nI5-Wh-II2" secondAttribute="trailing" constant="30" id="Hz2-Da-JAa"/>
-                            <constraint firstItem="nI5-Wh-II2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="30" id="Reu-DI-O5P"/>
-                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="S2S-B9-G0b"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EIr-f0-lrH"/>
+                            <constraint firstAttribute="trailing" secondItem="nI5-Wh-II2" secondAttribute="trailing" constant="10" id="Hz2-Da-JAa"/>
+                            <constraint firstItem="nI5-Wh-II2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Reu-DI-O5P"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="S2S-B9-G0b"/>
                             <constraint firstItem="nI5-Wh-II2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZeP-0E-Wci"/>
                             <constraint firstItem="nI5-Wh-II2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="bau-aU-urH"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xDY-MQ-bz2" secondAttribute="bottom" constant="444" id="eta-Ve-FKu"/>
-                            <constraint firstItem="nI5-Wh-II2" firstAttribute="top" secondItem="xDY-MQ-bz2" secondAttribute="bottom" constant="5" id="jbF-Xl-sBV"/>
-                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="centerX" secondItem="nI5-Wh-II2" secondAttribute="centerX" id="rJL-uw-Tms"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xDY-MQ-bz2" secondAttribute="bottom" constant="511" id="eta-Ve-FKu"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="centerX" secondItem="nI5-Wh-II2" secondAttribute="centerX" constant="-3" id="rJL-uw-Tms"/>
+                            <constraint firstItem="xDY-MQ-bz2" firstAttribute="width" secondItem="nI5-Wh-II2" secondAttribute="width" id="tUK-0H-W9T"/>
                             <constraint firstItem="xDY-MQ-bz2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="woc-oV-dWo"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="rJL-uw-Tms"/>
+                                <exclude reference="woc-oV-dWo"/>
                                 <exclude reference="D5d-HR-qls"/>
                                 <exclude reference="bau-aU-urH"/>
+                                <exclude reference="eta-Ve-FKu"/>
                             </mask>
                         </variation>
                     </view>
