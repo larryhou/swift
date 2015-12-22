@@ -14,6 +14,18 @@ class QRImageView:UIImageView
 {
     var ib_inputMessage:String = "larryhou"
     var ib_useCoreGraphics = true
+    var ib_correctionLevel = "M"
+    
+    @IBInspectable
+    var correctionLevel:String
+    {
+        get {return ib_correctionLevel}
+        set
+        {
+            self.ib_correctionLevel = newValue
+            self.drawQRImage()
+        }
+    }
     
     @IBInspectable
     var useCoreGraphics:Bool
@@ -56,10 +68,10 @@ class QRImageView:UIImageView
         let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
         
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue("H", forKey: "inputCorrectionLevel")
+        filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
         
         var image = (filter?.outputImage)!
-        let scale = self.frame.width / image.extent.size.width
+        let scale = self.frame.width / image.extent.width
         image = image.imageByApplyingTransform(CGAffineTransformMakeScale(scale, scale))
         
         self.image = UIImage(CIImage: image)
@@ -71,6 +83,7 @@ class QRImageView:UIImageView
         let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
         
         filter?.setValue(data, forKey: "inputMessage")
+        filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
         
         let image = (filter?.outputImage)!
         UIGraphicsBeginImageContext(frame.size)
