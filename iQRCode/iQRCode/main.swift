@@ -145,7 +145,7 @@ if file != nil
 }
 else
 {
-    assert(inputMessage != "", "Need input message")
+    assert(inputMessage != "", "NEED INPUT MESSAGE")
     if verbose
     {
         print("input:", inputMessage)
