@@ -12,9 +12,9 @@ import UIKit
 @IBDesignable
 class QRImageView:UIImageView
 {
-    var ib_inputMessage:String = "larryhou"
-    var ib_useCoreGraphics = true
-    var ib_correctionLevel = "M"
+    private var ib_inputMessage:String = "larryhou"
+    private var ib_useCoreGraphics = true
+    private var ib_correctionLevel = "M"
     
     @IBInspectable
     var correctionLevel:String

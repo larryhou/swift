@@ -21,6 +21,7 @@ class QRImageViewController: UIViewController, UITextViewDelegate
         
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        inputTextView.text = ""
         
         inputQRView.layer.borderWidth = 1.0
         inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor

@@ -15,6 +15,10 @@
 		6B6729451C27FC44006D4A48 /* QRCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6729441C27FC44006D4A48 /* QRCodeTests.swift */; };
 		6B6729501C27FC44006D4A48 /* QRCodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67294F1C27FC44006D4A48 /* QRCodeUITests.swift */; };
 		6B67295E1C283333006D4A48 /* QRImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67295D1C283333006D4A48 /* QRImageView.swift */; };
+		6BF25DD51C2990DE0045F6A4 /* AztecImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF25DD41C2990DE0045F6A4 /* AztecImageViewController.swift */; };
+		6BF25DD71C29933F0045F6A4 /* BarcodeImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF25DD61C29933F0045F6A4 /* BarcodeImageViewController.swift */; };
+		6BF25DD91C2995650045F6A4 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF25DD81C2995650045F6A4 /* TabBarViewController.swift */; };
+		6BF25DDB1C299AD00045F6A4 /* BarcodeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF25DDA1C299AD00045F6A4 /* BarcodeImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		6B67294F1C27FC44006D4A48 /* QRCodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeUITests.swift; sourceTree = "<group>"; };
 		6B6729511C27FC44006D4A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B67295D1C283333006D4A48 /* QRImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRImageView.swift; sourceTree = "<group>"; };
+		6BF25DD41C2990DE0045F6A4 /* AztecImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AztecImageViewController.swift; sourceTree = "<group>"; };
+		6BF25DD61C29933F0045F6A4 /* BarcodeImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeImageViewController.swift; sourceTree = "<group>"; };
+		6BF25DD81C2995650045F6A4 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		6BF25DDA1C299AD00045F6A4 /* BarcodeImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +108,12 @@
 			isa = PBXGroup;
 			children = (
 				6B67292F1C27FC44006D4A48 /* AppDelegate.swift */,
+				6BF25DD81C2995650045F6A4 /* TabBarViewController.swift */,
 				6B6729311C27FC44006D4A48 /* QRImageViewController.swift */,
+				6BF25DD41C2990DE0045F6A4 /* AztecImageViewController.swift */,
+				6BF25DD61C29933F0045F6A4 /* BarcodeImageViewController.swift */,
 				6B67295D1C283333006D4A48 /* QRImageView.swift */,
+				6BF25DDA1C299AD00045F6A4 /* BarcodeImageView.swift */,
 				6B6729331C27FC44006D4A48 /* Main.storyboard */,
 				6B6729361C27FC44006D4A48 /* Assets.xcassets */,
 				6B6729381C27FC44006D4A48 /* LaunchScreen.storyboard */,
@@ -260,7 +272,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B6729321C27FC44006D4A48 /* QRImageViewController.swift in Sources */,
+				6BF25DD71C29933F0045F6A4 /* BarcodeImageViewController.swift in Sources */,
+				6BF25DDB1C299AD00045F6A4 /* BarcodeImageView.swift in Sources */,
 				6B6729301C27FC44006D4A48 /* AppDelegate.swift in Sources */,
+				6BF25DD51C2990DE0045F6A4 /* AztecImageViewController.swift in Sources */,
+				6BF25DD91C2995650045F6A4 /* TabBarViewController.swift in Sources */,
 				6B67295E1C283333006D4A48 /* QRImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
