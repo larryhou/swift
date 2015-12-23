@@ -20,9 +20,14 @@ class BarcodeImageViewController:UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        barcodeImageView.layer.borderWidth = 1.0
-        barcodeImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+//        barcodeImageView.layer.borderWidth = 1.0
+//        barcodeImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
         
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
         quietSpaceDidChange(quietSpaceSlider)
     }
     

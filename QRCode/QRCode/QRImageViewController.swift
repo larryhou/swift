@@ -25,6 +25,11 @@ class QRImageViewController: UIViewController, UITextViewDelegate
         
         inputQRView.layer.borderWidth = 1.0
         inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
         
         levelDidChange(levelControl)
     }
