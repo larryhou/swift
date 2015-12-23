@@ -26,12 +26,10 @@
                                 <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihG-YR-OiQ" customClass="AztecImageView" customModule="QRCode" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihG-YR-OiQ" customClass="AztecImageView" customModule="QRCode" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="ihG-YR-OiQ" secondAttribute="height" multiplier="1:1" id="Brq-PD-aRv">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="-40"/>
-                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="ihG-YR-OiQ" secondAttribute="height" multiplier="1:1" id="Brq-PD-aRv"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="inputCompactStyle" value="YES"/>
@@ -99,7 +97,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="NIi-qB-ViV" secondAttribute="trailing" constant="2" id="HhZ-C3-6rt"/>
-                            <constraint firstItem="NIi-qB-ViV" firstAttribute="top" secondItem="2Rh-lV-4b9" secondAttribute="bottom" constant="8" id="MKp-8a-5lC"/>
+                            <constraint firstItem="NIi-qB-ViV" firstAttribute="top" secondItem="2Rh-lV-4b9" secondAttribute="bottom" constant="15" id="MKp-8a-5lC"/>
                             <constraint firstAttribute="trailing" secondItem="GpV-22-u33" secondAttribute="trailing" constant="-10" id="OO0-qW-CtL">
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
@@ -113,9 +111,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="-10"/>
                             </constraint>
                             <constraint firstItem="GpV-22-u33" firstAttribute="top" secondItem="2Rh-lV-4b9" secondAttribute="bottom" constant="55" id="YUe-ic-KBE"/>
-                            <constraint firstItem="GpV-22-u33" firstAttribute="leading" secondItem="b1J-aK-YWg" secondAttribute="leading" constant="-10" id="ZZG-xZ-Ete">
-                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                            </constraint>
+                            <constraint firstItem="GpV-22-u33" firstAttribute="leading" secondItem="b1J-aK-YWg" secondAttribute="leading" constant="10" id="ZZG-xZ-Ete"/>
                             <constraint firstItem="ihG-YR-OiQ" firstAttribute="leading" secondItem="b1J-aK-YWg" secondAttribute="leading" constant="-10" id="gQ7-MM-UE8">
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
