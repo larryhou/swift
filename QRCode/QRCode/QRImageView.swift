@@ -12,7 +12,9 @@ import UIKit
 @IBDesignable
 class QRImageView:UIImageView
 {
-    private var ib_inputMessage:String = "larryhou"
+    private static let DEFAULT_MESSAGE = "larryhou"
+    
+    private var ib_inputMessage:String = QRImageView.DEFAULT_MESSAGE
     private var ib_useCoreGraphics = true
     private var ib_correctionLevel = "M"
     
@@ -45,7 +47,7 @@ class QRImageView:UIImageView
         
         set
         {
-            self.ib_inputMessage = newValue
+            self.ib_inputMessage = newValue == "" ? QRImageView.DEFAULT_MESSAGE : newValue
             self.drawQRImage()
         }
     }

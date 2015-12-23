@@ -12,7 +12,9 @@ import UIKit
 @IBDesignable
 class AztecImageView:UIImageView
 {
-    private var ib_inputMessage = "larryhou"
+    private static let DEFAULT_MESSAGE = "larryhou"
+    
+    private var ib_inputMessage = AztecImageView.DEFAULT_MESSAGE
     private var ib_inputCompactStyle = false
     
     @IBInspectable
@@ -21,7 +23,7 @@ class AztecImageView:UIImageView
         get {return ib_inputMessage}
         set
         {
-            ib_inputMessage = newValue
+            ib_inputMessage = newValue == "" ? AztecImageView.DEFAULT_MESSAGE : newValue
             drawAztecImage()
         }
     }

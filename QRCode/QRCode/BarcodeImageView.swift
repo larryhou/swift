@@ -12,8 +12,10 @@ import UIKit
 @IBDesignable
 class BarcodeImageView:UIImageView
 {
+    private static let DEFAULT_MESSAGE = "larryhou"
+    
     private var ib_inputQuietSpace:Double = 7.0
-    private var ib_inputMessage:String = "larryhou"
+    private var ib_inputMessage:String = BarcodeImageView.DEFAULT_MESSAGE
     
     @IBInspectable
     var inputQuietSpace:Double
@@ -32,15 +34,7 @@ class BarcodeImageView:UIImageView
         get {return ib_inputMessage}
         set
         {
-            if newValue == ""
-            {
-                ib_inputMessage = "larryhou"
-            }
-            else
-            {
-                ib_inputMessage = newValue
-            }
-            
+            ib_inputMessage = newValue == "" ? BarcodeImageView.DEFAULT_MESSAGE : newValue
             drawBarcodeImage()
         }
     }
