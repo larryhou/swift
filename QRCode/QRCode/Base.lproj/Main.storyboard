@@ -498,12 +498,6 @@
                                     <action selector="aspactRatioDidChange:" destination="kqd-6u-rx3" eventType="valueChanged" id="p6C-T0-X5x"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IiO-4z-kzu">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CompactStyle:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUQ-tt-5wY">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -587,6 +581,12 @@
                                     <outlet property="delegate" destination="kqd-6u-rx3" id="7ZQ-F3-6Dv"/>
                                 </connections>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IiO-4z-kzu">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -607,7 +607,7 @@
                             <constraint firstItem="FWB-FB-QCo" firstAttribute="leading" secondItem="xr0-st-IVZ" secondAttribute="trailing" constant="8" id="Hla-2i-aUP"/>
                             <constraint firstItem="orr-DX-ToU" firstAttribute="top" secondItem="GJG-hm-OVh" secondAttribute="bottom" constant="10" id="MH1-H8-3dS"/>
                             <constraint firstItem="5af-Zm-vap" firstAttribute="centerY" secondItem="soz-t8-idF" secondAttribute="centerY" id="NFJ-3J-iEd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IiO-4z-kzu" secondAttribute="trailing" constant="-13" id="O6c-u9-OP8"/>
+                            <constraint firstAttribute="trailing" secondItem="IiO-4z-kzu" secondAttribute="trailing" constant="10" id="O6c-u9-OP8"/>
                             <constraint firstItem="IiO-4z-kzu" firstAttribute="leading" secondItem="FWB-FB-QCo" secondAttribute="trailing" constant="8" id="TC3-3A-I3V"/>
                             <constraint firstItem="fUQ-tt-5wY" firstAttribute="trailing" secondItem="5af-Zm-vap" secondAttribute="trailing" id="Z86-7S-25j"/>
                             <constraint firstItem="xr0-st-IVZ" firstAttribute="leading" secondItem="zdy-dM-Xyg" secondAttribute="leadingMargin" constant="-10" id="aGE-Ii-2JH"/>
@@ -623,7 +623,6 @@
                             <mask key="subviews">
                                 <exclude reference="xr0-st-IVZ"/>
                                 <exclude reference="FWB-FB-QCo"/>
-                                <exclude reference="IiO-4z-kzu"/>
                                 <exclude reference="fUQ-tt-5wY"/>
                                 <exclude reference="5af-Zm-vap"/>
                                 <exclude reference="whf-9h-W6d"/>
@@ -631,6 +630,7 @@
                                 <exclude reference="OEe-jr-v9U"/>
                                 <exclude reference="GJG-hm-OVh"/>
                                 <exclude reference="mnb-Fj-36p"/>
+                                <exclude reference="IiO-4z-kzu"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="aGE-Ii-2JH"/>
@@ -667,7 +667,6 @@
                             <mask key="subviews">
                                 <include reference="xr0-st-IVZ"/>
                                 <include reference="FWB-FB-QCo"/>
-                                <include reference="IiO-4z-kzu"/>
                                 <include reference="fUQ-tt-5wY"/>
                                 <include reference="5af-Zm-vap"/>
                                 <include reference="whf-9h-W6d"/>
@@ -675,6 +674,7 @@
                                 <include reference="OEe-jr-v9U"/>
                                 <include reference="GJG-hm-OVh"/>
                                 <include reference="mnb-Fj-36p"/>
+                                <include reference="IiO-4z-kzu"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="aGE-Ii-2JH"/>

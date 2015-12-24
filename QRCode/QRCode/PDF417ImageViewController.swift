@@ -51,7 +51,7 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBAction func aspactRatioDidChange(sender: UISlider)
     {
-        aspactRatioIndicator.text = String(format:"%4.1f", sender.value)
+        aspactRatioIndicator.text = String(format:"%2.0f", sender.value)
         imageView.preferredAspectRatio = Double(sender.value)
     }
     
