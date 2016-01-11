@@ -260,11 +260,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let context = LAContext()
         let policy = LAPolicy.DeviceOwnerAuthentication
         
-        do
-        {
-            try context.canEvaluatePolicy(policy)
-        }
-        catch let error
+        var error:NSError?
+        context.canEvaluatePolicy(policy, error: &error)
+        if error != nil
         {
             print(error)
             return
@@ -280,7 +278,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
