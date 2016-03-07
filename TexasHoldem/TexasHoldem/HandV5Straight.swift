@@ -43,7 +43,7 @@ class HandV5Straight:PokerHand
             hand.matches = []
             for j in 0..<5
             {
-                hand.matches.append(cards[j])
+                hand.matches.append(result[j])
             }
             
             hand.pattern = HandPattern.Straight
