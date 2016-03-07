@@ -24,41 +24,11 @@ class ViewController: UIViewController
         print(HandV8FourOfKind().toString())
         print(HandV9StraightFlush().toString())
         
-        var givenCards = [PokerCard]()
-        givenCards.append(PokerCard(color: PokerColor.Club, value: 1))
-        givenCards.append(PokerCard(color: PokerColor.Heart, value: 3))
-        
-        var tableCards = [PokerCard]()
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 10))
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 13))
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 11))
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 12))
-        tableCards.append(PokerCard(color: PokerColor.Spade, value: 9))
-        
-        let hand = HoldemHand(givenCards: givenCards, tableCards: tableCards)
-        if HandV7FullHouse.match(hand)
+        let result = PokerDealer.deal(10)
+        for i in 0..<result.count
         {
-            print(hand.pattern, hand.matches.toString())
-        }
-        
-        if HandV8FourOfKind.match(hand)
-        {
-            print(hand.pattern, hand.matches.toString())
-        }
-        
-        if HandV5Straight.match(hand)
-        {
-            print(hand.pattern, hand.matches.toString())
-        }
-        
-        if HandV6Flush.match(hand)
-        {
-            print(hand.pattern, hand.matches.toString())
-        }
-        
-        if HandV9StraightFlush.match(hand)
-        {
-            print(hand.pattern, hand.matches.toString())
+            result[i].evaluate()
+            print(result[i].description)
         }
     }
 
