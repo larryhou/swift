@@ -205,7 +205,7 @@ class HoldemHand
     
     var description:String
     {
-        return String(format: "%@ {%@} [%@] - [%@]", pattern.description, matches.toString(), givenCards.toString(), tableCards.toString())
+        return String(format: "%@ {%@} [%@] [%@]", pattern.description, matches.toString(), givenCards.toString(), tableCards.toString())
     }
 }
 
