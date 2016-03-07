@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B0C7A301C8C220A0097BF73 /* HandV1HighCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A2F1C8C220A0097BF73 /* HandV1HighCard.swift */; };
+		6B0C7A321C8C22750097BF73 /* HandV2OnePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A311C8C22750097BF73 /* HandV2OnePair.swift */; };
+		6B0C7A341C8C22840097BF73 /* HandV3TwoPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A331C8C22840097BF73 /* HandV3TwoPair.swift */; };
+		6B0C7A361C8C229D0097BF73 /* HandV4TreeOfKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A351C8C229D0097BF73 /* HandV4TreeOfKind.swift */; };
+		6B0C7A381C8C22B10097BF73 /* HandV5Straight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A371C8C22B10097BF73 /* HandV5Straight.swift */; };
+		6B0C7A3A1C8C22C00097BF73 /* HandV6Flush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A391C8C22C00097BF73 /* HandV6Flush.swift */; };
+		6B0C7A3C1C8C22D10097BF73 /* HandV7FullHouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A3B1C8C22D10097BF73 /* HandV7FullHouse.swift */; };
+		6B0C7A3E1C8C22E70097BF73 /* HandV8FourOfKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A3D1C8C22E70097BF73 /* HandV8FourOfKind.swift */; };
+		6B0C7A401C8C23130097BF73 /* HandV9StraightFlush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0C7A3F1C8C23130097BF73 /* HandV9StraightFlush.swift */; };
+		6B20E98D1C8C17190011A121 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E98C1C8C17190011A121 /* AppDelegate.swift */; };
+		6B20E98F1C8C17190011A121 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E98E1C8C17190011A121 /* ViewController.swift */; };
+		6B20E9921C8C17190011A121 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B20E9901C8C17190011A121 /* Main.storyboard */; };
+		6B20E9941C8C17190011A121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B20E9931C8C17190011A121 /* Assets.xcassets */; };
+		6B20E9971C8C17190011A121 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B20E9951C8C17190011A121 /* LaunchScreen.storyboard */; };
+		6B20E9A21C8C17190011A121 /* TexasHoldemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E9A11C8C17190011A121 /* TexasHoldemTests.swift */; };
+		6B20E9AD1C8C17190011A121 /* TexasHoldemUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E9AC1C8C17190011A121 /* TexasHoldemUITests.swift */; };
+		6B20E9BC1C8C188E0011A121 /* PokerHand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E9BB1C8C188E0011A121 /* PokerHand.swift */; };
+		6B20E9BF1C8C1B7D0011A121 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B20E9BE1C8C1B7D0011A121 /* Math.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6B20E99E1C8C17190011A121 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B20E9811C8C17190011A121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B20E9881C8C17190011A121;
+			remoteInfo = TexasHoldem;
+		};
+		6B20E9A91C8C17190011A121 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B20E9811C8C17190011A121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B20E9881C8C17190011A121;
+			remoteInfo = TexasHoldem;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6B0C7A2F1C8C220A0097BF73 /* HandV1HighCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV1HighCard.swift; sourceTree = "<group>"; };
+		6B0C7A311C8C22750097BF73 /* HandV2OnePair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV2OnePair.swift; sourceTree = "<group>"; };
+		6B0C7A331C8C22840097BF73 /* HandV3TwoPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV3TwoPair.swift; sourceTree = "<group>"; };
+		6B0C7A351C8C229D0097BF73 /* HandV4TreeOfKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV4TreeOfKind.swift; sourceTree = "<group>"; };
+		6B0C7A371C8C22B10097BF73 /* HandV5Straight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV5Straight.swift; sourceTree = "<group>"; };
+		6B0C7A391C8C22C00097BF73 /* HandV6Flush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV6Flush.swift; sourceTree = "<group>"; };
+		6B0C7A3B1C8C22D10097BF73 /* HandV7FullHouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV7FullHouse.swift; sourceTree = "<group>"; };
+		6B0C7A3D1C8C22E70097BF73 /* HandV8FourOfKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV8FourOfKind.swift; sourceTree = "<group>"; };
+		6B0C7A3F1C8C23130097BF73 /* HandV9StraightFlush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandV9StraightFlush.swift; sourceTree = "<group>"; };
+		6B20E9891C8C17190011A121 /* TexasHoldem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TexasHoldem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B20E98C1C8C17190011A121 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6B20E98E1C8C17190011A121 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6B20E9911C8C17190011A121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6B20E9931C8C17190011A121 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B20E9961C8C17190011A121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6B20E9981C8C17190011A121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B20E99D1C8C17190011A121 /* TexasHoldemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TexasHoldemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B20E9A11C8C17190011A121 /* TexasHoldemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexasHoldemTests.swift; sourceTree = "<group>"; };
+		6B20E9A31C8C17190011A121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B20E9A81C8C17190011A121 /* TexasHoldemUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TexasHoldemUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B20E9AC1C8C17190011A121 /* TexasHoldemUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexasHoldemUITests.swift; sourceTree = "<group>"; };
+		6B20E9AE1C8C17190011A121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B20E9BB1C8C188E0011A121 /* PokerHand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokerHand.swift; sourceTree = "<group>"; };
+		6B20E9BE1C8C1B7D0011A121 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B20E9861C8C17190011A121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E99A1C8C17190011A121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E9A51C8C17190011A121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B20E9801C8C17190011A121 = {
+			isa = PBXGroup;
+			children = (
+				6B20E98B1C8C17190011A121 /* TexasHoldem */,
+				6B20E9A01C8C17190011A121 /* TexasHoldemTests */,
+				6B20E9AB1C8C17190011A121 /* TexasHoldemUITests */,
+				6B20E98A1C8C17190011A121 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6B20E98A1C8C17190011A121 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9891C8C17190011A121 /* TexasHoldem.app */,
+				6B20E99D1C8C17190011A121 /* TexasHoldemTests.xctest */,
+				6B20E9A81C8C17190011A121 /* TexasHoldemUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B20E98B1C8C17190011A121 /* TexasHoldem */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9BD1C8C1B5B0011A121 /* Math */,
+				6B20E9BA1C8C17D00011A121 /* Rules */,
+				6B20E98C1C8C17190011A121 /* AppDelegate.swift */,
+				6B20E98E1C8C17190011A121 /* ViewController.swift */,
+				6B20E9901C8C17190011A121 /* Main.storyboard */,
+				6B20E9931C8C17190011A121 /* Assets.xcassets */,
+				6B20E9951C8C17190011A121 /* LaunchScreen.storyboard */,
+				6B20E9981C8C17190011A121 /* Info.plist */,
+			);
+			path = TexasHoldem;
+			sourceTree = "<group>";
+		};
+		6B20E9A01C8C17190011A121 /* TexasHoldemTests */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9A11C8C17190011A121 /* TexasHoldemTests.swift */,
+				6B20E9A31C8C17190011A121 /* Info.plist */,
+			);
+			path = TexasHoldemTests;
+			sourceTree = "<group>";
+		};
+		6B20E9AB1C8C17190011A121 /* TexasHoldemUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9AC1C8C17190011A121 /* TexasHoldemUITests.swift */,
+				6B20E9AE1C8C17190011A121 /* Info.plist */,
+			);
+			path = TexasHoldemUITests;
+			sourceTree = "<group>";
+		};
+		6B20E9BA1C8C17D00011A121 /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9BB1C8C188E0011A121 /* PokerHand.swift */,
+				6B0C7A2F1C8C220A0097BF73 /* HandV1HighCard.swift */,
+				6B0C7A311C8C22750097BF73 /* HandV2OnePair.swift */,
+				6B0C7A331C8C22840097BF73 /* HandV3TwoPair.swift */,
+				6B0C7A351C8C229D0097BF73 /* HandV4TreeOfKind.swift */,
+				6B0C7A371C8C22B10097BF73 /* HandV5Straight.swift */,
+				6B0C7A391C8C22C00097BF73 /* HandV6Flush.swift */,
+				6B0C7A3B1C8C22D10097BF73 /* HandV7FullHouse.swift */,
+				6B0C7A3D1C8C22E70097BF73 /* HandV8FourOfKind.swift */,
+				6B0C7A3F1C8C23130097BF73 /* HandV9StraightFlush.swift */,
+			);
+			name = Rules;
+			sourceTree = "<group>";
+		};
+		6B20E9BD1C8C1B5B0011A121 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E9BE1C8C1B7D0011A121 /* Math.swift */,
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B20E9881C8C17190011A121 /* TexasHoldem */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B20E9B11C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldem" */;
+			buildPhases = (
+				6B20E9851C8C17190011A121 /* Sources */,
+				6B20E9861C8C17190011A121 /* Frameworks */,
+				6B20E9871C8C17190011A121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TexasHoldem;
+			productName = TexasHoldem;
+			productReference = 6B20E9891C8C17190011A121 /* TexasHoldem.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6B20E99C1C8C17190011A121 /* TexasHoldemTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B20E9B41C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldemTests" */;
+			buildPhases = (
+				6B20E9991C8C17190011A121 /* Sources */,
+				6B20E99A1C8C17190011A121 /* Frameworks */,
+				6B20E99B1C8C17190011A121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B20E99F1C8C17190011A121 /* PBXTargetDependency */,
+			);
+			name = TexasHoldemTests;
+			productName = TexasHoldemTests;
+			productReference = 6B20E99D1C8C17190011A121 /* TexasHoldemTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6B20E9A71C8C17190011A121 /* TexasHoldemUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B20E9B71C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldemUITests" */;
+			buildPhases = (
+				6B20E9A41C8C17190011A121 /* Sources */,
+				6B20E9A51C8C17190011A121 /* Frameworks */,
+				6B20E9A61C8C17190011A121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B20E9AA1C8C17190011A121 /* PBXTargetDependency */,
+			);
+			name = TexasHoldemUITests;
+			productName = TexasHoldemUITests;
+			productReference = 6B20E9A81C8C17190011A121 /* TexasHoldemUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B20E9811C8C17190011A121 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = larryhou;
+				TargetAttributes = {
+					6B20E9881C8C17190011A121 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					6B20E99C1C8C17190011A121 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 6B20E9881C8C17190011A121;
+					};
+					6B20E9A71C8C17190011A121 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 6B20E9881C8C17190011A121;
+					};
+				};
+			};
+			buildConfigurationList = 6B20E9841C8C17190011A121 /* Build configuration list for PBXProject "TexasHoldem" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6B20E9801C8C17190011A121;
+			productRefGroup = 6B20E98A1C8C17190011A121 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6B20E9881C8C17190011A121 /* TexasHoldem */,
+				6B20E99C1C8C17190011A121 /* TexasHoldemTests */,
+				6B20E9A71C8C17190011A121 /* TexasHoldemUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6B20E9871C8C17190011A121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B20E9971C8C17190011A121 /* LaunchScreen.storyboard in Resources */,
+				6B20E9941C8C17190011A121 /* Assets.xcassets in Resources */,
+				6B20E9921C8C17190011A121 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E99B1C8C17190011A121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E9A61C8C17190011A121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B20E9851C8C17190011A121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B0C7A341C8C22840097BF73 /* HandV3TwoPair.swift in Sources */,
+				6B0C7A361C8C229D0097BF73 /* HandV4TreeOfKind.swift in Sources */,
+				6B0C7A381C8C22B10097BF73 /* HandV5Straight.swift in Sources */,
+				6B20E98F1C8C17190011A121 /* ViewController.swift in Sources */,
+				6B20E98D1C8C17190011A121 /* AppDelegate.swift in Sources */,
+				6B20E9BC1C8C188E0011A121 /* PokerHand.swift in Sources */,
+				6B20E9BF1C8C1B7D0011A121 /* Math.swift in Sources */,
+				6B0C7A3C1C8C22D10097BF73 /* HandV7FullHouse.swift in Sources */,
+				6B0C7A301C8C220A0097BF73 /* HandV1HighCard.swift in Sources */,
+				6B0C7A401C8C23130097BF73 /* HandV9StraightFlush.swift in Sources */,
+				6B0C7A3E1C8C22E70097BF73 /* HandV8FourOfKind.swift in Sources */,
+				6B0C7A321C8C22750097BF73 /* HandV2OnePair.swift in Sources */,
+				6B0C7A3A1C8C22C00097BF73 /* HandV6Flush.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E9991C8C17190011A121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B20E9A21C8C17190011A121 /* TexasHoldemTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B20E9A41C8C17190011A121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B20E9AD1C8C17190011A121 /* TexasHoldemUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B20E99F1C8C17190011A121 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B20E9881C8C17190011A121 /* TexasHoldem */;
+			targetProxy = 6B20E99E1C8C17190011A121 /* PBXContainerItemProxy */;
+		};
+		6B20E9AA1C8C17190011A121 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B20E9881C8C17190011A121 /* TexasHoldem */;
+			targetProxy = 6B20E9A91C8C17190011A121 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6B20E9901C8C17190011A121 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B20E9911C8C17190011A121 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6B20E9951C8C17190011A121 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B20E9961C8C17190011A121 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6B20E9AF1C8C17190011A121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6B20E9B01C8C17190011A121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6B20E9B21C8C17190011A121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TexasHoldem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6B20E9B31C8C17190011A121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TexasHoldem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		6B20E9B51C8C17190011A121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TexasHoldemTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldemTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TexasHoldem.app/TexasHoldem";
+			};
+			name = Debug;
+		};
+		6B20E9B61C8C17190011A121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TexasHoldemTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldemTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TexasHoldem.app/TexasHoldem";
+			};
+			name = Release;
+		};
+		6B20E9B81C8C17190011A121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TexasHoldemUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldemUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TexasHoldem;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		6B20E9B91C8C17190011A121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TexasHoldemUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldemUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TexasHoldem;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B20E9841C8C17190011A121 /* Build configuration list for PBXProject "TexasHoldem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B20E9AF1C8C17190011A121 /* Debug */,
+				6B20E9B01C8C17190011A121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B20E9B11C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B20E9B21C8C17190011A121 /* Debug */,
+				6B20E9B31C8C17190011A121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B20E9B41C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldemTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B20E9B51C8C17190011A121 /* Debug */,
+				6B20E9B61C8C17190011A121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B20E9B71C8C17190011A121 /* Build configuration list for PBXNativeTarget "TexasHoldemUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B20E9B81C8C17190011A121 /* Debug */,
+				6B20E9B91C8C17190011A121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6B20E9811C8C17190011A121 /* Project object */;
+}
