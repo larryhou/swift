@@ -22,7 +22,44 @@ class HandV4TreeOfKind:PokerHand
     
     static func match(hand:HoldemHand) -> Bool
     {
-//        var cards = hand.givenCards + hand.tableCards
+        var cards = (hand.givenCards + hand.tableCards).sort()
+        
+        var dict:[Int:[PokerCard]] = [:]
+        for i in 0..<cards.count
+        {
+            let item = cards[i]
+            if dict[item.value] == nil
+            {
+                dict[item.value] = []
+            }
+            
+            dict[item.value]?.append(item)
+        }
+        
+        var three = -1
+        for (value, list) in dict
+        {
+            if list.count == 3
+            {
+                if three == -1
+                {
+                    three = value
+                }
+                else // Keep three of a kind with max value
+                if let last = dict[three]?.first, item = list.first where item > last
+                {
+                    three = value
+                }
+            }
+        }
+        
+        if three != -1
+        {
+            hand.matches = dict[three]
+            hand.pattern = HandPattern.TreeOfKind
+            return true
+        }
+        
         return false
     }
 }

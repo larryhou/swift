@@ -25,16 +25,15 @@ class ViewController: UIViewController
         print(HandV9StraightFlush().toString())
         
         var givenCards = [PokerCard]()
-        givenCards.append(PokerCard(color: PokerColor.Spade, value: 1))
-        givenCards.append(PokerCard(color: PokerColor.Club, value: 3))
+        givenCards.append(PokerCard(color: PokerColor.Club, value: 1))
+        givenCards.append(PokerCard(color: PokerColor.Heart, value: 3))
         
         var tableCards = [PokerCard]()
-        tableCards.append(PokerCard(color: PokerColor.Spade, value: 2))
-        tableCards.append(PokerCard(color: PokerColor.Diamond, value: 2))
-        tableCards.append(PokerCard(color: PokerColor.Heart, value: 1))
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 9))
-        tableCards.append(PokerCard(color: PokerColor.Club, value: 1))
-        tableCards.append(PokerCard(color: PokerColor.Spade, value: 3))
+        tableCards.append(PokerCard(color: PokerColor.Club, value: 10))
+        tableCards.append(PokerCard(color: PokerColor.Club, value: 13))
+        tableCards.append(PokerCard(color: PokerColor.Club, value: 11))
+        tableCards.append(PokerCard(color: PokerColor.Club, value: 12))
+        tableCards.append(PokerCard(color: PokerColor.Spade, value: 9))
         
         let hand = HoldemHand(givenCards: givenCards, tableCards: tableCards)
         if HandV7FullHouse.match(hand)
@@ -42,6 +41,25 @@ class ViewController: UIViewController
             print(hand.pattern, hand.matches.toString())
         }
         
+        if HandV8FourOfKind.match(hand)
+        {
+            print(hand.pattern, hand.matches.toString())
+        }
+        
+        if HandV5Straight.match(hand)
+        {
+            print(hand.pattern, hand.matches.toString())
+        }
+        
+        if HandV6Flush.match(hand)
+        {
+            print(hand.pattern, hand.matches.toString())
+        }
+        
+        if HandV9StraightFlush.match(hand)
+        {
+            print(hand.pattern, hand.matches.toString())
+        }
     }
 
     override func didReceiveMemoryWarning()

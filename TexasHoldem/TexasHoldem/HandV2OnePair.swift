@@ -22,7 +22,6 @@ class HandV2OnePair : PokerHand
     
     static func match(hand:HoldemHand) -> Bool
     {
-//        var cards = hand.givenCards + hand.tableCards
         return false
     }
     

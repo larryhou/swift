@@ -23,7 +23,51 @@ class HandV3TwoPair:PokerHand
     
     static func match(hand:HoldemHand) -> Bool
     {
-//        var cards = hand.givenCards + hand.tableCards
+        var cards = (hand.givenCards + hand.tableCards).sort()
+        
+        var dict:[Int:[PokerCard]] = [:]
+        var sets:[Int] = []
+        
+        for i in 0..<cards.count
+        {
+            let item = cards[i]
+            if dict[item.value] == nil
+            {
+                dict[item.value] = []
+                sets.append(item.value)
+            }
+            
+            dict[item.value]?.append(item)
+        }
+        
+        var result:[PokerCard] = []
+        var tail:PokerCard!
+        
+        for value in sets
+        {
+            if let list = dict[value]
+            {
+                if list.count == 2 && result.count < 4
+                {
+                    result += list
+                }
+                else
+                if tail == nil
+                {
+                    tail = list[0]
+                }
+            }
+        }
+        
+        if result.count == 4
+        {
+            result.append(tail)
+            
+            hand.matches = result
+            hand.pattern = HandPattern.TwoPair
+            return true
+        }
+        
         return false
     }
 }

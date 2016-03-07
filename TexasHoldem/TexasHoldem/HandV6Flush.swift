@@ -34,9 +34,18 @@ class HandV6Flush:PokerHand
             }
             
             dict[item.color]?.append(item)
-            if let count = dict[item.color]?.count where count >= 5
+        }
+        
+        for (_, list) in dict
+        {
+            if list.count >= 5
             {
-                hand.matches = dict[item.color]
+                hand.matches = []
+                for i in 0..<5
+                {
+                    hand.matches.append(list[i])
+                }
+                
                 hand.pattern = HandPattern.Flush
                 return true
             }

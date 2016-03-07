@@ -24,9 +24,9 @@ class HandV7FullHouse:PokerHand
     
     static func match(hand:HoldemHand) -> Bool
     {
-        var cards = hand.givenCards + hand.tableCards
+        var cards = (hand.givenCards + hand.tableCards).sort()
         
-        var three = -1, two = -1
+        var three = -1, prev3 = -1, two = -1
         var dict:[Int:[PokerCard]] = [:]
         for i in 0..<cards.count
         {
@@ -47,14 +47,15 @@ class HandV7FullHouse:PokerHand
                 {
                     three = value
                 }
-                else // keep three of a kind with max value
+                else // Keep three of a kind with max value
                 if let last = dict[three]?.first, item = list.first where item > last
                 {
+                    prev3 = three
                     three = value
                 }
             }
             
-            if list.count >= 2 && value != three
+            if list.count == 2
             {
                 if two == -1
                 {
@@ -66,6 +67,11 @@ class HandV7FullHouse:PokerHand
                     two = value
                 }
             }
+        }
+        
+        if prev3 != -1 && prev3 > two
+        {
+            two = prev3
         }
         
         if three != -1 && two != -1

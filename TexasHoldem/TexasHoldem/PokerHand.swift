@@ -60,7 +60,7 @@ extension PokerHand
 
 class PokerCard
 {
-    private let hash = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+    static let hash = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
     
     let color:PokerColor
     let value:Int
@@ -75,7 +75,7 @@ class PokerCard
     
     var description:String
     {
-        return hash[value - 1] + color.description
+        return PokerCard.hash[value - 1] + color.description
     }
 }
 
@@ -83,7 +83,7 @@ extension _ArrayType where Generator.Element == PokerCard
 {
     func sort()->[PokerCard]
     {
-        return sort({$0.value > $1.value})
+        return sort({$0 > $1})
     }
     
     func sortWithColor()->[PokerCard]

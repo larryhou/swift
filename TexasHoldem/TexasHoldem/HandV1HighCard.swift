@@ -22,28 +22,19 @@ class HandV1HighCard : PokerHand
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
-        hand.matches = []
+        var result:[PokerCard] = []
         for i in 1..<cards.count
         {
             if cards[i].value == cards[i - 1].value
             {
                 return false
             }
-        }
-        
-        hand.matches = collectMatchedCards(cards)
-        hand.pattern = HandPattern.HighCard
-        return true
-    }
-    
-    private static func collectMatchedCards(cards:[PokerCard])->[PokerCard]
-    {
-        var result = [PokerCard]()
-        for i in 0..<5
-        {
+            
             result.append(cards[i])
         }
         
-        return result
+        hand.matches = result
+        hand.pattern = HandPattern.HighCard
+        return true
     }
 }

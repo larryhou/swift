@@ -24,31 +24,26 @@ class HandV5Straight:PokerHand
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
-        var num = 0, offset = 0
+        var result = [cards[0]]
         for i in 0..<cards.count - 1
         {
-            if cards[i].value - cards[i + 1].value == 1
+            if (cards[i].value - cards[i + 1].value == 1) || (cards[i].value == 1/*A*/ && cards[i + 1].value == 13/*K*/)
             {
-                num++
+                result.append(cards[i + 1])
             }
             else
+            if result.count < 5
             {
-                offset = i
-                num = 0
+                result = [cards[i]]
             }
         }
         
-        if num >= 5 || (num == 4 && cards.last!.value == 13/*K*/ && cards[0].value == 1/*A*/)
+        if result.count >= 5
         {
             hand.matches = []
-            for j in offset..<min(cards.count, offset + 5)
+            for j in 0..<5
             {
                 hand.matches.append(cards[j])
-            }
-            
-            if hand.matches.count == 4
-            {
-                hand.matches.append(cards[0])
             }
             
             hand.pattern = HandPattern.Straight

@@ -20,7 +20,7 @@ class HandV8FourOfKind:PokerHand
     
     static func match(hand:HoldemHand) -> Bool
     {
-        var cards = hand.givenCards + hand.tableCards
+        var cards = (hand.givenCards + hand.tableCards).sort()
         
         var dict:[Int:[PokerCard]] = [:]
         for i in 0..<cards.count
@@ -35,7 +35,15 @@ class HandV8FourOfKind:PokerHand
             if let count = dict[item.value]?.count where count == 4
             {
                 hand.matches = dict[item.value]
-                hand.pattern = HandPattern.Straight
+                for j in 0..<cards.count
+                {
+                    if cards[j].value != item.value
+                    {
+                        hand.matches.append(cards[j])
+                        break
+                    }
+                }
+                hand.pattern = HandPattern.FourOfKind
                 return true
             }
         }
