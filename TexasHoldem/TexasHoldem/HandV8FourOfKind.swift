@@ -9,19 +9,18 @@
 import Foundation
 
 // 炸弹
-class HandV8FourOfKind:PokerHand
+class HandV8FourOfKind:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.FourOfKind }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return 13 * (52 - 4) /  permuate(2)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
+        var four = -1
         var dict:[Int:[PokerCard]] = [:]
         for i in 0..<cards.count
         {
@@ -34,20 +33,20 @@ class HandV8FourOfKind:PokerHand
             dict[item.value]?.append(item)
             if let count = dict[item.value]?.count where count == 4
             {
-                hand.matches = dict[item.value]
-                for j in 0..<cards.count
-                {
-                    if cards[j].value != item.value
-                    {
-                        hand.matches.append(cards[j])
-                        break
-                    }
-                }
-                hand.pattern = HandPattern.FourOfKind
-                return true
+                four = item.value
             }
         }
         
-        return false
+        var result = dict[four]!
+        for i in 0..<cards.count
+        {
+            if cards[i].value != four
+            {
+                result.append(cards[i])
+                break
+            }
+        }
+        
+        hand.matches = result
     }
 }

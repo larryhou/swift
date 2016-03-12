@@ -9,18 +9,16 @@
 import Foundation
 
 // 顺子
-class HandV5Straight:PokerHand
+class HandV5Straight:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.Straight }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return
             10 * pow(4, exponent: 5) *
             combinate(52 - 5, select: 2)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
@@ -34,22 +32,10 @@ class HandV5Straight:PokerHand
             else
             if result.count < 5
             {
-                result = [cards[i]]
+                result = [cards[i + 1]]
             }
         }
         
-        if result.count >= 5
-        {
-            hand.matches = []
-            for j in 0..<5
-            {
-                hand.matches.append(result[j])
-            }
-            
-            hand.pattern = HandPattern.Straight
-            return true
-        }
-        
-        return false
+        hand.matches = Array(result[0..<5])
     }
 }

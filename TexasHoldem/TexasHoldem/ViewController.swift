@@ -14,17 +14,8 @@ class ViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        print(HandV1HighCard().toString())
-        print(HandV2OnePair().toString())
-        print(HandV3TwoPair().toString())
-        print(HandV4TreeOfKind().toString())
-        print(HandV5Straight().toString())
-        print(HandV6Flush().toString())
-        print(HandV7FullHouse().toString())
-        print(HandV8FourOfKind().toString())
-        print(HandV9StraightFlush().toString())
         
-        let result = PokerDealer.deal(10)
+        let result = PokerDealer.deal(23)
         for i in 0..<result.count
         {
             result[i].evaluate()

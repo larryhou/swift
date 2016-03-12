@@ -10,58 +10,49 @@ import Foundation
 
 
 //同花顺
-class HandV9StraightFlush:PokerHand
+class HandV9StraightFlush:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.StraightFlush }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return
             4 * 10 *
             combinate(52 - 5, select: 2)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
-        var source = [cards[0]]
+        var stack = [cards[0]]
         for i in 0..<cards.count - 1
         {
             if (cards[i].value - cards[i + 1].value == 1) || (cards[i].value == 1/*A*/ && cards[i + 1].value == 13/*K*/)
             {
-                source.append(cards[i + 1])
+                stack.append(cards[i + 1])
             }
             else
-            if source.count < 5
+            if stack.count < 5
             {
-                source = [cards[i]]
+                stack = [cards[i + 1]]
             }
         }
         
-        if source.count >= 5
+        for i in 0..<stack.count - 5
         {
-            for i in 0..<source.count - 5
+            var result = [stack[i]]
+            for j in i + 1..<i + 5
             {
-                var result = [source[i]]
-                for j in i + 1..<i + 5
+                if stack[j - 1].color != stack[j].color
                 {
-                    if source[j - 1].color != source[j].color
-                    {
-                        break
-                    }
-                    result.append(source[j])
+                    break
                 }
-                
-                if result.count == 5
-                {
-                    hand.matches = result
-                    hand.pattern = HandPattern.StraightFlush
-                    return true
-                }
+                result.append(stack[j])
+            }
+            
+            if result.count == 5
+            {
+                hand.matches = result
             }
         }
-        
-        return false
     }
 }

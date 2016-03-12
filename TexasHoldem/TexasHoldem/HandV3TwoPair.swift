@@ -9,11 +9,9 @@
 import Foundation
 
 // 两对
-class HandV3TwoPair:PokerHand
+class HandV3TwoPair:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.TwoPair }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return
             13 * combinate(4, select: 2) *
@@ -21,12 +19,12 @@ class HandV3TwoPair:PokerHand
             permutate(11, select: 3) * pow(4, exponent: 3) /  permuate(3)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
         var dict:[Int:[PokerCard]] = [:]
-        var sets:[Int] = []
+        var list:[Int] = []
         
         for i in 0..<cards.count
         {
@@ -34,40 +32,26 @@ class HandV3TwoPair:PokerHand
             if dict[item.value] == nil
             {
                 dict[item.value] = []
-                sets.append(item.value)
             }
             
             dict[item.value]?.append(item)
-        }
-        
-        var result:[PokerCard] = []
-        var tail:PokerCard!
-        
-        for value in sets
-        {
-            if let list = dict[value]
+            if let count = dict[item.value]?.count where count == 2
             {
-                if list.count == 2 && result.count < 4
-                {
-                    result += list
-                }
-                else
-                if tail == nil
-                {
-                    tail = list[0]
-                }
+                list.append(item.value)
             }
         }
         
-        if result.count == 4
+        list.sortInPlace({$0 > $1})
+        
+        var result:[PokerCard] = dict[list[0]]! + dict[list[1]]!
+        for i in 0..<cards.count
         {
-            result.append(tail)
-            
-            hand.matches = result
-            hand.pattern = HandPattern.TwoPair
-            return true
+            if list.indexOf(cards[i].value) < 0 && result.count < 5
+            {
+                result.append(cards[i])
+            }
         }
         
-        return false
+        hand.matches = result;
     }
 }

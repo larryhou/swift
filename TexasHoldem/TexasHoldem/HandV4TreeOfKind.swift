@@ -9,22 +9,21 @@
 import Foundation
 
 // 三张
-class HandV4TreeOfKind:PokerHand
+class HandV4TreeOfKind:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.TreeOfKind }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return
             13 * combinate(4, select: 3) *
             combinate(12, select: 4) * pow(4, exponent: 4)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand: PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
-        
         var dict:[Int:[PokerCard]] = [:]
+        
+        var three = -1
         for i in 0..<cards.count
         {
             let item = cards[i]
@@ -34,32 +33,22 @@ class HandV4TreeOfKind:PokerHand
             }
             
             dict[item.value]?.append(item)
-        }
-        
-        var three = -1
-        for (value, list) in dict
-        {
-            if list.count == 3
+            if let count = dict[item.value]?.count where count == 3
             {
-                if three == -1
-                {
-                    three = value
-                }
-                else // Keep three of a kind with max value
-                if let last = dict[three]?.first, item = list.first where item > last
-                {
-                    three = value
-                }
+                three = item.value
             }
         }
         
-        if three != -1
+        var result:[PokerCard] = dict[three]!
+        
+        for i in 0..<cards.count
         {
-            hand.matches = dict[three]
-            hand.pattern = HandPattern.TreeOfKind
-            return true
+            if cards[i].value != three && result.count < 5
+            {
+                result.append(cards[i])
+            }
         }
         
-        return false
+        hand.matches = result
     }
 }

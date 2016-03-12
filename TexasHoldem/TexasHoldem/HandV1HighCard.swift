@@ -9,29 +9,16 @@
 import Foundation
 
 // 高牌
-class HandV1HighCard : PokerHand
+class HandV1HighCard : PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.HighCard }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return permutate(13, select: 7) * pow(4, exponent: 7) / permuate(7)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand: PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
-        
-        for i in 1..<cards.count
-        {
-            if cards[i].value == cards[i - 1].value
-            {
-                return false
-            }
-        }
-        
         hand.matches = Array(cards[0..<5])
-        hand.pattern = HandPattern.HighCard
-        return true
     }
 }

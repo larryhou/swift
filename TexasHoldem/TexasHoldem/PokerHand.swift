@@ -2,7 +2,7 @@
 //  PokerHand.swift
 //  TexasHoldem
 //
-//  Created by larryhou on 6/3/2016.
+//  Created by larryhou on 9/3/2016.
 //  Copyright © 2016 larryhou. All rights reserved.
 //
 
@@ -10,141 +10,41 @@ import Foundation
 
 enum HandPattern:Int
 {
-    case HighCard = 1, OnePair, TwoPair, TreeOfKind, Straight, Flush, FullHouse, FourOfKind, StraightFlush
+    case HighCard = 1, OnePair, TwoPair, ThreeOfKind, Straight, Flush, FullHouse, FourOfKind, StraightFlush
     
     var description:String
     {
         switch self
         {
-            case .HighCard:return "高牌"
-            case .OnePair:return "一对"
-            case .TwoPair:return "两对"
-            case .TreeOfKind:return "三张"
-            case .Straight:return "顺子"
-            case .Flush:return "同花"
-            case .FullHouse:return "葫芦"
-            case .FourOfKind:return "炸弹"
+            case .HighCard:     return "高牌"
+            case .OnePair:      return "一对"
+            case .TwoPair:      return "两对"
+            case .ThreeOfKind:  return "三张"
+            case .Straight:     return "顺子"
+            case .Flush:        return "同花"
+            case .FullHouse:    return "葫芦"
+            case .FourOfKind:   return "炸弹"
             case .StraightFlush:return "花顺"
         }
     }
 }
 
-enum PokerColor:Int
+class PokerHand
 {
-    case Spade = 1, Club, Heart, Diamond
-    
-    var description:String
-    {
-        switch (self)
-        {
-            case .Spade     :return "♠︎"
-            case .Club      :return "♣︎"
-            case .Heart     :return "♥︎"
-            case .Diamond   :return "♦︎"
-        }
-    }
-}
-
-protocol PokerHand
-{
-    var pattern:HandPattern {get}
-    
-    func getOccurrences()->UInt
-    static func match(hand:HoldemHand)->Bool
-}
-
-extension PokerHand
-{
-    var posibility:Double
-    {
-        return self.getOccurrences().double / combinate(52, select: 7).double
-    }
-    
-    func toString()->String
-    {
-        return String(format: "%20s %8d %5.8f%%",
-            COpaquePointer(String(self.dynamicType).cStringUsingEncoding(NSUTF8StringEncoding)!),
-            getOccurrences(),
-            self.posibility * 100)
-    }
-}
-
-class PokerCard
-{
-    static let hash = [" A", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", " J", " Q", " K"]
-    
-    let color:PokerColor
-    let value:Int
-    
-    var id:String { return String(format: "%02d_%d", value, color.rawValue) }
-    
-    init(color:PokerColor, value:Int)
-    {
-        self.color = color
-        self.value = value
-    }
-    
-    var description:String
-    {
-        return PokerCard.hash[value - 1] + color.description
-    }
-}
-
-extension _ArrayType where Generator.Element == PokerCard
-{
-    func sort()->[PokerCard]
-    {
-        return sort({$0 > $1})
-    }
-    
-    func sortWithColor()->[PokerCard]
-    {
-        return sort({ $0 != $1 ? $0 > $1 : $0.color.rawValue < $1.color.rawValue })
-    }
-    
-    func toString() -> String
-    {
-        return map({$0.description}).joinWithSeparator(" ")
-    }
-}
-
-func == (left:PokerCard, right:PokerCard)->Bool
-{
-    return left.value == right.value
-}
-
-func != (left:PokerCard, right:PokerCard)->Bool
-{
-    return left.value != right.value
-}
-
-func > (left:PokerCard, right:PokerCard)->Bool
-{
-    return (left.value > right.value && right.value != 1) || (left.value < right.value && left.value == 1)
-}
-
-func < (left:PokerCard, right:PokerCard)->Bool
-{
-    return right > left
-}
-
-func >= (left:PokerCard, right:PokerCard)->Bool
-{
-    return left == right || left > right
-}
-
-func <= (left:PokerCard, right:PokerCard)->Bool
-{
-    return right >= left
-}
-
-class HoldemHand
-{
-    let givenCards:[PokerCard]
-    let tableCards:[PokerCard]
+    var givenCards:[PokerCard]
+    var tableCards:[PokerCard]
     
     var pattern:HandPattern!
     var matches:[PokerCard]!
+    
+    private var _isReady:Bool = false
+    var isReady:Bool { return _isReady }
+    
+    init()
+    {
+        self.givenCards = []
+        self.tableCards = []
+    }
     
     init(givenCards:[PokerCard], tableCards:[PokerCard])
     {
@@ -152,55 +52,149 @@ class HoldemHand
         self.tableCards = tableCards
     }
     
-    func check()
+    func reset()
+    {
+        self.givenCards = []
+        self.tableCards = []
+        self.matches = nil
+        self.pattern = nil
+    }
+    
+    func checkQualified()
     {
         assert(givenCards.count == 2)
         assert(tableCards.count == 5)
     }
     
+    func recognize() -> HandPattern
+    {
+        var cards = (givenCards + tableCards).sort()
+        
+        var colorStats:[PokerColor:Int] = [:]
+        var maxSameColorCount = 0
+        
+        var dict:[Int:[PokerCard]] = [:]
+        for i in 0..<cards.count
+        {
+            let item = cards[i]
+            if dict[item.value] == nil
+            {
+                dict[item.value] = []
+            }
+            
+            dict[item.value]?.append(item)
+            
+            if colorStats[item.color] == nil
+            {
+                colorStats[item.color] = 0
+            }
+            
+            colorStats[item.color]!++
+            maxSameColorCount = max(colorStats[item.color]!, maxSameColorCount)
+        }
+        
+        var kindStats:[Int:Int] = [:]
+        for (_, list) in dict
+        {
+            if kindStats[list.count] == nil
+            {
+                kindStats[list.count] = 0
+            }
+            
+            kindStats[list.count]!++
+        }
+        
+        if let v4 = kindStats[4] where v4 >= 1
+        {
+            return .FourOfKind
+        }
+        
+        if let v3 = kindStats[3], v2 = kindStats[2] where (v3 == 1 && v2 >= 1) || (v3 >= 2)
+        {
+            return .FullHouse
+        }
+        
+        var stack = [cards[0]]
+        for i in 1..<cards.count
+        {
+            if (cards[i - 1].value - cards[i].value == 1) || (cards[i - 1].value == 1/*A*/ && cards[i].value == 13/*K*/)
+            {
+                stack.append(cards[i])
+            }
+            else
+            if stack.count < 5
+            {
+                stack = [cards[i]]
+            }
+        }
+        
+        if stack.count >= 5
+        {
+            for i in 0..<stack.count - 5
+            {
+                var count = 1
+                for j in i + 1..<i + 5
+                {
+                    if stack[j - 1].color != stack[j].color
+                    {
+                        break
+                    }
+                    
+                    count++
+                }
+                
+                if count == 5
+                {
+                    return .StraightFlush
+                }
+            }
+            
+            return .Straight
+        }
+        
+        if maxSameColorCount >= 5
+        {
+            return .Flush
+        }
+        
+        if let v3 = kindStats[3] where v3 == 1
+        {
+            return .ThreeOfKind
+        }
+        
+        if let v2 = kindStats[2]
+        {
+            if v2 >= 2
+            {
+                return .TwoPair
+            }
+            else
+            if v2 == 1
+            {
+                return .OnePair
+            }
+        }
+        
+        return .HighCard
+    }
+    
     func evaluate()
     {
-        if HandV8FourOfKind.match(self)
+        pattern = recognize()
+        switch pattern!
         {
-            return
+            case .HighCard:HandV1HighCard.evaluate(self)
+            case .OnePair:HandV2OnePair.evaluate(self)
+            case .TwoPair:HandV3TwoPair.evaluate(self)
+            case .ThreeOfKind:HandV4TreeOfKind.evaluate(self)
+            case .Straight:HandV5Straight.evaluate(self)
+            case .Flush:HandV6Flush.evaluate(self)
+            case .FullHouse:HandV7FullHouse.evaluate(self)
+            case .FourOfKind:HandV8FourOfKind.evaluate(self)
+            case .StraightFlush:HandV9StraightFlush.evaluate(self)
         }
         
-        if HandV7FullHouse.match(self)
-        {
-            return
-        }
-        
-        if HandV9StraightFlush.match(self)
-        {
-            return
-        }
-        
-        if HandV6Flush.match(self)
-        {
-            return
-        }
-        
-        if HandV5Straight.match(self)
-        {
-            return
-        }
-        
-        if HandV4TreeOfKind.match(self)
-        {
-            return
-        }
-        
-        if HandV3TwoPair.match(self)
-        {
-            return
-        }
-        
-        if HandV2OnePair.match(self)
-        {
-            return
-        }
-        
-        HandV1HighCard.match(self)
+        _isReady = true
     }
     
     var description:String
@@ -209,55 +203,56 @@ class HoldemHand
     }
 }
 
-class PokerDealer
+func == (left:PokerHand, right:PokerHand) -> Bool
 {
-    static func deal(num:Int) -> [HoldemHand]
+    for i in 0..<5
     {
-        var pool:[PokerCard] = []
-        let colors:[PokerColor] = [.Spade, .Club, .Heart, .Diamond]
-        for n in 1...13
+        if left.matches[i] != right.matches[i]
         {
-            for i in 0..<colors.count
-            {
-                let card = PokerCard(color: colors[i], value: n)
-                pool.append(card)
-            }
+            return false
         }
-        
-        var dict:[Int:[PokerCard]] = [:]
-        for r in 1...2
-        {
-            for i in 1...num
-            {
-                if r == 1
-                {
-                    dict[i] = []
-                }
-                
-                let index = arc4random_uniform(UInt32(pool.count))
-                let card = pool.removeAtIndex(Int(index))
-                dict[i]?.append(card)
-            }
-        }
-        
-        var tableCards:[PokerCard] = []
-        for _ in 1...5
-        {
-            let index = arc4random_uniform(UInt32(pool.count))
-            let card = pool.removeAtIndex(Int(index))
-            tableCards.append(card)
-        }
-        
-        var result:[HoldemHand] = []
-        for i in 1...num
-        {
-            if let givenCards = dict[i]
-            {
-                let hand = HoldemHand(givenCards: givenCards, tableCards: tableCards)
-                result.append(hand)
-            }
-        }
-        
-        return result
     }
+    
+    return true
+}
+
+func != (left:PokerHand, right:PokerHand) -> Bool
+{
+    return !(left == right)
+}
+
+func > (left:PokerHand, right:PokerHand) -> Bool
+{
+    for i in 0..<5
+    {
+        if left.matches[i] != right.matches[i]
+        {
+            return left.matches[i] > right.matches[i]
+        }
+    }
+    
+    return false
+}
+
+func < (left:PokerHand, right:PokerHand) -> Bool
+{
+    for i in 0..<5
+    {
+        if left.matches[i] != right.matches[i]
+        {
+            return left.matches[i] < right.matches[i]
+        }
+    }
+    
+    return false
+}
+
+func >= (left:PokerHand, right:PokerHand) -> Bool
+{
+    return left > right || left == right
+}
+
+func <= (left:PokerHand, right:PokerHand) -> Bool
+{
+    return left < right || left == right
 }

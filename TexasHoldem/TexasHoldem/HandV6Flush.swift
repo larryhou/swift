@@ -9,21 +9,20 @@
 import Foundation
 
 // 同花
-class HandV6Flush:PokerHand
+class HandV6Flush:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.Flush }
-
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         return
             combinate(13, select: 5) * 4 *
             13 * 3 / permuate(2)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
+        var flush:PokerColor!
         var dict:[PokerColor:[PokerCard]] = [:]
         for i in 0..<cards.count
         {
@@ -34,23 +33,12 @@ class HandV6Flush:PokerHand
             }
             
             dict[item.color]?.append(item)
-        }
-        
-        for (_, list) in dict
-        {
-            if list.count >= 5
+            if let count = dict[item.color]?.count where count >= 5
             {
-                hand.matches = []
-                for i in 0..<5
-                {
-                    hand.matches.append(list[i])
-                }
-                
-                hand.pattern = HandPattern.Flush
-                return true
+                flush = item.color
             }
         }
         
-        return false
+        hand.matches = Array(dict[flush]![0..<5])
     }
 }

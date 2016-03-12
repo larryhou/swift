@@ -9,11 +9,9 @@
 import Foundation
 
 // 葫芦
-class HandV7FullHouse:PokerHand
+class HandV7FullHouse:PatternEvaluator
 {
-    var pattern:HandPattern { return HandPattern.FullHouse }
-    
-    func getOccurrences() -> UInt
+    static func getOccurrences() -> UInt
     {
         
         return
@@ -22,7 +20,7 @@ class HandV7FullHouse:PokerHand
             combinate(11, select: 2) * pow(4, exponent: 2) / permuate(3)
     }
     
-    static func match(hand:HoldemHand) -> Bool
+    static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
@@ -74,20 +72,6 @@ class HandV7FullHouse:PokerHand
             two = prev3
         }
         
-        if three != -1 && two != -1
-        {
-            hand.matches = dict[three]!
-            for item in dict[two]!
-            {
-                if hand.matches.count < 5
-                {
-                    hand.matches.append(item)
-                }
-            }
-            hand.pattern = HandPattern.FullHouse
-            return true
-        }
-        
-        return false
+        hand.matches = dict[three]! + Array(dict[two]![0..<2])
     }
 }
