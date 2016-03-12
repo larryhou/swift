@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HandPattern:Int
+enum HandPattern:UInt8
 {
     case HighCard = 1, OnePair, TwoPair, ThreeOfKind, Straight, Flush, FullHouse, FourOfKind, StraightFlush
     

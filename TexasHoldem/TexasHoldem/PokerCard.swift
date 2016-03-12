@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PokerColor:Int
+enum PokerColor:UInt8
 {
     case Spade = 1, Club, Heart, Diamond
     
@@ -28,10 +28,8 @@ class PokerCard
 {
     private static let hash = [" A", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", " J", " Q", " K"]
     
-    let color:PokerColor
-    let value:Int
-    
-    var id:String { return String(format: "%02d_%d", value, color.rawValue) }
+    var color:PokerColor
+    var value:Int
     
     init(color:PokerColor, value:Int)
     {

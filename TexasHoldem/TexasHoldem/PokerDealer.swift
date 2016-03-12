@@ -10,20 +10,30 @@ import Foundation
 
 class PokerDealer
 {
-    static func deal(var num:Int) -> [PokerHand]
+    private static let packOfCards:[PokerCard] =
     {
-        num = min((52 - 5) / 2, num);
-        
-        var pool:[PokerCard] = []
+        var result:[PokerCard] = []
         let colors:[PokerColor] = [.Spade, .Club, .Heart, .Diamond]
         for n in 1...13
         {
             for i in 0..<colors.count
             {
                 let card = PokerCard(color: colors[i], value: n)
-                pool.append(card)
+                result.append(card)
             }
         }
+        
+        return result
+    }()
+    
+    private static var handRecycle:[PokerHand] = []
+    
+    static func deal(var num:Int) -> [PokerHand]
+    {
+        num = min((52 - 5) / 2, num);
+        
+        var cards_pool = packOfCards
+        var hands_pool = handRecycle
         
         var dict:[Int:[PokerCard]] = [:]
         for r in 1...2
@@ -35,8 +45,8 @@ class PokerDealer
                     dict[i] = []
                 }
                 
-                let index = arc4random_uniform(UInt32(pool.count))
-                let card = pool.removeAtIndex(Int(index))
+                let index = arc4random_uniform(UInt32(cards_pool.count))
+                let card = cards_pool.removeAtIndex(Int(index))
                 dict[i]?.append(card)
             }
         }
@@ -44,8 +54,8 @@ class PokerDealer
         var tableCards:[PokerCard] = []
         for _ in 1...5
         {
-            let index = arc4random_uniform(UInt32(pool.count))
-            let card = pool.removeAtIndex(Int(index))
+            let index = arc4random_uniform(UInt32(cards_pool.count))
+            let card = cards_pool.removeAtIndex(Int(index))
             tableCards.append(card)
         }
         
@@ -54,7 +64,19 @@ class PokerDealer
         {
             if let givenCards = dict[i]
             {
-                let hand = PokerHand(givenCards: givenCards, tableCards: tableCards)
+                let hand:PokerHand
+                if hands_pool.count > 0
+                {
+                    hand = hands_pool.removeFirst()
+                    hand.givenCards = givenCards
+                    hand.tableCards = tableCards
+                }
+                else
+                {
+                    hand = PokerHand(givenCards: givenCards, tableCards: tableCards)
+                    handRecycle.append(hand)
+                }
+                
                 result.append(hand)
             }
         }
