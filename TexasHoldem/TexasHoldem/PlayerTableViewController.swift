@@ -49,4 +49,11 @@ class PlayerTableViewController:UITableViewController
         cell.textLabel?.text = String(format: "PLAYER #%02d", indexPath.row + 1)
         return cell
     }
+    
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath)
+    {
+        let alert = PatternStatsPrompt(title: "牌型分布#\(indexPath.row + 1)", message: nil, preferredStyle: .ActionSheet)
+        alert.setPromptSheet(model.stats[indexPath.row]!)
+        presentViewController(alert, animated: true, completion: nil)
+    }
 }

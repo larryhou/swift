@@ -44,6 +44,14 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
         return cell
     }
     
+    @IBAction func showPatternStats(sender: UIBarButtonItem)
+    {
+        let alert = PatternStatsPrompt(title: "牌型分布", message: nil, preferredStyle: .ActionSheet)
+        alert.setPromptSheet(model.stats[id]!)
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
     //MARK: search
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {

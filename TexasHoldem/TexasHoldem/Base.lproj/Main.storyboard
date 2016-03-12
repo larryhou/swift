@@ -237,7 +237,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="牌型" id="Yyd-Rp-GNU">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="YQ8-S8-S9C"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="YQ8-S8-S9C">
+                            <connections>
+                                <action selector="showPatternStats:" destination="9Lh-bO-mdY" id="Ivh-sT-Yt1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="search" destination="NOE-Tl-j71" id="73o-rq-STp"/>
