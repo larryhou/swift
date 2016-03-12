@@ -29,6 +29,9 @@
 		6BEE96711C93BEA6007DCFCC /* PatternEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE96701C93BEA6007DCFCC /* PatternEvaluator.swift */; };
 		6BEE96731C93CB9F007DCFCC /* PokerDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE96721C93CB9F007DCFCC /* PokerDealer.swift */; };
 		6BEE96761C93DC35007DCFCC /* UniqueRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE96751C93DC35007DCFCC /* UniqueRound.swift */; };
+		6BEE967C1C94418C007DCFCC /* PatternTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE967B1C94418C007DCFCC /* PatternTableViewCell.swift */; };
+		6BEE967E1C9447F5007DCFCC /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE967D1C9447F5007DCFCC /* PlayerTableViewController.swift */; };
+		6BEE96801C94482A007DCFCC /* PatternTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE967F1C94482A007DCFCC /* PatternTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,9 @@
 		6BEE96701C93BEA6007DCFCC /* PatternEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternEvaluator.swift; sourceTree = "<group>"; };
 		6BEE96721C93CB9F007DCFCC /* PokerDealer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokerDealer.swift; sourceTree = "<group>"; };
 		6BEE96751C93DC35007DCFCC /* UniqueRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueRound.swift; sourceTree = "<group>"; };
+		6BEE967B1C94418C007DCFCC /* PatternTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternTableViewCell.swift; sourceTree = "<group>"; };
+		6BEE967D1C9447F5007DCFCC /* PlayerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
+		6BEE967F1C94482A007DCFCC /* PatternTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,8 +137,8 @@
 				6B20E9BA1C8C17D00011A121 /* Evaluators */,
 				6BEE966B1C9073B0007DCFCC /* Cards */,
 				6BEE96741C93DA9D007DCFCC /* Game */,
+				6BEE967A1C944166007DCFCC /* View */,
 				6B20E98C1C8C17190011A121 /* AppDelegate.swift */,
-				6B20E98E1C8C17190011A121 /* ViewController.swift */,
 				6BEE96781C93FEDF007DCFCC /* round_num */,
 				6B20E9931C8C17190011A121 /* Assets.xcassets */,
 				6B20E9951C8C17190011A121 /* LaunchScreen.storyboard */,
@@ -224,6 +230,17 @@
 			children = (
 			);
 			name = "New Group";
+			sourceTree = "<group>";
+		};
+		6BEE967A1C944166007DCFCC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6B20E98E1C8C17190011A121 /* ViewController.swift */,
+				6BEE967D1C9447F5007DCFCC /* PlayerTableViewController.swift */,
+				6BEE967F1C94482A007DCFCC /* PatternTableViewController.swift */,
+				6BEE967B1C94418C007DCFCC /* PatternTableViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,10 +375,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BEE96761C93DC35007DCFCC /* UniqueRound.swift in Sources */,
+				6BEE967E1C9447F5007DCFCC /* PlayerTableViewController.swift in Sources */,
 				6B0C7A341C8C22840097BF73 /* HandV3TwoPair.swift in Sources */,
 				6B0C7A361C8C229D0097BF73 /* HandV4TreeOfKind.swift in Sources */,
 				6B0C7A381C8C22B10097BF73 /* HandV5Straight.swift in Sources */,
 				6BEE966F1C907584007DCFCC /* PokerHand.swift in Sources */,
+				6BEE967C1C94418C007DCFCC /* PatternTableViewCell.swift in Sources */,
 				6B20E98F1C8C17190011A121 /* ViewController.swift in Sources */,
 				6B20E98D1C8C17190011A121 /* AppDelegate.swift in Sources */,
 				6B20E9BF1C8C1B7D0011A121 /* Math.swift in Sources */,
@@ -371,6 +390,7 @@
 				6BEE966D1C9074F1007DCFCC /* PokerCard.swift in Sources */,
 				6B0C7A401C8C23130097BF73 /* HandV9StraightFlush.swift in Sources */,
 				6B0C7A3E1C8C22E70097BF73 /* HandV8FourOfKind.swift in Sources */,
+				6BEE96801C94482A007DCFCC /* PatternTableViewController.swift in Sources */,
 				6BEE96731C93CB9F007DCFCC /* PokerDealer.swift in Sources */,
 				6B0C7A321C8C22750097BF73 /* HandV2OnePair.swift in Sources */,
 				6B0C7A3A1C8C22C00097BF73 /* HandV6Flush.swift in Sources */,

@@ -7,7 +7,7 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Texas Holdem Simulator-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TexasHoldem" customModuleProvider="target" sceneMemberID="viewController">
@@ -28,9 +28,10 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kjt-YD-Qt5">
                                 <rect key="frame" x="0.0" y="64" width="600" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.7285872055" blue="0.0015096083839999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLN-2w-IXm">
-                                <rect key="frame" x="223" y="191.5" width="155" height="67"/>
+                                <rect key="frame" x="223" y="206.5" width="155" height="67"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="40"/>
                                 <state key="normal" title="Simulate"/>
                                 <connections>
@@ -69,9 +70,9 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-Iw-iei">
-                                <rect key="frame" x="393" y="214" width="22" height="22"/>
+                                <rect key="frame" x="393" y="229" width="22" height="22"/>
                                 <connections>
-                                    <segue destination="p8h-ta-Bsr" kind="show" id="PdD-tH-2wQ"/>
+                                    <segue destination="p8h-ta-Bsr" kind="show" identifier="player" id="PdD-tH-2wQ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -93,11 +94,13 @@
                             <constraint firstItem="rsS-V1-cXX" firstAttribute="baseline" secondItem="Hod-Gg-r0D" secondAttribute="baseline" id="lrn-nC-3fM"/>
                             <constraint firstAttribute="leadingMargin" secondItem="CRS-QH-WaF" secondAttribute="leading" id="odd-gk-4OI"/>
                             <constraint firstItem="Bli-Iw-iei" firstAttribute="leading" secondItem="OLN-2w-IXm" secondAttribute="trailing" constant="15" id="qAs-Ae-ZyS"/>
-                            <constraint firstItem="OLN-2w-IXm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.75" id="rex-pI-Ees"/>
+                            <constraint firstItem="OLN-2w-IXm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.8" id="rex-pI-Ees"/>
                             <constraint firstItem="rsS-V1-cXX" firstAttribute="leading" secondItem="jd2-LP-0IL" secondAttribute="trailing" constant="8" symbolic="YES" id="xvX-km-ovS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="9FQ-Lm-L5s"/>
+                    <navigationItem key="navigationItem" title="Texas Holdem Simulator" id="9FQ-Lm-L5s">
+                        <barButtonItem key="backBarButtonItem" title="Simulator" id="UfC-bZ-8GC"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="peopleInput" destination="Hod-Gg-r0D" id="9n9-fH-kEj"/>
                         <outlet property="peopleStepper" destination="CRS-QH-WaF" id="nUt-gb-Hze"/>
@@ -111,31 +114,34 @@
             </objects>
             <point key="canvasLocation" x="1267" y="375"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Player List-->
         <scene sceneID="Euq-8k-Zfn">
             <objects>
-                <tableViewController id="p8h-ta-Bsr" sceneMemberID="viewController">
+                <tableViewController id="p8h-ta-Bsr" customClass="PlayerTableViewController" customModule="TexasHoldem" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yyx-od-zDU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PatternStatsCell" textLabel="0ba-O4-CSK" style="IBUITableViewCellStyleDefault" id="ZBd-v4-raK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="PlayerCell" textLabel="0ba-O4-CSK" style="IBUITableViewCellStyleDefault" id="ZBd-v4-raK">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZBd-v4-raK" id="o9Q-ZK-Sax">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0ba-O4-CSK">
-                                            <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="#01" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0ba-O4-CSK">
+                                            <rect key="frame" x="15" y="0.0" width="518" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="9Lh-bO-mdY" kind="show" identifier="pattern" id="RQF-H7-KHd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -143,10 +149,87 @@
                             <outlet property="delegate" destination="p8h-ta-Bsr" id="d0s-fL-qtV"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Player List" id="PVp-1e-aOi">
+                        <barButtonItem key="backBarButtonItem" title="Players" id="QBD-ac-mKd"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pgo-9N-eWQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1993" y="375"/>
+        </scene>
+        <!--Pattern Browser-->
+        <scene sceneID="QP8-zL-80k">
+            <objects>
+                <tableViewController id="9Lh-bO-mdY" customClass="PatternTableViewController" customModule="TexasHoldem" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="28" sectionFooterHeight="28" id="uPe-ul-mMs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="input pattern type..." id="NOE-Tl-j71">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PatternCell" rowHeight="80" id="PV9-2e-nrn" customClass="PatternTableViewCell" customModule="TexasHoldem" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PV9-2e-nrn" id="bIX-hA-A6x">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#0000001" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyD-pt-z8n">
+                                            <rect key="frame" x="15" y="10" width="87" height="21"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="顺子" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHo-jD-0gE">
+                                            <rect key="frame" x="110" y="10" width="36" height="21"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" Q♠︎  J♠︎ 10♣︎  9♦︎  8♠︎" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jun-8L-ttt">
+                                            <rect key="frame" x="154" y="10" width="332" height="21"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <color key="textColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" J♠︎  9♦︎  6♦︎  4♠︎  8♠︎" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGQ-ze-Cvo">
+                                            <rect key="frame" x="154" y="43" width="332" height="21"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" Q♠︎ 10♣︎" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mb3-eE-jf0">
+                                            <rect key="frame" x="15" y="43" width="76" height="21"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="givenCards" destination="mb3-eE-jf0" id="EXz-EB-m5J"/>
+                                    <outlet property="id" destination="pyD-pt-z8n" id="FMy-kL-1Sk"/>
+                                    <outlet property="matchCards" destination="Jun-8L-ttt" id="9Ar-aq-qpd"/>
+                                    <outlet property="pattern" destination="FHo-jD-0gE" id="OBV-FF-uyD"/>
+                                    <outlet property="tableCards" destination="bGQ-ze-Cvo" id="ALY-CV-rzm"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9Lh-bO-mdY" id="GYZ-aV-S2L"/>
+                            <outlet property="delegate" destination="9Lh-bO-mdY" id="HW1-Xg-awe"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Pattern Browser" id="Yyd-Rp-GNU">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="YQ8-S8-S9C"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E4X-cf-hDC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2744" y="375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sYh-i3-WrY">

@@ -58,9 +58,12 @@ class RawPokerHand
 {
     let id:UInt8
     let data:(UInt8, [UInt8], [UInt8])
+    let index:Int
     
-    init(id:UInt8, data:(UInt8, [UInt8], [UInt8]))
+    init(index:Int, id:UInt8, data:(UInt8, [UInt8], [UInt8]))
     {
+        self.index = index
+        
         self.id = id
         self.data = data
     }

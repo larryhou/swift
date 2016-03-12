@@ -8,6 +8,24 @@
 
 import UIKit
 
+class ViewModel
+{
+    var data:[Int:UniqueRound]
+    var stats:[Int:[HandPattern:Int]]
+    
+    init(data:[Int:UniqueRound],stats:[Int:[HandPattern:Int]])
+    {
+        self.data = data
+        self.stats = stats
+    }
+    
+    init()
+    {
+        self.data = [:]
+        self.stats = [:]
+    }
+}
+
 class ViewController: UIViewController, UITextFieldDelegate
 {
     @IBOutlet weak var progressInfo: UILabel!
@@ -20,6 +38,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var roundInput: UITextField!
     
     private let background_queue = dispatch_queue_create("TexasHoldem.background", nil)
+    private let model = ViewModel()
     
     override func viewDidLoad()
     {
@@ -52,7 +71,7 @@ class ViewController: UIViewController, UITextFieldDelegate
                 for i in 0..<result.count
                 {
                     result[i].evaluate()
-                    round.list.append(RawPokerHand(id: UInt8(i), data: result[i].rawValue))
+                    round.list.append(RawPokerHand(index:n, id: UInt8(i), data: result[i].rawValue))
                     
                     let hand = result[i]
                     if stats[i] == nil
@@ -84,7 +103,8 @@ class ViewController: UIViewController, UITextFieldDelegate
     
     func setViewModel(data:[Int:UniqueRound], stats:[Int:[HandPattern:Int]])
     {
-        
+        model.data = data
+        model.stats = stats
     }
     
     func updateProgressIndicator(count:Int, total:Int, digitCount:Int, elapse:NSTimeInterval)
@@ -101,7 +121,7 @@ class ViewController: UIViewController, UITextFieldDelegate
         generateGameRounds(roundCount, personCount: personCount)
     }
     
-    //MARK:text input
+    //MARK: text input
     func textFieldShouldReturn(textField: UITextField) -> Bool
     {
         if textField == peopleInput
@@ -141,11 +161,16 @@ class ViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-//    override func prefersStatusBarHidden() -> Bool
-//    {
-//        return true
-//    }
-
+    //MARK: segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "player"
+        {
+            let dst = segue.destinationViewController as! PlayerTableViewController
+            dst.model = model
+        }
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

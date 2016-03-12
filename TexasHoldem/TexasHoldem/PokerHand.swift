@@ -19,12 +19,12 @@ enum HandPattern:UInt8
             case .HighCard:     return "高牌"
             case .OnePair:      return "一对"
             case .TwoPair:      return "两对"
-            case .ThreeOfKind:  return "三张"
-            case .Straight:     return "顺子"
-            case .Flush:        return "同花"
-            case .FullHouse:    return "葫芦"
-            case .FourOfKind:   return "炸弹"
-            case .StraightFlush:return "花顺"
+            case .ThreeOfKind:  return "三张" //绿色
+            case .Straight:     return "顺子" //蓝色
+            case .Flush:        return "同花" //紫色
+            case .FullHouse:    return "葫芦" //橙色
+            case .FourOfKind:   return "炸弹" //红色
+            case .StraightFlush:return "花顺" //
         }
     }
 }
