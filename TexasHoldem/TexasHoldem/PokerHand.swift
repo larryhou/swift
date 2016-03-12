@@ -234,6 +234,19 @@ func > (left:PokerHand, right:PokerHand) -> Bool
     return false
 }
 
+func >= (left:PokerHand, right:PokerHand) -> Bool
+{
+    for i in 0..<5
+    {
+        if left.matches[i] != right.matches[i]
+        {
+            return left.matches[i] > right.matches[i]
+        }
+    }
+    
+    return true
+}
+
 func < (left:PokerHand, right:PokerHand) -> Bool
 {
     for i in 0..<5
@@ -247,12 +260,15 @@ func < (left:PokerHand, right:PokerHand) -> Bool
     return false
 }
 
-func >= (left:PokerHand, right:PokerHand) -> Bool
-{
-    return left > right || left == right
-}
-
 func <= (left:PokerHand, right:PokerHand) -> Bool
 {
-    return left < right || left == right
+    for i in 0..<5
+    {
+        if left.matches[i] != right.matches[i]
+        {
+            return left.matches[i] < right.matches[i]
+        }
+    }
+    
+    return true
 }
