@@ -10,10 +10,10 @@ import UIKit
 
 class ViewModel
 {
-    var data:[Int:UniqueRound]
+    var data:[UniqueRound]
     var stats:[Int:[HandPattern:Int]]
     
-    init(data:[Int:UniqueRound],stats:[Int:[HandPattern:Int]])
+    init(data:[UniqueRound],stats:[Int:[HandPattern:Int]])
     {
         self.data = data
         self.stats = stats
@@ -21,7 +21,7 @@ class ViewModel
     
     init()
     {
-        self.data = [:]
+        self.data = []
         self.stats = [:]
     }
 }
@@ -52,20 +52,20 @@ class ViewController: UIViewController, UITextFieldDelegate
         while value >= 1
         {
             value /= 10
-            digitCount++
+            digitCount += 1
         }
         
         print(digitCount, personCount, roundCount)
         dispatch_async(background_queue)
         {
             var stats:[Int:[HandPattern:Int]] = [:]
-            var data:[Int:UniqueRound] = [:]
+            var data:[UniqueRound] = []
             
             let start = NSDate()
             for n in 0..<roundCount
             {
                 let round = UniqueRound(index: n)
-                data[round.index] = round
+                data.append(round)
                 
                 let result = PokerDealer.deal(personCount)
                 for i in 0..<result.count
@@ -84,7 +84,7 @@ class ViewController: UIViewController, UITextFieldDelegate
                         stats[i]?[hand.pattern] = 0
                     }
                     
-                    stats[i]?[hand.pattern]?++
+                    stats[i]?[hand.pattern]? += 1
                 }
                 
                 dispatch_async(dispatch_get_main_queue())
@@ -101,7 +101,7 @@ class ViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-    func setViewModel(data:[Int:UniqueRound], stats:[Int:[HandPattern:Int]])
+    func setViewModel(data:[UniqueRound], stats:[Int:[HandPattern:Int]])
     {
         model.data = data
         model.stats = stats

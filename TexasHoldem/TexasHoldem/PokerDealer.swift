@@ -28,9 +28,9 @@ class PokerDealer
     
     private static var handRecycle:[PokerHand] = []
     
-    static func deal(var num:Int) -> [PokerHand]
+    static func deal(num:Int) -> [PokerHand]
     {
-        num = min((52 - 5) / 2, num);
+        let personCount = min((52 - 5) / 2, num);
         
         var cards_pool = packOfCards
         var hands_pool = handRecycle
@@ -38,7 +38,7 @@ class PokerDealer
         var dict:[Int:[PokerCard]] = [:]
         for r in 1...2
         {
-            for i in 1...num
+            for i in 1...personCount
             {
                 if r == 1
                 {

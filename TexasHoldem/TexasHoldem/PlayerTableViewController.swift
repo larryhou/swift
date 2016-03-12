@@ -33,6 +33,11 @@ class PlayerTableViewController:UITableViewController
         return 1
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 75
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return model == nil ? 0 : model.stats.count

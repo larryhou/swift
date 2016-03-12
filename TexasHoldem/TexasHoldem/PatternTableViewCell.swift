@@ -20,7 +20,7 @@ class PatternTableViewCell:UITableViewCell
         hash[.ThreeOfKind]      = UIColor(white: 0.00, alpha: 1.0)
         hash[.Straight]         = UIColor.greenColor()
         hash[.Flush]            = UIColor.blueColor()
-        hash[.FullHouse]        = UIColor.purpleColor()
+        hash[.FullHouse]        = UIColor(red: 0.5, green: 0.0, blue: 1.0, alpha: 1.0)
         hash[.FourOfKind]       = UIColor.orangeColor()
         hash[.StraightFlush]    = UIColor.redColor()
         return hash
@@ -39,7 +39,7 @@ class PatternTableViewCell:UITableViewCell
         PokerHand.parse(data.data, hand: hand)
         hand.evaluate()
         
-        id.text = String(format: "%08d", data.index)
+        id.text = String(format: "%07d", data.index + 1)
         
         pattern.text = hand.pattern.description
         pattern.textColor = PatternTableViewCell.color_hash[hand.pattern]

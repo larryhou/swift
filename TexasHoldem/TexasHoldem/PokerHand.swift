@@ -89,7 +89,7 @@ class PokerHand
                 colorStats[item.color] = 0
             }
             
-            colorStats[item.color]!++
+            colorStats[item.color]! += 1
             maxSameColorCount = max(colorStats[item.color]!, maxSameColorCount)
         }
         
@@ -101,7 +101,7 @@ class PokerHand
                 kindStats[list.count] = 0
             }
             
-            kindStats[list.count]!++
+            kindStats[list.count]! += 1
         }
         
         if let v4 = kindStats[4] where v4 >= 1
@@ -140,7 +140,7 @@ class PokerHand
                         break
                     }
                     
-                    count++
+                    count += 1
                 }
                 
                 if count == 5
