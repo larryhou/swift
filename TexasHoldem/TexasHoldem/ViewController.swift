@@ -37,7 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var roundStepper: UIStepper!
     @IBOutlet weak var roundInput: UITextField!
     
-    private let background_queue = dispatch_queue_create("TexasHoldem.background", nil)
+    private let background_queue = dispatch_queue_create("TexasHoldem.background.simulate", nil)
     private let model = ViewModel()
     
     override func viewDidLoad()
@@ -55,11 +55,12 @@ class ViewController: UIViewController, UITextFieldDelegate
             digitCount += 1
         }
         
-        print(digitCount, personCount, roundCount)
         dispatch_async(background_queue)
         {
             var stats:[Int:[HandPattern:Int]] = [:]
             var data:[UniqueRound] = []
+            
+            UIApplication.sharedApplication().idleTimerDisabled = true
             
             let start = NSDate()
             for n in 0..<roundCount
@@ -93,7 +94,7 @@ class ViewController: UIViewController, UITextFieldDelegate
                 }
             }
             
-            print(stats)
+            UIApplication.sharedApplication().idleTimerDisabled = false
             dispatch_async(dispatch_get_main_queue())
             {
                 self.setViewModel(data, stats: stats);

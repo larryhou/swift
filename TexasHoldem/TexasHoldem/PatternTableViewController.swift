@@ -11,6 +11,8 @@ import UIKit
 
 class PatternTableViewController:UITableViewController, UISearchBarDelegate
 {
+    private let background_queue = dispatch_queue_create("TexasHoldem.background.search", nil)
+    
     @IBOutlet weak var search: UISearchBar!
     var model:ViewModel!
     var id:Int = 0
@@ -21,7 +23,6 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
     {
         super.viewDidLoad()
         history = model.data
-        search.inputAccessoryView = UIView(frame: CGRect.zero)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
@@ -36,12 +37,32 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PatternCell") as! PatternTableViewCell
-        
-        let data = history[indexPath.row].list[id]
-        cell.renderView(data)
-        
-        return cell
+        if indexPath.row < history.count
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("PatternCell") as! PatternTableViewCell
+            
+            let data = history[indexPath.row].list[id]
+            cell.renderView(data)
+            return cell
+        }
+        else
+        {
+            let identifier = "LoadingCell"
+            
+            let cell:UITableViewCell
+            if let reuseCell = tableView.dequeueReusableCellWithIdentifier(identifier)
+            {
+                cell = reuseCell
+            }
+            else
+            {
+                cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+                cell.textLabel?.font = UIFont(name: "Menlo", size: 18)
+                cell.textLabel?.text = "..."
+            }
+            
+            return cell
+        }
     }
     
     @IBAction func showPatternStats(sender: UIBarButtonItem)
@@ -55,17 +76,16 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
     //MARK: search
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        filterByInputText(searchBar.text)
+        searchByInput(searchBar.text)
         searchBar.resignFirstResponder()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String)
     {
-        print(searchText)
-        filterByInputText(searchText)
+        searchByInput(searchText)
     }
     
-    func filterByInputText(searchText:String?)
+    func searchByInput(searchText:String?)
     {
         if let text = searchText
         {
@@ -74,17 +94,25 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
             
             if let pattern = HandPattern(rawValue: UInt8(integer))
             {
-                var result:[UniqueRound] = []
-                for i in 0..<model.data.count
+                dispatch_async(background_queue)
                 {
-                    let hand = model.data[i].list[id]
-                    if hand.data.0 == pattern.rawValue
+                    self.history = []
+                    for i in 0..<self.model.data.count
                     {
-                        result.append(model.data[i])
+                        let hand = self.model.data[i].list[self.id]
+                        if hand.data.0 == pattern.rawValue
+                        {
+                            self.history.append(self.model.data[i])
+                            if self.history.count < 10
+                            {
+                                dispatch_async(dispatch_get_main_queue())
+                                {
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        }
                     }
                 }
-                
-                history = result
             }
             else
             {
