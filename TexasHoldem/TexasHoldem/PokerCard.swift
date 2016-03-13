@@ -10,7 +10,7 @@ import Foundation
 
 enum PokerColor:UInt8
 {
-    case Spade = 1, Club, Heart, Diamond
+    case Spade = 4, Club = 3, Heart = 2, Diamond = 1
     
     var description:String
     {
@@ -47,12 +47,13 @@ extension _ArrayType where Generator.Element == PokerCard
 {
     func sort()->[PokerCard]
     {
-        return sort({$0 > $1})
+        return sortWithColor()
+//        return sort({$0 > $1})
     }
     
     func sortWithColor()->[PokerCard]
     {
-        return sort({ $0 != $1 ? $0 > $1 : $0.color.rawValue < $1.color.rawValue })
+        return sort({ $0 != $1 ? $0 > $1 : $0.color.rawValue > $1.color.rawValue })
     }
     
     func toString() -> String

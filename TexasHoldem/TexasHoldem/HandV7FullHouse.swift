@@ -13,11 +13,22 @@ class HandV7FullHouse:PatternEvaluator
 {
     static func getOccurrences() -> UInt
     {
-        
-        return
+        var count:UInt = 0
+        count += // 3-2-1-1
             13 * combinate(4, select: 3) *
             12 * combinate(4, select: 2) *
-            combinate(11, select: 2) * pow(4, exponent: 2) / permuate(3)
+            combinate(11, select: 2) * pow(4, exponent: 2)
+        count += // 3-2-2
+            13 * combinate(4, select: 3) *
+            12 * combinate(4, select: 2) *
+            11 * combinate(4, select: 2)
+        
+        count += // 3-3-1
+            13 * combinate(4, select: 3) *
+            12 * combinate(4, select: 3) *
+            (52 - 4 * 2)
+        
+        return count
     }
     
     static func evaluate(hand:PokerHand)

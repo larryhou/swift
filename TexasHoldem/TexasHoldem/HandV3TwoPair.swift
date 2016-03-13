@@ -13,9 +13,17 @@ class HandV3TwoPair:PatternEvaluator
 {
     static func getOccurrences() -> UInt
     {
-        return
-            (combinate(13, select: 2) * combinate(4, select: 2) * combinate(11, select: 3) * pow(4, exponent: 3)/*two pair*/ +
-            combinate(13, select: 3) * combinate(4, select: 2) * (52 - 3 * 4) /*three pair*/)
+        var count:UInt = 0
+        
+        count += // 2-2-1-1-1
+            combinate(13, select: 2) * combinate(4, select: 2) *
+            combinate(11, select: 3) * pow(4, exponent: 3)
+        
+        count += // 2-2-2-1
+            combinate(13, select: 3) * combinate(4, select: 2) *
+            (52 - 4 * 3)
+        
+        return count
     }
     
     static func evaluate(hand:PokerHand)

@@ -13,7 +13,7 @@ class HandV1HighCard : PatternEvaluator
 {
     static func getOccurrences() -> UInt
     {
-        return permutate(13, select: 7) * pow(4, exponent: 7) / permuate(7)
+        return combinate(13, select: 7) * pow(4, exponent: 7)
     }
     
     static func evaluate(hand: PokerHand)
