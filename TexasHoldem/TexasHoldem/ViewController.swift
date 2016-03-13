@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var simulateButton: UIButton!
     
-    private let background_queue = dispatch_queue_create("TexasHoldem.background.simulate", nil)
+    private let background_queue = dispatch_queue_create("TexasHoldem.background.simulate", DISPATCH_QUEUE_CONCURRENT)
     private let model = ViewModel()
     
     override func viewDidLoad()

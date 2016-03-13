@@ -11,7 +11,7 @@ import UIKit
 
 class PatternTableViewController:UITableViewController, UISearchBarDelegate
 {
-    private let background_queue = dispatch_queue_create("TexasHoldem.background.search", nil)
+    private let background_queue = dispatch_queue_create("TexasHoldem.background.search", DISPATCH_QUEUE_CONCURRENT)
     
     @IBOutlet weak var search: UISearchBar!
     var model:ViewModel!
