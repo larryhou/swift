@@ -45,6 +45,16 @@ class ViewController: UIViewController, UITextFieldDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        print(HandV1HighCard.description)
+        print(HandV2OnePair.description)
+        print(HandV3TwoPair.description)
+        print(HandV4TreeOfKind.description)
+        print(HandV5Straight.description)
+        print(HandV6Flush.description)
+        print(HandV7FullHouse.description)
+        print(HandV8FourOfKind.description)
+        print(HandV9StraightFlush.description)
     }
     
     func generateGameRounds(roundCount:Int, personCount:Int)

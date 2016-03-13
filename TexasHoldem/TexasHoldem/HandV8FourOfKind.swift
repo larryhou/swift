@@ -13,7 +13,7 @@ class HandV8FourOfKind:PatternEvaluator
 {
     static func getOccurrences() -> UInt
     {
-        return 13 * (52 - 4) /  permuate(2)
+        return 13 * combinate(52 - 4, select: 3)
     }
     
     static func evaluate(hand:PokerHand)

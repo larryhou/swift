@@ -14,9 +14,8 @@ class HandV3TwoPair:PatternEvaluator
     static func getOccurrences() -> UInt
     {
         return
-            13 * combinate(4, select: 2) *
-            12 * combinate(4, select: 2) / permuate(2) *
-            permutate(11, select: 3) * pow(4, exponent: 3) /  permuate(3)
+            (combinate(13, select: 2) * combinate(4, select: 2) * combinate(11, select: 3) * pow(4, exponent: 3)/*two pair*/ +
+            combinate(13, select: 3) * combinate(4, select: 2) * (52 - 3 * 4) /*three pair*/)
     }
     
     static func evaluate(hand:PokerHand)
@@ -24,7 +23,7 @@ class HandV3TwoPair:PatternEvaluator
         var cards = (hand.givenCards + hand.tableCards).sort()
         
         var dict:[Int:[PokerCard]] = [:]
-        var list:[Int] = []
+        var group:[PokerCard] = []
         
         for i in 0..<cards.count
         {
@@ -37,11 +36,11 @@ class HandV3TwoPair:PatternEvaluator
             dict[item.value]?.append(item)
             if let count = dict[item.value]?.count where count == 2
             {
-                list.append(item.value)
+                group.append(item)
             }
         }
         
-        list.sortInPlace({$0 > $1})
+        let list = group.sort({$0 > $1}).map({$0.value})
         
         var result:[PokerCard] = dict[list[0]]! + dict[list[1]]!
         for i in 0..<cards.count

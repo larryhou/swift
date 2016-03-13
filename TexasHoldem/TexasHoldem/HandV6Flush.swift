@@ -15,7 +15,7 @@ class HandV6Flush:PatternEvaluator
     {
         return
             combinate(13, select: 5) * 4 *
-            13 * 3 / permuate(2)
+            combinate(52 - 5, select: 2)
     }
     
     static func evaluate(hand:PokerHand)

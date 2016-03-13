@@ -15,7 +15,7 @@ class HandV2OnePair : PatternEvaluator
     {
         return
             13 * combinate(4, select: 2) *
-            permutate(12, select: 5) * pow(4, exponent: 5) / permuate(5)
+            combinate(12, select: 5) * pow(4, exponent: 5)
     }
     
     static func evaluate(hand: PokerHand)
