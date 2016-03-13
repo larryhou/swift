@@ -32,7 +32,7 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return history.count
+        return 200_000
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell

@@ -141,7 +141,7 @@
 				6BEE96741C93DA9D007DCFCC /* Game */,
 				6BEE967A1C944166007DCFCC /* View */,
 				6B20E98C1C8C17190011A121 /* AppDelegate.swift */,
-				6BEE96781C93FEDF007DCFCC /* round_num */,
+				6B20E9901C8C17190011A121 /* Main.storyboard */,
 				6B20E9931C8C17190011A121 /* Assets.xcassets */,
 				6B20E9951C8C17190011A121 /* LaunchScreen.storyboard */,
 				6B20E9981C8C17190011A121 /* Info.plist */,
@@ -208,30 +208,6 @@
 				6BEE96751C93DC35007DCFCC /* UniqueRound.swift */,
 			);
 			name = Game;
-			sourceTree = "<group>";
-		};
-		6BEE96771C93FEC2007DCFCC /* people */ = {
-			isa = PBXGroup;
-			children = (
-				6B20E9901C8C17190011A121 /* Main.storyboard */,
-			);
-			name = people;
-			sourceTree = "<group>";
-		};
-		6BEE96781C93FEDF007DCFCC /* round_num */ = {
-			isa = PBXGroup;
-			children = (
-				6BEE96791C93FF15007DCFCC /* New Group */,
-				6BEE96771C93FEC2007DCFCC /* people */,
-			);
-			name = round_num;
-			sourceTree = "<group>";
-		};
-		6BEE96791C93FF15007DCFCC /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
 			sourceTree = "<group>";
 		};
 		6BEE967A1C944166007DCFCC /* View */ = {
@@ -542,6 +518,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TexasHoldem/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -554,6 +531,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TexasHoldem/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TexasHoldem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
