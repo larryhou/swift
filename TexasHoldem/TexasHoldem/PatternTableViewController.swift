@@ -76,7 +76,6 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
     //MARK: search
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        searchByInput(searchBar.text)
         searchBar.resignFirstResponder()
     }
     
