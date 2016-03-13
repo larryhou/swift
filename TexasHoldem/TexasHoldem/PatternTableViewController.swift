@@ -107,12 +107,20 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
                         if hand.data.0 == pattern.rawValue
                         {
                             self.history.append(self.model.data[i])
+                            
+                            if self.history.count < 10
+                            {
+                                dispatch_async(dispatch_get_main_queue())
+                                {
+                                    self.tableView.reloadData()
+                                }
+                            }
                         }
-                        
-                        dispatch_async(dispatch_get_main_queue())
-                        {
-                            self.tableView.reloadData()
-                        }
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue())
+                    {
+                        self.tableView.reloadData()
                     }
                 }
             }
