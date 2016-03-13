@@ -11,6 +11,45 @@ import UIKit
 
 class PatternStatsPrompt:UIAlertController
 {
+    var formatActionText:()->()
+    {
+        let font = UIFont(name: "Menlo", size: 18)
+        
+        var list:[UILabel] = []
+        findObjectsInView(view, result: &list)
+        
+        return {
+            for label in list
+            {
+                if let text = label.text where text.containsString(" - ")
+                {
+                    label.font = font
+                }
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        formatActionText();
+    }
+    
+    func findObjectsInView<T where T:UIView>(view:UIView, inout result:[T])
+    {
+        for child in view.subviews
+        {
+            if child is T
+            {
+                result.append(child as! T)
+            }
+            else
+            {
+                findObjectsInView(child, result: &result)
+            }
+        }
+    }
+    
     func getDigitCount(value:Double) -> Int
     {
         var digitCount = 0
@@ -46,5 +85,10 @@ class PatternStatsPrompt:UIAlertController
         
         let action = UIAlertAction(title: "知道了", style: .Cancel, handler: nil)
         addAction(action)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    {
+        formatActionText()
     }
 }
