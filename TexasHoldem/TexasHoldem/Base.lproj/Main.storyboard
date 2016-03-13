@@ -119,6 +119,7 @@
                         <outlet property="progressInfo" destination="6iS-Tx-r2m" id="u8T-HJ-MHp"/>
                         <outlet property="roundInput" destination="rsS-V1-cXX" id="ONf-4G-Vtv"/>
                         <outlet property="roundStepper" destination="jd2-LP-0IL" id="Rka-gj-XJf"/>
+                        <outlet property="simulateButton" destination="OLN-2w-IXm" id="iHs-TR-4JF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

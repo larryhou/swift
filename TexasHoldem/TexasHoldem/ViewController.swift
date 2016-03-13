@@ -37,6 +37,8 @@ class ViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var roundStepper: UIStepper!
     @IBOutlet weak var roundInput: UITextField!
     
+    @IBOutlet weak var simulateButton: UIButton!
+    
     private let background_queue = dispatch_queue_create("TexasHoldem.background.simulate", nil)
     private let model = ViewModel()
     
@@ -61,6 +63,7 @@ class ViewController: UIViewController, UITextFieldDelegate
             var data:[UniqueRound] = []
             
             UIApplication.sharedApplication().idleTimerDisabled = true
+            self.simulateButton.userInteractionEnabled = false
             
             let start = NSDate()
             for n in 0..<roundCount
@@ -95,6 +98,8 @@ class ViewController: UIViewController, UITextFieldDelegate
             }
             
             UIApplication.sharedApplication().idleTimerDisabled = false
+            self.simulateButton.userInteractionEnabled = true
+            
             dispatch_async(dispatch_get_main_queue())
             {
                 self.setViewModel(data, stats: stats);
