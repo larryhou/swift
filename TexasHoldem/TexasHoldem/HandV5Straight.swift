@@ -21,21 +21,25 @@ class HandV5Straight:PatternEvaluator
     static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
+        if cards[0].value == 1
+        {
+            cards.append(cards[0])
+        }
         
-        var result = [cards[0]]
+        var stack = [cards[0]]
         for i in 0..<cards.count - 1
         {
             if (cards[i].value - cards[i + 1].value == 1) || (cards[i].value == 1/*A*/ && cards[i + 1].value == 13/*K*/)
             {
-                result.append(cards[i + 1])
+                stack.append(cards[i + 1])
             }
             else
-            if result.count < 5
+            if stack.count < 5
             {
-                result = [cards[i + 1]]
+                stack = [cards[i + 1]]
             }
         }
         
-        hand.matches = Array(result[0..<5])
+        hand.matches = Array(stack[0..<5])
     }
 }

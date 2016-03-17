@@ -22,6 +22,10 @@ class HandV9StraightFlush:PatternEvaluator
     static func evaluate(hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
+        if cards[0].value == 1
+        {
+            cards.append(cards[0])
+        }
         
         var stack = [cards[0]]
         for i in 0..<cards.count - 1

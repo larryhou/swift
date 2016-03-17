@@ -114,6 +114,11 @@ class PokerHand
             return .FullHouse
         }
         
+        if cards[0].value == 1
+        {
+            cards.append(cards[0])
+        }
+        
         var stack = [cards[0]]
         for i in 1..<cards.count
         {
