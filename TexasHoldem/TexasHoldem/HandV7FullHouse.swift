@@ -31,7 +31,7 @@ class HandV7FullHouse:PatternEvaluator
         return count
     }
     
-    static func evaluate(hand:PokerHand)
+    static func evaluate(_ hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         

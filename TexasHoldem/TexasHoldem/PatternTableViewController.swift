@@ -11,7 +11,7 @@ import UIKit
 
 class PatternTableViewController:UITableViewController, UISearchBarDelegate
 {
-    private let background_queue = dispatch_queue_create("TexasHoldem.background.search", DISPATCH_QUEUE_CONCURRENT)
+    private let background_queue = DispatchQueue(label: "TexasHoldem.background.search", attributes: DispatchQueueAttributes.concurrent)
     
     @IBOutlet weak var search: UISearchBar!
     var model:ViewModel!
@@ -25,23 +25,23 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
         history = model.data
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return 80
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return history.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        if indexPath.row < history.count
+        if (indexPath as NSIndexPath).row < history.count
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("PatternCell") as! PatternTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PatternCell") as! PatternTableViewCell
             
-            let data = history[indexPath.row].list[id]
+            let data = history[(indexPath as NSIndexPath).row].list[id]
             cell.renderView(data)
             return cell
         }
@@ -50,13 +50,13 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
             let identifier = "LoadingCell"
             
             let cell:UITableViewCell
-            if let reuseCell = tableView.dequeueReusableCellWithIdentifier(identifier)
+            if let reuseCell = tableView.dequeueReusableCell(withIdentifier: identifier)
             {
                 cell = reuseCell
             }
             else
             {
-                cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+                cell = UITableViewCell(style: .default, reuseIdentifier: identifier)
                 cell.textLabel?.font = UIFont(name: "Menlo", size: 18)
                 cell.textLabel?.text = "..."
             }
@@ -65,26 +65,26 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
         }
     }
     
-    @IBAction func showPatternStats(sender: UIBarButtonItem)
+    @IBAction func showPatternStats(_ sender: UIBarButtonItem)
     {
-        let alert = PatternStatsPrompt(title: "牌型分布", message: nil, preferredStyle: .ActionSheet)
+        let alert = PatternStatsPrompt(title: "牌型分布", message: nil, preferredStyle: .actionSheet)
         alert.setPromptSheet(model.stats[id]!)
         
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     //MARK: search
-    func searchBarSearchButtonClicked(searchBar: UISearchBar)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
         searchBar.resignFirstResponder()
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
         searchByInput(searchText)
     }
     
-    func searchByInput(searchText:String?)
+    func searchByInput(_ searchText:String?)
     {
         if let text = searchText
         {
@@ -93,10 +93,10 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
             
             if let pattern = HandPattern(rawValue: UInt8(integer))
             {
-                dispatch_async(background_queue)
+                background_queue.async
                 {
                     self.history = []
-                    dispatch_async(dispatch_get_main_queue())
+                    DispatchQueue.main.async
                     {
                         self.tableView.reloadData()
                     }
@@ -110,7 +110,7 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
                             
                             if self.history.count < 10
                             {
-                                dispatch_async(dispatch_get_main_queue())
+                                DispatchQueue.main.async
                                 {
                                     self.tableView.reloadData()
                                 }
@@ -118,7 +118,7 @@ class PatternTableViewController:UITableViewController, UISearchBarDelegate
                         }
                     }
                     
-                    dispatch_async(dispatch_get_main_queue())
+                    DispatchQueue.main.async
                     {
                         self.tableView.reloadData()
                     }

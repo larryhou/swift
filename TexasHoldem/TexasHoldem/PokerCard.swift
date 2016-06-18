@@ -10,16 +10,16 @@ import Foundation
 
 enum PokerColor:UInt8
 {
-    case Spade = 4, Club = 3, Heart = 2, Diamond = 1
+    case spade = 4, club = 3, heart = 2, diamond = 1
     
     var description:String
     {
         switch (self)
         {
-            case .Spade     :return "♠︎"
-            case .Club      :return "♣︎"
-            case .Heart     :return "♥︎"
-            case .Diamond   :return "♦︎"
+            case .spade     :return "♠︎"
+            case .club      :return "♣︎"
+            case .heart     :return "♥︎"
+            case .diamond   :return "♦︎"
         }
     }
 }
@@ -43,7 +43,7 @@ class PokerCard
     }
 }
 
-extension _ArrayType where Generator.Element == PokerCard
+extension Array where Element : PokerCard
 {
     func sort()->[PokerCard]
     {
@@ -53,12 +53,12 @@ extension _ArrayType where Generator.Element == PokerCard
     
     func sortWithColor()->[PokerCard]
     {
-        return sort({ $0 != $1 ? $0 > $1 : $0.color.rawValue > $1.color.rawValue })
+        return sorted(isOrderedBefore: { $0 != $1 ? $0 > $1 : $0.color.rawValue > $1.color.rawValue })
     }
     
     func toString() -> String
     {
-        return map({$0.description}).joinWithSeparator(" ")
+        return map({$0.description}).joined(separator: " ")
     }
 }
 

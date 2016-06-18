@@ -15,14 +15,14 @@ extension PokerCard
         return UInt8(color.rawValue << 4) | UInt8(value)
     }
     
-    static func parse(rawValue:UInt8) -> PokerCard
+    static func parse(_ rawValue:UInt8) -> PokerCard
     {
         let value = Int(rawValue & 0xF)
         let color = PokerColor(rawValue: rawValue >> 4 & 0xF)!
         return PokerCard(color: color, value: value)
     }
     
-    static func parse(rawValue:UInt8, card:PokerCard)
+    static func parse(_ rawValue:UInt8, card:PokerCard)
     {
         card.value = Int(rawValue & 0xF)
         card.color = PokerColor(rawValue: rawValue >> 4 & 0xF)!
@@ -36,7 +36,7 @@ extension PokerHand
         return (pattern.rawValue, givenCards.map({$0.rawValue}), tableCards.map({$0.rawValue}))
     }
     
-    static func parse(rawValue:(UInt8, [UInt8], [UInt8])) -> PokerHand
+    static func parse(_ rawValue:(UInt8, [UInt8], [UInt8])) -> PokerHand
     {
         let givenCards = rawValue.1.map({PokerCard.parse($0)})
         let tableCards = rawValue.2.map({PokerCard.parse($0)})
@@ -45,7 +45,7 @@ extension PokerHand
         return hand
     }
     
-    static func parse(rawValue:(UInt8, [UInt8], [UInt8]), hand:PokerHand)
+    static func parse(_ rawValue:(UInt8, [UInt8], [UInt8]), hand:PokerHand)
     {
         hand.reset()
         hand.givenCards = rawValue.1.map({PokerCard.parse($0)})

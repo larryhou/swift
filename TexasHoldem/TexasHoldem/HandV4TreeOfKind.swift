@@ -18,7 +18,7 @@ class HandV4TreeOfKind:PatternEvaluator
             combinate(12, select: 4) * pow(4, exponent: 4)
     }
     
-    static func evaluate(hand: PokerHand)
+    static func evaluate(_ hand: PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         var dict:[Int:[PokerCard]] = [:]

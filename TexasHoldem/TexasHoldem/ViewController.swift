@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var simulateButton: UIButton!
     
-    private let background_queue = dispatch_queue_create("TexasHoldem.background.simulate", DISPATCH_QUEUE_CONCURRENT)
+    private let background_queue = DispatchQueue(label: "TexasHoldem.background.simulate", attributes: DispatchQueueAttributes.concurrent)
     private let model = ViewModel()
     
     override func viewDidLoad()
@@ -57,7 +57,7 @@ class ViewController: UIViewController, UITextFieldDelegate
         print(HandV9StraightFlush.description)
     }
     
-    func generateGameRounds(roundCount:Int, personCount:Int)
+    func generateGameRounds(_ roundCount:Int, personCount:Int)
     {
         var digitCount = 0
         var value = Double(roundCount)
@@ -67,15 +67,15 @@ class ViewController: UIViewController, UITextFieldDelegate
             digitCount += 1
         }
         
-        dispatch_async(background_queue)
+        background_queue.async
         {
             var stats:[Int:[HandPattern:Int]] = [:]
             var data:[UniqueRound] = []
             
-            UIApplication.sharedApplication().idleTimerDisabled = true
-            self.simulateButton.userInteractionEnabled = false
+            UIApplication.shared().isIdleTimerDisabled = true
+            self.simulateButton.isUserInteractionEnabled = false
             
-            let start = NSDate()
+            let start = Date()
             for n in 0..<roundCount
             {
                 let round = UniqueRound(index: n)
@@ -101,35 +101,35 @@ class ViewController: UIViewController, UITextFieldDelegate
                     stats[i]?[hand.pattern]? += 1
                 }
                 
-                dispatch_async(dispatch_get_main_queue())
+                DispatchQueue.main.async
                 {
-                    self.updateProgressIndicator(n + 1, total: roundCount, digitCount: digitCount, elapse: NSDate().timeIntervalSinceDate(start))
+                    self.updateProgressIndicator(n + 1, total: roundCount, digitCount: digitCount, elapse: Date().timeIntervalSince(start))
                 }
             }
             
-            UIApplication.sharedApplication().idleTimerDisabled = false
-            self.simulateButton.userInteractionEnabled = true
+            UIApplication.shared().isIdleTimerDisabled = false
+            self.simulateButton.isUserInteractionEnabled = true
             
-            dispatch_async(dispatch_get_main_queue())
+            DispatchQueue.main.async
             {
                 self.setViewModel(data, stats: stats);
             }
         }
     }
     
-    func setViewModel(data:[UniqueRound], stats:[Int:[HandPattern:Int]])
+    func setViewModel(_ data:[UniqueRound], stats:[Int:[HandPattern:Int]])
     {
         model.data = data
         model.stats = stats
     }
     
-    func updateProgressIndicator(count:Int, total:Int, digitCount:Int, elapse:NSTimeInterval)
+    func updateProgressIndicator(_ count:Int, total:Int, digitCount:Int, elapse:TimeInterval)
     {
         progressInfo.text = String(format: "%0\(digitCount)d/%d %5.2f%% %5.3fs", count, total, Double(count) * 100 / Double(total), elapse)
         progressIndicator.progress = Float(count)/Float(total)
     }
     
-    @IBAction func simulate(sender: AnyObject)
+    @IBAction func simulate(_ sender: AnyObject)
     {
         let roundCount = roundInput.text != "" ? NSString(string: roundInput.text!).integerValue : Int(roundStepper.value)
         let personCount = peopleInput.text != "" ? NSString(string: peopleInput.text!).integerValue : Int(peopleStepper.value)
@@ -138,7 +138,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     }
     
     //MARK: text input
-    func textFieldShouldReturn(textField: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         if textField == peopleInput
         {
@@ -161,7 +161,7 @@ class ViewController: UIViewController, UITextFieldDelegate
         return true
     }
     
-    @IBAction func setPeopleCount(sender: AnyObject)
+    @IBAction func setPeopleCount(_ sender: AnyObject)
     {
         if sender is UIStepper
         {
@@ -169,7 +169,7 @@ class ViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-    @IBAction func setRoundCount(sender: AnyObject)
+    @IBAction func setRoundCount(_ sender: AnyObject)
     {
         if sender is UIStepper
         {
@@ -178,7 +178,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     }
     
     //MARK: segue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?)
     {
         if segue.identifier == "player"
         {

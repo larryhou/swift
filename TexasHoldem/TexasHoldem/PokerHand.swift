@@ -10,21 +10,21 @@ import Foundation
 
 enum HandPattern:UInt8
 {
-    case HighCard = 1, OnePair, TwoPair, ThreeOfKind, Straight, Flush, FullHouse, FourOfKind, StraightFlush
+    case highCard = 1, onePair, twoPair, threeOfKind, straight, flush, fullHouse, fourOfKind, straightFlush
     
     var description:String
     {
         switch self
         {
-            case .HighCard:     return "高牌"
-            case .OnePair:      return "一对"
-            case .TwoPair:      return "两对"
-            case .ThreeOfKind:  return "三张" //绿色
-            case .Straight:     return "顺子" //蓝色
-            case .Flush:        return "同花" //紫色
-            case .FullHouse:    return "葫芦" //橙色
-            case .FourOfKind:   return "炸弹" //红色
-            case .StraightFlush:return "花顺" //
+            case .highCard:     return "高牌"
+            case .onePair:      return "一对"
+            case .twoPair:      return "两对"
+            case .threeOfKind:  return "三张" //绿色
+            case .straight:     return "顺子" //蓝色
+            case .flush:        return "同花" //紫色
+            case .fullHouse:    return "葫芦" //橙色
+            case .fourOfKind:   return "炸弹" //红色
+            case .straightFlush:return "花顺" //
         }
     }
 }
@@ -106,12 +106,12 @@ class PokerHand
         
         if let v4 = kindStats[4] where v4 >= 1
         {
-            return .FourOfKind
+            return .fourOfKind
         }
         
         if let v3 = kindStats[3], v2 = kindStats[2] where (v3 == 1 && v2 >= 1) || (v3 >= 2)
         {
-            return .FullHouse
+            return .fullHouse
         }
         
         if cards[0].value == 1
@@ -150,37 +150,37 @@ class PokerHand
                 
                 if count == 5
                 {
-                    return .StraightFlush
+                    return .straightFlush
                 }
             }
             
-            return .Straight
+            return .straight
         }
         
         if maxSameColorCount >= 5
         {
-            return .Flush
+            return .flush
         }
         
         if let v3 = kindStats[3] where v3 == 1
         {
-            return .ThreeOfKind
+            return .threeOfKind
         }
         
         if let v2 = kindStats[2]
         {
             if v2 >= 2
             {
-                return .TwoPair
+                return .twoPair
             }
             else
             if v2 == 1
             {
-                return .OnePair
+                return .onePair
             }
         }
         
-        return .HighCard
+        return .highCard
     }
     
     func evaluate()
@@ -188,15 +188,15 @@ class PokerHand
         pattern = recognize()
         switch pattern!
         {
-            case .HighCard:HandV1HighCard.evaluate(self)
-            case .OnePair:HandV2OnePair.evaluate(self)
-            case .TwoPair:HandV3TwoPair.evaluate(self)
-            case .ThreeOfKind:HandV4TreeOfKind.evaluate(self)
-            case .Straight:HandV5Straight.evaluate(self)
-            case .Flush:HandV6Flush.evaluate(self)
-            case .FullHouse:HandV7FullHouse.evaluate(self)
-            case .FourOfKind:HandV8FourOfKind.evaluate(self)
-            case .StraightFlush:HandV9StraightFlush.evaluate(self)
+            case .highCard:HandV1HighCard.evaluate(self)
+            case .onePair:HandV2OnePair.evaluate(self)
+            case .twoPair:HandV3TwoPair.evaluate(self)
+            case .threeOfKind:HandV4TreeOfKind.evaluate(self)
+            case .straight:HandV5Straight.evaluate(self)
+            case .flush:HandV6Flush.evaluate(self)
+            case .fullHouse:HandV7FullHouse.evaluate(self)
+            case .fourOfKind:HandV8FourOfKind.evaluate(self)
+            case .straightFlush:HandV9StraightFlush.evaluate(self)
         }
         
         _isReady = true

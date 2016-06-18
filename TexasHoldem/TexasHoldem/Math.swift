@@ -8,12 +8,12 @@
 
 import Foundation
 
-func combinate(num:UInt, select:UInt) -> UInt
+func combinate(_ num:UInt, select:UInt) -> UInt
 {
     return permutate(num, select: select) / permuate(select)
 }
 
-func permutate(num:UInt, select:UInt) -> UInt
+func permutate(_ num:UInt, select:UInt) -> UInt
 {
     var result:UInt = 1
     
@@ -25,7 +25,7 @@ func permutate(num:UInt, select:UInt) -> UInt
     return result
 }
 
-func permuate(num:UInt) -> UInt
+func permuate(_ num:UInt) -> UInt
 {
     var result:UInt = 1
     for i in 0..<num
@@ -36,7 +36,7 @@ func permuate(num:UInt) -> UInt
     return result
 }
 
-func pow(base:UInt, exponent:UInt) -> UInt
+func pow(_ base:UInt, exponent:UInt) -> UInt
 {
     var result:UInt = 1
     for _ in 1...exponent

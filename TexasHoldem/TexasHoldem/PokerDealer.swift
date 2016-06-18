@@ -13,7 +13,7 @@ class PokerDealer
     private static let packOfCards:[PokerCard] =
     {
         var result:[PokerCard] = []
-        let colors:[PokerColor] = [.Spade, .Club, .Heart, .Diamond]
+        let colors:[PokerColor] = [.spade, .club, .heart, .diamond]
         for n in 1...13
         {
             for i in 0..<colors.count
@@ -28,7 +28,7 @@ class PokerDealer
     
     private static var handRecycle:[PokerHand] = []
     
-    static func deal(num:Int) -> [PokerHand]
+    static func deal(_ num:Int) -> [PokerHand]
     {
         let personCount = min((52 - 5) / 2, num);
         
@@ -46,7 +46,7 @@ class PokerDealer
                 }
                 
                 let index = arc4random_uniform(UInt32(cards_pool.count))
-                let card = cards_pool.removeAtIndex(Int(index))
+                let card = cards_pool.remove(at: Int(index))
                 dict[i]?.append(card)
             }
         }
@@ -55,7 +55,7 @@ class PokerDealer
         for _ in 1...5
         {
             let index = arc4random_uniform(UInt32(cards_pool.count))
-            let card = cards_pool.removeAtIndex(Int(index))
+            let card = cards_pool.remove(at: Int(index))
             tableCards.append(card)
         }
         

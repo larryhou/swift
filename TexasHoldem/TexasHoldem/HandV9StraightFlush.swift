@@ -19,7 +19,7 @@ class HandV9StraightFlush:PatternEvaluator
             combinate(52 - 5, select: 2)
     }
     
-    static func evaluate(hand:PokerHand)
+    static func evaluate(_ hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         if cards[0].value == 1

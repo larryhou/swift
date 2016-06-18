@@ -14,15 +14,15 @@ class PatternTableViewCell:UITableViewCell
     private static var color_hash:[HandPattern:UIColor]
     {
         var hash:[HandPattern:UIColor] = [:]
-        hash[.HighCard]         = UIColor(white: 0.90, alpha: 1.0)
-        hash[.OnePair]          = UIColor(white: 0.75, alpha: 1.0)
-        hash[.TwoPair]          = UIColor(white: 0.50, alpha: 1.0)
-        hash[.ThreeOfKind]      = UIColor(white: 0.00, alpha: 1.0)
-        hash[.Straight]         = UIColor.greenColor()
-        hash[.Flush]            = UIColor.blueColor()
-        hash[.FullHouse]        = UIColor(red: 0.5, green: 0.0, blue: 1.0, alpha: 1.0)
-        hash[.FourOfKind]       = UIColor.orangeColor()
-        hash[.StraightFlush]    = UIColor.redColor()
+        hash[.highCard]         = UIColor(white: 0.90, alpha: 1.0)
+        hash[.onePair]          = UIColor(white: 0.75, alpha: 1.0)
+        hash[.twoPair]          = UIColor(white: 0.50, alpha: 1.0)
+        hash[.threeOfKind]      = UIColor(white: 0.00, alpha: 1.0)
+        hash[.straight]         = UIColor.green()
+        hash[.flush]            = UIColor.blue()
+        hash[.fullHouse]        = UIColor(red: 0.5, green: 0.0, blue: 1.0, alpha: 1.0)
+        hash[.fourOfKind]       = UIColor.orange()
+        hash[.straightFlush]    = UIColor.red()
         return hash
     }
     
@@ -34,7 +34,7 @@ class PatternTableViewCell:UITableViewCell
     
     private var hand:PokerHand = PokerHand()
     
-    func renderView(data:RawPokerHand)
+    func renderView(_ data:RawPokerHand)
     {
         PokerHand.parse(data.data, hand: hand)
         hand.evaluate()

@@ -16,7 +16,7 @@ class HandV8FourOfKind:PatternEvaluator
         return 13 * combinate(52 - 4, select: 3)
     }
     
-    static func evaluate(hand:PokerHand)
+    static func evaluate(_ hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         

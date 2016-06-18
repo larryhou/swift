@@ -26,7 +26,7 @@ class HandV3TwoPair:PatternEvaluator
         return count
     }
     
-    static func evaluate(hand:PokerHand)
+    static func evaluate(_ hand:PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         
@@ -48,12 +48,12 @@ class HandV3TwoPair:PatternEvaluator
             }
         }
         
-        let list = group.sort({$0 > $1}).map({$0.value})
+        let list = group.sorted(isOrderedBefore: {$0 > $1}).map({$0.value})
         
         var result:[PokerCard] = dict[list[0]]! + dict[list[1]]!
         for i in 0..<cards.count
         {
-            if list.indexOf(cards[i].value) < 0 && result.count < 5
+            if list.index(of: cards[i].value) < 0 && result.count < 5
             {
                 result.append(cards[i])
             }

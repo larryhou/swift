@@ -16,7 +16,7 @@ class HandV1HighCard : PatternEvaluator
         return combinate(13, select: 7) * pow(4, exponent: 7)
     }
     
-    static func evaluate(hand: PokerHand)
+    static func evaluate(_ hand: PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         hand.matches = Array(cards[0..<5])

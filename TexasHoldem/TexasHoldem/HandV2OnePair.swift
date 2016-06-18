@@ -18,7 +18,7 @@ class HandV2OnePair : PatternEvaluator
             combinate(12, select: 5) * pow(4, exponent: 5)
     }
     
-    static func evaluate(hand: PokerHand)
+    static func evaluate(_ hand: PokerHand)
     {
         var cards = (hand.givenCards + hand.tableCards).sort()
         var dict:[Int:[PokerCard]] = [:]

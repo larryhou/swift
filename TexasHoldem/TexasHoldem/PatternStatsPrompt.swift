@@ -21,7 +21,7 @@ class PatternStatsPrompt:UIAlertController
         return {
             for label in list
             {
-                if let text = label.text where text.containsString(" - ")
+                if let text = label.text where text.contains(" - ")
                 {
                     label.font = font
                 }
@@ -29,13 +29,13 @@ class PatternStatsPrompt:UIAlertController
         }
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         formatActionText();
     }
     
-    func findObjectsInView<T where T:UIView>(view:UIView, inout result:[T])
+    func findObjectsInView<T where T:UIView>(_ view:UIView, result:inout [T])
     {
         for child in view.subviews
         {
@@ -50,7 +50,7 @@ class PatternStatsPrompt:UIAlertController
         }
     }
     
-    func getDigitCount(value:Double) -> Int
+    func getDigitCount(_ value:Double) -> Int
     {
         var digitCount = 0
         
@@ -64,7 +64,7 @@ class PatternStatsPrompt:UIAlertController
         return digitCount
     }
     
-    func setPromptSheet(stats:[HandPattern:Int])
+    func setPromptSheet(_ stats:[HandPattern:Int])
     {
         var total = 0
         for (_, count) in stats
@@ -74,20 +74,20 @@ class PatternStatsPrompt:UIAlertController
         
         let digitCount = getDigitCount(Double(total))
         
-        let list = stats.sort({$0.0.rawValue > $1.0.rawValue})
+        let list = stats.sorted(isOrderedBefore: {$0.0.rawValue > $1.0.rawValue})
         
         for (pattern, count) in list
         {
             let title = String(format: "%@ - %0\(digitCount)d/%d - %07.4f%%", pattern.description, count, total, 100 * Double(count) / Double(total))
-            let action = UIAlertAction(title: title, style: .Default, handler: nil)
+            let action = UIAlertAction(title: title, style: .default, handler: nil)
             addAction(action)
         }
         
-        let action = UIAlertAction(title: "知道了", style: .Cancel, handler: nil)
+        let action = UIAlertAction(title: "知道了", style: .cancel, handler: nil)
         addAction(action)
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
     {
         formatActionText()
     }

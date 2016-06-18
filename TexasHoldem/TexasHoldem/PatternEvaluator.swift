@@ -10,7 +10,7 @@ import Foundation
 
 protocol PatternEvaluator
 {
-    static func evaluate(hand:PokerHand);
+    static func evaluate(_ hand:PokerHand);
     static func getOccurrences() -> UInt;
 }
 
