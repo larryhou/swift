@@ -12,19 +12,31 @@ import GameplayKit
 
 enum GridState
 {
+    struct GridStateColor
+    {
+        private static let data:[GridState:UIColor] =
+        {
+            var dict:[GridState:UIColor] = [:]
+            dict[.blank] = UIColor(white: 0.95, alpha: 1.0)
+            dict[.wall]  = UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+            dict[.road]  = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
+            dict[.path]  = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            dict[.start] = UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
+            dict[.close] = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+            return dict
+        }()
+    }
+    
     case blank, wall, road, path, start, close
     
     var color:UIColor
     {
-        switch self
+        if let value = GridStateColor.data[self]
         {
-            case .blank: return UIColor(white: 0.95, alpha: 1.0)
-            case .wall:  return UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
-            case .road:  return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
-            case .path:  return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
-            case .start: return UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
-            case .close: return UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+            return value
         }
+        
+        return GridStateColor.data[.blank]!
     }
 }
 
