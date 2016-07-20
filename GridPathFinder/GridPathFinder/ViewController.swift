@@ -19,6 +19,13 @@ extension SKNode
     }
 }
 
+public struct GridColors
+{
+    static public let `default` = UIColor(white: 0.95, alpha: 1.0)
+    static public let wall = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+    static public let road = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+}
+
 func clamp(_ x:CGFloat, min:CGFloat, max:CGFloat) -> CGFloat
 {
     if x > max
@@ -76,13 +83,17 @@ class ViewController: UIViewController
             path.addLineTo(nil, x: CGFloat(c * size), y: CGFloat(row * size))
         }
         
+        let content = Maze(width: Int32(column), height: Int32(row), length: Int32(size))
+        scene.addChild(content)
+        content.generate()
+        
         let graph = GKGridGraph(fromGridStartingAt: vector_int2(0,0), width: Int32(column), height: Int32(row), diagonalsAllowed: false)
         print(graph.node(atGridPosition: vector_int2(1,1)))
         
         let grid = SKShapeNode(path: path, centered: false)
-        grid.strokeColor = SKColor(white: 0.0, alpha: 0.2)
+        grid.strokeColor = SKColor(white: 1.0, alpha: 1.0)
         grid.isUserInteractionEnabled = false
-        grid.lineWidth = 1.0
+        grid.lineWidth = 1.5
         scene.addChild(grid)
         
         print(scene.size, view.frame,UIScreen.main().bounds, UIScreen.main().scale)
