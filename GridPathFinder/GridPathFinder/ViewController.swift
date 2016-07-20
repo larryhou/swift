@@ -19,13 +19,6 @@ extension SKNode
     }
 }
 
-public struct GridColors
-{
-    static public let `default` = UIColor(white: 0.95, alpha: 1.0)
-    static public let wall = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
-    static public let road = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
-}
-
 func clamp(_ x:CGFloat, min:CGFloat, max:CGFloat) -> CGFloat
 {
     if x > max
@@ -64,7 +57,7 @@ class ViewController: UIViewController
         camera.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         view.presentScene(scene)
         
-        let size = 20, row = 50, column = 40
+        let size = 20, row = 51, column = 51
         dragrect.size = CGSize(width:max(0, CGFloat(size * column) - view.frame.width),
                                height:max(0, CGFloat(size * row) - view.frame.height))
         dragrect.origin = camera.position
@@ -83,9 +76,10 @@ class ViewController: UIViewController
             path.addLineTo(nil, x: CGFloat(c * size), y: CGFloat(row * size))
         }
         
-        let content = Maze(width: Int32(column), height: Int32(row), length: Int32(size))
-        scene.addChild(content)
-        content.generate()
+        let maze = MazeNode(width: Int32(column), height: Int32(row), length: Int32(size))
+        scene.addChild(maze)
+        maze.name = "maze"
+        maze.generate()
         
         let graph = GKGridGraph(fromGridStartingAt: vector_int2(0,0), width: Int32(column), height: Int32(row), diagonalsAllowed: false)
         print(graph.node(atGridPosition: vector_int2(1,1)))
@@ -98,10 +92,31 @@ class ViewController: UIViewController
         
         print(scene.size, view.frame,UIScreen.main().bounds, UIScreen.main().scale)
         
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(OnPanGestureUpdate))
-        gesture.maximumNumberOfTouches = 1
-        gesture.minimumNumberOfTouches = 1
-        view.addGestureRecognizer(gesture)
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(OnPanGestureUpdate))
+        pan.maximumNumberOfTouches = 1
+        pan.minimumNumberOfTouches = 1
+        view.addGestureRecognizer(pan)
+        
+        let tap2t = UITapGestureRecognizer(target: self, action: #selector(OnTapGestureUpdate))
+        tap2t.numberOfTouchesRequired = 1
+        tap2t.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap2t)
+        
+        
+    }
+    
+    func OnTapGestureUpdate(sender:UITapGestureRecognizer)
+    {
+        if sender.state == .ended
+        {
+            if let scene = (self.view as! SKView).scene
+            {
+                if let maze = scene.childNode(withName: "maze") as? MazeNode
+                {
+                    maze.generate()
+                }
+            }
+        }
     }
     
     private var gesOrigin = CGPoint()
@@ -133,7 +148,6 @@ class ViewController: UIViewController
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func prefersStatusBarHidden() -> Bool

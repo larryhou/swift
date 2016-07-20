@@ -10,7 +10,15 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class MazeItem:SKSpriteNode, IPoolObject
+public struct GridColors
+{
+    static public let `default` = UIColor(white: 0.95, alpha: 1.0)
+    static public let wall = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
+    static public let road = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
+    static public let path = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+}
+
+class MazeCellNode:SKSpriteNode, IPoolObject
 {
     var gridpos = vector_int2()
     
@@ -28,30 +36,29 @@ class MazeItem:SKSpriteNode, IPoolObject
     }
 }
 
-class Maze:SKNode
+class MazeNode:SKNode
 {
     var length:Int32 = 0
     var algorithm = MazeAlgorithm(width: 10, height: 10)
-    let pool = ObjectPool<MazeItem>()
-    var map:[Int32:MazeItem] = [:]
+    let map = Array2D<MazeCellNode>(width:10, height: 10)
+    let pool = ObjectPool<MazeCellNode>()
     
     convenience init(width:Int32, height:Int32, length:Int32 = 10)
     {
         self.init()
         
         self.length = length
-        self.map = [:]
-        
         resize(width: width, height: height)
     }
     
     func resize(width:Int32, height:Int32)
     {
         algorithm.resize(width: width, height: height)
+        map.resize(width: width, height: height)
         
         children.forEach
         {
-            if let item = $0 as? MazeItem
+            if let item = $0 as? MazeCellNode
             {
                 pool.recycle(item)
             }
@@ -61,16 +68,16 @@ class Maze:SKNode
         {
             for x in 0..<algorithm.width
             {
-                let item = pool.get()
-                item.size = CGSize(width: Int(length), height: Int(length))
-                item.color = GridColors.default
-                item.anchorPoint = CGPoint.zero
-                item.position = CGPoint(x: Int(x * length), y: Int(y * length))
-                item.gridpos.x = x
-                item.gridpos.y = y
-                addChild(item)
+                let cell = pool.get()
+                cell.size = CGSize(width: Int(length), height: Int(length))
+                cell.color = GridColors.default
+                cell.anchorPoint = CGPoint.zero
+                cell.position = CGPoint(x: Int(x * length), y: Int(y * length))
+                cell.gridpos.x = x
+                cell.gridpos.y = y
+                addChild(cell)
                 
-                map[y * algorithm.width + x] = item
+                map[x, y] = cell
             }
         }
     }
@@ -82,7 +89,7 @@ class Maze:SKNode
         {
             for x in 0..<algorithm.width
             {
-                if let item = map[y * algorithm.width + x]
+                if let item = map[x, y]
                 {
                     let enabled = algorithm[x, y]
                     item.color = enabled ? GridColors.road : GridColors.wall
@@ -96,17 +103,12 @@ class Maze:SKNode
 class Array2D<Element> where Element:Equatable
 {
     var width:Int32, height:Int32
-    private var map:[Int32:Element]
+    private var map:[String:Element]
     
     init(width:Int32, height:Int32)
     {
         self.width = width;self.height = height;
         self.map = [:]
-    }
-    
-    convenience init()
-    {
-        self.init(width: Int32.max, height: Int32.max)
     }
     
     func resize(width:Int32, height:Int32)
@@ -132,14 +134,14 @@ class Array2D<Element> where Element:Equatable
     {
         get
         {
-            return map[y * width + x]
+            return map["\(x):\(y)"]
         }
         
         set
         {
             if x < width && y < height
             {
-                map[y * width + x] = newValue
+                map["\(x):\(y)"] = newValue
             }
         }
     }
@@ -183,58 +185,61 @@ class MazeAlgorithm
         }
     }
     
-    var width:Int32 { return walls.width}
-    var height:Int32 { return walls.height}
+    var width:Int32 { return wall.width}
+    var height:Int32 { return wall.height}
     
-    private let walls:Array2D<Bool>
-    private let visited:Array2D<Bool>
-    private var stack:[vector_int2] = []
+    private let wall:Array2D<Bool>
     
     init(width:Int32, height:Int32)
     {
-        walls = Array2D(width: width, height: height)
-        visited = Array2D()
+        wall = Array2D(width: width, height: height)
+        visited = Array2D(width: width, height: height)
     }
     
     func resize(width:Int32, height:Int32)
     {
-        walls.resize(width: width, height: height)
+        wall.resize(width: width, height: height)
+        visited.resize(width: width, height: height)
     }
     
+    private let visited:Array2D<Bool>
+    private var search:[int2] = []
     func generate()
     {
-        walls.clear()
+        wall.clear()
         for x in 0..<width
         {
             for y in 0..<height
             {
-                walls[x, y] = x % 2 == 1 || y % 2 == 1
+                wall[x, y] = x % 2 == 1 || y % 2 == 1
             }
         }
         
         visited.clear()
         visited[0, 0] = true
         
-        stack.removeAll()
-        stack.append(int2(x:0, y:0))
+        search.removeAll()
+        search.append(int2(x:0, y:0))
         
-        explore: while let node = stack.last
+        while let node = search.last
         {
             if hasUnvisitedNeighbor(x: node.x, y: node.y) == false
             {
-                stack.removeLast()
+                search.removeLast()
                 continue
             }
             
-            while true
+            explore: while true
             {
                 let dir = ExploreDirection.random()
-                let next = vector_int2(x: node.x + dir.dx, y: node.y + dir.dy)
+                let next = int2(x: node.x + dir.dx, y: node.y + dir.dy)
+                
                 if isUnvistedAt(x: next.x, y: next.y)
                 {
                     visited[next] = true
-                    walls[next.x + dir.dx / 2, next.y + dir.dy / 2] = false
-                    stack.append(next)
+                    search.append(next)
+                    
+                    wall[node.x + dir.dx / 2, node.y + dir.dy / 2] = false
                     break explore
                 }
             }
@@ -244,7 +249,7 @@ class MazeAlgorithm
     //MARK: check node walkable
     subscript(_ x:Int32, _ y:Int32)->Bool
     {
-        if let flag = walls[x, y]
+        if let flag = wall[x, y]
         {
             return flag == false
         }
@@ -254,16 +259,25 @@ class MazeAlgorithm
     
     private func hasUnvisitedNeighbor(x:Int32, y:Int32)->Bool
     {
-        return isUnvistedAt(x: x - 2, y: y) || isUnvistedAt(x: x + 2, y: y) || isUnvistedAt(x: x, y: y - 2) || isUnvistedAt(x: x, y: y + 2)
+        return
+            isUnvistedAt(x: x - 2, y: y) ||
+            isUnvistedAt(x: x + 2, y: y) ||
+            isUnvistedAt(x: x, y: y - 2) ||
+            isUnvistedAt(x: x, y: y + 2)
     }
     
     private func isUnvistedAt(x:Int32, y:Int32)->Bool
     {
-        if walls[x, y] == nil
+        if wall[x, y] == nil
         {
             return false
         }
         
-        return visited[x, y] == false
+        if let value = visited[x, y]
+        {
+            return value == false
+        }
+        
+        return true
     }
 }
