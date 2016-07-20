@@ -50,7 +50,7 @@ class ViewController: UIViewController
         view.showsQuadCount = true
         print(view.preferredFramesPerSecond)
         
-        let scene = SKScene(size: view.frame.size)
+        let scene = MazeScene(size: view.frame.size)
         scene.backgroundColor = UIColor.white()
         scene.scaleMode = .aspectFill
         scene.camera = camera
@@ -98,7 +98,7 @@ class ViewController: UIViewController
         view.addGestureRecognizer(pan)
         
         let tap2t = UITapGestureRecognizer(target: self, action: #selector(OnTapGestureUpdate))
-        tap2t.numberOfTouchesRequired = 1
+        tap2t.numberOfTouchesRequired = 2
         tap2t.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap2t)
         

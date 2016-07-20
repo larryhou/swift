@@ -16,6 +16,7 @@
 		6BD6247F1D3D1D6100C44649 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BD6247D1D3D1D6100C44649 /* LaunchScreen.storyboard */; };
 		6BD6248A1D3D1D6100C44649 /* GridPathFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD624891D3D1D6100C44649 /* GridPathFinderTests.swift */; };
 		6BD624951D3D1D6100C44649 /* GridPathFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD624941D3D1D6100C44649 /* GridPathFinderUITests.swift */; };
+		6BF33CC01D3FCC4F0036BD68 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF33CBF1D3FCC4F0036BD68 /* Scene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		6BD624901D3D1D6100C44649 /* GridPathFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridPathFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD624941D3D1D6100C44649 /* GridPathFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPathFinderUITests.swift; sourceTree = "<group>"; };
 		6BD624961D3D1D6100C44649 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BF33CBF1D3FCC4F0036BD68 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				6BD624741D3D1D6100C44649 /* AppDelegate.swift */,
 				6BD624761D3D1D6100C44649 /* ViewController.swift */,
+				6BF33CBF1D3FCC4F0036BD68 /* Scene.swift */,
 				6BB6A1DB1D3F21770092C29C /* Maze.swift */,
 				6BB6A1DD1D3F4DA00092C29C /* ObjectPool.swift */,
 				6BD624781D3D1D6100C44649 /* Main.storyboard */,
@@ -273,6 +276,7 @@
 			files = (
 				6BB6A1DE1D3F4DA00092C29C /* ObjectPool.swift in Sources */,
 				6BD624771D3D1D6100C44649 /* ViewController.swift in Sources */,
+				6BF33CC01D3FCC4F0036BD68 /* Scene.swift in Sources */,
 				6BD624751D3D1D6100C44649 /* AppDelegate.swift in Sources */,
 				6BB6A1DC1D3F21770092C29C /* Maze.swift in Sources */,
 			);

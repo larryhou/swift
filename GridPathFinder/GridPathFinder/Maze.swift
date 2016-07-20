@@ -10,21 +10,38 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-public struct GridColors
+enum GridState
 {
-    static public let `default` = UIColor(white: 0.95, alpha: 1.0)
-    static public let wall = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
-    static public let road = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
-    static public let path = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+    case blank, wall, road, path, start, close
+    
+    var color:UIColor
+    {
+        switch self
+        {
+            case .blank: return UIColor(white: 0.95, alpha: 1.0)
+            case .wall: return UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+            case .road: return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
+            case .path: return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            case .start: return UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
+            case .close: return UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        }
+    }
 }
 
 class MazeCellNode:SKSpriteNode, IPoolObject
 {
     var gridpos = vector_int2()
+    var state:GridState = .blank
+    {
+        didSet
+        {
+            self.color = state.color
+        }
+    }
     
     func awake()
     {
-        
+        self.state = .blank
     }
     
     func recycle()
@@ -70,7 +87,6 @@ class MazeNode:SKNode
             {
                 let cell = pool.get()
                 cell.size = CGSize(width: Int(length), height: Int(length))
-                cell.color = GridColors.default
                 cell.anchorPoint = CGPoint.zero
                 cell.position = CGPoint(x: Int(x * length), y: Int(y * length))
                 cell.gridpos.x = x
@@ -92,7 +108,7 @@ class MazeNode:SKNode
                 if let item = map[x, y]
                 {
                     let enabled = algorithm[x, y]
-                    item.color = enabled ? GridColors.road : GridColors.wall
+                    item.state = enabled ? .road : .wall
                     item.isUserInteractionEnabled = enabled
                 }
             }
