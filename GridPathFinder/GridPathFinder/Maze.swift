@@ -93,34 +93,150 @@ class Maze:SKNode
     }
 }
 
-class MazeAlgorithm
+class Array2D<Element> where Element:Equatable
 {
     var width:Int32, height:Int32
-    
-    private var map:[Int32:Bool]
+    private var map:[Int32:Element]
     
     init(width:Int32, height:Int32)
     {
-        self.width = width
-        self.height = height
+        self.width = width;self.height = height;
         self.map = [:]
+    }
+    
+    convenience init()
+    {
+        self.init(width: Int32.max, height: Int32.max)
     }
     
     func resize(width:Int32, height:Int32)
     {
-        self.width = width
-        self.height = height
-        self.map.removeAll()
+        map.removeAll()
+        self.width = width; self.height = height;
+    }
+    
+    subscript(_ vec:vector_int2)->Element?
+    {
+        get
+        {
+            return self[vec.x, vec.y]
+        }
+        
+        set
+        {
+            self[vec.x, vec.y] = newValue
+        }
+    }
+    
+    subscript(_ x:Int32, _ y:Int32)->Element?
+    {
+        get
+        {
+            return map[y * width + x]
+        }
+        
+        set
+        {
+            if x < width && y < height
+            {
+                map[y * width + x] = newValue
+            }
+        }
+    }
+    
+    func clear()
+    {
+        map.removeAll()
+    }
+}
+
+class MazeAlgorithm
+{
+    enum ExploreDirection:Int
+    {
+        case left = 0, down, right, up
+        
+        static func random()->ExploreDirection
+        {
+            let value = GKRandomSource.sharedRandom().nextInt(withUpperBound: 4)
+            return ExploreDirection(rawValue: value)!
+        }
+        
+        var dx:Int32
+        {
+            switch self
+            {
+                case .down,.up: return 0
+                case .right: return 2
+                case .left: return -2
+            }
+        }
+        
+        var dy:Int32
+        {
+            switch self
+            {
+                case .left, .right: return 0
+                case .down: return -2
+                case .up: return 2
+            }
+        }
+    }
+    
+    var width:Int32 { return walls.width}
+    var height:Int32 { return walls.height}
+    
+    private let walls:Array2D<Bool>
+    private let visited:Array2D<Bool>
+    private var stack:[vector_int2] = []
+    
+    init(width:Int32, height:Int32)
+    {
+        walls = Array2D(width: width, height: height)
+        visited = Array2D()
+    }
+    
+    func resize(width:Int32, height:Int32)
+    {
+        walls.resize(width: width, height: height)
     }
     
     func generate()
     {
-        map.removeAll()
+        walls.clear()
         for x in 0..<width
         {
             for y in 0..<height
             {
-                map[y * width + x] = x % 2 == 1 || y % 2 == 1
+                walls[x, y] = x % 2 == 1 || y % 2 == 1
+            }
+        }
+        
+        visited.clear()
+        visited[0, 0] = true
+        
+        stack.removeAll()
+        stack.append(int2(x:0, y:0))
+        
+        explore: while let node = stack.last
+        {
+            if hasUnvisitedNeighbor(x: node.x, y: node.y) == false
+            {
+                stack.removeLast()
+                continue
+            }
+            
+            while true
+            {
+                let dir = ExploreDirection.random()
+                let next = vector_int2(x: node.x + dir.dx, y: node.y + dir.dy)
+                if isUnvistedAt(x: next.x, y: next.y)
+                {
+                    visited[next] = true
+                    walls[next.x + dir.dx / 2, next.y + dir.dy / 2] = false
+                    stack.append(next)
+                    break explore
+                }
             }
         }
     }
@@ -128,11 +244,26 @@ class MazeAlgorithm
     //MARK: check node walkable
     subscript(_ x:Int32, _ y:Int32)->Bool
     {
-        if let flag = map[y * width + x]
+        if let flag = walls[x, y]
         {
             return flag == false
         }
         
         return false
+    }
+    
+    private func hasUnvisitedNeighbor(x:Int32, y:Int32)->Bool
+    {
+        return isUnvistedAt(x: x - 2, y: y) || isUnvistedAt(x: x + 2, y: y) || isUnvistedAt(x: x, y: y - 2) || isUnvistedAt(x: x, y: y + 2)
+    }
+    
+    private func isUnvistedAt(x:Int32, y:Int32)->Bool
+    {
+        if walls[x, y] == nil
+        {
+            return false
+        }
+        
+        return visited[x, y] == false
     }
 }
