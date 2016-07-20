@@ -19,9 +19,9 @@ enum GridState
         switch self
         {
             case .blank: return UIColor(white: 0.95, alpha: 1.0)
-            case .wall: return UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
-            case .road: return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
-            case .path: return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            case .wall:  return UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+            case .road:  return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 0.3)
+            case .path:  return UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
             case .start: return UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
             case .close: return UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
         }
