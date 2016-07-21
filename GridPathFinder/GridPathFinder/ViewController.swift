@@ -110,7 +110,7 @@ class ViewController: UIViewController, MazeNodeUIDelegate
         timeCostLabel.text = String(format: "%.1fms", elapse * 1000)
     }
     
-    func maze(_ maze: MazeNode, related: MazeCellNode, focusCameraAt: CGPoint)
+    func maze(_ maze: MazeNode, related: MazeCellNode, focusCameraAt point: CGPoint)
     {
         if let scene = (self.view as! SKView).scene
         {
@@ -118,10 +118,10 @@ class ViewController: UIViewController, MazeNodeUIDelegate
             let origin = CGPoint(x: camera.position.x - size.width / 2, y: camera.position.y - size.height / 2)
             let frame = CGRect(origin: origin, size: size)
 
-            if frame.contains(focusCameraAt) == false
+            if frame.contains(point) == false
             {
-                let x = clamp(focusCameraAt.x, min: dragrect.minX, max: dragrect.maxX)
-                let y = clamp(focusCameraAt.y, min: dragrect.minY, max: dragrect.maxY)
+                let x = clamp(point.x, min: dragrect.minX, max: dragrect.maxX)
+                let y = clamp(point.y, min: dragrect.minY, max: dragrect.maxY)
                 
                 let key = "moveto"
                 camera.removeAction(forKey: key)

@@ -82,7 +82,7 @@ class MazeCellNode:SKSpriteNode, IPoolObject
 protocol MazeNodeUIDelegate
 {
     func maze(_ maze:MazeNode, graph:GKGridGraph<GKGridGraphNode>, elapse:TimeInterval)
-    func maze(_ maze:MazeNode, related:MazeCellNode, focusCameraAt:CGPoint)
+    func maze(_ maze:MazeNode, related:MazeCellNode, focusCameraAt point:CGPoint)
 }
 
 class MazeNode:SKNode
