@@ -60,6 +60,7 @@ class ViewController: UIViewController, MazeNodeUIDelegate
         scene.camera = camera
         camera.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         view.presentScene(scene)
+        scene.addChild(camera)
         
         dragrect.size = CGSize(width:max(0, CGFloat(length * column) - view.frame.width),
                                height:max(0, CGFloat(length * row) - view.frame.height))
@@ -111,7 +112,23 @@ class ViewController: UIViewController, MazeNodeUIDelegate
     
     func maze(_ maze: MazeNode, related: MazeCellNode, focusCameraAt: CGPoint)
     {
-        
+        if let scene = (self.view as! SKView).scene
+        {
+            let size = scene.size
+            let origin = CGPoint(x: camera.position.x - size.width / 2, y: camera.position.y - size.height / 2)
+            let frame = CGRect(origin: origin, size: size)
+
+            if frame.contains(focusCameraAt) == false
+            {
+                let x = clamp(focusCameraAt.x, min: dragrect.minX, max: dragrect.maxX)
+                let y = clamp(focusCameraAt.y, min: dragrect.minY, max: dragrect.maxY)
+                
+                let key = "moveto"
+                camera.removeAction(forKey: key)
+                let move = SKAction.move(to: CGPoint(x:x, y:y), duration: 0.5)
+                camera.run(move, withKey: key)
+            }
+        }
     }
     
     func OnTapGestureUpdate(sender:UITapGestureRecognizer)

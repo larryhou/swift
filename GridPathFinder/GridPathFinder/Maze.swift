@@ -44,8 +44,17 @@ class MazeCellNode:SKSpriteNode, IPoolObject
 {
     var gridpos = vector_int2()
     var state:GridState = .blank
+    
+    func stateUpdate(_ state:GridState, useAnimation:Bool = false)
     {
-        didSet
+        self.state = state
+        if useAnimation
+        {
+            let key = "colorize"
+            removeAction(forKey: key)
+            run(SKAction.colorize(with: state.color, colorBlendFactor: 1.0, duration: 0.2), withKey: key)
+        }
+        else
         {
             self.color = state.color
         }
@@ -58,7 +67,7 @@ class MazeCellNode:SKSpriteNode, IPoolObject
     
     func awake()
     {
-        self.state = .blank
+        stateUpdate(.blank)
     }
     
     func recycle()
@@ -78,6 +87,8 @@ protocol MazeNodeUIDelegate
 
 class MazeNode:SKNode
 {
+    private static let queue = DispatchQueue(label: "path_finding",attributes: DispatchQueueAttributes.concurrent)
+    
     private var length:Int32 = 0
     private var algorithm = MazeAlgorithm(width: 10, height: 10)
     private let map = Array2D<MazeCellNode>(width:10, height: 10)
@@ -90,7 +101,7 @@ class MazeNode:SKNode
     convenience init(width:Int32, height:Int32, length:Int32 = 10)
     {
         self.init()
-
+        
         self.length = length
         resize(width: width, height: height)
     }
@@ -130,30 +141,39 @@ class MazeNode:SKNode
     func generate()
     {
         algorithm.generate()
-        graph?.addNodes(removedNodes)
-        while removedNodes.count > 0
-        {
-            graph?.connectNode(toAdjacentNodes: removedNodes.removeLast())
-        }
         
-        for y in 0..<algorithm.height
+        cache.removeAll()
+        
+        MazeNode.queue.async
         {
-            for x in 0..<algorithm.width
+            self.graph?.addNodes(self.removedNodes)
+            while self.removedNodes.count > 0
             {
-                if let item = map[x, y]
+                self.graph?.connectNode(toAdjacentNodes: self.removedNodes.removeLast())
+            }
+            
+            DispatchQueue.main.async
+            {
+                for y in 0..<self.algorithm.height
                 {
-                    let enabled = algorithm[x, y]
-                    item.state = enabled ? .road : .wall
-                    item.isUserInteractionEnabled = enabled
-                    if enabled == false
+                    for x in 0..<self.algorithm.width
                     {
-                        removedNodes.append(graph!.node(atGridPosition: int2(x, y))!)
+                        if let item = self.map[x, y]
+                        {
+                            let enabled = self.algorithm[x, y]
+                            item.stateUpdate(enabled ? .road : .wall)
+                            item.isUserInteractionEnabled = enabled
+                            if enabled == false
+                            {
+                                self.removedNodes.append(self.graph!.node(atGridPosition: int2(x, y))!)
+                            }
+                        }
                     }
                 }
+                
+                self.graph?.removeNodes(self.removedNodes)
             }
         }
-        
-        graph?.removeNodes(removedNodes)
     }
     
     func find(from:int2, to:int2)
@@ -162,31 +182,53 @@ class MazeNode:SKNode
         {
             while cache.count > 0
             {
-                cache.removeLast().state = .road
+                cache.removeLast().stateUpdate(.road, useAnimation: true)
             }
             
             let start = graph.node(atGridPosition: from)!
             let close = graph.node(atGridPosition: to)!
             
-            let timestamp = Date().timeIntervalSince1970
-            let path = start.findPath(to: close)
-            
-            delegate?.maze(self, graph: graph, elapse: Date().timeIntervalSince1970 - timestamp)
-            
-            if path.count > 0
+            MazeNode.queue.async
             {
-                for i in 1..<path.count-1
+                let time = Date().timeIntervalSince1970
+                let path = start.findPath(to: close)
+                
+                let elapse = Date().timeIntervalSince1970 - time
+                DispatchQueue.main.async
                 {
-                    let pos = (path[i] as! GKGridGraphNode).gridPosition
-                    if let cell = map[pos]
-                    {
-                        cell.state = .path
-                        cache.append(cell)
-                    }
+                    self.delegate?.maze(self, graph: graph, elapse: elapse)
                     
+                    if path.count > 0
+                    {
+                        var actions:[SKAction] = []
+                        for _ in 1..<path.count - 1
+                        {
+                            actions.append(SKAction.wait(forDuration: 0.05))
+                            actions.append(SKAction.run({ self.MoveToNextNode(path: path) }))
+                        }
+                        
+                        self.nodeIndex = 1
+                        self.run(SKAction.sequence(actions))
+                    }
                 }
             }
         }
+    }
+    
+    private var nodeIndex:Int = 0
+    func MoveToNextNode(path:[GKGraphNode])
+    {
+        let pos = (path[nodeIndex] as! GKGridGraphNode).gridPosition
+        if let cell = map[pos]
+        {
+            cell.stateUpdate(.path, useAnimation: true)
+            cache.append(cell)
+            
+            let center = CGPoint(x: cell.position.x + cell.size.width / 2, y: cell.position.y + cell.size.height / 2)
+            delegate?.maze(self, related: cell, focusCameraAt: center)
+        }
+        
+        nodeIndex += 1
     }
 }
 

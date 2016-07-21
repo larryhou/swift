@@ -22,7 +22,7 @@ class MazeScene:SKScene
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        if event!.timestamp - timestamp < 0.5
+        if event!.timestamp - timestamp < 0.3
         {
             return
         }
@@ -42,16 +42,16 @@ class MazeScene:SKScene
                     switch endnodes.count
                     {
                         case 0:
-                            node.state = .start
+                            node.stateUpdate(.start)
                             endnodes.append(node)
                         default:
-                            node.state = .close
+                            node.stateUpdate(.close)
                             endnodes.append(node)
                             while endnodes.count > 2
                             {
-                                endnodes.removeFirst().state = .road
+                                endnodes.removeFirst().stateUpdate(.road)
                             }
-                            endnodes.first?.state = .start
+                            endnodes.first?.stateUpdate(.start)
                             maze.find(from: endnodes[0].gridpos, to: endnodes[1].gridpos)
                     }
                 }
