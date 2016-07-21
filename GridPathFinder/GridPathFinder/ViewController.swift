@@ -50,7 +50,14 @@ class ViewController: UIViewController, MazeNodeUIDelegate
         view.showsDrawCount = true
         view.showsNodeCount = true
         view.showsQuadCount = true
-        print(view.preferredFramesPerSecond)
+        if #available(iOS 10.0, *)
+        {
+            print(view.preferredFramesPerSecond)
+        }
+        else
+        {
+            // Fallback on earlier versions
+        }
         
         let length = 20, row = 51, column = 51
         
