@@ -8,12 +8,26 @@
 
 import Foundation
 import SpriteKit
+import GameplayKit
 
 class MazeScene:SKScene
 {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    var endnodes:[MazeCellNode] = []
+    var timestamp:TimeInterval = 0
+    
+    convenience init(size:CGSize, graph:GKGridGraph<GKGridGraphNode>)
     {
-        guard let maze = childNode(withName: "maze") else
+        self.init(size:size)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        if event!.timestamp - timestamp < 0.5
+        {
+            return
+        }
+        
+        guard let maze = childNode(withName: "maze") as? MazeNode else
         {
             return
         }
@@ -23,13 +37,31 @@ class MazeScene:SKScene
             let point = touch.location(in: self)
             if let node = maze.nodes(at: point).first as? MazeCellNode
             {
-                print("touch x:\(node.gridpos.x) y:\(node.gridpos.y) color:\(node.color)")
                 if node.state == .road
                 {
-                    print("match")
-                    node.state = .start
+                    switch endnodes.count
+                    {
+                        case 0:
+                            node.state = .start
+                            endnodes.append(node)
+                        default:
+                            node.state = .close
+                            endnodes.append(node)
+                            while endnodes.count > 2
+                            {
+                                endnodes.removeFirst().state = .road
+                            }
+                            endnodes.first?.state = .start
+                            maze.find(from: endnodes[0].gridpos, to: endnodes[1].gridpos)
+                    }
                 }
+                
             }
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        timestamp = event!.timestamp
     }
 }

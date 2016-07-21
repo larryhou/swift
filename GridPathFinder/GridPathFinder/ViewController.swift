@@ -34,11 +34,13 @@ func clamp(_ x:CGFloat, min:CGFloat, max:CGFloat) -> CGFloat
     return x
 }
 
-class ViewController: UIViewController
+class ViewController: UIViewController, MazeNodeUIDelegate
 {
     let camera = SKCameraNode()
     var dragrect = CGRect()
 
+    @IBOutlet weak var timeCostLabel: UILabel!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -50,6 +52,8 @@ class ViewController: UIViewController
         view.showsQuadCount = true
         print(view.preferredFramesPerSecond)
         
+        let length = 20, row = 51, column = 51
+        
         let scene = MazeScene(size: view.frame.size)
         scene.backgroundColor = UIColor.white()
         scene.scaleMode = .aspectFill
@@ -57,32 +61,29 @@ class ViewController: UIViewController
         camera.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         view.presentScene(scene)
         
-        let size = 20, row = 51, column = 51
-        dragrect.size = CGSize(width:max(0, CGFloat(size * column) - view.frame.width),
-                               height:max(0, CGFloat(size * row) - view.frame.height))
+        dragrect.size = CGSize(width:max(0, CGFloat(length * column) - view.frame.width),
+                               height:max(0, CGFloat(length * row) - view.frame.height))
         dragrect.origin = camera.position
         dragrect.insetInPlace(dx: -10, dy: -10)
         
         let path = CGMutablePath()
         for r in 0...row
         {
-            path.moveTo(nil, x: 0.0, y: CGFloat(r * size))
-            path.addLineTo(nil, x: CGFloat(column * size), y: CGFloat(r * size))
+            path.moveTo(nil, x: 0.0, y: CGFloat(r * length))
+            path.addLineTo(nil, x: CGFloat(column * length), y: CGFloat(r * length))
         }
         
         for c in 0...column
         {
-            path.moveTo(nil, x: CGFloat(c * size), y: 0.0)
-            path.addLineTo(nil, x: CGFloat(c * size), y: CGFloat(row * size))
+            path.moveTo(nil, x: CGFloat(c * length), y: 0.0)
+            path.addLineTo(nil, x: CGFloat(c * length), y: CGFloat(row * length))
         }
         
-        let maze = MazeNode(width: Int32(column), height: Int32(row), length: Int32(size))
+        let maze = MazeNode(width: Int32(column), height: Int32(row), length: Int32(length))
+        maze.delegate = self
         scene.addChild(maze)
         maze.name = "maze"
         maze.generate()
-        
-        let graph = GKGridGraph(fromGridStartingAt: vector_int2(0,0), width: Int32(column), height: Int32(row), diagonalsAllowed: false)
-        print(graph.node(atGridPosition: vector_int2(1,1)))
         
         let grid = SKShapeNode(path: path, centered: false)
         grid.strokeColor = SKColor(white: 1.0, alpha: 1.0)
@@ -101,7 +102,15 @@ class ViewController: UIViewController
         tap2t.numberOfTouchesRequired = 2
         tap2t.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap2t)
-        
+    }
+    
+    func maze(_ maze: MazeNode, graph: GKGridGraph<GKGridGraphNode>, elapse: TimeInterval)
+    {
+        timeCostLabel.text = String(format: "%.1fms", elapse * 1000)
+    }
+    
+    func maze(_ maze: MazeNode, related: MazeCellNode, focusCameraAt: CGPoint)
+    {
         
     }
     
@@ -114,6 +123,10 @@ class ViewController: UIViewController
                 if let maze = scene.childNode(withName: "maze") as? MazeNode
                 {
                     maze.generate()
+                    if let scene = scene as? MazeScene
+                    {
+                        scene.endnodes.removeAll()
+                    }
                 }
             }
         }

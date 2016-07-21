@@ -51,6 +51,11 @@ class MazeCellNode:SKSpriteNode, IPoolObject
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print("touch cell")
+    }
+    
     func awake()
     {
         self.state = .blank
@@ -65,17 +70,27 @@ class MazeCellNode:SKSpriteNode, IPoolObject
     }
 }
 
+protocol MazeNodeUIDelegate
+{
+    func maze(_ maze:MazeNode, graph:GKGridGraph<GKGridGraphNode>, elapse:TimeInterval)
+    func maze(_ maze:MazeNode, related:MazeCellNode, focusCameraAt:CGPoint)
+}
+
 class MazeNode:SKNode
 {
-    var length:Int32 = 0
-    var algorithm = MazeAlgorithm(width: 10, height: 10)
-    let map = Array2D<MazeCellNode>(width:10, height: 10)
-    let pool = ObjectPool<MazeCellNode>()
+    private var length:Int32 = 0
+    private var algorithm = MazeAlgorithm(width: 10, height: 10)
+    private let map = Array2D<MazeCellNode>(width:10, height: 10)
+    private let pool = ObjectPool<MazeCellNode>()
+    private var cache:[MazeCellNode] = []
+    
+    var graph:GKGridGraph<GKGridGraphNode>?
+    var delegate:MazeNodeUIDelegate?
     
     convenience init(width:Int32, height:Int32, length:Int32 = 10)
     {
         self.init()
-        
+
         self.length = length
         resize(width: width, height: height)
     }
@@ -83,6 +98,7 @@ class MazeNode:SKNode
     func resize(width:Int32, height:Int32)
     {
         algorithm.resize(width: width, height: height)
+        graph = GKGridGraph(fromGridStartingAt: int2(0,0), width: algorithm.width, height: algorithm.height, diagonalsAllowed: false)
         map.resize(width: width, height: height)
         
         children.forEach
@@ -110,9 +126,16 @@ class MazeNode:SKNode
         }
     }
     
+    var removedNodes:[GKGridGraphNode] = []
     func generate()
     {
         algorithm.generate()
+        graph?.addNodes(removedNodes)
+        while removedNodes.count > 0
+        {
+            graph?.connectNode(toAdjacentNodes: removedNodes.removeLast())
+        }
+        
         for y in 0..<algorithm.height
         {
             for x in 0..<algorithm.width
@@ -122,6 +145,45 @@ class MazeNode:SKNode
                     let enabled = algorithm[x, y]
                     item.state = enabled ? .road : .wall
                     item.isUserInteractionEnabled = enabled
+                    if enabled == false
+                    {
+                        removedNodes.append(graph!.node(atGridPosition: int2(x, y))!)
+                    }
+                }
+            }
+        }
+        
+        graph?.removeNodes(removedNodes)
+    }
+    
+    func find(from:int2, to:int2)
+    {
+        if let graph = graph
+        {
+            while cache.count > 0
+            {
+                cache.removeLast().state = .road
+            }
+            
+            let start = graph.node(atGridPosition: from)!
+            let close = graph.node(atGridPosition: to)!
+            
+            let timestamp = Date().timeIntervalSince1970
+            let path = start.findPath(to: close)
+            
+            delegate?.maze(self, graph: graph, elapse: Date().timeIntervalSince1970 - timestamp)
+            
+            if path.count > 0
+            {
+                for i in 1..<path.count-1
+                {
+                    let pos = (path[i] as! GKGridGraphNode).gridPosition
+                    if let cell = map[pos]
+                    {
+                        cell.state = .path
+                        cache.append(cell)
+                    }
+                    
                 }
             }
         }
