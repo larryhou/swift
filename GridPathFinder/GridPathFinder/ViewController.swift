@@ -132,8 +132,7 @@ class ViewController: UIViewController, MazeNodeUIDelegate
                 
                 let key = "moveto"
                 camera.removeAction(forKey: key)
-                let move = SKAction.move(to: CGPoint(x:x, y:y), duration: 0.5)
-                camera.run(move, withKey: key)
+                camera.run(SKAction.move(to: CGPoint(x:x, y:y), duration: 0.5), withKey: key)
             }
         }
     }
