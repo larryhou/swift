@@ -109,7 +109,7 @@ class MazeNode:SKNode
     func resize(width:Int32, height:Int32)
     {
         algorithm.resize(width: width, height: height)
-        graph = GKGridGraph(fromGridStartingAt: int2(0,0), width: algorithm.width, height: algorithm.height, diagonalsAllowed: false)
+        graph = GKGridGraph(fromGridStartingAt: vector_int2(0,0), width: algorithm.width, height: algorithm.height, diagonalsAllowed: false)
         map.resize(width: width, height: height)
         
         children.forEach
@@ -165,7 +165,7 @@ class MazeNode:SKNode
                             item.isUserInteractionEnabled = enabled
                             if enabled == false
                             {
-                                self.removedNodes.append(self.graph!.node(atGridPosition: int2(x, y))!)
+                                self.removedNodes.append(self.graph!.node(atGridPosition: vector_int2(x, y))!)
                             }
                         }
                     }
@@ -176,7 +176,7 @@ class MazeNode:SKNode
         }
     }
     
-    func find(from:int2, to:int2)
+    func find(from:vector_int2, to:vector_int2)
     {
         if let graph = graph
         {
@@ -218,7 +218,11 @@ class MazeNode:SKNode
     private var nodeIndex:Int = 0
     func MoveToNextNode(path:[GKGraphNode])
     {
-        let pos = (path[nodeIndex] as! GKGridGraphNode).gridPosition
+        guard let pos = (path[nodeIndex] as? GKGridGraphNode)?.gridPosition else
+        {
+            return
+        }
+        
         if let cell = map[pos]
         {
             cell.stateUpdate(.path, useAnimation: true)
@@ -335,7 +339,7 @@ class MazeAlgorithm
     }
     
     private let visited:Array2D<Bool>
-    private var search:[int2] = []
+    private var search:[vector_int2] = []
     func generate()
     {
         wall.clear()
@@ -351,7 +355,7 @@ class MazeAlgorithm
         visited[0, 0] = true
         
         search.removeAll()
-        search.append(int2(x:0, y:0))
+        search.append(vector_int2(x:0, y:0))
         
         while let node = search.last
         {
@@ -364,7 +368,9 @@ class MazeAlgorithm
             explore: while true
             {
                 let dir = ExploreDirection.random()
-                let next = int2(x: node.x + dir.dx, y: node.y + dir.dy)
+                
+                //TODO: Why can't let be used here?
+                var next = vector_int2(x: node.x + dir.dx, y: node.y + dir.dy)
                 
                 if isUnvistedAt(x: next.x, y: next.y)
                 {

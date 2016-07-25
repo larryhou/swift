@@ -48,7 +48,7 @@ class ObjectPool<T> where T:IPoolObject, T:Equatable
     func recycle(_ object:T)
     {
         object.recycle()
-        if let index = pool.index(of: object) where index >= 0
+        if let index = pool.index(of: object) , index >= 0
         {
             pool.append(object)
         }
