@@ -10,10 +10,25 @@ import UIKit
 import GameplayKit
 import SpriteKit
 
+func clamp(_ value:CGFloat, min:CGFloat, max:CGFloat)->CGFloat
+{
+    if value < min
+    {
+        return min
+    }
+    
+    if value > max
+    {
+        return max
+    }
+    return value
+}
+
 class ViewController: UIViewController
 {
     
     var dragrect = CGRect()
+    let camera = SKCameraNode()
 
     override func viewDidLoad()
     {
@@ -25,17 +40,23 @@ class ViewController: UIViewController
         
         let scene = SKScene(size: view.frame.size)
         scene.backgroundColor = UIColor.white()
+        scene.camera = camera
+        scene.addChild(camera)
         view.presentScene(scene)
         
-        let row = 100, column = 100, sidelen:CGFloat = 50, margin:CGFloat = 20
+        camera.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
+        
+        let row = 20, column = 20, sidelen:CGFloat = 100, margin:CGFloat = 20
         let grid = SKShapeNode(path: CGMutablePath().grid(row: row, column: column, size: CGSize(width: sidelen, height: sidelen)))
-        grid.strokeColor = UIColor(white: 0.95, alpha: 1.0)
+        grid.strokeColor = UIColor(white: 0.90, alpha: 1.0)
         grid.lineWidth = 0.5
         scene.addChild(grid)
         
         dragrect.size = CGSize(width: max(0.0, CGFloat(column) * sidelen - scene.size.width),
                                height:max(0.0, CGFloat(row) * sidelen - scene.size.height))
-        dragrect.insetBy(dx: -margin, dy: -margin)
+        dragrect.origin = camera.position
+        
+        dragrect.insetInPlace(dx: -margin, dy: -margin)
         
         let shape = SKShapeNode(path: CGMutablePath().polygon(sideCount: 3, dimension: 300, equilateral: false))
         shape.strokeColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -48,17 +69,26 @@ class ViewController: UIViewController
         view.addGestureRecognizer(pan)
     }
     
-    var cameraRefer = CGPoint()
-    var gestureRefer = CGPoint()
+    var camOrigin = CGPoint()
+    var gesOrigin = CGPoint()
     func onPanGestureUpdate(gesture:UIPanGestureRecognizer)
     {
+        let point = gesture.location(in: self.view)
+        
         switch gesture.state
         {
             case .began:
-                break
+                gesOrigin = point
+                camOrigin = camera.position
             
             case .changed:
-                break
+                let dx = point.x - gesOrigin.x
+                let dy = point.y - gesOrigin.y
+                
+                var position = camera.position
+                position.x = clamp(camOrigin.x - dx, min:dragrect.minX, max:dragrect.maxX)
+                position.y = clamp(camOrigin.y + dy, min:dragrect.minY, max:dragrect.maxY)
+                camera.position = position
             
             default:
                 break
@@ -68,6 +98,11 @@ class ViewController: UIViewController
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
     {
         return .portrait
+    }
+    
+    override func prefersStatusBarHidden() -> Bool
+    {
+        return true
     }
     
     override func didReceiveMemoryWarning()
