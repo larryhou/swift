@@ -29,6 +29,7 @@ class ViewController: UIViewController
     
     var dragrect = CGRect()
     let camera = SKCameraNode()
+    var obstacles:[SKShapeNode] = []
 
     override func viewDidLoad()
     {
@@ -63,10 +64,40 @@ class ViewController: UIViewController
         shape.lineWidth = 1.5
         scene.addChild(shape)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate(gesture:)))
         pan.minimumNumberOfTouches = 1
         pan.maximumNumberOfTouches = 1
         view.addGestureRecognizer(pan)
+        
+        let press = UITapGestureRecognizer(target: self, action: #selector(onPressGestureUpdate(gesture:)))
+        press.numberOfTouchesRequired = 1
+        press.numberOfTapsRequired = 1
+        view.addGestureRecognizer(press)
+    }
+    
+    var presstime:TimeInterval = 0
+    func onPressGestureUpdate(gesture:UITapGestureRecognizer)
+    {
+        let point = gesture.location(in: self.view)
+        switch gesture.state
+        {
+            case .began:
+                presstime = Date().timeIntervalSince1970
+            
+            case .ended:
+                if Date().timeIntervalSince1970 - presstime > 0.2
+                {
+                    placeObstacle(at: point)
+                }
+            
+            default:break
+        }
+    }
+    
+    func placeObstacle(at:CGPoint)
+    {
+        let list = [3,4,5,6,7,8,9,10]
+        
     }
     
     var camOrigin = CGPoint()
