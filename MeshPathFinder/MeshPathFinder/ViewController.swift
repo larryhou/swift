@@ -24,7 +24,47 @@ func clamp(_ value:CGFloat, min:CGFloat, max:CGFloat)->CGFloat
     return value
 }
 
-class ViewController: UIViewController
+extension Array
+{
+    mutating func shuffleInPlace()
+    {
+        for i in 0..<count
+        {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            guard i != j else
+            {
+                continue
+            }
+            
+            swap(&self[i], &self[j])
+        }
+    }
+    
+    func shuffle()->[Element]
+    {
+        var ret:[Element] = self
+        for i in 0..<count
+        {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            guard i != j else
+            {
+                continue
+            }
+            
+            swap(&ret[i], &ret[j])
+        }
+        
+        return ret
+    }
+    
+    func random()->Element
+    {
+        let index = arc4random_uniform(UInt32(count))
+        return self[Int(index)]
+    }
+}
+
+class ViewController: UIViewController, UIGestureRecognizerDelegate
 {
     
     var dragrect = CGRect()
@@ -59,45 +99,58 @@ class ViewController: UIViewController
         
         dragrect.insetInPlace(dx: -margin, dy: -margin)
         
-        let shape = SKShapeNode(path: CGMutablePath().polygon(sideCount: 3, dimension: 300, equilateral: false))
-        shape.strokeColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
-        shape.lineWidth = 1.5
-        scene.addChild(shape)
-        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate(gesture:)))
         pan.minimumNumberOfTouches = 1
         pan.maximumNumberOfTouches = 1
         view.addGestureRecognizer(pan)
         
-        let press = UITapGestureRecognizer(target: self, action: #selector(onPressGestureUpdate(gesture:)))
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(onPressGestureUpdate(gesture:)))
         press.numberOfTouchesRequired = 1
         press.numberOfTapsRequired = 1
+//        press.minimumPressDuration = 0.2
+//        press.allowableMovement = 5.0
         view.addGestureRecognizer(press)
     }
     
     var presstime:TimeInterval = 0
-    func onPressGestureUpdate(gesture:UITapGestureRecognizer)
+    func onPressGestureUpdate(gesture:UILongPressGestureRecognizer)
     {
         let point = gesture.location(in: self.view)
+        print(gesture.state, gesture.state.rawValue)
+        
         switch gesture.state
         {
             case .began:
                 presstime = Date().timeIntervalSince1970
+                print("began", presstime)
+                break
             
             case .ended:
-                if Date().timeIntervalSince1970 - presstime > 0.2
+                if Date().timeIntervalSince1970 - presstime > 0.5
                 {
                     placeObstacle(at: point)
+                    print("recognized", Date().timeIntervalSince1970)
                 }
+                break
             
             default:break
         }
     }
     
-    func placeObstacle(at:CGPoint)
+    func placeObstacle(at position:CGPoint)
     {
-        let list = [3,4,5,6,7,8,9,10]
+        let sideCount = [3,4,5,6,7,8,9,10].random()
+        let dimension = [50,100,150,200,250,300].random()
+        let shape = SKShapeNode(path: CGMutablePath().polygon(sideCount: sideCount, dimension: CGFloat(dimension)))
+        shape.fillColor = [UIColor.black(), UIColor.blue(), UIColor.brown(), UIColor.cyan(), UIColor.red(), UIColor.yellow(), UIColor.green(), UIColor.darkGray(), UIColor.gray(), UIColor.orange(), UIColor.purple()].random()
+        shape.strokeColor = UIColor.clear()
+        shape.isAntialiased = true
         
+        if let scene = (view as? SKView)?.scene
+        {
+            shape.position = scene.convertPoint(fromView: position)
+            scene.addChild(shape)
+        }
     }
     
     var camOrigin = CGPoint()
