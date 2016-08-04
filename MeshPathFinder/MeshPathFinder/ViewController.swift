@@ -80,7 +80,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         view.showsFPS = true
         
         let scene = SKScene(size: view.frame.size)
-        scene.backgroundColor = UIColor.white()
+        scene.backgroundColor = UIColor.white
         scene.camera = camera
         scene.addChild(camera)
         view.presentScene(scene)
@@ -96,8 +96,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         dragrect.size = CGSize(width: max(0.0, CGFloat(column) * sidelen - scene.size.width),
                                height:max(0.0, CGFloat(row) * sidelen - scene.size.height))
         dragrect.origin = camera.position
-        
-        dragrect.insetInPlace(dx: -margin, dy: -margin)
+        dragrect = dragrect.insetBy(dx: -margin, dy: -margin)
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate(gesture:)))
         pan.minimumNumberOfTouches = 1
@@ -110,6 +109,16 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
 //        press.minimumPressDuration = 0.2
 //        press.allowableMovement = 5.0
         view.addGestureRecognizer(press)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(onTapGestureUpdate(gesture:)))
+        tap.numberOfTouchesRequired = 1
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+    }
+    
+    func onTapGestureUpdate(gesture:UITapGestureRecognizer)
+    {
+        print("tap", gesture.state, gesture.state.rawValue)
     }
     
     var presstime:TimeInterval = 0
@@ -142,8 +151,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         let sideCount = [3,4,5,6,7,8,9,10].random()
         let dimension = [50,100,150,200,250,300].random()
         let shape = SKShapeNode(path: CGMutablePath().polygon(sideCount: sideCount, dimension: CGFloat(dimension)))
-        shape.fillColor = [UIColor.black(), UIColor.blue(), UIColor.brown(), UIColor.cyan(), UIColor.red(), UIColor.yellow(), UIColor.green(), UIColor.darkGray(), UIColor.gray(), UIColor.orange(), UIColor.purple()].random()
-        shape.strokeColor = UIColor.clear()
+        shape.fillColor = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.cyan, UIColor.red, UIColor.yellow, UIColor.green, UIColor.darkGray, UIColor.gray, UIColor.orange, UIColor.purple].random()
+        shape.strokeColor = UIColor.clear
         shape.isAntialiased = true
         
         if let scene = (view as? SKView)?.scene
@@ -179,12 +188,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         }
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask
     {
         return .portrait
     }
     
-    override func prefersStatusBarHidden() -> Bool
+    override var prefersStatusBarHidden:Bool
     {
         return true
     }
