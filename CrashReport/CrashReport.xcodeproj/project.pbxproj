@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6BA36E1E1D53465A0059C8D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA36E1D1D53465A0059C8D0 /* ViewController.swift */; };
 		6BC7A6671D52E739008B33CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7A6661D52E739008B33CD /* AppDelegate.swift */; };
-		6BC7A6691D52E739008B33CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7A6681D52E739008B33CD /* ViewController.swift */; };
+		6BC7A6691D52E739008B33CD /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7A6681D52E739008B33CD /* TableViewController.swift */; };
 		6BC7A66C1D52E739008B33CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC7A66A1D52E739008B33CD /* Main.storyboard */; };
 		6BC7A66E1D52E739008B33CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BC7A66D1D52E739008B33CD /* Assets.xcassets */; };
 		6BC7A6711D52E739008B33CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC7A66F1D52E739008B33CD /* LaunchScreen.storyboard */; };
@@ -34,9 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6BA36E1D1D53465A0059C8D0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6BC7A6631D52E739008B33CD /* CrashReport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrashReport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC7A6661D52E739008B33CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6BC7A6681D52E739008B33CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6BC7A6681D52E739008B33CD /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		6BC7A66B1D52E739008B33CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6BC7A66D1D52E739008B33CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BC7A6701D52E739008B33CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,7 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				6BC7A6661D52E739008B33CD /* AppDelegate.swift */,
-				6BC7A6681D52E739008B33CD /* ViewController.swift */,
+				6BC7A6681D52E739008B33CD /* TableViewController.swift */,
+				6BA36E1D1D53465A0059C8D0 /* ViewController.swift */,
 				6BC7A66A1D52E739008B33CD /* Main.storyboard */,
 				6BC7A66D1D52E739008B33CD /* Assets.xcassets */,
 				6BC7A66F1D52E739008B33CD /* LaunchScreen.storyboard */,
@@ -262,7 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BC7A6691D52E739008B33CD /* ViewController.swift in Sources */,
+				6BA36E1E1D53465A0059C8D0 /* ViewController.swift in Sources */,
+				6BC7A6691D52E739008B33CD /* TableViewController.swift in Sources */,
 				6BC7A6671D52E739008B33CD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +514,7 @@
 				6BC7A68D1D52E739008B33CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6BC7A68E1D52E739008B33CD /* Build configuration list for PBXNativeTarget "CrashReportTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +523,7 @@
 				6BC7A6901D52E739008B33CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6BC7A6911D52E739008B33CD /* Build configuration list for PBXNativeTarget "CrashReportUITests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +532,7 @@
 				6BC7A6931D52E739008B33CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
