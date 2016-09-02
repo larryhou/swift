@@ -12,29 +12,29 @@ import GameplayKit
 
 extension CGMutablePath
 {
-    func circle(radius:CGFloat)->CGPath
+    func circle(_ radius:CGFloat)->CGPath
     {
-        return circle(width: radius, height: radius)
+        return circle(radius, height: radius)
     }
     
-    func circle(width:CGFloat, height:CGFloat)->CGPath
+    func circle(_ width:CGFloat, height:CGFloat)->CGPath
     {
-        addEllipseIn(nil, rect: CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
+        addEllipse(in: CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
     
-    func square(size:CGFloat)->CGPath
+    func square(_ size:CGFloat)->CGPath
     {
-        return rectangle(width: size, height: size)
+        return rectangle(size, height: size)
     }
     
-    func rectangle(width:CGFloat, height:CGFloat)->CGPath
+    func rectangle(_ width:CGFloat, height:CGFloat)->CGPath
     {
-        addRect(nil, rect: CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
+        addRect(CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
     
-    func triangle(dimension:CGFloat, equilateral:Bool)->CGPath
+    func triangle(_ dimension:CGFloat, equilateral:Bool)->CGPath
     {
         return polygon(sideCount: 3, dimension: dimension, equilateral: equilateral)
     }
@@ -44,7 +44,7 @@ extension CGMutablePath
         let radius = dimension * 0.5
         var vertex:[(x:CGFloat, y:CGFloat)] = [], offset = CGPoint()
         
-        let data = randomPolygonVertexAngles(sideCount: count, equilateral: equilateral, repeatCount:5)
+        let data = randomPolygonVertexAngles(count, equilateral: equilateral, repeatCount:5)
         for i in 0..<count
         {
             let angle = data.vertex[i]
@@ -59,18 +59,18 @@ extension CGMutablePath
         }
         
         let start = vertex[0]
-        moveTo(nil, x: start.x - offset.x, y: start.y - offset.y)
+        move(to:CGPoint( x: start.x - offset.x, y: start.y - offset.y))
         
         vertex.append(start)
         for i in 1..<vertex.count
         {
-            addLineTo(nil, x: vertex[i].x - offset.x, y: vertex[i].y - offset.y)
+            addLine(to: CGPoint(x: vertex[i].x - offset.x, y: vertex[i].y - offset.y))
         }
         
         return self
     }
     
-    func randomPolygonVertexAngles(sideCount:Int, equilateral:Bool = false, repeatCount:Int = 1)->(vertex:[CGFloat], area:CGFloat)
+    func randomPolygonVertexAngles(_ sideCount:Int, equilateral:Bool = false, repeatCount:Int = 1)->(vertex:[CGFloat], area:CGFloat)
     {
         let repeatCount = equilateral ? 1 : repeatCount
         let total = CGFloat.pi * 2, delta = total / CGFloat(sideCount)
@@ -82,7 +82,7 @@ extension CGMutablePath
             var parts:[CGFloat] = [], divider:CGFloat = 0.0
             for _ in 0..<sideCount
             {
-                let num = CGFloat(GKRandomSource.sharedRandom().nextInt(withUpperBound: 0xFF))
+                let num = CGFloat(GKRandomSource.sharedRandom().nextInt(upperBound: 0xFF))
                 parts.append(num)
                 divider += num
             }
@@ -123,20 +123,20 @@ extension CGMutablePath
         return (vertex, maxArea)
     }
     
-    func grid(row:Int, column:Int, size:CGSize)->CGPath
+    func grid(_ row:Int, column:Int, size:CGSize)->CGPath
     {
         for r in 0...row
         {
             let y = CGFloat(r) * size.height
-            moveTo(nil, x: 0.0, y: y)
-            addLineTo(nil, x: size.width * CGFloat(column), y: y)
+            move(to:CGPoint(x: 0.0, y: y))
+            addLine(to: CGPoint(x: size.width * CGFloat(column), y: y))
         }
         
         for c in 0...column
         {
             let x = CGFloat(c) * size.width
-            moveTo(nil, x: x, y: 0.0)
-            addLineTo(nil, x: x, y: size.height * CGFloat(row))
+            move(to:CGPoint(x: x, y: 0.0))
+            addLine(to:CGPoint(x: x, y: size.height * CGFloat(row)))
         }
         
         return self

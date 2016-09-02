@@ -198,12 +198,14 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = PRLP6W5S32;
 						DevelopmentTeamName = "Kunfeng Hou";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					6B4F99501D4709F900215465 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = PRLP6W5S32;
 						DevelopmentTeamName = "Kunfeng Hou";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 6B4F993C1D4709F900215465;
 					};
@@ -211,6 +213,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = PRLP6W5S32;
 						DevelopmentTeamName = "Kunfeng Hou";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 6B4F993C1D4709F900215465;
 					};
@@ -423,6 +426,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.MeshPathFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -435,6 +439,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.MeshPathFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

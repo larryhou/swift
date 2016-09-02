@@ -66,7 +66,6 @@ extension Array
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate
 {
-    
     var dragrect = CGRect()
     let camera = SKCameraNode()
     var obstacles:[SKShapeNode] = []
@@ -88,7 +87,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         camera.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
         
         let row = 20, column = 20, sidelen:CGFloat = 100, margin:CGFloat = 20
-        let grid = SKShapeNode(path: CGMutablePath().grid(row: row, column: column, size: CGSize(width: sidelen, height: sidelen)))
+        let grid = SKShapeNode(path: CGMutablePath().grid(row, column: column, size: CGSize(width: sidelen, height: sidelen)))
         grid.strokeColor = UIColor(white: 0.90, alpha: 1.0)
         grid.lineWidth = 0.5
         scene.addChild(grid)
@@ -98,48 +97,37 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         dragrect.origin = camera.position
         dragrect = dragrect.insetBy(dx: -margin, dy: -margin)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate(gesture:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(onPanGestureUpdate(_:)))
         pan.minimumNumberOfTouches = 1
         pan.maximumNumberOfTouches = 1
         view.addGestureRecognizer(pan)
         
-        let press = UILongPressGestureRecognizer(target: self, action: #selector(onPressGestureUpdate(gesture:)))
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(onPressGestureUpdate(_:)))
         press.numberOfTouchesRequired = 1
         press.numberOfTapsRequired = 1
-//        press.minimumPressDuration = 0.2
-//        press.allowableMovement = 5.0
+        press.minimumPressDuration = 0.3
         view.addGestureRecognizer(press)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(onTapGestureUpdate(gesture:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(onTapGestureUpdate(_:)))
         tap.numberOfTouchesRequired = 1
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
     }
     
-    func onTapGestureUpdate(gesture:UITapGestureRecognizer)
+    func onTapGestureUpdate(_ gesture:UITapGestureRecognizer)
     {
-        print("tap", gesture.state, gesture.state.rawValue)
+//        print("tap", gesture.state, gesture.state.rawValue)
     }
     
-    var presstime:TimeInterval = 0
-    func onPressGestureUpdate(gesture:UILongPressGestureRecognizer)
+    func onPressGestureUpdate(_ gesture:UILongPressGestureRecognizer)
     {
         let point = gesture.location(in: self.view)
         print(gesture.state, gesture.state.rawValue)
         
         switch gesture.state
         {
-            case .began:
-                presstime = Date().timeIntervalSince1970
-                print("began", presstime)
-                break
-            
             case .ended:
-                if Date().timeIntervalSince1970 - presstime > 0.5
-                {
-                    placeObstacle(at: point)
-                    print("recognized", Date().timeIntervalSince1970)
-                }
+                placeObstacle(at: point)
                 break
             
             default:break
@@ -164,7 +152,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
     
     var camOrigin = CGPoint()
     var gesOrigin = CGPoint()
-    func onPanGestureUpdate(gesture:UIPanGestureRecognizer)
+    func onPanGestureUpdate(_ gesture:UIPanGestureRecognizer)
     {
         let point = gesture.location(in: self.view)
         
