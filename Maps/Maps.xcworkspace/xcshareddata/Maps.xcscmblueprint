@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E779EACAF3CE8C56ECB8100FBE245C406DF3219B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E779EACAF3CE8C56ECB8100FBE245C406DF3219B" : 0,
+    "910A3B3A1D352F7A0B5C487506E17B8D6367FF66" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "25FB0FF3-6BDA-47F9-BBAB-CA29F2218B91",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E779EACAF3CE8C56ECB8100FBE245C406DF3219B" : "Curso%20BeGeek%20iOS\/",
+    "910A3B3A1D352F7A0B5C487506E17B8D6367FF66" : "Curso%20BeGeek%20iOS\/Maps\/Externals\/Squeal\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Maps",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Maps\/Maps.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nerdyc\/Squeal.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "910A3B3A1D352F7A0B5C487506E17B8D6367FF66"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/horaciogarza\/BeGeek-iOSCourse.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E779EACAF3CE8C56ECB8100FBE245C406DF3219B"
+    }
+  ]
+}
