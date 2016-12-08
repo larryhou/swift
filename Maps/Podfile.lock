@@ -1,0 +1,18 @@
+PODS:
+  - Alamofire (3.4.1)
+  - KVNProgress (2.3)
+  - SwiftyJSON (2.3.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.4)
+  - KVNProgress
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  KVNProgress: d0459bfa4dca0379cdba5c038326ea34e9fc2df9
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+
+PODFILE CHECKSUM: bf601463e2c5c5851b77db62ac0850757255ab3d
+
+COCOAPODS: 1.0.1
