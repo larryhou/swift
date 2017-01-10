@@ -24,7 +24,7 @@ func sendSynchronousRequest(_ url:String, response rspt:AutoreleasingUnsafeMutab
         { (body, response, error) in
             
             data = body
-            rspt?.pointee = response as! HTTPURLResponse?
+            rspt?.pointee = response as? HTTPURLResponse
             erpt?.pointee = error
             CFRunLoopStop(loop)
         }.resume()
