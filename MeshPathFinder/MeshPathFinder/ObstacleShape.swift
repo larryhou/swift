@@ -14,27 +14,27 @@ extension CGMutablePath
 {
     func circle(_ radius:CGFloat)->CGPath
     {
-        return circle(radius, height: radius)
+        return circle(width:radius, height: radius)
     }
     
-    func circle(_ width:CGFloat, height:CGFloat)->CGPath
+    func circle(width:CGFloat, height:CGFloat)->CGPath
     {
         addEllipse(in: CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
     
-    func square(_ size:CGFloat)->CGPath
+    func square(size:CGFloat)->CGPath
     {
-        return rectangle(size, height: size)
+        return rectangle(width: size, height: size)
     }
     
-    func rectangle(_ width:CGFloat, height:CGFloat)->CGPath
+    func rectangle(width:CGFloat, height:CGFloat)->CGPath
     {
         addRect(CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
     
-    func triangle(_ dimension:CGFloat, equilateral:Bool)->CGPath
+    func triangle(dimension:CGFloat, equilateral:Bool)->CGPath
     {
         return polygon(sideCount: 3, dimension: dimension, equilateral: equilateral)
     }

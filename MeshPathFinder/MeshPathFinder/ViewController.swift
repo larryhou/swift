@@ -64,6 +64,51 @@ extension Array
     }
 }
 
+class UIShape:SKShapeNode
+{
+    override var canBecomeFirstResponder: Bool
+    {
+        return true
+    }
+    
+    //MARK: touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print(#function)
+        if let polygon  = SKNode.obstacles(fromNodePhysicsBodies: [self]).first
+        {
+            var list = [vector_float2]()
+            for i in 0..<polygon.vertexCount
+            {
+                list.append(polygon.vertex(at: i))
+            }
+            
+            let vertex = list.map
+            {
+                return String(format: "{x:%5.2f,y:%5.2f}", $0.x, $0.y)
+            }.joined(separator: ",")
+            
+            print(polygon.vertexCount, vertex)
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print(#function)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print(#function)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print(#function)
+    }
+    
+}
+
 class ViewController: UIViewController, UIGestureRecognizerDelegate
 {
     var dragrect = CGRect()
@@ -78,7 +123,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
         view.showsNodeCount = true
         view.showsFPS = true
         
-        let scene = SKScene(size: view.frame.size)
+        let scene = MapWorld(size: view.frame.size)
         scene.backgroundColor = UIColor.white
         scene.camera = camera
         scene.addChild(camera)
@@ -122,7 +167,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
     func onPressGestureUpdate(_ gesture:UILongPressGestureRecognizer)
     {
         let point = gesture.location(in: self.view)
-        print(gesture.state, gesture.state.rawValue)
         
         switch gesture.state
         {
@@ -136,12 +180,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate
     
     func placeObstacle(at position:CGPoint)
     {
-        let sideCount = [3,4,5,6,7,8,9,10].random()
-        let dimension = [50,100,150,200,250,300].random()
-        let shape = SKShapeNode(path: CGMutablePath().polygon(sideCount: sideCount, dimension: CGFloat(dimension)))
+        let sideCount = [3,4,5,6,7,8].random()
+        let dimension = [100,150,200,250, 300].random()
+        let shape = UIShape(path: CGMutablePath().polygon(sideCount: sideCount, dimension: CGFloat(dimension)))
         shape.fillColor = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.cyan, UIColor.red, UIColor.yellow, UIColor.green, UIColor.darkGray, UIColor.gray, UIColor.orange, UIColor.purple].random()
         shape.strokeColor = UIColor.clear
         shape.isAntialiased = true
+        shape.isUserInteractionEnabled = true
         
         if let scene = (view as? SKView)?.scene
         {

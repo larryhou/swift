@@ -15,6 +15,8 @@
 		6B4F994B1D4709F900215465 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4F99491D4709F900215465 /* LaunchScreen.storyboard */; };
 		6B4F99561D4709F900215465 /* MeshPathFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4F99551D4709F900215465 /* MeshPathFinderTests.swift */; };
 		6B4F99611D4709F900215465 /* MeshPathFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4F99601D4709F900215465 /* MeshPathFinderUITests.swift */; };
+		6BAA2FB21D7FBDF90075E1CF /* MapWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA2FB11D7FBDF90075E1CF /* MapWorld.swift */; };
+		6BAA2FB41D7FECE60075E1CF /* UIPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA2FB31D7FECE60075E1CF /* UIPolygon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		6B4F995C1D4709F900215465 /* MeshPathFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeshPathFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4F99601D4709F900215465 /* MeshPathFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshPathFinderUITests.swift; sourceTree = "<group>"; };
 		6B4F99621D4709F900215465 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BAA2FB11D7FBDF90075E1CF /* MapWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapWorld.swift; sourceTree = "<group>"; };
+		6BAA2FB31D7FECE60075E1CF /* UIPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPolygon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 			children = (
 				6B4F99401D4709F900215465 /* AppDelegate.swift */,
 				6B4F99421D4709F900215465 /* ViewController.swift */,
+				6BAA2FB11D7FBDF90075E1CF /* MapWorld.swift */,
+				6BAA2FB31D7FECE60075E1CF /* UIPolygon.swift */,
 				6B195F0E1D4750240099B8DE /* ObstacleShape.swift */,
 				6B4F99441D4709F900215465 /* Main.storyboard */,
 				6B4F99471D4709F900215465 /* Assets.xcassets */,
@@ -271,8 +277,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BAA2FB21D7FBDF90075E1CF /* MapWorld.swift in Sources */,
 				6B4F99431D4709F900215465 /* ViewController.swift in Sources */,
 				6B4F99411D4709F900215465 /* AppDelegate.swift in Sources */,
+				6BAA2FB41D7FECE60075E1CF /* UIPolygon.swift in Sources */,
 				6B195F0F1D4750240099B8DE /* ObstacleShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
