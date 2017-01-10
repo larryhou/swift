@@ -11,21 +11,46 @@ import Foundation
 var verbose = false
 var zoneAdjust = false
 
-var eventTimeFormatter = NSDateFormatter()
+var eventTimeFormatter = DateFormatter()
 eventTimeFormatter.dateFormat = "yyyy-MM-dd"
 
-func getQuoteRequest(ticket:String, #interval:Int, numOfDays:Int = 1, exchange:String = "HKG")->NSURLRequest
+func sendSynchronousRequest(_ url:String, response rspt:AutoreleasingUnsafeMutablePointer<HTTPURLResponse?>?, error erpt:AutoreleasingUnsafeMutablePointer<Error?>?)->Data?
 {
-	let timestamp = UInt(NSDate().timeIntervalSince1970 * 1000)
-	let url = "http://www.google.com/finance/getprices?q=\(ticket)&x=\(exchange)&i=\(interval)&p=\(numOfDays)d&f=d,c,v,k,o,h,l&df=cpct&auto=1&ts=\(timestamp)&ei=yW0qVam9A-f1igLUvIGQBw"
-	return NSURLRequest(URL: NSURL(string: url)!)
+    var data:Data?
+    if let url = URL(string: url)
+    {
+        let loop = CFRunLoopGetCurrent()
+        URLSession(configuration: .ephemeral).dataTask(with: url)
+        { (body, response, error) in
+            
+            data = body
+            rspt?.pointee = response as! HTTPURLResponse?
+            erpt?.pointee = error
+            CFRunLoopStop(loop)
+            }.resume()
+        
+        CFRunLoopRun()
+    }
+    else
+    {
+        erpt?.pointee = NSError(domain: "HTTPSession", code: -1, userInfo: nil)
+    }
+    
+    return data
 }
 
-func getQuoteRequest(ticket:String, #exchange:String)->NSURLRequest
+func getQuoteQuery(_ ticket:String, interval:Int, numOfDays:Int = 1, exchange:String = "HKG")->String
 {
-	let timestamp = UInt(NSDate().timeIntervalSince1970 * 1000)
+	let timestamp = UInt(Date().timeIntervalSince1970 * 1000)
+	let url = "http://www.google.com/finance/getprices?q=\(ticket)&x=\(exchange)&i=\(interval)&p=\(numOfDays)d&f=d,c,v,k,o,h,l&df=cpct&auto=1&ts=\(timestamp)&ei=yW0qVam9A-f1igLUvIGQBw"
+	return url
+}
+
+func getQuoteQuery(_ ticket:String, exchange:String)->String
+{
+	let timestamp = UInt(Date().timeIntervalSince1970 * 1000)
 	let url = "http://www.google.com/finance/getprices?q=\(ticket)&x=\(exchange)&i=86400&p=40Y&f=d,c,v,k,o,h,l&df=cpct&auto=1&ts=\(timestamp)&ei=yW0qVam9A-f1igLUvIGQBw"
-	return NSURLRequest(URL: NSURL(string: url)!)
+	return url
 }
 
 struct QuoteKey
@@ -50,19 +75,19 @@ struct StockExchange
 	static let SHE = ExchangeInfo(name: "SHE", abbr: "SZ")
 }
 
-func formatQuote(text:String)->String
+func formatQuote(_ text:String)->String
 {
 	let value = NSString(string: text).doubleValue
 	return String(format: "%6.2f", value)
 }
 
-func dateOffset(date:NSDate, minuteOffset:Int)->NSDate
+func dateOffset(_ date:Date, minuteOffset:Int)->Date
 {
 	if zoneAdjust
 	{
-		let interval:NSTimeInterval = date.timeIntervalSince1970 + NSTimeInterval(minuteOffset) * 60 -
-			NSTimeInterval(NSTimeZone.localTimeZone().secondsFromGMT)
-		return NSDate(timeIntervalSince1970: interval)
+		let interval:TimeInterval = date.timeIntervalSince1970 + TimeInterval(minuteOffset) * 60 -
+			TimeInterval(NSTimeZone.local.secondsFromGMT())
+		return Date(timeIntervalSince1970: interval)
 	}
 	else
 	{
@@ -76,20 +101,20 @@ enum CooprActionType:String
 	case DIVIDEND = "DIVIDEND"
 }
 
-struct CoorpAction:Printable
+struct CoorpAction:CustomStringConvertible
 {
-	let date:NSDate
+	let date:Date
 	let type:CooprActionType
 	var value:Double
 	
 	var description:String
 	{
 		let vstr = String(format:"%.6f", value)
-		return "\(eventTimeFormatter.stringFromDate(date))|\(vstr)|\(type.rawValue)"
+		return "\(eventTimeFormatter.string(from: date))|\(vstr)|\(type.rawValue)"
 	}
 }
 
-func createActionMap(list:[CoorpAction]?, #formatter:NSDateFormatter)->[String:CoorpAction]
+func createActionMap(_ list:[CoorpAction]?, formatter:DateFormatter)->[String:CoorpAction]
 {
 	var map:[String:CoorpAction] = [:]
 	if list == nil
@@ -99,14 +124,14 @@ func createActionMap(list:[CoorpAction]?, #formatter:NSDateFormatter)->[String:C
 	
 	for i in 0..<list!.count
 	{
-		let key = formatter.stringFromDate(list![i].date)
+		let key = formatter.string(from: list![i].date)
 		map[key] = list![i]
 	}
 	
 	return map
 }
 
-func parseQuote(rawlist:[String])
+func parseQuote(_ rawlist:[String])
 {
 	var ready = false
 	var step:Int = 0, offset:Int = 0
@@ -115,14 +140,14 @@ func parseQuote(rawlist:[String])
 	let zoneMatch = NSPredicate(format: "SELF MATCHES %@", "^TIMEZONE_OFFSET=-?\\d+$")
 	var cols:[String]!
 	
-	var formatter = NSDateFormatter()
+	let formatter = DateFormatter()
 	formatter.dateFormat = "yyyy-MM-dd"
 	
 	var dmap:[String:CoorpAction] = createActionMap(dividends, formatter: formatter)
 	var splitAction:CoorpAction!
 	
 	formatter.dateFormat = "yyyy-MM-dd,HH:mm:SS"
-	println("date,time,open,high,low,close,volume,split,dividend")
+	print("date,time,open,high,low,close,volume,split,dividend")
 	
 	var time = 0
 	for i in 0..<rawlist.count
@@ -131,12 +156,12 @@ func parseQuote(rawlist:[String])
 		
 		if !ready
 		{
-			line = line.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+			line = line.removingPercentEncoding!
 			
-			var params = line.componentsSeparatedByString("=")
+			var params = line.components(separatedBy: "=")
 			if verbose
 			{
-				println(": ".join(params))
+				print(params.joined(separator: ": "))
 			}
 			
 			switch params[0]
@@ -149,7 +174,7 @@ func parseQuote(rawlist:[String])
 					ready = true
 					break
 				case "COLUMNS":
-					cols = params[1].componentsSeparatedByString(",")
+					cols = params[1].components(separatedBy: ",")
 					break
 					
 				default:break
@@ -157,22 +182,23 @@ func parseQuote(rawlist:[String])
 		}
 		else
 		{
-			if zoneMatch.evaluateWithObject(line)
+			if zoneMatch.evaluate(with: line)
 			{
-				var params = line.componentsSeparatedByString("=")
+				var params = line.components(separatedBy: "=")
 				offset = NSString(string: params[1]).integerValue
 			}
 			
-			var components = line.componentsSeparatedByString(",")
+			var components = line.components(separatedBy: ",")
 			if line == "" || components.count < 5
 			{
 				continue
 			}
 			
-			if dateMatch.evaluateWithObject(line)
+			if dateMatch.evaluate(with: line)
 			{
 				var first = components.first!
-				first = first.substringFromIndex(advance(first.startIndex, 1))
+				first = first.substring(from: first.index(first.startIndex, offsetBy: 1))
+                
 				time = NSString(string: first).integerValue
 				components[0] = "0"
 			}
@@ -184,9 +210,9 @@ func parseQuote(rawlist:[String])
 			}
 			
 			let index = NSString(string: item[QuoteKey.DATE]!).integerValue
-			var date = NSDate(timeIntervalSince1970: NSTimeInterval(time + index * step))
-			date = dateOffset(date, offset)
-			let dateString = formatter.stringFromDate(date)
+			var date = Date(timeIntervalSince1970: TimeInterval(time + index * step))
+			date = dateOffset(date, minuteOffset: offset)
+			let dateString = formatter.string(from: date)
 			
 			let open = formatQuote(item[QuoteKey.OPEN]!)
 			let high = formatQuote(item[QuoteKey.HIGH]!)
@@ -199,8 +225,8 @@ func parseQuote(rawlist:[String])
 			{
 				while splits.count > 0
 				{
-					if (splitAction == nil || date.timeIntervalSinceDate(splitAction.date) >= 0)
-						&& date.timeIntervalSinceDate(splits[0].date) < 0
+					if (splitAction == nil || date.timeIntervalSince(splitAction.date) >= 0)
+						&& date.timeIntervalSince(splits[0].date) < 0
 					{
 						splitAction = splits.first!
 					}
@@ -209,13 +235,13 @@ func parseQuote(rawlist:[String])
 						break
 					}
 					
-					splits.removeAtIndex(0)
+					splits.remove(at: 0)
 				}
 
 			}
 			else
 			{
-				if splitAction != nil && date.timeIntervalSinceDate(splitAction.date) >= 0
+				if splitAction != nil && date.timeIntervalSince(splitAction.date) >= 0
 				{
 					splitAction = nil
 				}
@@ -224,24 +250,24 @@ func parseQuote(rawlist:[String])
 			msg += "," + String(format:"%.6f", splitAction != nil ? splitAction.value : 1.0)
 			
 			var dividend = 0.0
-			let key = dateString.componentsSeparatedByString(",").first!
+			let key = dateString.components(separatedBy: ",").first!
 			if dmap[key] != nil
 			{
 				dividend = dmap[key]!.value
 			}
 			msg += "," + String(format:"%.6f", dividend)
-			println(msg)
+			print(msg)
 		}
 	}
 	
 	if verbose
 	{
-		println(QuoteKey.DATE + "," + QuoteKey.OPEN + "," + QuoteKey.HIGH + "," + QuoteKey.LOW + "," + QuoteKey.CLOSE + "," + QuoteKey.VOLUME + "," + CooprActionType.SPLIT.rawValue + "," + CooprActionType.DIVIDEND.rawValue)
+		print(QuoteKey.DATE + "," + QuoteKey.OPEN + "," + QuoteKey.HIGH + "," + QuoteKey.LOW + "," + QuoteKey.CLOSE + "," + QuoteKey.VOLUME + "," + CooprActionType.SPLIT.rawValue + "," + CooprActionType.DIVIDEND.rawValue)
 	}
 }
 
 var splits, dividends:[CoorpAction]!
-func fetchCooprActions(ticket:String, #exchange:String)
+func fetchCooprActions(_ ticket:String, exchange:String)
 {
 	var coorpActions:[CoorpAction]!
 	
@@ -266,39 +292,39 @@ func fetchCooprActions(ticket:String, #exchange:String)
 		suffix = ".\(suffix)"
 	}
 	
-	var formatter = NSDateFormatter()
+	let formatter = DateFormatter()
 	formatter.dateFormat = "MM-dd-yyyy"
 	
-	var date = formatter.stringFromDate(NSDate()).componentsSeparatedByString("-")
+	var date = formatter.string(from: Date()).components(separatedBy: "-")
 	let url = "http://ichart.finance.yahoo.com/x?s=\(ticket)\(suffix)&d=\(date[0])&e=\(date[1])&f=\(date[2])&g=v"
 	if verbose
 	{
-		println(url)
+		print(url)
 	}
 	
 	formatter.dateFormat = "yyyyMMdd"
 	
-	var response:NSURLResponse?
-	var error:NSError?
-	let data = NSURLConnection.sendSynchronousRequest(NSURLRequest(URL: NSURL(string: url)!), returningResponse: &response, error: &error)
-	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
+    var error:Error?
+	var response:HTTPURLResponse?
+	let data = sendSynchronousRequest(url, response: &response, error: &error)
+	if error == nil && response!.statusCode == 200
 	{
 		coorpActions = []
-		let list = (NSString(data: data!, encoding: NSUTF8StringEncoding) as! String).componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+		let list = String(bytes: data!, encoding: String.Encoding.utf8)!.components(separatedBy: .newlines)
 		for i in 1..<list.count
 		{
-			let line = list[i].stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.ForcedOrderingSearch, range: nil)
-			let cols = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))
+			let line = list[i].replacingOccurrences(of: " ", with: "", options: .forcedOrdering, range: nil)
+			let cols = line.components(separatedBy: ", ")
 			if cols.count < 3
 			{
 				continue
 			}
 			
 			let type = CooprActionType(rawValue: cols[0])
-			let date = formatter.dateFromString(cols[1])
+			let date = formatter.date(from: cols[1])
 			
 			let value:Double
-			let digits = cols[2].componentsSeparatedByString(":").map({NSString(string:$0).doubleValue})
+			let digits = cols[2].components(separatedBy: ":").map({NSString(string:$0).doubleValue})
 			if type == CooprActionType.SPLIT
 			{
 				value = digits[0] / digits[1]
@@ -324,13 +350,13 @@ func fetchCooprActions(ticket:String, #exchange:String)
 		coorpActions = nil
 		if verbose
 		{
-			println(response == nil ? error! : response!)
+			print(response == nil ? error! : response!)
 		}
 	}
 	
 	if coorpActions != nil
 	{
-		coorpActions.sort({$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
+		coorpActions = coorpActions.sorted(by: {$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
 		
 		var values:[Double] = []
 		for i in 0..<coorpActions.count
@@ -351,8 +377,8 @@ func fetchCooprActions(ticket:String, #exchange:String)
 		
 		if verbose
 		{
-			println(dividends)
-			println(splits)
+			print(dividends)
+			print(splits)
 		}
 		
 		if splits != nil
@@ -376,19 +402,19 @@ func fetchCooprActions(ticket:String, #exchange:String)
 	}
 }
 
-func fetchQuote(request:NSURLRequest)
+func fetchQuote(_ url:String)
 {
 	if verbose
 	{
-		println(request.URL!)
+		print(url)
 	}
 	
-	var response:NSURLResponse?, error:NSError?
-	let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-	if error == nil && (response as! NSHTTPURLResponse).statusCode == 200
+	var response:HTTPURLResponse?, error:Error?
+	let data = sendSynchronousRequest(url, response: &response, error: &error)
+	if error == nil && response!.statusCode == 200
 	{
-		let text = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-		let list = text.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as! [String]
+		let text = String(bytes: data!, encoding: String.Encoding.utf8)!
+		let list = text.components(separatedBy: .newlines)
 		
 		parseQuote(list)
 		
@@ -397,26 +423,26 @@ func fetchQuote(request:NSURLRequest)
 	{
 		if verbose
 		{
-			println(response == nil ? error! : response!)
+			print(response == nil ? error! : response!)
 		}
 	}
 }
 
-func judge(@autoclosure condition:()->Bool, message:String)
+func judge(_ condition:@autoclosure ()->Bool, message:String)
 {
 	if !condition()
 	{
-		println("ERR: " + message)
+		print("ERR: " + message)
 		exit(1)
 	}
 }
 
-if Process.arguments.filter({$0 == "-h"}).count == 0
+if CommandLine.arguments.filter({$0 == "-h"}).count == 0
 {
-	let count = Process.arguments.filter({$0 == "-t"}).count
-	judge(count >= 1, "[-t STOCK_TICKET] MUST be provided")
-	judge(count == 1, "[-t STOCK_TICKET] has been set \(count) times")
-	judge(Process.argc >= 3, "Unenough Parameters")
+	let count = CommandLine.arguments.filter({$0 == "-t"}).count
+	judge(count >= 1, message: "[-t STOCK_TICKET] MUST be provided")
+	judge(count == 1, message: "[-t STOCK_TICKET] has been set \(count) times")
+	judge(CommandLine.argc >= 3, message: "Unenough Parameters")
 }
 
 var interval = 60
@@ -426,9 +452,9 @@ var numOfDays:Int = 1
 var all = false
 
 var skip:Bool = false
-for i in 1..<Int(Process.argc)
+for i in 1..<Int(CommandLine.argc)
 {
-	let option = Process.arguments[i]
+	let option = CommandLine.arguments[i]
 	if skip
 	{
 		skip = false
@@ -438,26 +464,26 @@ for i in 1..<Int(Process.argc)
 	switch option
 	{
 		case "-t":
-			judge(Process.arguments.count > i + 1, "-t lack of parameter")
-			ticket = Process.arguments[i + 1]
+			judge(CommandLine.arguments.count > i + 1, message: "-t lack of parameter")
+			ticket = CommandLine.arguments[i + 1]
 			skip = true
 			break
 		
 		case "-x":
-			judge(Process.arguments.count > i + 1, "-x lack of parameter")
-			exchange = Process.arguments[i + 1]
+			judge(CommandLine.arguments.count > i + 1, message: "-x lack of parameter")
+			exchange = CommandLine.arguments[i + 1]
 			skip = true
 			break
 		
 		case "-i":
-			judge(Process.arguments.count > i + 1, "-i lack of parameter")
-			interval = NSString(string: Process.arguments[i + 1]).integerValue
+			judge(CommandLine.arguments.count > i + 1, message: "-i lack of parameter")
+			interval = NSString(string: CommandLine.arguments[i + 1]).integerValue
 			skip = true
 			break
 		
 		case "-d":
-			judge(Process.arguments.count > i + 1, "-d lack of parameter")
-			numOfDays = NSString(string: Process.arguments[i + 1]).integerValue
+			judge(CommandLine.arguments.count > i + 1, message: "-d lack of parameter")
+			numOfDays = NSString(string: CommandLine.arguments[i + 1]).integerValue
 			skip = true
 			break
 		
@@ -474,13 +500,13 @@ for i in 1..<Int(Process.argc)
 			break
 		
 		case "-h":
-			let msg = Process.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME] [-z TIME_ZONE_ADJUST] [-a ALL_HISTORICAL_QUOTES]"
-			println(msg)
+			let msg = CommandLine.arguments[0] + " -t STOCK_TICKET [-i QUOTE_INTERVAL_SECONDS] [-d NUM_OF_DAYS] [-x EXCHANGE_NAME] [-z TIME_ZONE_ADJUST] [-a ALL_HISTORICAL_QUOTES]"
+			print(msg)
 			exit(0)
 			break
 			
 		default:
-			println("Unsupported arguments: " + Process.arguments[i])
+			print("Unsupported arguments: " + CommandLine.arguments[i])
 			exit(2)
 	}
 }
@@ -489,9 +515,9 @@ fetchCooprActions(ticket, exchange: exchange)
 
 if !all
 {
-	fetchQuote(getQuoteRequest(ticket, interval: interval, numOfDays: numOfDays, exchange:exchange))
+	fetchQuote(getQuoteQuery(ticket, interval: interval, numOfDays: numOfDays, exchange:exchange))
 }
 else
 {
-	fetchQuote(getQuoteRequest(ticket, exchange: exchange))
+	fetchQuote(getQuoteQuery(ticket, exchange: exchange))
 }
