@@ -8,9 +8,11 @@
 
 import UIKit
 import LocalAuthentication
+import Security
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
 {
+
     struct PickerItemInfo
     {
         let label:String
@@ -30,19 +32,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    let SERVICE_PSSW = "LARRYHOU-PASSWORD-TEXT"
-    let SERVICE_NAME = "TouchID.app"
+    struct QueryParams
+    {
+        static let service = "TouchID.app"
+        static let password = "LARRYHOU-PASSWORD-TEXT"
+    }
+    
+    let background = DispatchQueue(label: "touchid")
     
     enum PickerComponent:Int
     {
-        case Protection = 0, SACFlags
+        case Protection = 0, SACFlags = 1
     }
     
     @IBOutlet weak var picker: UIPickerView!
     
     private var model:[[PickerItemInfo]]!
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         unlockWithTouchID()
@@ -65,40 +72,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         model[PickerComponent.Protection.rawValue] = data
         
         data = []
-        data.append(PickerItemInfo(label: "UserPresence", flags: SecAccessControlCreateFlags.UserPresence))
-        data.append(PickerItemInfo(label: "TouchIDAny", flags: SecAccessControlCreateFlags.TouchIDAny))
-        data.append(PickerItemInfo(label: "TouchIDCurrentSet", flags: SecAccessControlCreateFlags.TouchIDCurrentSet))
-        data.append(PickerItemInfo(label: "DevicePasscode", flags: SecAccessControlCreateFlags.DevicePasscode))
-        data.append(PickerItemInfo(label: "ApplicationPassword", flags: SecAccessControlCreateFlags.ApplicationPassword))
+        data.append(PickerItemInfo(label: "UserPresence", flags: SecAccessControlCreateFlags.userPresence))
+        data.append(PickerItemInfo(label: "TouchIDAny", flags: SecAccessControlCreateFlags.touchIDAny))
+        data.append(PickerItemInfo(label: "TouchIDCurrentSet", flags: SecAccessControlCreateFlags.touchIDCurrentSet))
+        data.append(PickerItemInfo(label: "DevicePasscode", flags: SecAccessControlCreateFlags.devicePasscode))
+        data.append(PickerItemInfo(label: "ApplicationPassword", flags: SecAccessControlCreateFlags.applicationPassword))
         model[PickerComponent.SACFlags.rawValue] = data
         
     }
     
     //MARK: UIPickerView
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return model.count
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         return model[component].count
     }
     
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-//    {
-//        return model[component][row].label
-//    }
-    
-//    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
-//    {
-//        let text:String = model[component][row].label
-//        
-//        let format:[String:AnyObject] = [NSFontAttributeName:UIFont.systemFontOfSize(12)]
-//        return NSAttributedString(string: text, attributes: format)
-//    }
-    
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
     {
         var labelView:UILabel
         if view != nil
@@ -108,17 +102,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else
         {
             labelView = UILabel()
-            labelView.font = UIFont.systemFontOfSize(20)
-            labelView.textAlignment = NSTextAlignment.Center
+            labelView.font = UIFont.systemFont(ofSize: 20)
+            labelView.textAlignment = NSTextAlignment.center
         }
         
         labelView.text = model[component][row].label
         return labelView
     }
     
-    func getComponentItemInfo(component:Int)->PickerItemInfo
+    func getComponentInfo(by component:Int)->PickerItemInfo
     {
-        let row = picker.selectedRowInComponent(component)
+        let row = picker.selectedRow(inComponent: component)
         return model[component][row]
     }
     
@@ -128,127 +122,121 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         resetPassword()
         
-        let protection = getComponentItemInfo(PickerComponent.Protection.rawValue).protection
-        let flags = getComponentItemInfo(PickerComponent.SACFlags.rawValue).flags
+        let protection = getComponentInfo(by: PickerComponent.Protection.rawValue).protection
+        let flags = getComponentInfo(by: PickerComponent.SACFlags.rawValue).flags
         
-        var error:Unmanaged<CFErrorRef>?
-        let sac = SecAccessControlCreateWithFlags(kCFAllocatorDefault, protection, flags, &error)
+        var error:Unmanaged<CFError>?
+        let sac = SecAccessControlCreateWithFlags(kCFAllocatorDefault, protection!, flags!, &error)
         if error != nil || sac == nil
         {
-            print(error)
+            print(error!)
             return
         }
         
-        var data:[String:AnyObject] = [:]
+        var data:[String:Any] = [:]
         data[kSecClass as String] = kSecClassGenericPassword
-        data[kSecAttrService as String] = SERVICE_NAME
-        data[kSecValueData as String] = SERVICE_PSSW.dataUsingEncoding(NSUTF8StringEncoding)!
+        data[kSecAttrService as String] = QueryParams.service
+        data[kSecValueData as String] = QueryParams.password.data(using: String.Encoding.utf8)!
         data[kSecUseAuthenticationUI as String] = kSecUseAuthenticationUIAllow
         data[kSecAttrAccessControl as String] = sac
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
+        background.async
         {
-            var result:AnyObject?
-            let status = SecItemAdd(data, &result)
-            
-            print("add: " + self.status2string(status))
-            
-            let alert = UIAlertController(title: "status", message: self.status2string(status), preferredStyle: UIAlertControllerStyle.ActionSheet)
-            let action = UIAlertAction(title: "我知道了", style: UIAlertActionStyle.Cancel)
-            { (target:UIAlertAction) in
-                
-            }
-            
-            alert.addAction(action)
-            dispatch_async(dispatch_get_main_queue())
-            {
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+            var result:CFTypeRef?
+            let status = SecItemAdd(data as CFDictionary, &result)
+            self.showAlert(message: self.interpret(status: status))
         }
     }
     
     @IBAction func actionReadPassword(sender: UIButton)
     {
-        var query:[String:AnyObject] = [:]
+        var query:[String:Any] = [:]
         query[kSecClass as String] = kSecClassGenericPassword
-        query[kSecAttrService as String] = SERVICE_NAME
+        query[kSecAttrService as String] = QueryParams.service
         query[kSecReturnData as String] = true
         query[kSecUseOperationPrompt as String] = "读取Keychain密码"
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
+        background.async
         {
             var result:AnyObject?
-            let status = SecItemCopyMatching(query, &result)
+            let status = SecItemCopyMatching(query as CFDictionary, &result)
             
-            print("match: " + self.status2string(status))
-            
-            var message:String = self.status2string(status)
-            if status == errSecSuccess
+            var message:String = self.interpret(status: status)
+            if let result = result as? Data, status == errSecSuccess
             {
-                let pssw = result as! NSData
-                message += ": " + (NSString(data: pssw, encoding: NSUTF8StringEncoding) as! String)
+                if let data = String(data: result, encoding: String.Encoding.utf8)
+                {
+                    if status == errSecSuccess
+                    {
+                        message = data
+                    }
+                    else
+                    {
+                        message += ": " + data
+                    }
+                }
             }
             
-            let alert = UIAlertController(title: "status", message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
-            let action = UIAlertAction(title: "我知道了", style: UIAlertActionStyle.Cancel)
-            { (target:UIAlertAction) in
-                    
-            }
-            
-            alert.addAction(action)
-            dispatch_async(dispatch_get_main_queue())
-            {
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+            self.showAlert(message: message)
+        }
+    }
+    
+    func showAlert(message: String)
+    {
+        let alert = UIAlertController(title: "执行状态", message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "我知道了", style: .cancel, handler: nil))
+        DispatchQueue.main.async
+        {
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
     func resetPassword()
     {
-        var query:[String:AnyObject] = [:]
+        var query:[String:Any] = [:]
         query[kSecClass as String] = kSecClassGenericPassword
-        query[kSecAttrService as String] = SERVICE_NAME
+        query[kSecAttrService as String] = QueryParams.service
         
-        let status = SecItemDelete(query)
-        print("reset: " + status2string(status))
+        let status = SecItemDelete(query as CFDictionary)
+        print("reset: " + interpret(status: status))
     }
     
-    func status2string(status:OSStatus)->String
+    func interpret(status:OSStatus)->String
     {
         switch status
         {
             case errSecAllocate:
-                return "Failed to allocate memory"
+                return "Failed to allocate memory."
                 
             case errSecAuthFailed:
-                return "The user name or passphrase you entered is not correct"
+                return "Authorization/Authentication failed."
                 
             case errSecDecode:
-                return "Unable to decode the provided data"
+                return "Unable to decode the provided data."
                 
             case errSecDuplicateItem:
-                return "The specified item already exists in the keychain"
+                return "The item already exists."
                 
             case errSecInteractionNotAllowed:
-                return "User interaction is not allowed"
+                return "Interaction with the Security Server is not allowed."
                 
             case errSecItemNotFound:
-                return "The specified item could not be found in the keychain"
+                return "The item cannot be found."
                 
             case errSecNotAvailable:
-                return "No keychain is available. You may need to restart your"
+                return "No trust results are available."
                 
             case errSecParam:
-                return "One or more parameters passed to a function where not valid"
+                return "One or more parameters passed to the function were not valid."
                 
             case errSecSuccess:
-                return "success"
+                return "sucess"
             
-            case OSStatus(errSecUserCanceled):
+            case errSecUserCanceled:
                 return "User canceled the operation"
         
             case errSecUnimplemented:
-                return "Function or operation not implemented"
+                return "Function or operation not implemented."
                 
             default:return "Unknown:\(status)"
         }
@@ -258,20 +246,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func unlockWithTouchID()
     {
         let context = LAContext()
-        let policy = LAPolicy.DeviceOwnerAuthentication
+        let policy = LAPolicy.deviceOwnerAuthenticationWithBiometrics
         
         var error:NSError?
-        context.canEvaluatePolicy(policy, error: &error)
-        if error != nil
+        if context.canEvaluatePolicy(policy, error: &error)
         {
-            print(error)
-            return
+            let reason = "指纹解锁应用"
+            context.evaluatePolicy(policy, localizedReason: reason)
+            { flag, error in
+                var message = "指纹识别成功:\(flag)"
+                if let error = error
+                {
+                    message += " error:\(error.localizedDescription)"
+                }
+                self.showAlert(message: message)
+            }
         }
-        
-        let reason = "指纹解锁应用"
-        context.evaluatePolicy(policy, localizedReason: reason)
-        { flag, error in
-            print(flag)
+        else
+        {
+            print(error!)
         }
     }
 

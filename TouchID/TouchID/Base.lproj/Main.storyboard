@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F60a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,42 +18,42 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8e7-Rg-q7a">
-                                <rect key="frame" x="0.0" y="45" width="600" height="216"/>
+                                <rect key="frame" x="0.0" y="45" width="736" height="216"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="xCV-v4-bvR"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="5zP-Fy-zpl"/>
                                 </connections>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IeS-fh-Vj8">
-                                <rect key="frame" x="200" y="280" width="80" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="222" y="289" width="122" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                                 <state key="normal" title="更新密码"/>
                                 <connections>
-                                    <action selector="actionUpdatePassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NCQ-z0-cQq"/>
+                                    <action selector="actionUpdatePasswordWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CTH-Mw-mom"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOK-8f-0ze">
-                                <rect key="frame" x="320" y="280" width="80" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="392" y="289" width="122" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                                 <state key="normal" title="读取密码"/>
                                 <connections>
-                                    <action selector="actionReadPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hMi-iD-rUT"/>
+                                    <action selector="actionReadPasswordWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GJB-IR-kPf"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="top" secondItem="8e7-Rg-q7a" secondAttribute="bottom" constant="19" id="FZf-Pi-Gwx"/>
+                            <constraint firstItem="SOK-8f-0ze" firstAttribute="baseline" secondItem="IeS-fh-Vj8" secondAttribute="baseline" id="1OP-Ts-U5V"/>
                             <constraint firstItem="8e7-Rg-q7a" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="25" id="HcA-BC-CPG"/>
-                            <constraint firstItem="SOK-8f-0ze" firstAttribute="top" secondItem="IeS-fh-Vj8" secondAttribute="top" id="J1F-oJ-HKV"/>
                             <constraint firstAttribute="trailing" secondItem="8e7-Rg-q7a" secondAttribute="trailing" id="gfU-bw-ZCG"/>
-                            <constraint firstItem="SOK-8f-0ze" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="20" id="kzU-8Z-N3g"/>
-                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-20" id="qmu-B7-5Kp"/>
+                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="top" secondItem="8e7-Rg-q7a" secondAttribute="bottom" constant="28" id="j68-RG-Vhd"/>
+                            <constraint firstItem="SOK-8f-0ze" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="85" id="pOR-no-0jn"/>
                             <constraint firstItem="8e7-Rg-q7a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="sQR-VG-kZk"/>
+                            <constraint firstItem="IeS-fh-Vj8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-85" id="uEW-ls-l0a"/>
                         </constraints>
                     </view>
                     <connections>
