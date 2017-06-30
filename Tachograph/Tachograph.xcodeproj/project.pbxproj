@@ -15,6 +15,7 @@
 		6B4280841F0628B200567C24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4280821F0628B200567C24 /* LaunchScreen.storyboard */; };
 		6B42808F1F0628B200567C24 /* TachographTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B42808E1F0628B200567C24 /* TachographTests.swift */; };
 		6B42809A1F0628B200567C24 /* TachographUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280991F0628B200567C24 /* TachographUITests.swift */; };
+		6B4280AA1F065C7A00567C24 /* TCPConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280A91F065C7A00567C24 /* TCPConnection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		6B4280951F0628B200567C24 /* TachographUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TachographUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4280991F0628B200567C24 /* TachographUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TachographUITests.swift; sourceTree = "<group>"; };
 		6B42809B1F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B4280A91F065C7A00567C24 /* TCPConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPConnection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		6B4280751F0628B200567C24 /* Tachograph */ = {
 			isa = PBXGroup;
 			children = (
+				6B4280A91F065C7A00567C24 /* TCPConnection.swift */,
 				6B4280761F0628B200567C24 /* AppDelegate.swift */,
 				6B4280781F0628B200567C24 /* ViewController.swift */,
 				6B42807A1F0628B200567C24 /* Main.storyboard */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B4280791F0628B200567C24 /* ViewController.swift in Sources */,
+				6B4280AA1F065C7A00567C24 /* TCPConnection.swift in Sources */,
 				6B42807F1F0628B200567C24 /* Tachograph.xcdatamodeld in Sources */,
 				6B4280771F0628B200567C24 /* AppDelegate.swift in Sources */,
 			);
@@ -423,7 +427,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_OBJC_UNUSED_IVARS = YES;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Tachograph/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.Tachograph;
@@ -437,7 +445,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_OBJC_UNUSED_IVARS = YES;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Tachograph/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.Tachograph;
@@ -528,6 +540,7 @@
 				6B4280A01F0628B200567C24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B4280A11F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +549,7 @@
 				6B4280A31F0628B200567C24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B4280A41F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographUITests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +558,7 @@
 				6B4280A61F0628B200567C24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

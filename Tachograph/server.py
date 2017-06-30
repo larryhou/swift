@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#encoding:utf-8
 
 import json, enum, time
 from twisted.internet import reactor, protocol
@@ -31,6 +32,7 @@ class CameraProtocol(protocol.Protocol):
             if data:
                 print '%r data:%r'%(e, data)
             return
+        print message
         response = ''
         command = CameraCommand(data['msg_id'])
         if command == CameraCommand.LOOKUP:
@@ -59,10 +61,10 @@ class CameraProtocol(protocol.Protocol):
         self.transport.write(response + '\n')
 
         if command == CameraCommand.CAPTURE_IMAGE:
-            time.sleep(0.2)
+            time.sleep(1)
             response = '{ "msg_id": 7, "type": "record", "param": "record" }'
             self.transport.write(response + '\n')
-            time.sleep(0.2)
+            time.sleep(1)
             response = '{ "msg_id": 7, "type": "photo_taken", "param": "\/mnt\/mmc01\/PICTURE\/ch1_20170629_1924_0037.jpg" }'
             self.transport.write(response + '\n')
 
