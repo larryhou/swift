@@ -1,0 +1,564 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B4280771F0628B200567C24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280761F0628B200567C24 /* AppDelegate.swift */; };
+		6B4280791F0628B200567C24 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280781F0628B200567C24 /* ViewController.swift */; };
+		6B42807C1F0628B200567C24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B42807A1F0628B200567C24 /* Main.storyboard */; };
+		6B42807F1F0628B200567C24 /* Tachograph.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B42807D1F0628B200567C24 /* Tachograph.xcdatamodeld */; };
+		6B4280811F0628B200567C24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B4280801F0628B200567C24 /* Assets.xcassets */; };
+		6B4280841F0628B200567C24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4280821F0628B200567C24 /* LaunchScreen.storyboard */; };
+		6B42808F1F0628B200567C24 /* TachographTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B42808E1F0628B200567C24 /* TachographTests.swift */; };
+		6B42809A1F0628B200567C24 /* TachographUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280991F0628B200567C24 /* TachographUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6B42808B1F0628B200567C24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B42806B1F0628B200567C24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B4280721F0628B200567C24;
+			remoteInfo = Tachograph;
+		};
+		6B4280961F0628B200567C24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B42806B1F0628B200567C24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B4280721F0628B200567C24;
+			remoteInfo = Tachograph;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6B4280731F0628B200567C24 /* Tachograph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tachograph.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B4280761F0628B200567C24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6B4280781F0628B200567C24 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6B42807B1F0628B200567C24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6B42807E1F0628B200567C24 /* Tachograph.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tachograph.xcdatamodel; sourceTree = "<group>"; };
+		6B4280801F0628B200567C24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B4280831F0628B200567C24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6B4280851F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B42808A1F0628B200567C24 /* TachographTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TachographTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B42808E1F0628B200567C24 /* TachographTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TachographTests.swift; sourceTree = "<group>"; };
+		6B4280901F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B4280951F0628B200567C24 /* TachographUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TachographUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B4280991F0628B200567C24 /* TachographUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TachographUITests.swift; sourceTree = "<group>"; };
+		6B42809B1F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B4280701F0628B200567C24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280871F0628B200567C24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280921F0628B200567C24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B42806A1F0628B200567C24 = {
+			isa = PBXGroup;
+			children = (
+				6B4280751F0628B200567C24 /* Tachograph */,
+				6B42808D1F0628B200567C24 /* TachographTests */,
+				6B4280981F0628B200567C24 /* TachographUITests */,
+				6B4280741F0628B200567C24 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6B4280741F0628B200567C24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B4280731F0628B200567C24 /* Tachograph.app */,
+				6B42808A1F0628B200567C24 /* TachographTests.xctest */,
+				6B4280951F0628B200567C24 /* TachographUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B4280751F0628B200567C24 /* Tachograph */ = {
+			isa = PBXGroup;
+			children = (
+				6B4280761F0628B200567C24 /* AppDelegate.swift */,
+				6B4280781F0628B200567C24 /* ViewController.swift */,
+				6B42807A1F0628B200567C24 /* Main.storyboard */,
+				6B4280801F0628B200567C24 /* Assets.xcassets */,
+				6B4280821F0628B200567C24 /* LaunchScreen.storyboard */,
+				6B4280851F0628B200567C24 /* Info.plist */,
+				6B42807D1F0628B200567C24 /* Tachograph.xcdatamodeld */,
+			);
+			path = Tachograph;
+			sourceTree = "<group>";
+		};
+		6B42808D1F0628B200567C24 /* TachographTests */ = {
+			isa = PBXGroup;
+			children = (
+				6B42808E1F0628B200567C24 /* TachographTests.swift */,
+				6B4280901F0628B200567C24 /* Info.plist */,
+			);
+			path = TachographTests;
+			sourceTree = "<group>";
+		};
+		6B4280981F0628B200567C24 /* TachographUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6B4280991F0628B200567C24 /* TachographUITests.swift */,
+				6B42809B1F0628B200567C24 /* Info.plist */,
+			);
+			path = TachographUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B4280721F0628B200567C24 /* Tachograph */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B42809E1F0628B200567C24 /* Build configuration list for PBXNativeTarget "Tachograph" */;
+			buildPhases = (
+				6B42806F1F0628B200567C24 /* Sources */,
+				6B4280701F0628B200567C24 /* Frameworks */,
+				6B4280711F0628B200567C24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tachograph;
+			productName = Tachograph;
+			productReference = 6B4280731F0628B200567C24 /* Tachograph.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6B4280891F0628B200567C24 /* TachographTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B4280A11F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographTests" */;
+			buildPhases = (
+				6B4280861F0628B200567C24 /* Sources */,
+				6B4280871F0628B200567C24 /* Frameworks */,
+				6B4280881F0628B200567C24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B42808C1F0628B200567C24 /* PBXTargetDependency */,
+			);
+			name = TachographTests;
+			productName = TachographTests;
+			productReference = 6B42808A1F0628B200567C24 /* TachographTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6B4280941F0628B200567C24 /* TachographUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B4280A41F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographUITests" */;
+			buildPhases = (
+				6B4280911F0628B200567C24 /* Sources */,
+				6B4280921F0628B200567C24 /* Frameworks */,
+				6B4280931F0628B200567C24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B4280971F0628B200567C24 /* PBXTargetDependency */,
+			);
+			name = TachographUITests;
+			productName = TachographUITests;
+			productReference = 6B4280951F0628B200567C24 /* TachographUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B42806B1F0628B200567C24 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = larryhou;
+				TargetAttributes = {
+					6B4280721F0628B200567C24 = {
+						CreatedOnToolsVersion = 9.0;
+					};
+					6B4280891F0628B200567C24 = {
+						CreatedOnToolsVersion = 9.0;
+						TestTargetID = 6B4280721F0628B200567C24;
+					};
+					6B4280941F0628B200567C24 = {
+						CreatedOnToolsVersion = 9.0;
+						TestTargetID = 6B4280721F0628B200567C24;
+					};
+				};
+			};
+			buildConfigurationList = 6B42806E1F0628B200567C24 /* Build configuration list for PBXProject "Tachograph" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6B42806A1F0628B200567C24;
+			productRefGroup = 6B4280741F0628B200567C24 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6B4280721F0628B200567C24 /* Tachograph */,
+				6B4280891F0628B200567C24 /* TachographTests */,
+				6B4280941F0628B200567C24 /* TachographUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6B4280711F0628B200567C24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B4280841F0628B200567C24 /* LaunchScreen.storyboard in Resources */,
+				6B4280811F0628B200567C24 /* Assets.xcassets in Resources */,
+				6B42807C1F0628B200567C24 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280881F0628B200567C24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280931F0628B200567C24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B42806F1F0628B200567C24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B4280791F0628B200567C24 /* ViewController.swift in Sources */,
+				6B42807F1F0628B200567C24 /* Tachograph.xcdatamodeld in Sources */,
+				6B4280771F0628B200567C24 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280861F0628B200567C24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B42808F1F0628B200567C24 /* TachographTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4280911F0628B200567C24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B42809A1F0628B200567C24 /* TachographUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B42808C1F0628B200567C24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B4280721F0628B200567C24 /* Tachograph */;
+			targetProxy = 6B42808B1F0628B200567C24 /* PBXContainerItemProxy */;
+		};
+		6B4280971F0628B200567C24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B4280721F0628B200567C24 /* Tachograph */;
+			targetProxy = 6B4280961F0628B200567C24 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6B42807A1F0628B200567C24 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B42807B1F0628B200567C24 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6B4280821F0628B200567C24 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B4280831F0628B200567C24 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6B42809C1F0628B200567C24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6B42809D1F0628B200567C24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6B42809F1F0628B200567C24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = Tachograph/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.Tachograph;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6B4280A01F0628B200567C24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = Tachograph/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.Tachograph;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6B4280A21F0628B200567C24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = TachographTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TachographTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tachograph.app/Tachograph";
+			};
+			name = Debug;
+		};
+		6B4280A31F0628B200567C24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = TachographTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TachographTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tachograph.app/Tachograph";
+			};
+			name = Release;
+		};
+		6B4280A51F0628B200567C24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = TachographUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TachographUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tachograph;
+			};
+			name = Debug;
+		};
+		6B4280A61F0628B200567C24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = PRLP6W5S32;
+				INFOPLIST_FILE = TachographUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.TachographUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tachograph;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B42806E1F0628B200567C24 /* Build configuration list for PBXProject "Tachograph" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B42809C1F0628B200567C24 /* Debug */,
+				6B42809D1F0628B200567C24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B42809E1F0628B200567C24 /* Build configuration list for PBXNativeTarget "Tachograph" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B42809F1F0628B200567C24 /* Debug */,
+				6B4280A01F0628B200567C24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6B4280A11F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B4280A21F0628B200567C24 /* Debug */,
+				6B4280A31F0628B200567C24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6B4280A41F0628B200567C24 /* Build configuration list for PBXNativeTarget "TachographUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B4280A51F0628B200567C24 /* Debug */,
+				6B4280A61F0628B200567C24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6B42807D1F0628B200567C24 /* Tachograph.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6B42807E1F0628B200567C24 /* Tachograph.xcdatamodel */,
+			);
+			currentVersion = 6B42807E1F0628B200567C24 /* Tachograph.xcdatamodel */;
+			path = Tachograph.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6B42806B1F0628B200567C24 /* Project object */;
+}
