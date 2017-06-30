@@ -28,9 +28,17 @@ class CrashReportUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testExample()
+    {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let app = XCUIApplication()
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["等待手动退出"].tap()
+        app.navigationBars["等待手动退出"].buttons["测试列表"].tap()
+        tablesQuery.staticTexts["CPU使用超限制"].tap()
+        
     }
     
 }

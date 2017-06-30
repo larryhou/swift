@@ -83,6 +83,7 @@
 				6BC7A67A1D52E739008B33CD /* CrashReportTests */,
 				6BC7A6851D52E739008B33CD /* CrashReportUITests */,
 				6BC7A6641D52E739008B33CD /* Products */,
+				6BD762401E7E495D00966727 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +127,13 @@
 				6BC7A6881D52E739008B33CD /* Info.plist */,
 			);
 			path = CrashReportUITests;
+			sourceTree = "<group>";
+		};
+		6BD762401E7E495D00966727 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,7 +199,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = larryhou;
 				TargetAttributes = {
 					6BC7A6621D52E739008B33CD = {
@@ -340,6 +348,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -390,6 +399,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

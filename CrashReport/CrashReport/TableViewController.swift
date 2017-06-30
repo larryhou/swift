@@ -84,7 +84,7 @@ class TableViewController: UITableViewController
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier == "action"
         {
@@ -107,6 +107,7 @@ class TableViewController: UITableViewController
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
+        print("memory warning")
         // Dispose of any resources that can be recreated.
     }
 }

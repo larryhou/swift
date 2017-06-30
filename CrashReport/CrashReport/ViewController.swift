@@ -70,7 +70,7 @@ class ViewController:UIViewController
             for y in 0..<height
             {
                 let densitiy = 5
-                if random.nextInt(withUpperBound: densitiy) % densitiy == 1
+                if random.nextInt(upperBound: densitiy) % densitiy == 1
                 {
                     let node = graph.node(atGridPosition: int2(x, y))
                     obstacles.append(node!)
@@ -78,12 +78,12 @@ class ViewController:UIViewController
             }
         }
         
-        graph.removeNodes(obstacles)
+        graph.remove(obstacles)
         
         func get_random_node()->GKGraphNode
         {
             let nodes = graph.nodes!
-            return nodes[random.nextInt(withUpperBound: nodes.count)]
+            return nodes[random.nextInt(upperBound: nodes.count)]
         }
         
         while true
