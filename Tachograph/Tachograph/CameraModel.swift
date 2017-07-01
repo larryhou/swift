@@ -114,6 +114,7 @@ class CameraModel:TCPSessionDelegate
     {
         _session = TCPSession()
         _session.connect(address: "172.20.10.3", port: 8800)
+//        _session.connect(address: "192.168.42.1", port: 80)
         
         _decoder = JSONDecoder()
         
@@ -244,11 +245,12 @@ class CameraModel:TCPSessionDelegate
             
             if let trim = _trim
             {
+                let domain = "192.168.42.1"
                 let range = NSMakeRange(0, name.count)
                 let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
                 let timestamp = _dateFormatter.date(from: text)
-                let asset = CameraAsset(name: name, url: "http://192.168.42.1\(assetPath)/\(item.name)",
-                    icon: "http://192.168.42.1\(assetPath)/\(text).thm",
+                let asset = CameraAsset(name: name, url: "http://\(domain)\(assetPath)/\(item.name)",
+                    icon: "http://\(domain)\(assetPath)/\(text).thm",
                     timestamp: timestamp!)
                 target.append(asset)
             }
