@@ -263,7 +263,7 @@ class CameraModel:TCPSessionDelegate
     func lookup(type:String = "date_time")
     {
 //        {"token" : 1, "msg_id" : 1, "type":"date_time"}
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.lookup.rawValue, "type" : "date_time"]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.lookup.rawValue, "type" : type]
         _session.send(data: params)
     }
     

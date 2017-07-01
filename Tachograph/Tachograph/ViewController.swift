@@ -15,6 +15,8 @@ class ViewController: UIViewController, CameraModelDelegate
         if command == .fetchToken
         {
             model.fetchVersion()
+            model.lookup(type: "app_status")
+            model.lookup(type: "date_time")
             model.fetchHierarchy()
         }
     }
