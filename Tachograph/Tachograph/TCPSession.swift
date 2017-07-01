@@ -115,6 +115,7 @@ class TCPSession:NSObject, StreamDelegate
             }
             
             _flags = 0
+            _timer.invalidate()
         }
     }
     
