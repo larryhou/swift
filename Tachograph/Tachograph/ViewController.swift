@@ -8,56 +8,36 @@
 
 import UIKit
 
-class ViewController: UIViewController, TCPConnectionDelegate
+class ViewController: UIViewController, CameraModelDelegate
 {
-    func tcp(connection: TCPConnection, data: Data)
+    func model(command: RemoteCommand, data: RemoteMessage)
     {
-        print("data", String(data:data, encoding:.utf8)!)
-        do
-        {
-            if let obj = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-            {
-                print(obj)
-            }
-        }
-        catch
-        {
-            print(error)
-        }
+        
     }
     
-    var flag = false
-    func tcp(connection: TCPConnection, sendEvent: Stream.Event)
+    func model(ready: Bool)
     {
-        print("send", sendEvent)
-        if sendEvent == .openCompleted
-        {
-            let data:[String:Int] = ["token":1, "msg_id":769]
-            connection.send(data: data)
-        }
+        model.fetchRouteVideos()
+        model.fetchEventVideos()
+        model.fetchImages()
     }
     
-    func tcp(connection: TCPConnection, readEvent: Stream.Event)
-    {
-        print("read", readEvent)
-    }
-    
-    var session:TCPConnection!
+    var model:CameraModel!
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        session = TCPConnection()
-        session.delegate = self
-        session.connect(address: "192.168.0.103", port: 8800)
+        model = CameraModel.shared
+        model.delegate = self
+        
+        model.fetchToken()
+        model.fetchVersion()
+        model.fetchHierarchy()
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
-
 }
 

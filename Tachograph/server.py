@@ -25,6 +25,7 @@ class CameraProtocol(protocol.Protocol):
         print 'los_connection -> num:%d'%(len(self.factory.clients))
     
     def dataReceived(self, message):
+        print message
         data = None
         try:
             data = json.loads(message)
@@ -32,7 +33,6 @@ class CameraProtocol(protocol.Protocol):
             if data:
                 print '%r data:%r'%(e, data)
             return
-        print message
         response = ''
         command = CameraCommand(data['msg_id'])
         if command == CameraCommand.LOOKUP:
@@ -59,14 +59,6 @@ class CameraProtocol(protocol.Protocol):
         else:
             response = '{ "rval": 0, "msg_id": %d }'%(command.value)
         self.transport.write(response + '\n')
-
-        if command == CameraCommand.CAPTURE_IMAGE:
-            time.sleep(1)
-            response = '{ "msg_id": 7, "type": "record", "param": "record" }'
-            self.transport.write(response + '\n')
-            time.sleep(1)
-            response = '{ "msg_id": 7, "type": "photo_taken", "param": "\/mnt\/mmc01\/PICTURE\/ch1_20170629_1924_0037.jpg" }'
-            self.transport.write(response + '\n')
 
 def main():
     factory = protocol.Factory()

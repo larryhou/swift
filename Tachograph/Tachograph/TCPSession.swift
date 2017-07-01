@@ -9,11 +9,12 @@
 import Foundation
 
 @objc
-protocol TCPConnectionDelegate
+protocol TCPSessionDelegate
 {
-    func tcp(connection:TCPConnection, data:Data)
-    @objc optional func tcp(connection:TCPConnection, sendEvent:Stream.Event)
-    @objc optional func tcp(connection:TCPConnection, readEvent:Stream.Event)
+    func tcp(session:TCPSession, data:Data)
+    @objc optional func tcp(session:TCPSession, sendEvent:Stream.Event)
+    @objc optional func tcp(session:TCPSession, readEvent:Stream.Event)
+    @objc optional func tcp(session:TCPSession, error:Error)
 }
 
 struct QueuedMessage
@@ -40,18 +41,20 @@ struct QueuedMessage
     }
 }
 
-class TCPConnection:NSObject, StreamDelegate
+class TCPSession:NSObject, StreamDelegate
 {
     static let BUFFER_SIZE = 1024
-    
-    var delegate:TCPConnectionDelegate?
+    var delegate:TCPSessionDelegate?
     
     private var _readStream:InputStream!
     private var _sendStream:OutputStream!
+    private var _timer:Timer!
     
     lazy
     private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: BUFFER_SIZE)
     private var _queue:[QueuedMessage] = []
+    
+    var connected:Bool { return _flags == 0x11 }
     
     func connect(address:String, port:UInt32)
     {
@@ -70,25 +73,37 @@ class TCPConnection:NSObject, StreamDelegate
         
         _readStream.open()
         _sendStream.open()
+        
+        _flags = 0
+        _timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
+    @objc func update()
+    {
+        guard let stream = _sendStream else { return }
+        if stream.hasSpaceAvailable && _queue.count > 0
+        {
+            _flags |= 0x10
+            send(_queue.removeFirst())
+        }
+    }
+    
+    private var _flags:Int = 0
     func stream(_ aStream: Stream, handle eventCode: Stream.Event)
     {
+        print(eventCode)
         if aStream == _readStream
         {
-            delegate?.tcp?(connection: self, readEvent: eventCode)
+            delegate?.tcp?(session: self, readEvent: eventCode)
             if eventCode == .hasBytesAvailable
             {
-                delegate?.tcp(connection: self, data: read())
+                _flags |= 0x01
+                delegate?.tcp(session: self, data: read())
             }
         }
         else
         {
-            delegate?.tcp?(connection: self, sendEvent: eventCode)
-            if eventCode == .hasSpaceAvailable && _queue.count > 0
-            {
-                send(_queue.removeFirst())
-            }
+            delegate?.tcp?(session: self, sendEvent: eventCode)
         }
         
         if eventCode == .errorOccurred
@@ -96,7 +111,10 @@ class TCPConnection:NSObject, StreamDelegate
             if let error = aStream.streamError
             {
                 print(error)
+                delegate?.tcp?(session: self, error: error)
             }
+            
+            _flags = 0
         }
     }
     
@@ -113,6 +131,7 @@ class TCPConnection:NSObject, StreamDelegate
         do
         {
             let bytes = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+            print(String(data:bytes, encoding:.utf8)!)
             send(data: bytes)
         }
         catch
@@ -169,7 +188,7 @@ class TCPConnection:NSObject, StreamDelegate
         var data = Data()
         while _readStream.hasBytesAvailable
         {
-            let num = _readStream.read(_buffer, maxLength: TCPConnection.BUFFER_SIZE)
+            let num = _readStream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
             data.append(_buffer, count: num)
         }
         return data
@@ -181,7 +200,7 @@ class TCPConnection:NSObject, StreamDelegate
         while _readStream.hasBytesAvailable
         {
             let remain = count - data.count
-            let num = _readStream.read(_buffer, maxLength: min(remain, TCPConnection.BUFFER_SIZE))
+            let num = _readStream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))
             data.append(_buffer, count: num)
         }
         return data
@@ -202,12 +221,13 @@ class TCPConnection:NSObject, StreamDelegate
         }
         
         _queue.removeAll(keepingCapacity: false)
+        _timer.invalidate()
     }
     
     deinit
     {
         close()
         
-        _buffer.deallocate(capacity: TCPConnection.BUFFER_SIZE)
+        _buffer.deallocate(capacity: TCPSession.BUFFER_SIZE)
     }
 }
