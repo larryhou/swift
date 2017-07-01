@@ -12,7 +12,11 @@ class ViewController: UIViewController, CameraModelDelegate
 {
     func model(command: RemoteCommand, data: RemoteMessage)
     {
-        
+        if command == .fetchToken
+        {
+            model.fetchVersion()
+            model.fetchHierarchy()
+        }
     }
     
     func model(ready: Bool)
@@ -31,8 +35,6 @@ class ViewController: UIViewController, CameraModelDelegate
         model.delegate = self
         
         model.fetchToken()
-        model.fetchVersion()
-        model.fetchHierarchy()
     }
 
     override func didReceiveMemoryWarning()

@@ -17,6 +17,28 @@ protocol TCPSessionDelegate
     @objc optional func tcp(session:TCPSession, error:Error)
 }
 
+extension Stream.Event
+{
+    var description:String
+    {
+        switch self
+        {
+            case .hasBytesAvailable:
+                return "\(self) hasBytesAvailable"
+            case .hasSpaceAvailable:
+                return "\(self) hasSpaceAvailable"
+            case .openCompleted:
+                return "\(self) openCompleted"
+            case .errorOccurred:
+                return "\(self) errorOccurred"
+            case .endEncountered:
+                return "\(self) endEncountered"
+            default:
+                return "\(self)"
+        }
+    }
+}
+
 struct QueuedMessage
 {
     let data:Data
@@ -91,7 +113,7 @@ class TCPSession:NSObject, StreamDelegate
     private var _flags:Int = 0
     func stream(_ aStream: Stream, handle eventCode: Stream.Event)
     {
-        print(eventCode)
+        print(eventCode.description)
         if aStream == _readStream
         {
             delegate?.tcp?(session: self, readEvent: eventCode)

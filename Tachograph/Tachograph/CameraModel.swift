@@ -162,7 +162,6 @@ class CameraModel:TCPSessionDelegate
             case .lookup:
                 let msg = try _decoder.decode(CommonMessage.self, from: bytes)
                 response = msg
-                print(msg)
             
             case .fetchVersion:
                 self.version = try _decoder.decode(VersionMessage.self, from: bytes)
@@ -173,7 +172,6 @@ class CameraModel:TCPSessionDelegate
                 self.token = msg.param
                 response = msg
                 _flags |= 0x01
-                print(msg)
             
             case .fetchHierarchy:
                 let msg = try _decoder.decode(HierarchyMessage.self, from: bytes)
@@ -219,6 +217,7 @@ class CameraModel:TCPSessionDelegate
         if let rsp = response
         {
             delegate?.model(command: command, data: rsp)
+            print(rsp)
         }
         
         if self.ready && !ready
