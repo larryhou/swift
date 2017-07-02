@@ -15,6 +15,7 @@ protocol TCPSessionDelegate
     @objc optional func tcp(session:TCPSession, sendEvent:Stream.Event)
     @objc optional func tcp(session:TCPSession, readEvent:Stream.Event)
     @objc optional func tcp(session:TCPSession, error:Error)
+    @objc optional func close()
 }
 
 extension Stream.Event
@@ -135,7 +136,7 @@ class TCPSession:NSObject, StreamDelegate
             }
         }
         
-        if eventCode == .errorOccurred
+        if eventCode == .errorOccurred || eventCode == .endEncountered
         {
             if let error = aStream.streamError
             {
@@ -143,8 +144,7 @@ class TCPSession:NSObject, StreamDelegate
                 delegate?.tcp?(session: self, error: error)
             }
             
-            _flags = 0
-            _timer.invalidate()
+            close()
         }
     }
     
@@ -252,6 +252,9 @@ class TCPSession:NSObject, StreamDelegate
         
         _queue.removeAll(keepingCapacity: false)
         _timer.invalidate()
+        _flags = 0
+        
+        delegate?.close?()
     }
     
     deinit
