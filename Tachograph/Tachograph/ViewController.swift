@@ -30,7 +30,7 @@ class ViewController: UIViewController, CameraModelDelegate
         }
     }
     
-    func model(ready: Bool)
+    func modelReady()
     {
         model.fetchRouteVideos()
         model.fetchEventVideos()

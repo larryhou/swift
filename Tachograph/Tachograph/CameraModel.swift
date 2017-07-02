@@ -73,7 +73,7 @@ protocol CameraModelDelegate
 {
     func model(command:RemoteCommand, data:Codable)
     func model(assets:[CameraModel.CameraAsset], type:CameraModel.AssetType)
-    func model(ready:Bool)
+    func modelReady()
 }
 
 class CameraModel:TCPSessionDelegate
@@ -246,7 +246,7 @@ class CameraModel:TCPSessionDelegate
         
         if self.ready && !ready
         {
-            delegate?.model(ready: true)
+            delegate?.modelReady()
         }
     }
     
