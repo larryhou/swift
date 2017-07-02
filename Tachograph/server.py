@@ -24,7 +24,7 @@ class CameraProtocol(protocol.Protocol):
         self.factory.clients.remove(self)
         print 'los_connection -> num:%d'%(len(self.factory.clients))
 
-    def split_protocol(self, message):
+    def split_data(self, message):
         message_list = []
         stack, found, start = [], False, 0
         for i in range(len(message)):
@@ -75,9 +75,9 @@ class CameraProtocol(protocol.Protocol):
         print '>>> %r'%response
         self.transport.write(response + '\n')
 
-    def dataReceived(self, message):
-        for segment in self.split_protocol(message):
-            self.respond_message(segment)
+    def dataReceived(self, data):
+        for message in self.split_data(data):
+            self.respond_message(message)
 
 def main():
     factory = protocol.Factory()
