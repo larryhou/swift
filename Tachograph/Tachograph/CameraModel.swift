@@ -8,26 +8,25 @@
 
 import Foundation
 
-protocol RemoteMessage
+struct AcknowledgeMessage:Codable
 {
-    var rval:Int { get }
-    var msg_id:Int { get }
+    let rval, msg_id:Int
 }
 
 //{ "rval": 0, "msg_id": 1, "type": "date_time", "param": "2017-06-29 19:25:12" }
-struct CommonMessage:Codable, RemoteMessage
+struct QueryMessage:Codable
 {
     let rval, msg_id:Int
     let type, param:String
 }
 
-struct TokenMessage:Codable, RemoteMessage
+struct TokenMessage:Codable
 {
     let rval, msg_id, param:Int
 }
 
 //{ "rval": 0, "msg_id": 1290, "totalFileNum": 37, "param": 0, "listing": [
-struct AssetsMessage:Codable, RemoteMessage
+struct AssetsMessage:Codable
 {
     struct Asset:Codable
     {
@@ -38,7 +37,7 @@ struct AssetsMessage:Codable, RemoteMessage
     let listing:[Asset]
 }
 //{ "rval": 0, "msg_id": 1280, "listing": [ { "path": "\/mnt\/mmc01\/DCIM", "type": "nor_video" }, { "path": "\/mnt\/mmc01\/EVENT", "type": "event_video" }, { "path": "\/mnt\/mmc01\/PICTURE", "type": "cap_img" } ] }
-struct HierarchyMessage:Codable, RemoteMessage
+struct StorageMessage:Codable
 {
     struct Folder:Codable
     {
@@ -50,32 +49,30 @@ struct HierarchyMessage:Codable, RemoteMessage
 }
 
 //{ "rval": 0, "msg_id": 11, "camera_type": "AE-CS2016-HZ2", "firm_ver": "V1.1.0", "firm_date": "build 161031", "param_version": "V1.3.0", "serial_num": "655136915", "verify_code": "JXYSNT" }
-struct VersionMessage:Codable,RemoteMessage
+struct VersionMessage:Codable
 {
     let rval, msg_id:Int
     let camera_type, firm_ver, firm_date, param_version, serial_num, verify_code:String
 }
 
-//LOOKUP = 1
-//SYSTEM = 11
-//FETCH_TOKEN = 257
-//FETCH_FOLDERS = 1280
-//FETCH_ROUTE_VIDEO_LIST = 1288
-//FETCH_EVENT_VIDEO_LIST = 1289
-//FETCH_IMAGE_LIST = 1290
-//CAPTURE_IMAGE = 769
-//NOTIFY_IMAGE = 7
+//{ "msg_id": 7, "type": "photo_taken", "param": "\/mnt\/mmc01\/PICTURE\/ch1_20170701_2022_0053.jpg" }
+struct CaptureNotification:Codable
+{
+    let msg_id:Int
+    let type, param:String
+}
 
 enum RemoteCommand:Int
 {
-    case lookup = 1, fetchVersion = 11, fetchToken = 257
-    case fetchHierarchy = 1280, fetchRouteVideos = 1288, fetchEventVideos = 1289, fetchImages = 1290
-    case capture = 7
+    case query = 1, fetchVersion = 11, fetchToken = 0x101/*257*/
+    case fetchStorage = 0x500/*1280*/, fetchRouteVideos = 0x508/*1288*/, fetchEventVideos = 0x509/*1289*/, fetchImages = 0x50A/*1290*/
+    case captureVideo = 0x201/*513*/, captureImage = 0x301/*769*/, notification = 7
 }
 
 protocol CameraModelDelegate
 {
-    func model(command:RemoteCommand, data:RemoteMessage)
+    func model(command:RemoteCommand, data:Codable)
+    func model(assets:[CameraModel.CameraAsset], type:CameraModel.AssetType)
     func model(ready:Bool)
 }
 
@@ -85,6 +82,11 @@ class CameraModel:TCPSessionDelegate
     {
         let name, url, icon:String
         let timestamp:Date
+    }
+    
+    enum AssetType
+    {
+        case image, event, route
     }
     
     struct AssetPath
@@ -155,18 +157,17 @@ class CameraModel:TCPSessionDelegate
         guard let id = data["msg_id"] as! Int? else { return }
         guard let command = RemoteCommand(rawValue: id) else { return }
         
-//        print(String(data:bytes, encoding:.utf8)!)
         let ready = self.ready
-        var response:RemoteMessage?
+        var response:Codable
         switch command
         {
-            case .lookup:
-                let msg = try _decoder.decode(CommonMessage.self, from: bytes)
+            case .query:
+                let msg = try _decoder.decode(QueryMessage.self, from: bytes)
                 response = msg
             
             case .fetchVersion:
                 self.version = try _decoder.decode(VersionMessage.self, from: bytes)
-                response = self.version
+                response = self.version!
             
             case .fetchToken:
                 let msg = try _decoder.decode(TokenMessage.self, from: bytes)
@@ -174,8 +175,8 @@ class CameraModel:TCPSessionDelegate
                 response = msg
                 _flags |= 0x01
             
-            case .fetchHierarchy:
-                let msg = try _decoder.decode(HierarchyMessage.self, from: bytes)
+            case .fetchStorage:
+                let msg = try _decoder.decode(StorageMessage.self, from: bytes)
                 var route = "", event = "", image = ""
                 for item in msg.listing
                 {
@@ -199,32 +200,70 @@ class CameraModel:TCPSessionDelegate
             case .fetchRouteVideos:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
                 parse(assets: msg, target: &routeVideos, assetPath: path!.route)
+                delegate?.model(assets: routeVideos, type: .route)
                 response = msg
             
             case .fetchEventVideos:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
                 parse(assets: msg, target: &eventVideos, assetPath: path!.event)
+                delegate?.model(assets: eventVideos, type: .event)
                 response = msg
             
             case .fetchImages:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
                 parse(assets: msg, target: &images, assetPath: path!.image)
+                delegate?.model(assets: images, type: .image)
                 response = msg
             
-            default:
-                break
+            case .captureImage, .captureVideo:
+                let msg = try _decoder.decode(AcknowledgeMessage.self, from: bytes)
+                response = msg
+            
+            case .notification:
+                let msg = try _decoder.decode(CaptureNotification.self, from: bytes)
+                guard let name = msg.param.split(separator: "/").last else {return}
+                if msg.type == "photo_taken"
+                {
+                    if let asset = parse(name: String(name), assetPath: path!.image)
+                    {
+                        images.insert(asset, at: 0)
+                        delegate?.model(assets: images, type: .image)
+                    }
+                }
+                else if msg.type == "file_new"
+                {
+                    if let asset = parse(name: String(name), assetPath: path!.route)
+                    {
+                        routeVideos.insert(asset, at: 0)
+                        delegate?.model(assets: routeVideos, type: .route)
+                    }
+                }
+                response = msg
         }
         
-        if let rsp = response
-        {
-            delegate?.model(command: command, data: rsp)
-            print(rsp)
-        }
+        delegate?.model(command: command, data: response)
+        print(response)
         
         if self.ready && !ready
         {
             delegate?.model(ready: true)
         }
+    }
+    
+    func parse(name:String, assetPath:String) -> CameraAsset?
+    {
+        if let trim = _trim
+        {
+            let domain = "192.168.42.1"
+            let range = NSMakeRange(0, name.count)
+            let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
+            let timestamp = _dateFormatter.date(from: text)
+            return CameraAsset(name: name, url: "http://\(domain)\(assetPath)/\(name)",
+                icon: "http://\(domain)\(assetPath)/\(text).thm",
+                timestamp: timestamp!)
+        }
+        
+        return nil
     }
     
     func parse(assets:AssetsMessage, target:inout [CameraAsset], assetPath:String)
@@ -243,15 +282,8 @@ class CameraModel:TCPSessionDelegate
                 continue
             }
             
-            if let trim = _trim
+            if let asset = parse(name: name, assetPath: assetPath)
             {
-                let domain = "192.168.42.1"
-                let range = NSMakeRange(0, name.count)
-                let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
-                let timestamp = _dateFormatter.date(from: text)
-                let asset = CameraAsset(name: name, url: "http://\(domain)\(assetPath)/\(item.name)",
-                    icon: "http://\(domain)\(assetPath)/\(text).thm",
-                    timestamp: timestamp!)
                 target.append(asset)
             }
         }
@@ -260,10 +292,10 @@ class CameraModel:TCPSessionDelegate
         print(target)
     }
     
-    func lookup(type:String = "date_time")
+    func query(type:String = "date_time")
     {
 //        {"token" : 1, "msg_id" : 1, "type":"date_time"}
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.lookup.rawValue, "type" : type]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.query.rawValue, "type" : type]
         _session.send(data: params)
     }
     
@@ -281,10 +313,10 @@ class CameraModel:TCPSessionDelegate
         _session.send(data: params)
     }
     
-    func fetchHierarchy()
+    func fetchStorage()
     {
 //        {"token" : 1, "msg_id" : 1280}
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchHierarchy.rawValue]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchStorage.rawValue]
         _session.send(data: params)
     }
     
@@ -307,18 +339,15 @@ class CameraModel:TCPSessionDelegate
         _session.send(data: params)
     }
     
-    func capture()
+    func captureImage()
     {
-//        { "msg_id": 7, "type": "photo_taken", "param": "\/mnt\/mmc01\/PICTURE\/ch1_20170629_1924_0037.jpg" }
-        let name = "\(_dateFormatter.string(from: Date())).jpg"
-        let params:[String:Any] = ["msg_id": RemoteCommand.capture.rawValue, "type": "photo_taken", "param": "/mnt/mmc01/PICTURE/\(name)"]
+        let params:[String:Any] = ["token" : self.token, "msg_id": RemoteCommand.captureImage.rawValue]
         _session.send(data: params)
     }
     
-    func record()
+    func captureVideo()
     {
-//        { "msg_id": 7, "type": "record", "param": "record" }
-        let params:[String:Any] = ["msg_id": RemoteCommand.capture.rawValue, "type": "record", "param": "record"]
+        let params:[String:Any] = ["token" : self.token, "msg_id": RemoteCommand.captureVideo.rawValue]
         _session.send(data: params)
     }
 }

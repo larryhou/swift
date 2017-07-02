@@ -10,18 +10,23 @@ import UIKit
 
 class ViewController: UIViewController, CameraModelDelegate
 {
-    func model(command: RemoteCommand, data: RemoteMessage)
+    func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
+    {
+        
+    }
+    
+    func model(command: RemoteCommand, data: Codable)
     {
         if command == .fetchToken
         {
             model.fetchVersion()
-            model.lookup(type: "app_status")
-            model.lookup(type: "date_time")
-            model.fetchHierarchy()
+            model.query(type: "app_status")
+            model.query(type: "date_time")
+            model.fetchStorage()
         }
         else if command == .fetchImages
         {
-            model.capture()
+            model.captureImage()
         }
     }
     
