@@ -115,8 +115,8 @@ class CameraModel:TCPSessionDelegate
     init()
     {
         _session = TCPSession()
-//        _session.connect(address: "172.20.10.3", port: 8800)
-        _session.connect(address: "192.168.42.1", port: 7878)
+        _session.connect(address: "192.168.0.103", port: 8800)
+//        _session.connect(address: "192.168.42.1", port: 7878)
         
         _decoder = JSONDecoder()
         
@@ -132,13 +132,40 @@ class CameraModel:TCPSessionDelegate
     {
         do
         {
-            if let msg = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any>
-            {
-                try processMessage(data: msg, bytes: data)
-            }
+            if data.count == 0 { return }
+            try data.withUnsafeBytes({ (pointer:UnsafePointer<UInt8>) in
+                var pair:[UInt8] = []
+                var position = pointer, start = pointer, found = false
+                for _ in 0..<data.count
+                {
+                    if position.pointee == 0x5b || position.pointee == 0x7b
+                    {
+                        found = true
+                        pair.append(position.pointee)
+                    }
+                    else
+                    if position.pointee == 0x5d || position.pointee == 0x7d
+                    {
+                        pair.removeLast()
+                    }
+                    
+                    position = position.advanced(by: 1)
+                    if found && pair.count == 0
+                    {
+                        let message = Data(bytes:start, count:start.distance(to: position))
+                        if let jsonObject = try JSONSerialization.jsonObject(with: message, options: .allowFragments) as? Dictionary<String, Any>
+                        {
+                            try processMessage(data: jsonObject, bytes: message)
+                        }
+                        start = position
+                        found = false
+                    }
+                }
+            })
         }
         catch
         {
+            print(String(data:data, encoding:.utf8)!)
             print(error)
         }
     }
