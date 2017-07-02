@@ -26,14 +26,14 @@ class CameraProtocol(protocol.Protocol):
 
     def split_data(self, message):
         message_list = []
-        stack, found, start = [], False, 0
+        depth, found, start = 0, False, 0
         for i in range(len(message)):
             if message[i] in ('\x5b', '\x7b'):
-                stack.append(message[i])
                 found = True
+                depth += 1
             elif message[i] in ('\x5d', '\x7d'):
-                del stack[-1]
-            if found and len(stack) == 0:
+                depth -= 1
+            if found and depth == 0:
                 found = False
                 stop = i + 1
                 message_list.append(message[start:stop])

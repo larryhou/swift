@@ -134,23 +134,22 @@ class CameraModel:TCPSessionDelegate
         {
             if data.count == 0 { return }
             try data.withUnsafeBytes({ (pointer:UnsafePointer<UInt8>) in
-                var pair:[UInt8] = []
-                var position = pointer, start = pointer, found = false
+                var position = pointer, start = pointer, found = false, depth = 0
                 for _ in 0..<data.count
                 {
                     if position.pointee == 0x5b || position.pointee == 0x7b
                     {
                         found = true
-                        pair.append(position.pointee)
+                        depth += 1
                     }
                     else
                     if position.pointee == 0x5d || position.pointee == 0x7d
                     {
-                        pair.removeLast()
+                        depth -= 1
                     }
                     
                     position = position.advanced(by: 1)
-                    if found && pair.count == 0
+                    if found && depth == 0
                     {
                         let message = Data(bytes:start, count:start.distance(to: position))
                         if let jsonObject = try JSONSerialization.jsonObject(with: message, options: .allowFragments) as? Dictionary<String, Any>
