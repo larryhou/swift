@@ -19,6 +19,10 @@ class ViewController: UIViewController, CameraModelDelegate
             model.lookup(type: "date_time")
             model.fetchHierarchy()
         }
+        else if command == .fetchImages
+        {
+            model.capture()
+        }
     }
     
     func model(ready: Bool)

@@ -97,10 +97,10 @@ class TCPSession:NSObject, StreamDelegate
         _sendStream.open()
         
         _flags = 0
-        _timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        _timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(sendUpdate), userInfo: nil, repeats: true)
     }
     
-    @objc func update()
+    @objc private func sendUpdate()
     {
         guard let stream = _sendStream else { return }
         if stream.hasSpaceAvailable && _queue.count > 0
@@ -120,12 +120,19 @@ class TCPSession:NSObject, StreamDelegate
             if eventCode == .hasBytesAvailable
             {
                 _flags |= 0x01
-                delegate?.tcp(session: self, data: read())
+                if let stream = _readStream, stream.hasBytesAvailable
+                {
+                    delegate?.tcp(session: self, data: read())
+                }
             }
         }
         else
         {
             delegate?.tcp?(session: self, sendEvent: eventCode)
+            if eventCode == .hasSpaceAvailable
+            {
+                sendUpdate()
+            }
         }
         
         if eventCode == .errorOccurred
