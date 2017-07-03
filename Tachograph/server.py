@@ -48,7 +48,7 @@ class CameraProtocol(protocol.Protocol):
             if data:
                 print '%r data:%r'%(e, data)
             return
-        print '<<< %r'%message
+        print '+++\n%s'%message
         response = ''
         command = CameraCommand(data['msg_id'])
         if command == CameraCommand.QUERY:
@@ -72,7 +72,7 @@ class CameraProtocol(protocol.Protocol):
             response = '{ "rval": 0, "msg_id": 1290, "totalFileNum": 37, "param": 0, "listing": [ { "name": "ch1_20170629_1924_0037.jpg" }, { "name": "ch1_20170628_2004_0036.jpg" }, { "name": "ch1_20170628_2004_0035.jpg" }, { "name": "ch1_20170628_2004_0034.jpg" }, { "name": "ch1_20170628_2004_0033.jpg" }, { "name": "ch1_20170628_2002_0032.jpg" }, { "name": "ch1_20170628_1951_0031.jpg" }, { "name": "ch1_20170628_1950_0030.jpg" }, { "name": "ch1_20170628_1950_0029.jpg" }, { "name": "ch1_20170628_1950_0028.jpg" }, { "name": "ch1_20170628_1947_0027.jpg" }, { "name": "ch1_20170628_1946_0026.jpg" }, { "name": "ch1_20170628_1946_0025.jpg" }, { "name": "ch1_20170628_1946_0024.jpg" }, { "name": "ch1_20170628_1945_0023.jpg" }, { "name": "ch1_20170628_1945_0022.jpg" }, { "name": "ch1_20170628_1944_0021.jpg" }, { "name": "ch1_20170628_1944_0020.jpg" }, { "name": "ch1_20170628_1943_0019.jpg" }, { "name": "ch1_20170628_1941_0018.jpg" } ] }'
         else:
             response = '{ "rval": 0, "msg_id": %d }'%(command.value)
-        print '>>> %r'%response
+        print '>>> %r\n'%response
         self.transport.write(response + '\n')
 
     def dataReceived(self, data):
