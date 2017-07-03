@@ -344,20 +344,20 @@ class CameraModel:TCPSessionDelegate
     
     func fetchEventVideos(offset num:Int = 0)
     {
-        fetchAssets(command: .fetchEventVideos, offset:num, storage: &eventVideos)
+        fetchCameraAssets(command: .fetchEventVideos, offset:num, storage: &eventVideos)
     }
     
     func fetchRouteVideos(offset num:Int = 0)
     {
-        fetchAssets(command: .fetchRouteVideos, offset:num, storage: &routeVideos)
+        fetchCameraAssets(command: .fetchRouteVideos, offset:num, storage: &routeVideos)
     }
     
     func fetchImages(offset num:Int = 0)
     {
-        fetchAssets(command: .fetchImages, offset:num, storage: &images)
+        fetchCameraAssets(command: .fetchImages, offset:num, storage: &images)
     }
     
-    func fetchAssets(command:RemoteCommand, offset num:Int = 0, storage:inout [CameraAsset])
+    private func fetchCameraAssets(command:RemoteCommand, offset num:Int = 0, storage:inout [CameraAsset])
     {
         let offset = (num == 0 ? storage.count : num) / 20 * 20
         let params:[String:Any] = ["token" : self.token, "msg_id" : command.rawValue, "param" : offset]
