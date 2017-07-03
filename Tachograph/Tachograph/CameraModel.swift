@@ -320,48 +320,43 @@ class CameraModel:TCPSessionDelegate
     
     func query(type:String = "date_time")
     {
-//        {"token" : 1, "msg_id" : 1, "type":"date_time"}
         let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.query.rawValue, "type" : type]
         _session.send(data: params)
     }
     
     func fetchToken()
     {
-//        {"token" : 0, "msg_id" : 257}
         let params:[String:Any] = ["token" : 0, "msg_id" : RemoteCommand.fetchToken.rawValue]
         _session.send(data: params)
     }
     
     func fetchVersion()
     {
-//        {"token" : 1, "msg_id" : 11}
         let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchVersion.rawValue]
         _session.send(data: params)
     }
     
     func fetchStorage()
     {
-//        {"token" : 1, "msg_id" : 1280}
         let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchStorage.rawValue]
         _session.send(data: params)
     }
     
-    func fetchEventVideos()
+    func fetchEventVideos(offset num:Int = 0)
     {
-//        {"token" : 1, "msg_id" : 1289, "param" : 0}
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchEventVideos.rawValue, "param" : 0]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchEventVideos.rawValue, "param" : num]
         _session.send(data: params)
     }
     
-    func fetchRouteVideos()
+    func fetchRouteVideos(offset num:Int = 0)
     {
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchRouteVideos.rawValue, "param" : 0]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchRouteVideos.rawValue, "param" : num]
         _session.send(data: params)
     }
     
-    func fetchImages()
+    func fetchImages(offset num:Int = 0)
     {
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchImages.rawValue, "param" : 0]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchImages.rawValue, "param" : num]
         _session.send(data: params)
     }
     
