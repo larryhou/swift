@@ -98,7 +98,7 @@ class TCPSession:NSObject, StreamDelegate
         _sendStream.open()
         
         _flags = 0
-        _timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(sendUpdate), userInfo: nil, repeats: true)
+        _timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(sendUpdate), userInfo: nil, repeats: true)
     }
     
     @objc private func sendUpdate()
@@ -130,10 +130,6 @@ class TCPSession:NSObject, StreamDelegate
         else
         {
             delegate?.tcp?(session: self, sendEvent: eventCode)
-            if eventCode == .hasSpaceAvailable
-            {
-                sendUpdate()
-            }
         }
         
         if eventCode == .errorOccurred || eventCode == .endEncountered
