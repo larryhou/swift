@@ -64,6 +64,11 @@ struct QueuedMessage
     }
 }
 
+enum TCPSessionState
+{
+    case none, connecting, connected, closed, reconnecting
+}
+
 class TCPSession:NSObject, StreamDelegate
 {
     static let BUFFER_SIZE = 1024
@@ -73,14 +78,20 @@ class TCPSession:NSObject, StreamDelegate
     private var _sendStream:OutputStream!
     private var _timer:Timer!
     
+    private(set) var state:TCPSessionState = .none
+    
     lazy
     private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: BUFFER_SIZE)
     private var _queue:[QueuedMessage] = []
     
     var connected:Bool { return _flags == 0x11 }
     
+    private var address:String?, port:UInt32 = 0
     func connect(address:String, port:UInt32)
     {
+        self.address = address
+        self.port = port
+        
         var r:Unmanaged<CFReadStream>?
         var w:Unmanaged<CFWriteStream>?
         CFStreamCreatePairWithSocketToHost(nil, address as CFString, port, &r, &w)
@@ -97,8 +108,19 @@ class TCPSession:NSObject, StreamDelegate
         _readStream.open()
         _sendStream.open()
         
+        state = .connecting
+        
         _flags = 0
         _timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(sendUpdate), userInfo: nil, repeats: true)
+    }
+    
+    func reconnect()
+    {
+        state = .reconnecting
+        if let address = self.address, port != 0
+        {
+            connect(address: address, port: port)
+        }
     }
     
     @objc private func sendUpdate()
@@ -107,6 +129,8 @@ class TCPSession:NSObject, StreamDelegate
         if stream.hasSpaceAvailable && _queue.count > 0
         {
             _flags |= 0x10
+            if connected { state = .connected }
+            
             send(_queue.removeFirst())
         }
     }
@@ -121,6 +145,8 @@ class TCPSession:NSObject, StreamDelegate
             if eventCode == .hasBytesAvailable
             {
                 _flags |= 0x01
+                if connected { state = .connected }
+                
                 if let stream = _readStream, stream.hasBytesAvailable
                 {
                     delegate?.tcp(session: self, data: read())
@@ -250,6 +276,7 @@ class TCPSession:NSObject, StreamDelegate
         _timer.invalidate()
         _flags = 0
         
+        state = .closed
         delegate?.close?()
     }
     

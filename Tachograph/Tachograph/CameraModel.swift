@@ -112,11 +112,13 @@ class CameraModel:TCPSessionDelegate
     private var _dateFormatter:DateFormatter
     private var _trim:NSRegularExpression?
     
+    private var _timer:Timer?
+    
     init()
     {
         _session = TCPSession()
-//        _session.connect(address: "10.65.133.66", port: 8800)
-        _session.connect(address: "192.168.42.1", port: 7878)
+        _session.connect(address: "10.65.133.85", port: 8800)
+//        _session.connect(address: "192.168.42.1", port: 7878)
         
         _decoder = JSONDecoder()
         
@@ -126,6 +128,22 @@ class CameraModel:TCPSessionDelegate
         _trim = try? NSRegularExpression(pattern: "\\.[^\\.]+$", options: .caseInsensitive)
         
         _session.delegate = self
+        _timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(heartbeat), userInfo: nil, repeats: true)
+    }
+    
+    @objc func heartbeat()
+    {
+        if _session.connected
+        {
+            query(type: "app_status")
+        }
+        else
+        {
+            if _session.state != .reconnecting
+            {
+                _session.reconnect()
+            }
+        }
     }
     
     func tcp(session: TCPSession, data: Data)
