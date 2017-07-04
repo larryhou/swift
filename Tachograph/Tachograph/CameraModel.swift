@@ -80,7 +80,7 @@ class CameraModel:TCPSessionDelegate
 {
     struct CameraAsset
     {
-        let name, url, icon:String
+        let id, name, url, icon:String
         let timestamp:Date
     }
     
@@ -123,12 +123,13 @@ class CameraModel:TCPSessionDelegate
         _decoder = JSONDecoder()
         
         _dateFormatter = DateFormatter()
-        _dateFormatter.dateFormat = "'ch1_'yyyyMMdd_HHmm_ssSS" // ch1_20170628_2004_0042
+        _dateFormatter.dateFormat = "'ch1_'yyyyMMdd_HHmm_SSSS" // ch1_20170628_2004_0042
         
         _trim = try? NSRegularExpression(pattern: "\\.[^\\.]+$", options: .caseInsensitive)
         
         _session.delegate = self
         _timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(heartbeat), userInfo: nil, repeats: true)
+        _timer?.invalidate()
     }
     
     @objc func heartbeat()
@@ -302,7 +303,9 @@ class CameraModel:TCPSessionDelegate
             let range = NSMakeRange(0, name.count)
             let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
             let timestamp = _dateFormatter.date(from: text)
-            return CameraAsset(name: name, url: "http://\(domain)\(assetPath)/\(name)",
+            
+            let id:String = String(text.split(separator: "_").last!)
+            return CameraAsset(id: id, name: name, url: "http://\(domain)\(assetPath)/\(name)",
                 icon: "http://\(domain)\(assetPath)/\(text).thm",
                 timestamp: timestamp!)
         }

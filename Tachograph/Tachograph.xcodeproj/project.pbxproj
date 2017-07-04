@@ -16,6 +16,7 @@
 		6B42808F1F0628B200567C24 /* TachographTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B42808E1F0628B200567C24 /* TachographTests.swift */; };
 		6B42809A1F0628B200567C24 /* TachographUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280991F0628B200567C24 /* TachographUITests.swift */; };
 		6B4280AA1F065C7A00567C24 /* TCPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280A91F065C7A00567C24 /* TCPSession.swift */; };
+		6B70559C1F0BA31800C64BFB /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B70559B1F0BA31800C64BFB /* BrowserViewController.swift */; };
 		6BCD30751F074D95001F0F30 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD30741F074D95001F0F30 /* CameraModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		6B4280991F0628B200567C24 /* TachographUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TachographUITests.swift; sourceTree = "<group>"; };
 		6B42809B1F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B4280A91F065C7A00567C24 /* TCPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSession.swift; sourceTree = "<group>"; };
+		6B70559B1F0BA31800C64BFB /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		6BCD30741F074D95001F0F30 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				6B4280A91F065C7A00567C24 /* TCPSession.swift */,
+				6B70559B1F0BA31800C64BFB /* BrowserViewController.swift */,
 				6BCD30741F074D95001F0F30 /* CameraModel.swift */,
 				6B4280761F0628B200567C24 /* AppDelegate.swift */,
 				6B4280781F0628B200567C24 /* ViewController.swift */,
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B4280791F0628B200567C24 /* ViewController.swift in Sources */,
+				6B70559C1F0BA31800C64BFB /* BrowserViewController.swift in Sources */,
 				6B4280AA1F065C7A00567C24 /* TCPSession.swift in Sources */,
 				6B42807F1F0628B200567C24 /* Tachograph.xcdatamodeld in Sources */,
 				6B4280771F0628B200567C24 /* AppDelegate.swift in Sources */,

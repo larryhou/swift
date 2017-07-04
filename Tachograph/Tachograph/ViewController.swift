@@ -8,11 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController, CameraModelDelegate
+protocol ModelObserver
+{
+    func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
+}
+
+class ViewController: UITabBarController, CameraModelDelegate
 {
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
-        
+        if let viewControllers = self.viewControllers
+        {
+            for item in viewControllers
+            {
+                if item is ModelObserver
+                {
+                    (item as! ModelObserver).model(assets: assets, type: type)
+                }
+            }
+        }
     }
     
     func model(command: RemoteCommand, data: Codable)
