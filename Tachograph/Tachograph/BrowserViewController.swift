@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 import UIKit
+import AVKit
 
 class AssetCell:UITableViewCell
 {
@@ -32,9 +33,6 @@ class BrowerViewController:UITableViewController, ModelObserver
     var formatter:DateFormatter!
     var focusHeight:CGFloat = 0
     
-    var videoController:AVPlayer!
-    var videoLayer:AVPlayerLayer!
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -45,13 +43,6 @@ class BrowerViewController:UITableViewController, ModelObserver
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
         focusHeight = view.frame.width / 16 * 9
-        
-        videoController = AVPlayer()
-        videoController.actionAtItemEnd = .none
-        
-        videoLayer = AVPlayerLayer(player: videoController)
-        videoLayer.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(videoLayer)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int
@@ -74,6 +65,7 @@ class BrowerViewController:UITableViewController, ModelObserver
         return assets.count
     }
     
+    var videoController:AVPlayerViewController?
     var focusIndex:IndexPath?, focusBounds:CGRect!
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
@@ -82,17 +74,35 @@ class BrowerViewController:UITableViewController, ModelObserver
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        guard let url = URL(string: "http://10.65.133.85/sample.mp4") else {return}
-        
-        let asset = AVAsset(url: url)
-        videoController.replaceCurrentItem(with: AVPlayerItem(asset: asset))
+        guard let url = URL(string: "http://10.65.133.61:8080/sample.mp4") else {return}
         if let cell = tableView.cellForRow(at: indexPath)
         {
-            let point = cell.convert(cell.frame.origin, to: self.view)
-            focusBounds = CGRect(origin: point, size: CGSize(width: view.frame.width, height: focusHeight))
-            videoLayer.bounds = focusBounds
+            focusBounds = cell.superview!.convert(cell.frame, to: self.view)
+            focusBounds.size.height = focusHeight
+            
+            if self.videoController == nil
+            {
+                videoController = AVPlayerViewController()
+                videoController?.view.frame = focusBounds
+                view.addSubview(videoController!.view)
+                videoController?.view.isHidden = true
+            }
+            else
+            {
+                videoController?.player?.pause()
+            }
+            
+            UIView.setAnimationCurve(.easeInOut)
+            UIView.animate(withDuration: 0.2, animations:
+            { [unowned self] in
+                self.videoController!.view.isHidden = false
+                self.videoController!.view.frame = self.focusBounds
+            }, completion:
+            { [unowned self] (flag) in
+                self.videoController!.player = AVPlayer(url: url)
+                self.videoController!.player?.automaticallyWaitsToMinimizeStalling = false
+            })
         }
-        videoController.play()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -112,14 +122,14 @@ class BrowerViewController:UITableViewController, ModelObserver
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
     {
         focusHeight = size.width / 16 * 9
-        let orientation = UIDevice.current.orientation
-        if orientation == .landscapeLeft || orientation == .landscapeRight
-        {
-            videoLayer.bounds = CGRect(origin: CGPoint(), size: size)
-        }
-        else
-        {
-            videoLayer.bounds = focusBounds
-        }
+//        let orientation = UIDevice.current.orientation
+//        if orientation == .landscapeLeft || orientation == .landscapeRight
+//        {
+//            videoLayer.bounds = CGRect(origin: CGPoint(), size: size)
+//        }
+//        else
+//        {
+//            videoLayer.bounds = focusBounds
+//        }
     }
 }
