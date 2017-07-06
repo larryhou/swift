@@ -93,8 +93,8 @@ class BrowerViewController:UITableViewController, ModelObserver
             
             let barController = self.parent as! UITabBarController
             
-            self.boundsVideo.size = sizeCell
-            controller.view.frame = self.boundsVideo
+            self.frameVideo.size = sizeCell
+            controller.view.frame = self.frameVideo
             let orientation = UIDevice.current.orientation
             if orientation == .landscapeRight || orientation == .landscapeLeft
             {
@@ -149,7 +149,7 @@ class BrowerViewController:UITableViewController, ModelObserver
     }
     
     var videoController:AVPlayerViewController?
-    var focusIndex:IndexPath?, boundsVideo:CGRect!
+    var focusIndex:IndexPath?, frameVideo:CGRect!
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         focusIndex = indexPath
@@ -164,13 +164,13 @@ class BrowerViewController:UITableViewController, ModelObserver
         
         if let cell = tableView.cellForRow(at: indexPath)
         {
-            boundsVideo = cell.superview!.convert(cell.frame, to: self.view)
-            boundsVideo.size.height = sizeCell.height
+            frameVideo = cell.superview!.convert(cell.frame, to: self.view)
+            frameVideo.size.height = sizeCell.height
             
             if self.videoController == nil
             {
                 videoController = AVPlayerViewController()
-                videoController?.view.frame = boundsVideo
+                videoController?.view.frame = frameVideo
                 view.addSubview(videoController!.view)
                 videoController?.view.isHidden = true
             }
@@ -183,7 +183,7 @@ class BrowerViewController:UITableViewController, ModelObserver
             UIView.animate(withDuration: 0.25, animations:
             { [unowned self] in
                 self.videoController!.view.isHidden = false
-                self.videoController!.view.frame = self.boundsVideo
+                self.videoController!.view.frame = self.frameVideo
             }, completion:
             { [unowned self] (flag) in
                 self.videoController!.player = AVPlayer(url: url)
