@@ -18,31 +18,95 @@ class AssetCell:UITableViewCell
     @IBOutlet var ib_timestamp:UILabel!
 }
 
+class MoviePlayController:AVPlayerViewController
+{
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return UIInterfaceOrientationMask.all }
+}
+
 class BrowerViewController:UITableViewController, ModelObserver
 {
+    var OrientationContext:String?
+    
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
-        if type == .route
+        if type == .route && self.videoAssets.count != assets.count
         {
-            self.assets = assets
-            self.tableView.reloadData()
+            loading = false
+            
+            videoAssets = assets
+            tableView.reloadData()
+            
+            focusIndex = nil
+            videoController?.player?.pause()
+            videoController?.view.isHidden = true
         }
+        
+        loadingIndicator.stopAnimating()
+        tableView.tableFooterView = nil
     }
     
-    var assets:[CameraModel.CameraAsset]!
+    var videoAssets:[CameraModel.CameraAsset]!
     var formatter:DateFormatter!
-    var focusHeight:CGFloat = 0
+    
+    var loadingIndicator:UIActivityIndicatorView!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        assets = CameraModel.shared.routeVideos
+        videoAssets = CameraModel.shared.routeVideos
         
         formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
-        focusHeight = view.frame.width / 16 * 9
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
+        
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        loadingIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        loadingIndicator.hidesWhenStopped = false
+    }
+    
+    @objc func tap(sender:UITapGestureRecognizer)
+    {
+        let orientation = UIDevice.current.orientation
+        if orientation == .landscapeLeft || orientation == .landscapeRight
+        {
+            if let parent = self.parent as? UITabBarController
+            {
+                parent.tabBar.isHidden = !parent.tabBar.isHidden
+            }
+        }
+    }
+    
+    var sizeCell:CGSize = CGSize()
+    @objc func orientationUpdate()
+    {
+        sizeCell = CGSize(width: view.frame.width, height: view.frame.width / 16 * 9)
+        if let controller = self.videoController
+        {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+            let barController = self.parent as! UITabBarController
+            
+            self.boundsVideo.size = sizeCell
+            controller.view.frame = self.boundsVideo
+            let orientation = UIDevice.current.orientation
+            if orientation == .landscapeRight || orientation == .landscapeLeft
+            {
+                if let index = self.focusIndex
+                {
+                    tableView.scrollToRow(at: index, at: .top, animated: true)
+                }
+                
+                barController.tabBar.isHidden = true
+            }
+            else
+            {
+                barController.tabBar.isHidden = false
+            }
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int
@@ -54,7 +118,7 @@ class BrowerViewController:UITableViewController, ModelObserver
     {
         if focusIndex == indexPath
         {
-            return focusHeight
+            return sizeCell.height
         }
         
         return 70
@@ -62,11 +126,27 @@ class BrowerViewController:UITableViewController, ModelObserver
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return assets.count
+        return videoAssets.count
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        if indexPath.row == videoAssets.count - 1
+        {
+            if tableView.tableFooterView == nil
+            {
+                tableView.tableFooterView = loadingIndicator
+            }
+            
+            loadingIndicator.startAnimating()
+            
+            loading = true
+            CameraModel.shared.fetchRouteVideos()
+        }
     }
     
     var videoController:AVPlayerViewController?
-    var focusIndex:IndexPath?, focusBounds:CGRect!
+    var focusIndex:IndexPath?, boundsVideo:CGRect!
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         focusIndex = indexPath
@@ -74,16 +154,20 @@ class BrowerViewController:UITableViewController, ModelObserver
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        guard let url = URL(string: "http://10.65.133.61:8080/sample.mp4") else {return}
+        guard let url = URL(string: "http://172.20.10.3:8080/sample.mp4") else {return}
+        
+//        guard let data = assets?[indexPath.row] else { return }
+//        guard let url = URL(string: data.url) else {return}
+        
         if let cell = tableView.cellForRow(at: indexPath)
         {
-            focusBounds = cell.superview!.convert(cell.frame, to: self.view)
-            focusBounds.size.height = focusHeight
+            boundsVideo = cell.superview!.convert(cell.frame, to: self.view)
+            boundsVideo.size.height = sizeCell.height
             
             if self.videoController == nil
             {
                 videoController = AVPlayerViewController()
-                videoController?.view.frame = focusBounds
+                videoController?.view.frame = boundsVideo
                 view.addSubview(videoController!.view)
                 videoController?.view.isHidden = true
             }
@@ -93,10 +177,10 @@ class BrowerViewController:UITableViewController, ModelObserver
             }
             
             UIView.setAnimationCurve(.easeInOut)
-            UIView.animate(withDuration: 0.2, animations:
+            UIView.animate(withDuration: 0.25, animations:
             { [unowned self] in
                 self.videoController!.view.isHidden = false
-                self.videoController!.view.frame = self.focusBounds
+                self.videoController!.view.frame = self.boundsVideo
             }, completion:
             { [unowned self] (flag) in
                 self.videoController!.player = AVPlayer(url: url)
@@ -105,11 +189,12 @@ class BrowerViewController:UITableViewController, ModelObserver
         }
     }
     
+    var loading = false
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell") as? AssetCell
         {
-            let data = assets[indexPath.row]
+            let data = videoAssets[indexPath.row]
             cell.ib_name.text = data.name
             cell.ib_timestamp.text = formatter.string(from: data.timestamp)
             cell.ib_id.text = data.id
@@ -117,19 +202,5 @@ class BrowerViewController:UITableViewController, ModelObserver
         }
         
         return UITableViewCell()
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
-    {
-        focusHeight = size.width / 16 * 9
-//        let orientation = UIDevice.current.orientation
-//        if orientation == .landscapeLeft || orientation == .landscapeRight
-//        {
-//            videoLayer.bounds = CGRect(origin: CGPoint(), size: size)
-//        }
-//        else
-//        {
-//            videoLayer.bounds = focusBounds
-//        }
     }
 }

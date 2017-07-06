@@ -139,6 +139,7 @@ class TCPSession:NSObject, StreamDelegate
     func stream(_ aStream: Stream, handle eventCode: Stream.Event)
     {
         print(eventCode.description)
+        if _readStream == nil || _sendStream == nil {return}
         if aStream == _readStream
         {
             delegate?.tcp?(session: self, readEvent: eventCode)

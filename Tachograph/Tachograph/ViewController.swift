@@ -40,7 +40,7 @@ class ViewController: UITabBarController, CameraModelDelegate
         }
         else if command == .fetchImages
         {
-            model.captureImage()
+//            model.captureImage()
         }
     }
     
@@ -65,6 +65,6 @@ class ViewController: UITabBarController, CameraModelDelegate
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-    }
+    }    
 }
 

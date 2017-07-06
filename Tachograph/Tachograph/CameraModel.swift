@@ -117,7 +117,7 @@ class CameraModel:TCPSessionDelegate
     init()
     {
         _session = TCPSession()
-        _session.connect(address: "10.65.133.61", port: 8800)
+        _session.connect(address: "172.20.10.3", port: 8800)
 //        _session.connect(address: "192.168.42.1", port: 7878)
         
         _decoder = JSONDecoder()
@@ -129,7 +129,7 @@ class CameraModel:TCPSessionDelegate
         
         _session.delegate = self
         _timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(heartbeat), userInfo: nil, repeats: true)
-        _timer?.invalidate()
+//        _timer?.invalidate()
     }
     
     @objc func heartbeat()
