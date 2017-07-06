@@ -27,13 +27,33 @@ class BrowerViewController:UITableViewController, ModelObserver
         if type == .route && self.videoAssets.count != assets.count
         {
             loading = false
+            if let index = self.focusIndex
+            {
+                let data = videoAssets[index.row]
+                for i in 0..<assets.count
+                {
+                    if assets[i].name == data.name
+                    {
+                        self.focusIndex = IndexPath(row: i, section: index.section)
+                    }
+                }
+            }
             
             videoAssets = assets
             tableView.reloadData()
             
-            focusIndex = nil
-            videoController?.player?.pause()
-            videoController?.view.isHidden = true
+            if let index = self.focusIndex
+            {
+                if let cell = tableView.cellForRow(at: index)
+                {
+                    var frame = cell.superview!.convert(cell.frame, to: view)
+                    frame.size.height = sizeCell.height
+                    UIView.animate(withDuration: 0.25)
+                    {
+                        self.videoController?.view.frame = frame
+                    }
+                }
+            }
         }
         
         loadingIndicator.stopAnimating()
