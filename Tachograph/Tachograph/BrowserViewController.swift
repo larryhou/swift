@@ -18,11 +18,6 @@ class AssetCell:UITableViewCell
     @IBOutlet var ib_timestamp:UILabel!
 }
 
-class MoviePlayController:AVPlayerViewController
-{
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return UIInterfaceOrientationMask.all }
-}
-
 class BrowerViewController:UITableViewController, ModelObserver
 {
     var OrientationContext:String?
