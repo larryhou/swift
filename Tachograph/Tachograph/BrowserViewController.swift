@@ -67,18 +67,6 @@ class BrowerViewController:UITableViewController, ModelObserver
         loadingIndicator.hidesWhenStopped = false
     }
     
-    @objc func tap(sender:UITapGestureRecognizer)
-    {
-        let orientation = UIDevice.current.orientation
-        if orientation == .landscapeLeft || orientation == .landscapeRight
-        {
-            if let parent = self.parent as? UITabBarController
-            {
-                parent.tabBar.isHidden = !parent.tabBar.isHidden
-            }
-        }
-    }
-    
     var sizeCell:CGSize = CGSize()
     @objc func orientationUpdate()
     {
