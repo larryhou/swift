@@ -86,11 +86,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="AssetCell" rowHeight="70" id="RNI-fc-8NH" customClass="AssetCell" customModule="Tachograph" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssetCell" rowHeight="70" id="RNI-fc-8NH" customClass="AssetCell" customModule="Tachograph" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RNI-fc-8NH" id="p3i-Fc-b7Q">
-                                    <rect key="frame" x="0.0" y="0.0" width="328" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07-04 10:29" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xgz-31-tO9">
@@ -100,7 +100,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.thm" translatesAutoresizingMaskIntoConstraints="NO" id="3LF-lk-cfe">
-                                            <rect key="frame" x="8" y="5" width="80" height="60"/>
+                                            <rect key="frame" x="5" y="5" width="80" height="60"/>
                                             <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="CgO-RG-qTv"/>
@@ -120,10 +120,10 @@
                                         <constraint firstItem="RJP-fh-MO3" firstAttribute="leading" secondItem="Xgz-31-tO9" secondAttribute="leading" id="1zN-rl-R86"/>
                                         <constraint firstItem="RJP-fh-MO3" firstAttribute="bottom" secondItem="3LF-lk-cfe" secondAttribute="bottom" id="3fu-kB-jXH"/>
                                         <constraint firstItem="3LF-lk-cfe" firstAttribute="centerY" secondItem="p3i-Fc-b7Q" secondAttribute="centerY" id="9YF-hB-fpK"/>
-                                        <constraint firstItem="Xgz-31-tO9" firstAttribute="leading" secondItem="3LF-lk-cfe" secondAttribute="trailing" constant="8" symbolic="YES" id="MY5-vB-Xub"/>
+                                        <constraint firstItem="Xgz-31-tO9" firstAttribute="leading" secondItem="3LF-lk-cfe" secondAttribute="trailing" constant="11" id="MY5-vB-Xub"/>
                                         <constraint firstItem="3LF-lk-cfe" firstAttribute="top" secondItem="Xgz-31-tO9" secondAttribute="top" id="S9E-Un-ny5"/>
                                         <constraint firstItem="3LF-lk-cfe" firstAttribute="top" secondItem="p3i-Fc-b7Q" secondAttribute="topMargin" constant="-3" id="eWv-Gs-M2w"/>
-                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="leading" secondItem="p3i-Fc-b7Q" secondAttribute="leadingMargin" id="qji-0e-xOL"/>
+                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="leading" secondItem="p3i-Fc-b7Q" secondAttribute="leadingMargin" constant="-3" id="qji-0e-xOL"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
