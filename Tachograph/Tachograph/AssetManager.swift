@@ -164,9 +164,18 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = URL(string: url)
         {
-            let task = URLSession.shared.downloadTask(with: url)
             let item = UnfinishedTask(url: url.absoluteString)
             loadingQueue[item.name] = item
+            
+            let task:URLSessionDownloadTask
+            if let data = readResumeData(name: item.name)
+            {
+                task = URLSession.shared.downloadTask(withResumeData: data)
+            }
+            else
+            {
+                task = URLSession.shared.downloadTask(with: url)
+            }
             dict[item.name] = task
             task.resume()
         }
