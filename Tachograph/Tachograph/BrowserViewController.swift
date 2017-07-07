@@ -22,7 +22,6 @@ class AssetCell:UITableViewCell
 class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetching,  ModelObserver
 {
     var OrientationContext:String?
-    let background = DispatchQueue(label: "cell_assets_loading_queue")
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
