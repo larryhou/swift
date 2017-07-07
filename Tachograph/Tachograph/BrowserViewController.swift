@@ -19,9 +19,10 @@ class AssetCell:UITableViewCell
     @IBOutlet var ib_id:UILabel!
 }
 
-class BrowerViewController:UITableViewController, ModelObserver
+class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetching,  ModelObserver
 {
     var OrientationContext:String?
+    let background = DispatchQueue(label: "cell_assets_loading_queue")
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
@@ -116,6 +117,11 @@ class BrowerViewController:UITableViewController, ModelObserver
     override func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath])
+    {
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat

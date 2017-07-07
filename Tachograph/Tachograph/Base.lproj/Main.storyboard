@@ -142,6 +142,7 @@
                         <connections>
                             <outlet property="dataSource" destination="9Pw-yB-4ji" id="QLe-Lc-hQ8"/>
                             <outlet property="delegate" destination="9Pw-yB-4ji" id="BNU-rY-bLO"/>
+                            <outlet property="prefetchDataSource" destination="9Pw-yB-4ji" id="6SV-KR-XY7"/>
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="行程" id="4lY-As-XSf">
