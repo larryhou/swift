@@ -13,9 +13,10 @@ import AVKit
 
 class AssetCell:UITableViewCell
 {
-    @IBOutlet var ib_name:UILabel!
+    @IBOutlet var ib_image:UIImageView!
+    @IBOutlet var ib_time:UILabel!
+    @IBOutlet var ib_progress:UIProgressView!
     @IBOutlet var ib_id:UILabel!
-    @IBOutlet var ib_timestamp:UILabel!
 }
 
 class BrowerViewController:UITableViewController, ModelObserver
@@ -52,7 +53,7 @@ class BrowerViewController:UITableViewController, ModelObserver
                     {
                         self.videoController?.view.frame = frame
                     }
-                }
+                } 
             }
         }
         
@@ -60,7 +61,7 @@ class BrowerViewController:UITableViewController, ModelObserver
         tableView.tableFooterView = nil
     }
     
-    var videoAssets:[CameraModel.CameraAsset]!
+    var videoAssets:[CameraModel.CameraAsset] = []
     var formatter:DateFormatter!
     
     var loadingIndicator:UIActivityIndicatorView!
@@ -72,7 +73,7 @@ class BrowerViewController:UITableViewController, ModelObserver
         videoAssets = CameraModel.shared.routeVideos
         
         formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        formatter.dateFormat = "HH:mm MM-dd"
         
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
@@ -157,9 +158,9 @@ class BrowerViewController:UITableViewController, ModelObserver
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        guard let url = URL(string: "http://172.20.10.3:8080/sample.mp4") else {return}
+        guard let url = URL(string: "http://10.65.133.85:8080/sample.mp4") else {return}
         
-//        guard let data = assets?[indexPath.row] else { return }
+//        let data = videoAssets[indexPath.row]
 //        guard let url = URL(string: data.url) else {return}
         
         if let cell = tableView.cellForRow(at: indexPath)
@@ -198,8 +199,8 @@ class BrowerViewController:UITableViewController, ModelObserver
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell") as? AssetCell
         {
             let data = videoAssets[indexPath.row]
-            cell.ib_name.text = data.name
-            cell.ib_timestamp.text = formatter.string(from: data.timestamp)
+            cell.ib_time.text = formatter.string(from: data.timestamp)
+            cell.ib_progress.isHidden = true
             cell.ib_id.text = data.id
             return cell
         }

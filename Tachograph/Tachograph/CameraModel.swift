@@ -117,7 +117,7 @@ class CameraModel:TCPSessionDelegate
     init()
     {
         _session = TCPSession()
-        _session.connect(address: "172.20.10.3", port: 8800)
+        _session.connect(address: "10.65.133.85", port: 8800)
 //        _session.connect(address: "192.168.42.1", port: 7878)
         
         _decoder = JSONDecoder()
