@@ -32,9 +32,8 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     static private(set) var shared:AssetManager = AssetManager()
     
-    private let queue = DispatchQueue(label: "assets_loading_queue")
-    private var tasks:[String:URLSessionDownloadTask] = [:]
     private var progression:[String:AssetProgression] = [:]
+    private var tasks:[String:URLSessionDownloadTask] = [:]
     
     var delegate:AssetManagerDelegate?
     

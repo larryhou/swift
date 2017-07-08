@@ -7,6 +7,15 @@
 //
 
 import Foundation
+struct ServerInfo
+{
+    let addr:String
+    let port:UInt32
+}
+
+let LIVE_SERVER = ServerInfo(addr: "10.65.133.36", port: 8800)
+//let SVR_ADDR = ServerInfo(addr: "192.168.42.1", port: 7878)
+
 
 struct AcknowledgeMessage:Codable
 {
@@ -117,8 +126,7 @@ class CameraModel:TCPSessionDelegate
     init()
     {
         _session = TCPSession()
-        _session.connect(address: "10.65.133.85", port: 8800)
-//        _session.connect(address: "192.168.42.1", port: 7878)
+        _session.connect(address: LIVE_SERVER.addr, port: LIVE_SERVER.port)
         
         _decoder = JSONDecoder()
         
