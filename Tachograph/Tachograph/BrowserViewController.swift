@@ -198,10 +198,12 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        guard let url = URL(string: "http://\(LIVE_SERVER.addr):\(LIVE_SERVER.port)/sample.mp4") else {return}
-        
-//        let data = videoAssets[indexPath.row]
-//        guard let url = URL(string: data.url) else {return}
+        #if NATIVE_DEBUG
+        guard let url = URL(string: "http://\(LIVE_SERVER.addr):8080/sample.mp4") else {return}
+        #else
+        let data = videoAssets[indexPath.row]
+        guard let url = URL(string: data.url) else {return}
+        #endif
         
         if let cell = tableView.cellForRow(at: indexPath)
         {

@@ -13,8 +13,11 @@ struct ServerInfo
     let port:UInt32
 }
 
+#if NATIVE_DEBUG
 let LIVE_SERVER = ServerInfo(addr: "10.65.133.36", port: 8800)
-//let SVR_ADDR = ServerInfo(addr: "192.168.42.1", port: 7878)
+#else
+let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
+#endif
 
 
 struct AcknowledgeMessage:Codable
