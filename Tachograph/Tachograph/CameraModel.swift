@@ -19,7 +19,6 @@ let LIVE_SERVER = ServerInfo(addr: "10.65.133.36", port: 8800)
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif
 
-
 struct AcknowledgeMessage:Codable
 {
     let rval, msg_id:Int
