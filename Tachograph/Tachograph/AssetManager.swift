@@ -10,12 +10,13 @@ import Foundation
 
 protocol AssetManagerDelegate
 {
-    func assetUpdate(url:String, name:String, location:URL)
+    func asset(update name:String, location:URL)
+    func asset(update name:String, progress:Float)
 }
 
 class AssetManager:NSObject, URLSessionDownloadDelegate
 {
-    class UnfinishedTask:Codable
+    class AssetProgression:Codable
     {
         let url, name:String
         var bytesWritten, bytesExpectedTotal:Int64
@@ -26,14 +27,14 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             self.name = String(url.split(separator: "/").last!)
             self.bytesExpectedTotal = 0
             self.bytesWritten = 0
-        }
+        } 
     }
     
     static private(set) var shared:AssetManager = AssetManager()
     
     private let queue = DispatchQueue(label: "assets_loading_queue")
-    private var loadingQueue:[String:UnfinishedTask] = [:]
-    private var dict:[String:URLSessionDownloadTask] = [:]
+    private var tasks:[String:URLSessionDownloadTask] = [:]
+    private var progression:[String:AssetProgression] = [:]
     
     var delegate:AssetManagerDelegate?
     
@@ -49,8 +50,8 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = get(url: url.absoluteString)
-            loadingQueue.removeValue(forKey: name)
-            dict.removeValue(forKey: name)
+            progression.removeValue(forKey: name)
+            tasks.removeValue(forKey: name)
             
             var destination = getUserWorkspace()
             destination.appendPathComponent(name)
@@ -58,11 +59,11 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             do
             {
                 try FileManager.default.moveItem(at: location, to: destination)
-                delegate?.assetUpdate(url: url.absoluteString, name: name, location: destination)
+                delegate?.asset(update: name, location: destination)
             }
             catch
             {
-                delegate?.assetUpdate(url: url.absoluteString, name: name, location: location)
+                delegate?.asset(update: name, location: location)
             }
         }
     }
@@ -72,7 +73,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = get(url: url.absoluteString)
-            if let item = loadingQueue[name]
+            if let item = progression[name]
             {
                 item.bytesWritten = fileOffset
                 item.bytesExpectedTotal = expectedTotalBytes
@@ -85,10 +86,11 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = get(url: url.absoluteString)
-            if let item = loadingQueue[name]
+            if let item = progression[name]
             {
                 item.bytesWritten = totalBytesWritten
                 item.bytesExpectedTotal = totalBytesExpectedToWrite
+                delegate?.asset(update: name, progress: progress(of: item))
             }
         }
     }
@@ -97,6 +99,21 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     private func get(url:String)->String
     {
         return String(url.split(separator: "/").last!)
+    }
+    
+    func progress(of name:String)->Float
+    {
+        if let item = progression[name]
+        {
+            return progress(of:item)
+        }
+        
+        return Float.nan
+    }
+    
+    private func progress(of item:AssetProgression)->Float
+    {
+        return (Float)(Double(item.bytesWritten) / Double(item.bytesExpectedTotal))
     }
     
     func get(url:String)->Data?
@@ -130,7 +147,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     func cancel(url:String)
     {
         let name:String = get(url: url)
-        if let task = dict[name]
+        if let task = tasks[name]
         {
             task.cancel()
             { [unowned self] (data) in
@@ -145,7 +162,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     func resume(url:String)
     {
         let name:String = get(url: url)
-        if let task = dict[name]
+        if let task = tasks[name]
         {
             task.resume()
         }
@@ -154,7 +171,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     func suspend(url:String)
     {
         let name:String = get(url: url)
-        if let task = dict[name]
+        if let task = tasks[name]
         {
             task.suspend()
         }
@@ -164,8 +181,8 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = URL(string: url)
         {
-            let item = UnfinishedTask(url: url.absoluteString)
-            loadingQueue[item.name] = item
+            let item = AssetProgression(url: url.absoluteString)
+            progression[item.name] = item
             
             let task:URLSessionDownloadTask
             if let data = readResumeData(name: item.name)
@@ -176,7 +193,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             {
                 task = URLSession.shared.downloadTask(with: url)
             }
-            dict[item.name] = task
+            tasks[item.name] = task
             task.resume()
         }
     }
