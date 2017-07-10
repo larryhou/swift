@@ -21,19 +21,34 @@ class ViewController: UITableViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        data = HardwareModel.shared.get()
+        data = [:]
+        self.tableView.allowsSelection = false
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
+    }
+    
+    @objc func reload()
+    {
+        data = [:]
+        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
-        return data.count
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if let cate = CategoryType(rawValue: section)
         {
-            return data[cate]!.count
+            if let count = self.data[cate]?.count, count > 0
+            {
+                return count
+            }
+            
+            let data = HardwareModel.shared.get(category: cate, reload: true)
+            self.data[cate] = data
+            return data.count
         }
         
         return 0
@@ -79,7 +94,6 @@ class ViewController: UITableViewController
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 

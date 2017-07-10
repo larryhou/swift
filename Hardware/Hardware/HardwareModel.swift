@@ -209,11 +209,16 @@ class HardwareModel
         }
     }
     
+    var ctinfo:CTTelephonyNetworkInfo?
     private func getTelephony()->[ItemInfo]
     {
         var result:[ItemInfo] = []
-        let info = CTTelephonyNetworkInfo()
-        if let telephony = info.currentRadioAccessTechnology
+        if ctinfo == nil
+        {
+            ctinfo = CTTelephonyNetworkInfo()
+        }
+        
+        if let telephony = ctinfo!.currentRadioAccessTechnology
         {
             switch telephony
             {
@@ -242,7 +247,7 @@ class HardwareModel
             }
         }
         
-        if let carrier = info.subscriberCellularProvider
+        if let carrier = ctinfo!.subscriberCellularProvider
         {
             if let name = carrier.carrierName
             {
