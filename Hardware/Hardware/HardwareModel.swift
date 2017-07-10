@@ -91,7 +91,7 @@ class HardwareModel
         result.append(ItemInfo(name: "systemVersion", value: info.systemVersion))
         result.append(ItemInfo(name: "model", value: info.model))
         result.append(ItemInfo(name: "localizedModel", value: info.localizedModel))
-        result.append(ItemInfo(name: "idiom", value: "\(info.userInterfaceIdiom)"))
+        result.append(ItemInfo(name: "idiom", value: format(of: info.userInterfaceIdiom)))
         if let uuid = info.identifierForVendor
         {
             result.append(ItemInfo(name: "IDFV", value: uuid.description))
@@ -99,7 +99,7 @@ class HardwareModel
         result.append(ItemInfo(name: "IDFA", value: ASIdentifierManager.shared().advertisingIdentifier.description))
         info.isBatteryMonitoringEnabled = true
         result.append(ItemInfo(name: "batteryLevel", value: String(format: "%.4f", info.batteryLevel)))
-        result.append(ItemInfo(name: "batterState", value: "\(info.batteryState)"))
+        result.append(ItemInfo(name: "batterState", value: format(of: info.batteryState)))
         info.isProximityMonitoringEnabled = true
         result.append(ItemInfo(name: "proximityState", value: "\(info.proximityState)"))
         return result
@@ -118,7 +118,7 @@ class HardwareModel
         result.append(ItemInfo(name: "activeCoreCount", value: "\(info.activeProcessorCount)"))
         result.append(ItemInfo(name: "physicalMemory", value: format(memory: info.physicalMemory)))
         result.append(ItemInfo(name: "systemUptime", value: "\(info.systemUptime)"))
-        result.append(ItemInfo(name: "thermalState", value: "\(info.thermalState)"))
+        result.append(ItemInfo(name: "thermalState", value: format(of: info.thermalState)))
         result.append(ItemInfo(name: "lowPowerMode", value: "\(info.isLowPowerModeEnabled)"))
         return result
     }
@@ -135,6 +135,53 @@ class HardwareModel
         
         components.insert(memory.description, at: 0)
         return components.joined(separator: "x")
+    }
+    
+    private func format(of type:UIDeviceBatteryState)->String
+    {
+        switch type
+        {
+            case .charging:
+                return "charging"
+            case .full:
+                return "full"
+            case .unplugged:
+                return "unplugged"
+            case .unknown:
+                return "unknown"
+        }
+    }
+    
+    private func format(of type:ProcessInfo.ThermalState)->String
+    {
+        switch type
+        {
+            case .critical:
+                return "critical"
+            case .fair:
+                return "fair"
+            case .nominal:
+                return "nominal"
+            case .serious:
+                return "serious"
+        }
+    }
+    
+    private func format(of type:UIUserInterfaceIdiom)->String
+    {
+        switch type
+        {
+            case .carPlay:
+                return "carPlay"
+            case .pad:
+                return "pad"
+            case .phone:
+                return "phone"
+            case .tv:
+                return "tv"
+            case .unspecified:
+                return "unspecified"
+        }
     }
     
     private func getTelephony()->[ItemInfo]
