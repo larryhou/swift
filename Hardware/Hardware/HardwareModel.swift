@@ -26,6 +26,10 @@ class HardwareModel
     static private(set) var shared = HardwareModel()
     
     private var data:[CategoryType:[ItemInfo]] = [:]
+    init()
+    {
+        
+    }
     
     func get(reload:Bool = false)->[CategoryType:[ItemInfo]]
     {
@@ -117,7 +121,7 @@ class HardwareModel
         result.append(ItemInfo(name: "coreCount", value: "\(info.processorCount)"))
         result.append(ItemInfo(name: "activeCoreCount", value: "\(info.activeProcessorCount)"))
         result.append(ItemInfo(name: "physicalMemory", value: format(memory: info.physicalMemory)))
-        result.append(ItemInfo(name: "systemUptime", value: "\(info.systemUptime)"))
+        result.append(ItemInfo(name: "systemUptime", value: format(duration: info.systemUptime)))
         result.append(ItemInfo(name: "thermalState", value: format(of: info.thermalState)))
         result.append(ItemInfo(name: "lowPowerMode", value: "\(info.isLowPowerModeEnabled)"))
         return result
@@ -181,6 +185,27 @@ class HardwareModel
                 return "tv"
             case .unspecified:
                 return "unspecified"
+        }
+    }
+    
+    private func format(duration:TimeInterval)->String
+    {
+        var duration = duration
+        let bases:[Double] = [60, 60, 24]
+        var list:[Double] = []
+        for value in bases
+        {
+            list.insert(fmod(duration, value), at: 0)
+            duration = floor(duration / value)
+        }
+        if duration > 0
+        {
+            list.insert(duration, at: 0)
+            return String(format: "%.0f %02.0f:%02.0f:%.3f", arguments: list)
+        }
+        else
+        {
+            return String(format: "%02.0f:%02.0f:%.3f", arguments: list)
         }
     }
     

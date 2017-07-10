@@ -65,7 +65,6 @@ class ViewController: UITableViewController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        print(indexPath.section, indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell") as! ItemCell
         if let cate = CategoryType(rawValue: indexPath.section), let data = self.data[cate]
         {
