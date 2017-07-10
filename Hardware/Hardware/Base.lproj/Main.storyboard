@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xoI-dQ-JbI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Courier.ttc">
+            <string>Courier</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="dls-dt-CJW">
+            <objects>
+                <tableViewController id="xoI-dQ-JbI" customClass="ViewController" customModule="Hardware" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QnE-ng-n1X">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ItemCell" id="iXi-cH-vZQ" customClass="ItemCell" customModule="Hardware" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iXi-cH-vZQ" id="WuC-qO-ngQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="activeCoreCount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qss-Gx-fI4">
+                                            <rect key="frame" x="8" y="14" width="127" height="14"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="127" id="wQa-ak-CgE"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PhysicalMemory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2d-EV-icI">
+                                            <rect key="frame" x="143" y="14" width="224" height="14"/>
+                                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="k2d-EV-icI" firstAttribute="trailing" secondItem="WuC-qO-ngQ" secondAttribute="trailingMargin" id="0yf-Ig-ggT"/>
+                                        <constraint firstItem="qss-Gx-fI4" firstAttribute="bottom" secondItem="k2d-EV-icI" secondAttribute="bottom" id="1tc-Ca-avH"/>
+                                        <constraint firstItem="qss-Gx-fI4" firstAttribute="centerY" secondItem="WuC-qO-ngQ" secondAttribute="centerY" id="QXt-0U-Vn0"/>
+                                        <constraint firstItem="k2d-EV-icI" firstAttribute="leading" secondItem="qss-Gx-fI4" secondAttribute="trailing" constant="8" symbolic="YES" id="hn9-wl-Iyz"/>
+                                        <constraint firstItem="qss-Gx-fI4" firstAttribute="top" secondItem="k2d-EV-icI" secondAttribute="top" id="ulY-wG-q9k"/>
+                                        <constraint firstItem="qss-Gx-fI4" firstAttribute="leading" secondItem="WuC-qO-ngQ" secondAttribute="leadingMargin" id="xOK-Zm-WWg"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ib_name" destination="qss-Gx-fI4" id="czK-FN-o0v"/>
+                                    <outlet property="ib_value" destination="k2d-EV-icI" id="Eh0-VW-wsB"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xoI-dQ-JbI" id="gib-6n-vW5"/>
+                            <outlet property="delegate" destination="xoI-dQ-JbI" id="IeQ-cu-VmU"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oyf-vr-WWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="752.79999999999995" y="137.18140929535232"/>
+        </scene>
+    </scenes>
+</document>
