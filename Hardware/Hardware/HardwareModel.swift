@@ -205,7 +205,7 @@ class HardwareModel
         }
         else
         {
-            return String(format: "%02.0f:%02.0f:%.3f", arguments: list)
+            return String(format: "%02.0f:%02.0f:%06.3f", arguments: list)
         }
     }
     
