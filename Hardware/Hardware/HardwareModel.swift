@@ -212,7 +212,7 @@ class HardwareModel
         }
         result.append(ItemInfo(name: "IDFA", value: ASIdentifierManager.shared().advertisingIdentifier.description))
         info.isBatteryMonitoringEnabled = true
-        result.append(ItemInfo(name: "batteryLevel", value: String(format: "%.4f", info.batteryLevel)))
+        result.append(ItemInfo(name: "batteryLevel", value: String(format: "%3.0f%%", info.batteryLevel * 100)))
         result.append(ItemInfo(name: "batterState", value: format(of: info.batteryState)))
         info.isProximityMonitoringEnabled = true
         result.append(ItemInfo(name: "proximityState", value: "\(info.proximityState)"))
