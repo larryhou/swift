@@ -249,8 +249,41 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         result.append(ItemInfo(name: "name", value: info.name))
         result.append(ItemInfo(name: "systemName", value: info.systemName))
         result.append(ItemInfo(name: "systemVersion", value: info.systemVersion))
-        result.append(ItemInfo(name: "model", value: info.model))
         result.append(ItemInfo(name: "localizedModel", value: info.localizedModel))
+        var system:utsname = utsname()
+        if uname(&system) == 0
+        {
+            withUnsafePointer(to: &system.machine.0)
+            { (pointer:UnsafePointer<Int8>) in
+                let value = String(cString: pointer)
+                result.append(ItemInfo(name: "model", value: value))
+            }
+            
+            withUnsafePointer(to: &system.nodename.0)
+            { (pointer:UnsafePointer<Int8>) in
+                let value = String(cString: pointer)
+                result.append(ItemInfo(name: "nodename", value: value))
+            }
+            
+            withUnsafePointer(to: &system.release.0)
+            { (pointer:UnsafePointer<Int8>) in
+                let value = String(cString: pointer)
+                result.append(ItemInfo(name: "release", value: value))
+            }
+            
+            withUnsafePointer(to: &system.sysname.0)
+            { (pointer:UnsafePointer<Int8>) in
+                let value = String(cString: pointer)
+                result.append(ItemInfo(name: "sysname", value: value))
+            }
+            
+            withUnsafePointer(to: &system.version.0)
+            { (pointer:UnsafePointer<Int8>) in
+                let value = String(cString: pointer)
+                result.append(ItemInfo(name: "version", value: value))
+            }
+        }
+        
         result.append(ItemInfo(name: "idiom", value: format(of: info.userInterfaceIdiom)))
         if let uuid = info.identifierForVendor
         {
@@ -262,6 +295,7 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         result.append(ItemInfo(name: "batterState", value: format(of: info.batteryState)))
         info.isProximityMonitoringEnabled = true
         result.append(ItemInfo(name: "proximityState", value: "\(info.proximityState)"))
+        
         return result
     }
     

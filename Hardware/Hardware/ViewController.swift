@@ -49,9 +49,7 @@ class ViewController: UITableViewController
         super.viewDidLoad()
         
         data = [:]
-        self.tableView.allowsSelection = false
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
-        
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
     }
     
@@ -130,6 +128,27 @@ class ViewController: UITableViewController
         }
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "review", let cell = sender as? ItemCell
+        {
+            if let index = tableView.indexPath(for: cell),
+            let cate = CategoryType(rawValue: index.section),
+            let data = self.data[cate]
+            {
+                let item = data[index.row]
+                if let dst = segue.destination as? ReviewController
+                {
+                    dst.data = item
+                }
+            }
+        }
+        else
+        {
+            super.prepare(for: segue, sender: sender)
+        }
     }
 
     override func didReceiveMemoryWarning()
