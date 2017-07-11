@@ -70,7 +70,7 @@ class ViewController: UITableViewController
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
-        return 7
+        return 8
     }
     
     private func filter(_ data:[ItemInfo])->[ItemInfo]

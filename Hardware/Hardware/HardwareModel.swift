@@ -11,10 +11,11 @@ import CoreTelephony
 import AdSupport
 import UIKit
 import SystemConfiguration.CaptiveNetwork
+import CoreBluetooth
 
 enum CategoryType:Int
 {
-    case telephony = 5, process = 1, device = 0, screen = 2, network = 6, language = 3, timezone = 4
+    case telephony = 5, bluetooth = 6, process = 1, device = 0, screen = 2, network = 7, language = 3, timezone = 4
 }
 
 struct ItemInfo
@@ -41,21 +42,17 @@ struct ItemInfo
     }
 }
 
-class HardwareModel
+class HardwareModel:NSObject, CBCentralManagerDelegate
 {
     static private(set) var shared = HardwareModel()
     
     private var data:[CategoryType:[ItemInfo]] = [:]
-    init()
-    {
-        
-    }
     
     @discardableResult
     func reload()->[CategoryType:[ItemInfo]]
     {
         var result:[CategoryType:[ItemInfo]] = [:]
-        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .network, .language]
+        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .network, .language, .bluetooth]
         for cate in categories
         {
             result[cate] = get(category: cate, reload: true)
@@ -88,10 +85,59 @@ class HardwareModel
                 data = getLanguage()
             case .timezone:
                 data = getTimezone()
+            case .bluetooth:
+                data = getBluetooth()
         }
         
         self.data[category] = data
         return data
+    }
+    
+    var bluetooth:CBCentralManager!
+    private func getBluetooth()->[ItemInfo]
+    {
+        if bluetooth == nil
+        {
+            var result:[ItemInfo] = []
+            let options:[String:Any] = [CBCentralManagerOptionShowPowerAlertKey:0]
+            bluetooth = CBCentralManager(delegate: self, queue: DispatchQueue.main, options: options)
+            result.append(ItemInfo(name: "state", value: format(of: bluetooth.state)))
+            return result
+        }
+        else
+        {
+            return self.data[.bluetooth]!
+        }
+    }
+    
+    private func format(of type:CBManagerState)->String
+    {
+        switch type
+        {
+            case .poweredOff:
+                return "poweredOff"
+            case .poweredOn:
+                return "poweredOn"
+            case .resetting:
+                return "resetting"
+            case .unauthorized:
+                return "unauthorized"
+            case .unsupported:
+                return "unsupported"
+            default:
+                return "unknown"
+        }
+    }
+    
+    @available(iOS 5.0, *)
+    func centralManagerDidUpdateState(_ central: CBCentralManager)
+    {
+        if var data = self.data[.bluetooth]
+        {
+            data.remove(at: 0)
+            data.insert(ItemInfo(name:"state", value:format(of: central.state)), at: 0)
+            self.data[.bluetooth] = data
+        }
     }
     
     private func getTimezone()->[ItemInfo]
