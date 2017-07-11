@@ -132,7 +132,6 @@ class HardwareModel
         var ifaddr:UnsafeMutablePointer<ifaddrs>?
         if getifaddrs(&ifaddr) == 0
         {
-            print(ifaddr!.pointee)
             var pointer = ifaddr
             while pointer != nil
             {
