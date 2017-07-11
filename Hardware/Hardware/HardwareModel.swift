@@ -14,7 +14,7 @@ import SystemConfiguration.CaptiveNetwork
 
 enum CategoryType:Int
 {
-    case telephony = 0, process, device, screen, wifi
+    case telephony = 0, process, device, screen, network
 }
 
 struct ItemInfo
@@ -55,7 +55,7 @@ class HardwareModel
     func reload()->[CategoryType:[ItemInfo]]
     {
         var result:[CategoryType:[ItemInfo]] = [:]
-        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .wifi]
+        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .network]
         for cate in categories
         {
             result[cate] = get(category: cate, reload: true)
@@ -82,8 +82,8 @@ class HardwareModel
                 data = getDevice()
             case .screen:
                 data = getScreen()
-            case .wifi:
-                data = getWiFi()
+            case .network:
+                data = getNetwork()
         }
         
         self.data[category] = data
@@ -103,13 +103,16 @@ class HardwareModel
         }
     }
     
-    private func getWiFi()->[ItemInfo]
+    private func getNetwork()->[ItemInfo]
     {
+        var inames:[String] = []
+        
         var result:[ItemInfo] = []
         if let interfaces = CNCopySupportedInterfaces() as? [CFString]
         {
             for iname in interfaces
             {
+                inames.append(iname as String)
                 let node = ItemInfo(id: result.count, name: "interface", value: iname as String)
                 result.append(node)
                 
@@ -126,6 +129,27 @@ class HardwareModel
             }
         }
         
+        var ifaddr:UnsafeMutablePointer<ifaddrs>?
+        if getifaddrs(&ifaddr) == 0
+        {
+            print(ifaddr!.pointee)
+            var pointer = ifaddr
+            while pointer != nil
+            {
+                defer { pointer = pointer?.pointee.ifa_next }
+                let interface = pointer!.pointee
+                let family = interface.ifa_addr.pointee.sa_family
+                if family == UInt8(AF_INET) || family == UInt8(AF_INET6)
+                {
+                    let name = String(cString: interface.ifa_name)
+                    var host = [CChar](repeating:0, count:Int(NI_MAXHOST))
+                    getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len), &host, socklen_t(host.count), nil, socklen_t(0), NI_NUMERICHOST)
+                    let address = String(cString:host)
+                    result.append(ItemInfo(name: name, value: address))
+                }
+            }
+            
+        }
         return result
     }
     
