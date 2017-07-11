@@ -14,22 +14,58 @@ class ItemCell:UITableViewCell
     @IBOutlet var ib_value:UILabel!
 }
 
+class HeaderView:UITableViewHeaderFooterView
+{
+    static let identifier = "SectionHeaderView"
+    var title:UILabel?
+    override func layoutSubviews()
+    {
+        if self.title == nil
+        {
+            let title = UILabel()
+            title.font = UIFont(name: "Courier New", size: 36)
+            title.translatesAutoresizingMaskIntoConstraints = false
+            self.contentView.addSubview(title)
+            self.title = title
+            
+            let map:[String:Any] = ["title":title]
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(10)-[title]-|", options: .alignAllLeft, metrics: nil, views: map))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-|", options: .alignAllCenterY, metrics: nil, views: map))
+            
+            backgroundView = UIView()
+        }
+        tintColor = UIColor.clear
+        contentView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+    }
+}
+
 class ViewController: UITableViewController
 {
+    let background = DispatchQueue(label: "data_reload_queue")
     var data:[CategoryType:[ItemInfo]]!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         data = [:]
         self.tableView.allowsSelection = false
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
+        
+        tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
     }
     
     @objc func reload()
     {
-        data = [:]
-        tableView.reloadData()
+        background.async
+        {
+            HardwareModel.shared.reload()
+            DispatchQueue.main.async
+            { [unowned self] in
+                self.data = [:]
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int
@@ -46,26 +82,26 @@ class ViewController: UITableViewController
                 return count
             }
             
-            let data = HardwareModel.shared.get(category: cate, reload: true)
+            let data = HardwareModel.shared.get(category: cate, reload: false)
             self.data[cate] = data
             return data.count
         }
         
         return 0
     }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 50
+    }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 30))
-        let title:UILabel = UILabel(frame: CGRect(x: 10, y: 0, width: 200, height: 30))
-        title.font = UIFont(name: "Courier New", size: 30)
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.identifier) as! HeaderView
         if let cate = CategoryType(rawValue: section)
         {
-            title.text = "\(cate)"
+            header.title?.text = "\(cate)"
         }
-        view.addSubview(title)
-        
-        return view
+        return header
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?

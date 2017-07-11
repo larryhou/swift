@@ -31,24 +31,19 @@ class HardwareModel
         
     }
     
-    func get(reload:Bool = false)->[CategoryType:[ItemInfo]]
+    @discardableResult
+    func reload()->[CategoryType:[ItemInfo]]
     {
-        if !reload && self.data.count > 0
-        {
-            return self.data
-        }
-        
         var result:[CategoryType:[ItemInfo]] = [:]
         let categories:[CategoryType] = [.telephony, .process, .device, .screen]
         for cate in categories
         {
-            result[cate] = get(category: cate, reload: reload)
+            result[cate] = get(category: cate, reload: true)
         }
         
         return result
     }
     
-    @discardableResult
     func get(category:CategoryType, reload:Bool = false)->[ItemInfo]
     {
         if !reload, let data = self.data[category]
@@ -209,16 +204,12 @@ class HardwareModel
         }
     }
     
-    var ctinfo:CTTelephonyNetworkInfo?
     private func getTelephony()->[ItemInfo]
     {
         var result:[ItemInfo] = []
-        if ctinfo == nil
-        {
-            ctinfo = CTTelephonyNetworkInfo()
-        }
+        let info = CTTelephonyNetworkInfo()
         
-        if let telephony = ctinfo!.currentRadioAccessTechnology
+        if let telephony = info.currentRadioAccessTechnology
         {
             switch telephony
             {
@@ -247,7 +238,7 @@ class HardwareModel
             }
         }
         
-        if let carrier = ctinfo!.subscriberCellularProvider
+        if let carrier = info.subscriberCellularProvider
         {
             if let name = carrier.carrierName
             {
