@@ -14,7 +14,7 @@ import SystemConfiguration.CaptiveNetwork
 
 enum CategoryType:Int
 {
-    case telephony = 0, process, device, screen, network
+    case telephony = 5, process = 1, device = 0, screen = 2, network = 6, language = 3, timezone = 4
 }
 
 struct ItemInfo
@@ -55,7 +55,7 @@ class HardwareModel
     func reload()->[CategoryType:[ItemInfo]]
     {
         var result:[CategoryType:[ItemInfo]] = [:]
-        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .network]
+        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .network, .language]
         for cate in categories
         {
             result[cate] = get(category: cate, reload: true)
@@ -84,23 +84,53 @@ class HardwareModel
                 data = getScreen()
             case .network:
                 data = getNetwork()
+            case .language:
+                data = getLanguage()
+            case .timezone:
+                data = getTimezone()
         }
         
         self.data[category] = data
         return data
     }
     
-    private func sequence()->()->Int
+    private func getTimezone()->[ItemInfo]
     {
-        var num = 0
-        return {
-            if num >= Int.max
-            {
-                num = 0
-            }
-            num += 1
-            return num
+        var result:[ItemInfo] = []
+        
+        let zone = TimeZone.current
+        result.append(ItemInfo(name: "identifier", value: zone.identifier))
+        if let abbr = zone.abbreviation()
+        {
+            result.append(ItemInfo(name: "abbreviation", value: abbr))
         }
+        result.append(ItemInfo(name: "secondsFromGMT", value: format(duration: TimeInterval(zone.secondsFromGMT()))))
+        
+        return result
+    }
+    
+    private func getLanguage()->[ItemInfo]
+    {
+        var result:[ItemInfo] = []
+        
+        let current = Locale.current
+        result.append(ItemInfo(name: "current", value: "\(current.identifier) | \(current.localizedString(forIdentifier: current.identifier)!)"))
+        
+        var index = 0
+        for id in Locale.preferredLanguages
+        {
+            index += 1
+            if let name = current.localizedString(forIdentifier: id)
+            {
+                result.append(ItemInfo(name: "prefer_lang_\(index)", value: "\(id) | \(name)"))
+            }
+            else
+            {
+                result.append(ItemInfo(name: "prefer_lang_\(index)", value: id))
+            }
+        }
+        
+        return result
     }
     
     private func getNetwork()->[ItemInfo]
