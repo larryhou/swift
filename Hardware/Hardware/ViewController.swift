@@ -70,7 +70,12 @@ class ViewController: UITableViewController
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
-        return 4
+        return 5
+    }
+    
+    private func filter(_ data:[ItemInfo])->[ItemInfo]
+    {
+        return data.filter({$0.parent == -1})
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int

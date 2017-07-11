@@ -10,15 +10,35 @@ import Foundation
 import CoreTelephony
 import AdSupport
 import UIKit
+import SystemConfiguration.CaptiveNetwork
 
 enum CategoryType:Int
 {
-    case telephony = 0, process, device, screen
+    case telephony = 0, process, device, screen, wifi
 }
 
 struct ItemInfo
 {
-    let name, value:String
+    let id:Int, name, value:String
+    let parent:Int
+    
+    init(name:String, value:String)
+    {
+        self.init(id: -1, name: name, value: value)
+    }
+    
+    init(name:String, value:String, parent:Int)
+    {
+        self.init(id: -1, name: name, value: value, parent: parent)
+    }
+    
+    init(id:Int, name:String, value:String, parent:Int = -1)
+    {
+        self.id = id
+        self.name = name
+        self.value = value
+        self.parent = parent
+    }
 }
 
 class HardwareModel
@@ -35,7 +55,7 @@ class HardwareModel
     func reload()->[CategoryType:[ItemInfo]]
     {
         var result:[CategoryType:[ItemInfo]] = [:]
-        let categories:[CategoryType] = [.telephony, .process, .device, .screen]
+        let categories:[CategoryType] = [.telephony, .process, .device, .screen, .wifi]
         for cate in categories
         {
             result[cate] = get(category: cate, reload: true)
@@ -62,10 +82,51 @@ class HardwareModel
                 data = getDevice()
             case .screen:
                 data = getScreen()
+            case .wifi:
+                data = getWiFi()
         }
         
         self.data[category] = data
         return data
+    }
+    
+    private func sequence()->()->Int
+    {
+        var num = 0
+        return {
+            if num >= Int.max
+            {
+                num = 0
+            }
+            num += 1
+            return num
+        }
+    }
+    
+    private func getWiFi()->[ItemInfo]
+    {
+        var result:[ItemInfo] = []
+        if let interfaces = CNCopySupportedInterfaces() as? [CFString]
+        {
+            for iname in interfaces
+            {
+                let node = ItemInfo(id: result.count, name: "interface", value: iname as String)
+                result.append(node)
+                
+                if let data = CNCopyCurrentNetworkInfo(iname) as? [String:Any]
+                {
+                    for (name, value) in data
+                    {
+                        if name == "BSSID" || name == "SSID"
+                        {
+                            result.append(ItemInfo(name: name, value: "\(value)", parent:node.id))
+                        }
+                    }
+                }
+            }
+        }
+        
+        return result
     }
     
     private func getScreen()->[ItemInfo]
