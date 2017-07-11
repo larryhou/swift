@@ -18,7 +18,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--DEVICE INFORMATION-->
+        <!--INFORMATION-->
         <scene sceneID="dls-dt-CJW">
             <objects>
                 <tableViewController id="xoI-dQ-JbI" customClass="ViewController" customModule="Hardware" customModuleProvider="target" sceneMemberID="viewController">
@@ -74,7 +74,7 @@
                             <outlet property="delegate" destination="xoI-dQ-JbI" id="IeQ-cu-VmU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="DEVICE INFORMATION" id="P9y-X1-xpU">
+                    <navigationItem key="navigationItem" title="INFORMATION" id="P9y-X1-xpU">
                         <barButtonItem key="backBarButtonItem" title="MORE" id="VRO-B9-m4G"/>
                     </navigationItem>
                 </tableViewController>
