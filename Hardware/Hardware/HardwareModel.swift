@@ -136,7 +136,6 @@ class HardwareModel
             var pointer = ifaddr
             while pointer != nil
             {
-                defer { pointer = pointer?.pointee.ifa_next }
                 let interface = pointer!.pointee
                 let family = interface.ifa_addr.pointee.sa_family
                 if family == UInt8(AF_INET) || family == UInt8(AF_INET6)
@@ -147,6 +146,8 @@ class HardwareModel
                     let address = String(cString:host)
                     result.append(ItemInfo(name: name, value: address))
                 }
+                
+                pointer = pointer?.pointee.ifa_next
             }
             
         }
