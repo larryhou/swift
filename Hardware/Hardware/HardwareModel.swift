@@ -431,7 +431,6 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
             
             if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
             {
-                print(CPU_SUBTYPE_ARM_V7, CPU_SUBTYPE_ARM_ALL, subtype)
                 switch subtype
                 {
                     case CPU_SUBTYPE_ARM_V7,
