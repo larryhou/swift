@@ -418,7 +418,8 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
     
     private func arch()->String
     {
-        print(CPU_SUBTYPE_ARM_V7, CPU_TYPE_ARM)
+        print(CPU_SUBTYPE_ARM_V7)
+        
         var value = ""
         if let type:cpu_type_t = sysctl(name:"hw.cputype")
         {
@@ -429,27 +430,28 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
                 case CPU_TYPE_ANY:value = "ANY"
                 default: value = String(format:"0x%08x", type)
             }
-            
-            if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
+        }
+        
+        if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
+        {
+            switch subtype
             {
-                switch subtype
-                {
-                    case CPU_SUBTYPE_ARM_V7,
-                         CPU_SUBTYPE_ARM_V7F,
-                         CPU_SUBTYPE_ARM_V7K,
-                         CPU_SUBTYPE_ARM_V7M,
-                         CPU_SUBTYPE_ARM_V7S,
-                         CPU_SUBTYPE_ARM_V7EM: value += "|ARM_V7"
-                    case CPU_SUBTYPE_ARM_V8: value += "|ARM_V8"
-                    case CPU_SUBTYPE_ARM_V6: value += "|ARM_V6"
-                    case CPU_SUBTYPE_X86_ALL: value += "|x86_ALL"
-                    case CPU_SUBTYPE_X86_ARCH1: value += "|x86_ARCH1"
-                    case CPU_SUBTYPE_X86_64_ALL: value += "|x86_64_ALL"
-                    case CPU_SUBTYPE_X86_64_H: value += "|x86_64_H"
-                    default:value += "|" + String(format:"0x%08x", subtype)
-                }
+                case CPU_SUBTYPE_ARM_V7,
+                     CPU_SUBTYPE_ARM_V7F,
+                     CPU_SUBTYPE_ARM_V7K,
+                     CPU_SUBTYPE_ARM_V7M,
+                     CPU_SUBTYPE_ARM_V7S,
+                     CPU_SUBTYPE_ARM_V7EM: value += "|ARM_v7"
+                case CPU_SUBTYPE_ARM_V8: value += "|ARM_v8"
+                case CPU_SUBTYPE_ARM_V6: value += "|ARM_v6"
+                case CPU_SUBTYPE_X86_ALL: value += "|x86_all"
+                case CPU_SUBTYPE_X86_ARCH1: value += "|x86_ARCH1"
+                case CPU_SUBTYPE_X86_64_ALL: value += "|x86_64_all"
+                case CPU_SUBTYPE_X86_64_H: value += "|x86_64_H"
+                default:value += "|" + String(format:"0x%08x", subtype)
             }
         }
+        
         return value
     }
     
