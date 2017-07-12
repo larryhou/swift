@@ -295,8 +295,162 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         result.append(ItemInfo(name: "batterState", value: format(of: info.batteryState)))
         info.isProximityMonitoringEnabled = true
         result.append(ItemInfo(name: "proximityState", value: "\(info.proximityState)"))
+
+        result.append(ItemInfo(name: "architecture", value: arch()))
+        if let value:String = sysctl(TYPE_NAME: HW_MACHINE)
+        {
+            result.append(ItemInfo(name: "HW_MACHINE", value: value))
+        }
         
+        if let value:String = sysctl(TYPE_NAME: HW_MODEL)
+        {
+            result.append(ItemInfo(name: "HW_MODEL", value: value))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_CPU_FREQ)
+        {
+            result.append(ItemInfo(name: "HW_CPU_FREQ", value: "\(value)"))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_BUS_FREQ)
+        {
+            result.append(ItemInfo(name: "HW_BUS_FREQ", value: "\(value)"))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_TB_FREQ)
+        {
+            result.append(ItemInfo(name: "HW_TB_FREQ", value: "\(value)"))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_BYTEORDER)
+        {
+            result.append(ItemInfo(name: "HW_BYTEORDER", value: "\(value)"))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_PHYSMEM)
+        {
+            result.append(ItemInfo(name: "HW_PHYSMEM", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_USERMEM)
+        {
+            result.append(ItemInfo(name: "HW_USERMEM", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_PAGESIZE)
+        {
+            result.append(ItemInfo(name: "HW_PAGESIZE", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_L1ICACHESIZE)
+        {
+            result.append(ItemInfo(name: "HW_L1ICACHESIZE", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_L1DCACHESIZE)
+        {
+            result.append(ItemInfo(name: "HW_L1DCACHESIZE", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_L2CACHESIZE)
+        {
+            result.append(ItemInfo(name: "HW_L2CACHESIZE", value: format(memory: UInt64(value))))
+        }
+        
+        if let value:Int = sysctl(TYPE_NAME: HW_L3CACHESIZE)
+        {
+            result.append(ItemInfo(name: "HW_L3CACHESIZE", value: format(memory: UInt64(value))))
+        }
         return result
+    }
+    
+    private func sysctl(TYPE_NAME:Int32, CTL_TYPE:Int32 = CTL_HW)->Int?
+    {
+        var value = 0
+        var size:size_t = MemoryLayout<Int>.size
+        var data = [CTL_TYPE, TYPE_NAME]
+        Darwin.sysctl(&data, 2, &value, &size, nil, 0)
+        return value
+    }
+    
+    private func sysctl(TYPE_NAME:Int32, CTL_TYPE:Int32 = CTL_HW)->String?
+    {
+        var params = [CTL_TYPE, TYPE_NAME]
+        
+        var size:size_t = 0
+        Darwin.sysctl(&params, 2, nil, &size, nil, 0)
+        if let pointer = malloc(size)
+        {
+            Darwin.sysctl(&params, 2, pointer, &size, nil, 0)
+            return String(bytesNoCopy: pointer, length: size, encoding: .utf8, freeWhenDone: true)
+        }
+        
+        return nil
+    }
+    
+    private func sysctl(name:String, hexMode:Bool = false)->String?
+    {
+        var size:size_t = 0
+        sysctlbyname(name, nil, &size, nil, 0)
+        if let pointer = malloc(size)
+        {
+            sysctlbyname(name, pointer, &size, nil, 0)
+            if hexMode
+            {
+                let value = Data(bytes: pointer, count: size).map({String(format: "%02X", $0)}).joined()
+                free(pointer)
+                return "0x\(value)"
+            }
+            
+            return String(bytesNoCopy: pointer, length: size, encoding: .utf8, freeWhenDone: true)
+        }
+        
+        return nil
+    }
+    
+    private func sysctl<T>(name:String)->T? where T:SignedInteger
+    {
+        var value:T = 0
+        var size:size_t = MemoryLayout<T>.size
+        sysctlbyname(name, &value, &size, nil, 0)
+        return value
+    }
+    
+    private func arch()->String
+    {
+        print(CPU_SUBTYPE_ARM_V7, CPU_TYPE_ARM)
+        var value = ""
+        if let type:cpu_type_t = sysctl(name:"hw.cputype")
+        {
+            switch type
+            {
+                case CPU_TYPE_X86:value = "x86"
+                case CPU_TYPE_ARM:value = "ARM"
+                case CPU_TYPE_ANY:value = "ANY"
+                default: value = String(format:"0x%08x", type)
+            }
+            
+            if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
+            {
+                switch subtype
+                {
+                    case CPU_SUBTYPE_ARM_V7,
+                         CPU_SUBTYPE_ARM_V7F,
+                         CPU_SUBTYPE_ARM_V7K,
+                         CPU_SUBTYPE_ARM_V7M,
+                         CPU_SUBTYPE_ARM_V7S,
+                         CPU_SUBTYPE_ARM_V7EM: value += "|ARM_V7"
+                    case CPU_SUBTYPE_ARM_V8: value += "|ARM_V8"
+                    case CPU_SUBTYPE_ARM_V6: value += "|ARM_V6"
+                    case CPU_SUBTYPE_X86_ALL: value += "|x86_ALL"
+                    case CPU_SUBTYPE_X86_ARCH1: value += "|x86_ARCH1"
+                    case CPU_SUBTYPE_X86_64_ALL: value += "|x86_64_ALL"
+                    case CPU_SUBTYPE_X86_64_H: value += "|x86_64_H"
+                    default:value += "|" + String(format:"0x%08x", subtype)
+                }
+            }
+        }
+        return value
     }
     
     private func getProcess()->[ItemInfo]
@@ -314,20 +468,39 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         result.append(ItemInfo(name: "systemUptime", value: format(duration: info.systemUptime)))
         result.append(ItemInfo(name: "thermalState", value: format(of: info.thermalState)))
         result.append(ItemInfo(name: "lowPowerMode", value: "\(info.isLowPowerModeEnabled)"))
+        var usage = rusage()
+        if getrusage(RUSAGE_SELF, &usage) == 0
+        {
+            result.append(ItemInfo(name: "cpu_time_user", value: format(of: usage.ru_utime)))
+            result.append(ItemInfo(name: "cpu_time_system", value: format(of: usage.ru_stime)))
+        }
         return result
+    }
+    
+    private func format(of type:timeval)->String
+    {
+        return String(format: "%d.%06ds", type.tv_sec, type.tv_usec)
     }
     
     private func format(memory:UInt64)->String
     {
         var components:[String] = []
-        var memory = memory
+        var memory = Double(memory)
         while memory > 1024
         {
             memory /= 1024
             components.append("1024")
         }
         
-        components.insert(memory.description, at: 0)
+        if memory - floor(memory) > 0
+        {
+            components.insert(String(format:"%.3f", memory), at: 0)
+        }
+        else
+        {
+            components.insert(String(format:"%.0f", memory), at: 0)
+        }
+        
         return components.joined(separator: "x")
     }
     
