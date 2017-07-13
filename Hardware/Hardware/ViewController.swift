@@ -16,25 +16,32 @@ class ItemCell:UITableViewCell
 
 class HeaderView:UITableViewHeaderFooterView
 {
-    static let identifier = "SectionHeaderView"
+    static let identifier = "section_header_view"
     var title:UILabel?
+    
+    override init(reuseIdentifier: String?)
+    {
+        super.init(reuseIdentifier: reuseIdentifier)
+        let title = UILabel()
+        title.font = UIFont(name: "Courier New", size: 36)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(title)
+        self.title = title
+        
+        let map:[String:Any] = ["title":title]
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(10)-[title]-|", options: .alignAllLeft, metrics: nil, views: map))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-|", options: .alignAllCenterY, metrics: nil, views: map))
+        
+        backgroundView = UIView()
+    }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+    }
+    
     override func layoutSubviews()
     {
-        if self.title == nil
-        {
-            let title = UILabel()
-            title.font = UIFont(name: "Courier New", size: 36)
-            title.translatesAutoresizingMaskIntoConstraints = false
-            self.contentView.addSubview(title)
-            self.title = title
-            
-            let map:[String:Any] = ["title":title]
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(10)-[title]-|", options: .alignAllLeft, metrics: nil, views: map))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-|", options: .alignAllCenterY, metrics: nil, views: map))
-            
-            backgroundView = UIView()
-        }
-        tintColor = UIColor.clear
         contentView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
     }
 }
