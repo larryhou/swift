@@ -239,10 +239,6 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         result.append(ItemInfo(name: "scale", value: "\(info.scale)"))
         result.append(ItemInfo(name: "brightness", value: String(format: "%.4f", info.brightness)))
         result.append(ItemInfo(name: "softwareDimming", value: "\(info.wantsSoftwareDimming)"))
-        let ppi = info.scale * (UIDevice.current.userInterfaceIdiom == .phone ? 163 : 132)
-        result.append(ItemInfo(name: "ppi", value: String(format: "%.0f", ppi)))
-        let inches = sqrt(pow(info.bounds.width, 2) + pow(info.bounds.height, 2)) * info.scale / ppi
-        result.append(ItemInfo(name: "size", value: String(format: "%.1finches", inches)))
         return result
     }
     
