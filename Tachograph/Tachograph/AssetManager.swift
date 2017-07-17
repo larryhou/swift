@@ -39,7 +39,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     private func getUserWorkspace()->URL
     {
-        return try! FileManager.default.url(for: .downloadsDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     
     //MARK: session delegate
@@ -48,7 +48,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = get(url: url.absoluteString)
+            let name:String = self.name(from: url.absoluteString)
             progression.removeValue(forKey: name)
             tasks.removeValue(forKey: name)
             
@@ -71,7 +71,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = get(url: url.absoluteString)
+            let name:String = self.name(from: url.absoluteString)
             if let item = progression[name]
             {
                 item.bytesWritten = fileOffset
@@ -84,7 +84,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = get(url: url.absoluteString)
+            let name:String = self.name(from: url.absoluteString)
             if let item = progression[name]
             {
                 item.bytesWritten = totalBytesWritten
@@ -95,11 +95,6 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     }
     
     //MARK: manager
-    private func get(url:String)->String
-    {
-        return String(url.split(separator: "/").last!)
-    }
-    
     func progress(of name:String)->Float
     {
         if let item = progression[name]
@@ -115,11 +110,27 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         return (Float)(Double(item.bytesWritten) / Double(item.bytesExpectedTotal))
     }
     
-    func get(url:String)->Data?
+    func name(from url:String)->String
+    {
+        return String(url.split(separator: "/").last!)
+    }
+    
+    func get(url:String)->URL?
     {
         var location = getUserWorkspace()
-        location.appendPathComponent(get(url: url))
-        return try? Data(contentsOf: location)
+        location.appendPathComponent(name(from: url))
+        if FileManager.default.fileExists(atPath: location.absoluteString)
+        {
+            return location
+        }
+        return nil
+    }
+    
+    func has(url:String)->Bool
+    {
+        var location = getUserWorkspace()
+        location.appendPathComponent(name(from: url))
+        return FileManager.default.fileExists(atPath: location.absoluteString)
     }
     
     private func writeResumeData(_ data:Data, name:String)
@@ -145,7 +156,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func cancel(url:String)
     {
-        let name:String = get(url: url)
+        let name:String = self.name(from: url)
         if let task = tasks[name]
         {
             task.cancel()
@@ -160,7 +171,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func resume(url:String)
     {
-        let name:String = get(url: url)
+        let name:String = self.name(from: url)
         if let task = tasks[name]
         {
             task.resume()
@@ -169,7 +180,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func suspend(url:String)
     {
-        let name:String = get(url: url)
+        let name:String = self.name(from: url)
         if let task = tasks[name]
         {
             task.suspend()

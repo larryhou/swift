@@ -61,6 +61,8 @@ class ViewController: UITabBarController, CameraModelDelegate
         
         model.fetchToken()
     }
+    
+    override var prefersStatusBarHidden:Bool { return true }
 
     override func didReceiveMemoryWarning()
     {

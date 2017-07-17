@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ddJ-pe-0ac">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ddJ-pe-0ac">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13137.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -86,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssetCell" rowHeight="70" id="RNI-fc-8NH" customClass="AssetCell" customModule="Tachograph" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="AssetCell" rowHeight="70" id="RNI-fc-8NH" customClass="AssetCell" customModule="Tachograph" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RNI-fc-8NH" id="p3i-Fc-b7Q">
@@ -94,36 +93,45 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07-04 10:29" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xgz-31-tO9">
-                                            <rect key="frame" x="96" y="5" width="211.5" height="36.5"/>
+                                            <rect key="frame" x="96" y="5" width="212" height="37"/>
                                             <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="32"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.thm" translatesAutoresizingMaskIntoConstraints="NO" id="3LF-lk-cfe">
                                             <rect key="frame" x="5" y="5" width="80" height="60"/>
+                                            <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="CgO-RG-qTv"/>
+                                                <constraint firstAttribute="width" constant="80" id="hba-PX-hyA"/>
+                                                <constraint firstAttribute="height" constant="60" id="p15-wU-k26"/>
                                             </constraints>
                                         </imageView>
                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UoC-bZ-eXk">
                                             <rect key="frame" x="0.0" y="68" width="375" height="2"/>
                                         </progressView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0860" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJP-fh-MO3">
-                                            <rect key="frame" x="96" y="46.5" width="38.5" height="18.5"/>
+                                            <rect key="frame" x="96" y="46.5" width="39" height="19"/>
                                             <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYt-xs-wKl">
+                                            <rect key="frame" x="342" y="23" width="25" height="25"/>
+                                            <state key="normal" image="share"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="RJP-fh-MO3" firstAttribute="leading" secondItem="Xgz-31-tO9" secondAttribute="leading" id="1zN-rl-R86"/>
-                                        <constraint firstItem="RJP-fh-MO3" firstAttribute="bottom" secondItem="3LF-lk-cfe" secondAttribute="bottom" id="3fu-kB-jXH"/>
-                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="centerY" secondItem="p3i-Fc-b7Q" secondAttribute="centerY" id="9YF-hB-fpK"/>
-                                        <constraint firstItem="Xgz-31-tO9" firstAttribute="leading" secondItem="3LF-lk-cfe" secondAttribute="trailing" constant="11" id="MY5-vB-Xub"/>
-                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="top" secondItem="Xgz-31-tO9" secondAttribute="top" id="S9E-Un-ny5"/>
-                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="top" secondItem="p3i-Fc-b7Q" secondAttribute="topMargin" constant="-3" id="eWv-Gs-M2w"/>
-                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="leading" secondItem="p3i-Fc-b7Q" secondAttribute="leadingMargin" constant="-3" id="qji-0e-xOL"/>
+                                        <constraint firstAttribute="trailing" secondItem="bYt-xs-wKl" secondAttribute="trailing" constant="8" id="Ev6-ue-q4y"/>
+                                        <constraint firstItem="RJP-fh-MO3" firstAttribute="leading" secondItem="3LF-lk-cfe" secondAttribute="trailing" constant="11" id="Fab-hs-b2C"/>
+                                        <constraint firstItem="Xgz-31-tO9" firstAttribute="top" secondItem="p3i-Fc-b7Q" secondAttribute="top" constant="5" id="H84-0R-ehW"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RJP-fh-MO3" secondAttribute="trailing" constant="20" symbolic="YES" id="SSt-8Q-wSk"/>
+                                        <constraint firstItem="Xgz-31-tO9" firstAttribute="leading" secondItem="3LF-lk-cfe" secondAttribute="trailing" constant="11" id="UtH-rQ-xDb"/>
+                                        <constraint firstItem="bYt-xs-wKl" firstAttribute="top" secondItem="p3i-Fc-b7Q" secondAttribute="top" constant="23" id="cE1-nb-oJo"/>
+                                        <constraint firstItem="RJP-fh-MO3" firstAttribute="top" secondItem="Xgz-31-tO9" secondAttribute="bottom" constant="4.5" id="nEN-Fa-iNX"/>
+                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="leading" secondItem="p3i-Fc-b7Q" secondAttribute="leading" constant="5" id="qno-TH-de0"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xgz-31-tO9" secondAttribute="trailing" constant="20" symbolic="YES" id="tIn-li-QeV"/>
+                                        <constraint firstItem="3LF-lk-cfe" firstAttribute="top" secondItem="p3i-Fc-b7Q" secondAttribute="top" constant="5" id="zPs-zB-STy"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -135,6 +143,7 @@
                                     <outlet property="ib_id" destination="RJP-fh-MO3" id="jOz-Cg-agk"/>
                                     <outlet property="ib_image" destination="3LF-lk-cfe" id="L2w-7b-jdA"/>
                                     <outlet property="ib_progress" destination="UoC-bZ-eXk" id="2dF-3H-dN5"/>
+                                    <outlet property="ib_share" destination="bYt-xs-wKl" id="Zrv-zD-jf7"/>
                                     <outlet property="ib_time" destination="Xgz-31-tO9" id="hov-fn-O2c"/>
                                 </connections>
                             </tableViewCell>
@@ -151,7 +160,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g0I-SJ-htO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="175" y="-1176"/>
+            <point key="canvasLocation" x="173.59999999999999" y="-1176.1619190404799"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="rlJ-ON-7Z5">
@@ -175,6 +184,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon.thm" width="160" height="120"/>
+        <image name="icon.thm" width="38" height="29"/>
+        <image name="share" width="25" height="25"/>
     </resources>
 </document>

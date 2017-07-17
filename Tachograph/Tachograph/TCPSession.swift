@@ -80,8 +80,7 @@ class TCPSession:NSObject, StreamDelegate
     
     private(set) var state:TCPSessionState = .none
     
-    lazy
-    private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: BUFFER_SIZE)
+    lazy private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: TCPSession.BUFFER_SIZE)
     private var _queue:[QueuedMessage] = []
     
     var connected:Bool { return _flags == 0x11 }

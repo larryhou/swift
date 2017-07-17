@@ -17,6 +17,7 @@ class AssetCell:UITableViewCell
     @IBOutlet var ib_time:UILabel!
     @IBOutlet var ib_progress:UIProgressView!
     @IBOutlet var ib_id:UILabel!
+    @IBOutlet var ib_share:UIButton!
     
     var data:CameraModel.CameraAsset?
 }
@@ -36,12 +37,22 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
     
     func asset(update name: String, progress: Float)
     {
+        if !name.hasSuffix(".mp4") { return }
+        
         for item in tableView.visibleCells
         {
             if let cell = item as? AssetCell, let data = cell.data, data.name == name
             {
                 cell.ib_progress.progress = progress
-                cell.ib_progress.isHidden = false
+                if progress == 1.0
+                {
+                    cell.ib_progress.isHidden = true
+                }
+                else
+                {
+                    cell.ib_progress.isHidden = false
+                }
+                cell.ib_share.isHidden = !cell.ib_progress.isHidden
             }
         }
     }
@@ -99,7 +110,7 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         AssetManager.shared.delegate = self
         
         formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm MM-dd"
+        formatter.dateFormat = "HH:mm/MM-dd"
         
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
@@ -243,8 +254,14 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
             let data = videoAssets[indexPath.row]
             cell.ib_time.text = formatter.string(from: data.timestamp)
             cell.ib_progress.isHidden = true
+            cell.ib_progress.progress = 0.0
             cell.ib_id.text = data.id
             cell.data = data
+            if let url = AssetManager.shared.get(url: data.icon)
+            {
+                cell.ib_image.image = UIImage(contentsOfFile: url.absoluteString)
+            }
+            cell.ib_share.isHidden = AssetManager.shared.has(url: data.url)
             return cell
         }
         
