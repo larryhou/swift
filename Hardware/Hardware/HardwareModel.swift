@@ -418,12 +418,12 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
     
     private func arch()->String
     {
-        var value = ""
+        var value = "unknown"
         if let type:cpu_type_t = sysctl(name:"hw.cputype")
         {
             if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
             {
-                let unknown = String(format:"unknown[0x%08x|0x%08x]", type, subtype)
+                value = String(format:"unknown[0x%08x|0x%08x]", type, subtype)
                 if type == CPU_TYPE_X86
                 {
                     switch subtype
@@ -431,7 +431,7 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
                         case CPU_SUBTYPE_X86_64_ALL:value = "X86_64_ALL"
                         case CPU_SUBTYPE_X86_64_H:value = "X86_64_H"
                         case CPU_SUBTYPE_X86_ARCH1:value = "X86_ARCH1";
-                        default:value = unknown
+                        default:break
                     }
                 }
                 else if type == CPU_TYPE_ARM
@@ -447,7 +447,7 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
                         case CPU_SUBTYPE_ARM_V7S:value = "ARM_V7S"
                         case CPU_SUBTYPE_ARM_V7EM:value = "ARM_V7EM"
                         case CPU_SUBTYPE_ARM_V8:value = "ARM_V8"
-                        default:value = unknown
+                        default:break
                     }
                 }
                 else if type == (CPU_TYPE_ARM | CPU_ARCH_ABI64)
@@ -456,7 +456,7 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
                     {
                         case CPU_SUBTYPE_ARM64_V8:value = "ARM64_V8"
                         case CPU_SUBTYPE_ARM64_ALL:value = "ARM64_ALL"
-                        default:value = unknown
+                        default:break
                     }
                 }
             }
