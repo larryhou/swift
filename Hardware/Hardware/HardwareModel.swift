@@ -454,8 +454,8 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
                 {
                     switch subtype
                     {
-                        case CPU_SUBTYPE_ARM64_V8:value = "ARM64_v8"
-                        case CPU_SUBTYPE_ARM64_ALL:value = "ARM64_all"
+                        case CPU_SUBTYPE_ARM64_V8:value = "ARM64_V8"
+                        case CPU_SUBTYPE_ARM64_ALL:value = "ARM64_ALL"
                         default:value = unknown
                     }
                 }
