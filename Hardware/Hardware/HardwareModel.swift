@@ -421,33 +421,43 @@ class HardwareModel:NSObject, CBCentralManagerDelegate
         var value = ""
         if let type:cpu_type_t = sysctl(name:"hw.cputype")
         {
-            switch type
-            {
-                case CPU_TYPE_X86:value = "x86"
-                case CPU_TYPE_ARM:value = "ARM"
-                case CPU_TYPE_ANY:value = "ANY"
-                default: value = String(format:"0x%08x", type)
-            }
-            
             if let subtype:cpu_subtype_t = sysctl(name: "hw.cpusubtype")
             {
-                switch subtype
+                let unknown = String(format:"unknown[0x%08x|0x%08x]", type, subtype)
+                if type == CPU_TYPE_X86
                 {
-                    case CPU_SUBTYPE_ARM_V7,
-                         CPU_SUBTYPE_ARM_V7F,
-                         CPU_SUBTYPE_ARM_V7K,
-                         CPU_SUBTYPE_ARM_V7M,
-                         CPU_SUBTYPE_ARM_V7S,
-                         CPU_SUBTYPE_ARM_V7EM: value += "|ARM_v7"
-                    case CPU_SUBTYPE_ARM_V8: value += "|ARM_v8"
-                    case CPU_SUBTYPE_ARM_V6: value += "|ARM_v6"
-                    case CPU_SUBTYPE_X86_ALL: value += "|x86_all"
-                    case CPU_SUBTYPE_X86_ARCH1: value += "|x86_ARCH1"
-                    case CPU_SUBTYPE_X86_64_ALL: value += "|x86_64_all"
-                    case CPU_SUBTYPE_X86_64_H: value += "|x86_64_H"
-                    case CPU_SUBTYPE_ARM64_V8: value += "|ARM64_v8"
-                    case CPU_SUBTYPE_ARM64_ALL: value += "|ARM64_all"
-                    default:value += "|" + String(format:"0x%08x", subtype)
+                    switch subtype
+                    {
+                        case CPU_SUBTYPE_X86_64_ALL:value = "X86_64_ALL"
+                        case CPU_SUBTYPE_X86_64_H:value = "X86_64_H"
+                        case CPU_SUBTYPE_X86_ARCH1:value = "X86_ARCH1";
+                        default:value = unknown
+                    }
+                }
+                else if type == CPU_TYPE_ARM
+                {
+                    switch subtype
+                    {
+                        case CPU_SUBTYPE_ARM_V6:value = "ARM_V6"
+                        case CPU_SUBTYPE_ARM_V6M:value = "ARM_V6M"
+                        case CPU_SUBTYPE_ARM_V7:value = "ARM_V7"
+                        case CPU_SUBTYPE_ARM_V7F:value = "ARM_V7F"
+                        case CPU_SUBTYPE_ARM_V7K:value = "ARM_V7K"
+                        case CPU_SUBTYPE_ARM_V7M:value = "ARM_V7M"
+                        case CPU_SUBTYPE_ARM_V7S:value = "ARM_V7S"
+                        case CPU_SUBTYPE_ARM_V7EM:value = "ARM_V7EM"
+                        case CPU_SUBTYPE_ARM_V8:value = "ARM_V8"
+                        default:value = unknown
+                    }
+                }
+                else if type == (CPU_TYPE_ARM | CPU_ARCH_ABI64)
+                {
+                    switch subtype
+                    {
+                        case CPU_SUBTYPE_ARM64_V8:value = "ARM64_v8"
+                        case CPU_SUBTYPE_ARM64_ALL:value = "ARM64_all"
+                        default:value = unknown
+                    }
                 }
             }
         }

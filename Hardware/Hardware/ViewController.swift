@@ -58,7 +58,7 @@ class ViewController: UITableViewController
         data = [:]
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font.rawValue:UIFont(name: "Courier New", size: 30)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [.font:UIFont(name: "Courier New", size: 30)!]
     }
     
     @objc func reload()
