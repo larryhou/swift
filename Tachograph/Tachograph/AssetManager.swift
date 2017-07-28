@@ -128,7 +128,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         var location = getUserWorkspace()
         location.appendPathComponent(name(from: url))
-        return FileManager.default.fileExists(atPath: location.absoluteString)
+        return FileManager.default.fileExists(atPath: location.path)
     }
     
     private func writeResumeData(_ data:Data, name:String)
