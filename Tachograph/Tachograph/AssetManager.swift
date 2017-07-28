@@ -29,8 +29,8 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     typealias LoadProgressHandler = (String, Float)->Void
     
     private var progress:[String:AssetProgression] = [:]
-    private var tasks:[String:URLSessionDownloadTask] = [:]
     private var handlers:[String:(LoadCompleteHandler?, LoadProgressHandler?)] = [:]
+    private var tasks:[String:URLSessionDownloadTask] = [:]
     
     var session:URLSession!
     
