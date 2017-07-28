@@ -8,13 +8,7 @@
 
 import Foundation
 
-protocol AssetManagerDelegate
-{
-    func asset(update name:String, location:URL)
-    func asset(update name:String, progress:Float)
-}
-
-class AssetManager:NSObject, URLSessionDownloadDelegate
+class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
 {
     class AssetProgression:Codable
     {
@@ -31,15 +25,24 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     }
     
     static private(set) var shared:AssetManager = AssetManager()
+    typealias LoadCompleteHandler = (String, URL)->Void
+    typealias LoadProgressHandler = (String, Float)->Void
     
-    private var progression:[String:AssetProgression] = [:]
+    private var progress:[String:AssetProgression] = [:]
     private var tasks:[String:URLSessionDownloadTask] = [:]
+    private var handlers:[String:(LoadCompleteHandler?, LoadProgressHandler?)] = [:]
     
-    var delegate:AssetManagerDelegate?
+    var session:URLSession!
     
     private func getUserWorkspace()->URL
     {
         return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    }
+    
+    //MARK: file manager
+    func fileManager(_ fileManager: FileManager, shouldMoveItemAt srcURL: URL, to dstURL: URL) -> Bool
+    {
+        return true
     }
     
     //MARK: session delegate
@@ -49,20 +52,26 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = self.name(from: url.absoluteString)
-            progression.removeValue(forKey: name)
-            tasks.removeValue(forKey: name)
+            defer
+            {
+                handlers.removeValue(forKey: name)
+                progress.removeValue(forKey: name)
+                tasks.removeValue(forKey: name)
+            }
             
+            let handler = handlers[name]
             var destination = getUserWorkspace()
             destination.appendPathComponent(name)
             
             do
             {
+                FileManager.default.delegate = self
                 try FileManager.default.moveItem(at: location, to: destination)
-                delegate?.asset(update: name, location: destination)
+                handler?.0?(name, destination)
             }
             catch
             {
-                delegate?.asset(update: name, location: location)
+                handler?.0?(name, location)
             }
         }
     }
@@ -72,10 +81,11 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = self.name(from: url.absoluteString)
-            if let item = progression[name]
+            if let item = progress[name]
             {
                 item.bytesWritten = fileOffset
                 item.bytesExpectedTotal = expectedTotalBytes
+                handlers[name]?.1?(name, get(progress: item))
             }
         }
     }
@@ -85,27 +95,27 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         if let url = downloadTask.originalRequest?.url
         {
             let name:String = self.name(from: url.absoluteString)
-            if let item = progression[name]
+            if let item = progress[name]
             {
                 item.bytesWritten = totalBytesWritten
                 item.bytesExpectedTotal = totalBytesExpectedToWrite
-                delegate?.asset(update: name, progress: progress(of: item))
+                handlers[name]?.1?(name, get(progress: item))
             }
         }
     }
     
     //MARK: manager
-    func progress(of name:String)->Float
+    func get(progress name:String)->Float
     {
-        if let item = progression[name]
+        if let item = progress[name]
         {
-            return progress(of:item)
+            return get(progress:item)
         }
         
         return Float.nan
     }
     
-    private func progress(of item:AssetProgression)->Float
+    private func get(progress item:AssetProgression)->Float
     {
         return (Float)(Double(item.bytesWritten) / Double(item.bytesExpectedTotal))
     }
@@ -187,21 +197,27 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         }
     }
     
-    func load(url:String)
+    func load(url:String, completion completeHandler:LoadCompleteHandler?, progression progressHandler:LoadProgressHandler? = nil)
     {
+        if self.session == nil
+        {
+            self.session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+        }
+        
         if let url = URL(string: url)
         {
             let item = AssetProgression(url: url.absoluteString)
-            progression[item.name] = item
+            handlers[item.name] = (completeHandler, progressHandler)
+            progress[item.name] = item
             
             let task:URLSessionDownloadTask
             if let data = readResumeData(name: item.name)
             {
-                task = URLSession.shared.downloadTask(withResumeData: data)
+                task = session.downloadTask(withResumeData: data)
             }
             else
             {
-                task = URLSession.shared.downloadTask(with: url)
+                task = session.downloadTask(with: url)
             }
             tasks[item.name] = task
             task.resume()

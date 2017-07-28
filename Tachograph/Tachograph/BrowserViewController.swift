@@ -22,42 +22,14 @@ class AssetCell:UITableViewCell
     var data:CameraModel.CameraAsset?
 }
 
-class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetching,  ModelObserver, AssetManagerDelegate
+class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetching,  ModelObserver
 {
-    func asset(update name: String, location: URL)
-    {
-        for item in tableView.visibleCells
-        {
-            if let cell = item as? AssetCell, let data = cell.data, data.name == name
-            {
-                cell.ib_image.image = UIImage(contentsOfFile: location.absoluteString)
-            }
-        }
-    }
-    
-    func asset(update name: String, progress: Float)
-    {
-        if !name.hasSuffix(".mp4") { return }
-        
-        for item in tableView.visibleCells
-        {
-            if let cell = item as? AssetCell, let data = cell.data, data.name == name
-            {
-                cell.ib_progress.progress = progress
-                if progress == 1.0
-                {
-                    cell.ib_progress.isHidden = true
-                }
-                else
-                {
-                    cell.ib_progress.isHidden = false
-                }
-                cell.ib_share.isHidden = !cell.ib_progress.isHidden
-            }
-        }
-    }
-    
     var OrientationContext:String?
+    
+    func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
+    {
+        
+    }
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
@@ -107,7 +79,6 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         super.viewDidLoad()
         
         videoAssets = CameraModel.shared.routeVideos
-        AssetManager.shared.delegate = self
         
         formatter = DateFormatter()
         formatter.dateFormat = "HH:mm/MM-dd"
@@ -157,16 +128,11 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath])
     {
-        for index in indexPaths
-        {
-            if let cell = tableView.cellForRow(at: index) as? AssetCell
-            {
-                if let data = cell.data
-                {
-                    AssetManager.shared.load(url: data.icon)
-                }
-            }
-        }
+//        for index in indexPaths
+//        {
+//            let data = videoAssets[index.row]
+//            AssetManager.shared.load(url: data.icon)
+//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -209,12 +175,8 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        #if NATIVE_DEBUG
-        guard let url = URL(string: "http://\(LIVE_SERVER.addr):8080/sample.mp4") else {return}
-        #else
         let data = videoAssets[indexPath.row]
         guard let url = URL(string: data.url) else {return}
-        #endif
         
         if let cell = tableView.cellForRow(at: indexPath)
         {
@@ -259,9 +221,18 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
             cell.data = data
             if let url = AssetManager.shared.get(url: data.icon)
             {
-                cell.ib_image.image = UIImage(contentsOfFile: url.absoluteString)
+                cell.ib_image.image = try! UIImage(data: Data(contentsOf: url))
             }
+            else
+            {
+                cell.ib_image.image = UIImage(named: "icon.thm")
+            }
+            
             cell.ib_share.isHidden = AssetManager.shared.has(url: data.url)
+            AssetManager.shared.load(url: data.icon, completion:
+            {
+                cell.ib_image.image = try! UIImage(data: Data(contentsOf: $1))
+            })
             return cell
         }
         

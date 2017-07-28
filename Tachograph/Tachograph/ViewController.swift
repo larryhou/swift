@@ -11,10 +11,16 @@ import UIKit
 protocol ModelObserver
 {
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
+    func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
 }
 
 class ViewController: UITabBarController, CameraModelDelegate
 {
+    func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
+    {
+        
+    }
+    
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
         if let viewControllers = self.viewControllers

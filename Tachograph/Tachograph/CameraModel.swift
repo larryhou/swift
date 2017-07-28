@@ -14,7 +14,7 @@ struct ServerInfo
 }
 
 #if NATIVE_DEBUG
-let LIVE_SERVER = ServerInfo(addr: "10.66.237.223", port: 8800)
+let LIVE_SERVER = ServerInfo(addr: "10.66.237.141", port: 8800)
 #else
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif
@@ -80,10 +80,11 @@ enum RemoteCommand:Int
     case captureVideo = 0x201/*513*/, captureImage = 0x301/*769*/, notification = 7
 }
 
-protocol CameraModelDelegate
+protocol CameraModelDelegate:NSObjectProtocol
 {
     func model(command:RemoteCommand, data:Codable)
     func model(assets:[CameraModel.CameraAsset], type:CameraModel.AssetType)
+    func model(update:CameraModel.CameraAsset, type:CameraModel.AssetType)
     func modelReady()
 }
 
@@ -139,7 +140,7 @@ class CameraModel:TCPSessionDelegate
         
         _session.delegate = self
         _timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(heartbeat), userInfo: nil, repeats: true)
-//        _timer?.invalidate()
+        _timer?.invalidate()
     }
     
     @objc func heartbeat()
@@ -254,19 +255,19 @@ class CameraModel:TCPSessionDelegate
             
             case .fetchRouteVideos:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
-                parse(assets: msg, target: &routeVideos, assetPath: path!.route)
+                parse(assets: msg, target: &routeVideos, type: .route)
                 delegate?.model(assets: routeVideos, type: .route)
                 response = msg
             
             case .fetchEventVideos:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
-                parse(assets: msg, target: &eventVideos, assetPath: path!.event)
+                parse(assets: msg, target: &eventVideos, type: .event)
                 delegate?.model(assets: eventVideos, type: .event)
                 response = msg
             
             case .fetchImages:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
-                parse(assets: msg, target: &images, assetPath: path!.image)
+                parse(assets: msg, target: &images, type: .image)
                 delegate?.model(assets: images, type: .image)
                 response = msg
             
@@ -279,18 +280,18 @@ class CameraModel:TCPSessionDelegate
                 guard let name = msg.param.split(separator: "/").last else {return}
                 if msg.type == "photo_taken"
                 {
-                    if let asset = parse(name: String(name), assetPath: path!.image)
+                    if let asset = parse(name: String(name), type: .image)
                     {
                         images.insert(asset, at: 0)
-                        delegate?.model(assets: images, type: .image)
+                        delegate?.model(update: asset, type: .image)
                     }
                 }
                 else if msg.type == "file_new"
                 {
-                    if let asset = parse(name: String(name), assetPath: path!.route)
+                    if let asset = parse(name: String(name), type: .route)
                     {
                         routeVideos.insert(asset, at: 0)
-                        delegate?.model(assets: routeVideos, type: .route)
+                        delegate?.model(update: asset, type: .route)
                     }
                 }
                 response = msg
@@ -305,25 +306,49 @@ class CameraModel:TCPSessionDelegate
         }
     }
     
-    func parse(name:String, assetPath:String) -> CameraAsset?
+    var countAsset:[AssetType:Int] = [:]
+    func parse(name:String, type:AssetType) -> CameraAsset?
     {
-        if let trim = _trim
-        {
-            let domain = "192.168.42.1"
-            let range = NSMakeRange(0, name.count)
-            let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
-            let timestamp = _dateFormatter.date(from: text)
-            
-            let id:String = String(text.split(separator: "_").last!)
-            return CameraAsset(id: id, name: name, url: "http://\(domain)\(assetPath)/\(name)",
-                icon: "http://\(domain)\(assetPath)/\(text).thm",
-                timestamp: timestamp!)
-        }
+        guard let trim = _trim else {return nil}
         
-        return nil
+        let range = NSMakeRange(0, name.count)
+        let text = trim.stringByReplacingMatches(in: name, options: [], range: range, withTemplate: "")
+        let timestamp = _dateFormatter.date(from: text)!
+        let id:String = String(text.split(separator: "_").last!)
+        
+        #if NATIVE_DEBUG
+        let index = String(format: "%03d", countAsset[type] ?? 0)
+        let server = "http://\(LIVE_SERVER.addr):8080/camera"
+        let sample = "\(server)/videos/sample.mp4"
+        let asset:CameraAsset
+        switch type
+        {
+            case .event, .route:
+                let url = "\(server)/videos/\(index).thm"
+                asset = CameraAsset(id: id, name: "sample.mp4", url: sample, icon: url, timestamp: timestamp)
+            case .image:
+                asset = CameraAsset(id: id, name: "sample.mp4",
+                                    url: "\(server)/images/\(index).jpg",
+                                    icon: "\(server)/images/\(index).thm",
+                                    timestamp: timestamp)
+        }
+        return asset
+        #else
+        let subpath:String
+        switch type
+        {
+            case .event:subpath = path!.event
+            case .image:subpath = path!.image
+            case .route:subpath = path!.route
+        }
+        let server = "http://\(LIVE_SERVER.addr)/\(subpath)"
+        return CameraAsset(id: id, name: name, url: "\(server)/\(name)",
+            icon: "\(server)/\(text).thm",
+            timestamp: timestamp)
+        #endif
     }
     
-    func parse(assets:AssetsMessage, target:inout [CameraAsset], assetPath:String)
+    func parse(assets:AssetsMessage, target:inout [CameraAsset], type:AssetType)
     {
         var dict:[String:CameraAsset] = [:]
         for item in target
@@ -339,9 +364,10 @@ class CameraModel:TCPSessionDelegate
                 continue
             }
             
-            if let asset = parse(name: name, assetPath: assetPath)
+            if let asset = parse(name: name, type: type)
             {
                 target.append(asset)
+                countAsset[type] = target.count
             }
         }
         
