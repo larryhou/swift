@@ -42,9 +42,11 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
         
         formatter = DateFormatter()
         formatter.dateFormat = "HH:mm/MM-dd"
+        
+        setup()
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    func setup()
     {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -52,7 +54,6 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
         
         playController = AVPlayerViewController()
         playController.entersFullScreenWhenPlaybackBegins = true
-        playController.exitsFullScreenWhenPlaybackEnds = true
         playController.view.frame = CGRect(origin: CGPoint(), size: movieView.frame.size)
         movieView.addSubview(playController.view)
     }

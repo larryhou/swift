@@ -70,6 +70,11 @@ class ViewController: UITabBarController, CameraModelDelegate
     
     override var prefersStatusBarHidden:Bool { return true }
     
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation
+    {
+        return UIInterfaceOrientation.portrait
+    }
+    
     override var shouldAutorotate: Bool {return false}
 
     override func didReceiveMemoryWarning()
