@@ -34,9 +34,14 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     var session:URLSession!
     
-    private func getUserWorkspace()->URL
+    private func locate(append:String? = nil)->URL
     {
-        return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        var location = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        if let pathComponent = append
+        {
+            location.appendPathComponent(pathComponent)
+        }
+        return location
     }
     
     //MARK: session delegate
@@ -57,8 +62,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             {
                 handlers[name]?.0?(name, data)
                 
-                var destination = getUserWorkspace()
-                destination.appendPathComponent(name)
+                let destination = locate(append: name)
                 try? data.write(to: destination)
             }
         }
@@ -115,8 +119,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func get(url:String)->URL?
     {
-        var location = getUserWorkspace()
-        location.appendPathComponent(name(from: url))
+        let location = locate(append: name(from: url))
         if FileManager.default.fileExists(atPath: location.path)
         {
             return location
@@ -126,24 +129,19 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func has(url:String)->Bool
     {
-        var location = getUserWorkspace()
-        location.appendPathComponent(name(from: url))
+        let location = locate(append: name(from: url))
         return FileManager.default.fileExists(atPath: location.path)
     }
     
     private func writeResumeData(_ data:Data, name:String)
     {
-        var location = getUserWorkspace()
-        location.appendPathComponent("\(name).dl")
-        
+        let location = locate(append: "\(name).dl")
         try? data.write(to: location)
     }
     
     private func readResumeData(name:String, deleteAfterReading:Bool = true)->Data?
     {
-        var location = getUserWorkspace()
-        location.appendPathComponent("\(name).dl")
-        
+        let location = locate(append: "\(name).dl")
         let data = try? Data(contentsOf: location)
         if deleteAfterReading
         {
