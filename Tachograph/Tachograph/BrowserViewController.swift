@@ -22,9 +22,40 @@ class AssetCell:UITableViewCell
     var data:CameraModel.CameraAsset?
 }
 
-class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetching,  ModelObserver
+class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDataSource,  ModelObserver
 {
-    var OrientationContext:String?
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var movieView: UIView!
+    
+    var videoAssets:[CameraModel.CameraAsset] = []
+    var formatter:DateFormatter!
+    
+    var loadingIndicator:UIActivityIndicatorView!
+    var playController:AVPlayerViewController!
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        videoAssets = CameraModel.shared.routeVideos
+        tableView.reloadData()
+        
+        formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm/MM-dd"
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        loadingIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        loadingIndicator.hidesWhenStopped = false
+        
+        playController = AVPlayerViewController()
+        playController.entersFullScreenWhenPlaybackBegins = true
+        playController.exitsFullScreenWhenPlaybackEnds = true
+        playController.view.frame = CGRect(origin: CGPoint(), size: movieView.frame.size)
+        movieView.addSubview(playController.view)
+    }
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
@@ -36,121 +67,32 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         if type == .route && self.videoAssets.count != assets.count
         {
             loading = false
-            if let index = self.focusIndex
-            {
-                let data = videoAssets[index.row]
-                for i in 0..<assets.count
-                {
-                    if assets[i].name == data.name
-                    {
-                        self.focusIndex = IndexPath(row: i, section: index.section)
-                    }
-                }
-            }
-            
             videoAssets = assets
+            guard let tableView = self.tableView else {return}
             tableView.reloadData()
-            
-            if let index = self.focusIndex
-            {
-                if let cell = tableView.cellForRow(at: index)
-                {
-                    var frame = cell.superview!.convert(cell.frame, to: view)
-                    frame.size.height = sizeCell.height
-                    UIView.animate(withDuration: 0.25)
-                    {
-                        self.videoController?.view.frame = frame
-                    }
-                } 
-            }
         }
         
+        guard let tableView = self.tableView else {return}
         loadingIndicator.stopAnimating()
         tableView.tableFooterView = nil
     }
     
-    var videoAssets:[CameraModel.CameraAsset] = []
-    var formatter:DateFormatter!
-    
-    var loadingIndicator:UIActivityIndicatorView!
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        
-        videoAssets = CameraModel.shared.routeVideos
-        
-        formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm/MM-dd"
-        
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
-        
-        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        loadingIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        loadingIndicator.hidesWhenStopped = false
-    }
-    
-    var sizeCell:CGSize = CGSize()
-    @objc func orientationUpdate()
-    {
-        sizeCell = CGSize(width: view.frame.width, height: view.frame.width / 16 * 9)
-        if let controller = self.videoController
-        {
-            tableView.beginUpdates()
-            tableView.endUpdates()
-            
-            let barController = self.parent as! UITabBarController
-            
-            self.frameVideo.size = sizeCell
-            controller.view.frame = self.frameVideo
-            let orientation = UIDevice.current.orientation
-            if orientation == .landscapeRight || orientation == .landscapeLeft
-            {
-                if let index = self.focusIndex
-                {
-                    tableView.scrollToRow(at: index, at: .top, animated: true)
-                }
-                
-                barController.tabBar.isHidden = true
-            }
-            else
-            {
-                barController.tabBar.isHidden = false
-            }
-        }
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int
+    func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath])
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-//        for index in indexPaths
-//        {
-//            let data = videoAssets[index.row]
-//            AssetManager.shared.load(url: data.icon)
-//        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        if focusIndex == indexPath
-        {
-            return sizeCell.height
-        }
-        
         return 70
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return videoAssets.count
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
         if indexPath.row == videoAssets.count - 1
         {
@@ -166,50 +108,25 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
         }
     }
     
-    var videoController:AVPlayerViewController?
-    var focusIndex:IndexPath?, frameVideo:CGRect!
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        focusIndex = indexPath
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        
         let data = videoAssets[indexPath.row]
         guard let url = URL(string: data.url) else {return}
         
-        if let cell = tableView.cellForRow(at: indexPath)
+        if playController.player == nil
         {
-            frameVideo = cell.superview!.convert(cell.frame, to: self.view)
-            frameVideo.size.height = sizeCell.height
-            
-            if self.videoController == nil
-            {
-                videoController = AVPlayerViewController()
-                videoController?.view.frame = frameVideo
-                view.addSubview(videoController!.view)
-                videoController?.view.isHidden = true
-            }
-            else
-            {
-                videoController?.player?.pause()
-            }
-            
-            UIView.setAnimationCurve(.easeInOut)
-            UIView.animate(withDuration: 0.25, animations:
-            { [unowned self] in
-                self.videoController!.view.isHidden = false
-                self.videoController!.view.frame = self.frameVideo
-            }, completion:
-            { [unowned self] (flag) in
-                self.videoController!.player = AVPlayer(url: url)
-                self.videoController!.player?.automaticallyWaitsToMinimizeStalling = false
-            })
+            playController.player = AVPlayer(url: url)
         }
+        else
+        {
+            playController.player?.replaceCurrentItem(with: AVPlayerItem(url: url))
+        }
+        
+        playController.player?.play()
     }
     
     var loading = false
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell") as? AssetCell
         {
@@ -232,7 +149,7 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
                 })
             }
             
-            cell.ib_share.isHidden = AssetManager.shared.has(cache: data.url)
+            cell.ib_share.isHidden = !AssetManager.shared.has(cache: data.url)
             
             return cell
         }
