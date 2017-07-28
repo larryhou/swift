@@ -53,9 +53,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             let name:String = get(name: url.absoluteString)
             defer
             {
-                handlers.removeValue(forKey: name)
-                progress.removeValue(forKey: name)
-                tasks.removeValue(forKey: name)
+                clean(name: name)
             }
             
             if let data = try? Data(contentsOf: location)
@@ -139,34 +137,42 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         try? data.write(to: location)
     }
     
-    private func readResumeData(name:String, deleteAfterReading:Bool = true)->Data?
+    private func readResumeData(name:String)->Data?
     {
         let location = locate(append: "\(name).dl")
         let data = try? Data(contentsOf: location)
-        if deleteAfterReading
-        {
-            try? FileManager.default.removeItem(at: location)
-        }
+        try? FileManager.default.removeItem(at: location)
         return data
     }
     
-    func cancel(url:String)
+    func cancel(url:String, resumable:Bool = true)
     {
         let name:String = get(name: url)
         if let task = tasks[name]
         {
-            task.cancel()
-            { [unowned self] (data) in
-                if let data = data
-                {
-                    self.writeResumeData(data, name: name)
+            if resumable
+            {
+                task.cancel()
+                { [unowned self] (data) in
+                    if let data = data
+                    {
+                        self.writeResumeData(data, name: name)
+                    }
                 }
             }
-            
-            progress.removeValue(forKey: name)
-            handlers.removeValue(forKey: name)
-            tasks.removeValue(forKey: name)
+            else
+            {
+                task.cancel()
+            }
+            clean(name: name)
         }
+    }
+    
+    private func clean(name:String)
+    {
+        handlers.removeValue(forKey: name)
+        progress.removeValue(forKey: name)
+        tasks.removeValue(forKey: name)
     }
     
     func resume(url:String)
