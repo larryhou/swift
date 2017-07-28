@@ -219,7 +219,7 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
             cell.ib_progress.progress = 0.0
             cell.ib_id.text = data.id
             cell.data = data
-            if let url = AssetManager.shared.get(url: data.icon)
+            if let url = AssetManager.shared.get(cache: data.icon)
             {
                 cell.ib_image.image = try! UIImage(data: Data(contentsOf: url))
             }
@@ -232,7 +232,7 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
                 })
             }
             
-            cell.ib_share.isHidden = AssetManager.shared.has(url: data.url)
+            cell.ib_share.isHidden = AssetManager.shared.has(cache: data.url)
             
             return cell
         }

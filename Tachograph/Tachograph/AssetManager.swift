@@ -50,7 +50,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = self.name(from: url.absoluteString)
+            let name:String = self.get(name: url.absoluteString)
             defer
             {
                 handlers.removeValue(forKey: name)
@@ -72,7 +72,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = self.name(from: url.absoluteString)
+            let name:String = self.get(name: url.absoluteString)
             if let item = progress[name]
             {
                 item.bytesWritten = fileOffset
@@ -86,7 +86,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = self.name(from: url.absoluteString)
+            let name:String = self.get(name: url.absoluteString)
             if let item = progress[name]
             {
                 item.bytesWritten = totalBytesWritten
@@ -112,14 +112,14 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         return (Float)(Double(item.bytesWritten) / Double(item.bytesExpectedTotal))
     }
     
-    func name(from url:String)->String
+    private func get(name url:String)->String
     {
         return String(url.split(separator: "/").last!)
     }
     
-    func get(url:String)->URL?
+    func get(cache url:String)->URL?
     {
-        let location = locate(append: name(from: url))
+        let location = locate(append: get(name: url))
         if FileManager.default.fileExists(atPath: location.path)
         {
             return location
@@ -127,9 +127,9 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         return nil
     }
     
-    func has(url:String)->Bool
+    func has(cache url:String)->Bool
     {
-        let location = locate(append: name(from: url))
+        let location = locate(append: get(name: url))
         return FileManager.default.fileExists(atPath: location.path)
     }
     
@@ -152,7 +152,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func cancel(url:String)
     {
-        let name:String = self.name(from: url)
+        let name:String = self.get(name: url)
         if let task = tasks[name]
         {
             task.cancel()
@@ -167,7 +167,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func resume(url:String)
     {
-        let name:String = self.name(from: url)
+        let name:String = self.get(name: url)
         if let task = tasks[name]
         {
             task.resume()
@@ -176,7 +176,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func suspend(url:String)
     {
-        let name:String = self.name(from: url)
+        let name:String = self.get(name: url)
         if let task = tasks[name]
         {
             task.suspend()
