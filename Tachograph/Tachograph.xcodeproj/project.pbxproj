@@ -55,6 +55,7 @@
 		6B42809B1F0628B200567C24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B4280A91F065C7A00567C24 /* TCPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSession.swift; sourceTree = "<group>"; };
 		6B70559B1F0BA31800C64BFB /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
+		6B915AF31F2B6617000E9077 /* Tachograph.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tachograph.entitlements; sourceTree = "<group>"; };
 		6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		6BCD30741F074D95001F0F30 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +108,7 @@
 		6B4280751F0628B200567C24 /* Tachograph */ = {
 			isa = PBXGroup;
 			children = (
+				6B915AF31F2B6617000E9077 /* Tachograph.entitlements */,
 				6B4280A91F065C7A00567C24 /* TCPSession.swift */,
 				6B70559B1F0BA31800C64BFB /* BrowserViewController.swift */,
 				6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */,
@@ -208,6 +210,11 @@
 				TargetAttributes = {
 					6B4280721F0628B200567C24 = {
 						CreatedOnToolsVersion = 9.0;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					6B4280891F0628B200567C24 = {
 						CreatedOnToolsVersion = 9.0;
@@ -440,6 +447,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_OBJC_UNUSED_IVARS = YES;
+				CODE_SIGN_ENTITLEMENTS = Tachograph/Tachograph.entitlements;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -464,6 +472,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_OBJC_UNUSED_IVARS = YES;
+				CODE_SIGN_ENTITLEMENTS = Tachograph/Tachograph.entitlements;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VALUE = NO;

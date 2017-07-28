@@ -175,6 +175,15 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         tasks.removeValue(forKey: name)
     }
     
+    func removeUserStorage()
+    {
+        let location = locate()
+        if let list = try? FileManager.default.contentsOfDirectory(at: location, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+        {
+            list.forEach({ try? FileManager.default.removeItem(at: $0) })
+        }
+    }
+    
     func resume(url:String)
     {
         let name:String = get(name: url)

@@ -134,6 +134,15 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i5Y-PM-E9r">
                                                     <rect key="frame" x="342" y="23" width="25" height="25"/>
                                                     <state key="normal" image="share"/>
+                                                    <connections>
+                                                        <action selector="share:" destination="FJI-aa-x5L" eventType="touchUpInside" id="Rm9-rA-uet"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfC-Mn-msZ">
+                                                    <rect key="frame" x="343" y="24" width="22" height="22"/>
+                                                    <connections>
+                                                        <action selector="download:" destination="FJI-aa-x5L" eventType="touchUpInside" id="rnE-A5-uhb"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -143,7 +152,9 @@
                                                 <constraint firstItem="i5Y-PM-E9r" firstAttribute="top" secondItem="0Hn-d4-lYj" secondAttribute="top" constant="23" id="Gbo-h8-53f"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Hry-DG-yOb" secondAttribute="trailing" constant="20" symbolic="YES" id="IWt-z2-Hte"/>
                                                 <constraint firstItem="Hry-DG-yOb" firstAttribute="top" secondItem="0Hn-d4-lYj" secondAttribute="top" constant="5" id="Jy6-VT-ys0"/>
+                                                <constraint firstItem="i5Y-PM-E9r" firstAttribute="leading" secondItem="jfC-Mn-msZ" secondAttribute="trailing" constant="-23" id="Ktm-qy-Ucq"/>
                                                 <constraint firstAttribute="trailing" secondItem="i5Y-PM-E9r" secondAttribute="trailing" constant="8" id="TLJ-OB-Xh0"/>
+                                                <constraint firstItem="i5Y-PM-E9r" firstAttribute="top" secondItem="jfC-Mn-msZ" secondAttribute="bottom" constant="-23" id="Wee-Yh-c3n"/>
                                                 <constraint firstItem="kfv-eZ-G5t" firstAttribute="leading" secondItem="0Hn-d4-lYj" secondAttribute="leading" constant="5" id="cIx-Sm-BsJ"/>
                                                 <constraint firstItem="tbQ-E4-7dX" firstAttribute="top" secondItem="Hry-DG-yOb" secondAttribute="bottom" constant="4.5" id="l32-8a-EXv"/>
                                                 <constraint firstItem="tbQ-E4-7dX" firstAttribute="leading" secondItem="kfv-eZ-G5t" secondAttribute="trailing" constant="11" id="utl-mE-vph"/>
@@ -155,6 +166,7 @@
                                             <constraint firstAttribute="bottom" secondItem="sJ1-bR-n2G" secondAttribute="bottom" id="U1z-SD-pza"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="ib_download" destination="jfC-Mn-msZ" id="CDU-Jd-PR1"/>
                                             <outlet property="ib_id" destination="tbQ-E4-7dX" id="gY2-r3-Zxy"/>
                                             <outlet property="ib_image" destination="kfv-eZ-G5t" id="KIJ-hg-iIt"/>
                                             <outlet property="ib_progress" destination="sJ1-bR-n2G" id="knm-nn-4Fv"/>

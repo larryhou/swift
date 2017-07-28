@@ -18,8 +18,26 @@ class AssetCell:UITableViewCell
     @IBOutlet var ib_progress:UIProgressView!
     @IBOutlet var ib_id:UILabel!
     @IBOutlet var ib_share:UIButton!
+    @IBOutlet weak var ib_download: UIButton!
     
     var data:CameraModel.CameraAsset?
+    
+    func progress(name:String, value:Float)
+    {
+        if value < 1.0 || Float.nan == value
+        {
+            ib_share.isHidden = true
+        }
+        else
+        {
+            ib_share.isHidden = false
+        }
+        
+        ib_progress.progress = value
+        
+        ib_download.isHidden = !ib_share.isHidden
+        ib_progress.isHidden = ib_download.isHidden
+    }
 }
 
 class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDataSource,  ModelObserver
@@ -42,6 +60,7 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
         
         formatter = DateFormatter()
         formatter.dateFormat = "HH:mm/MM-dd"
+        AssetManager.shared.removeUserStorage()
         
         setup()
     }
@@ -60,7 +79,10 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
+        videoAssets.insert(update, at: 0)
         
+        let index = IndexPath(row: 0, section: 0)
+        tableView.insertRows(at: [index], with: UITableViewRowAnimation.top)
     }
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
@@ -78,6 +100,36 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
         tableView.tableFooterView = nil
     }
     
+    //MARK: cell
+    @IBAction func share(_ sender: UIButton)
+    {
+        let rect = sender.superview!.convert(sender.frame, to: tableView)
+        if let list = tableView.indexPathsForRows(in: rect)
+        {
+            let data = videoAssets[list[0].row]
+            if let location = AssetManager.shared.get(cache: data.url)
+            {
+                let controller = UIActivityViewController(activityItems: [location], applicationActivities:nil)
+                present(controller, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @IBAction func download(_ sender: UIButton)
+    {
+        let rect = sender.superview!.convert(sender.frame, to: tableView)
+        if let list = tableView.indexPathsForRows(in: rect)
+        {
+            let index = list[0]
+            if let cell = tableView.cellForRow(at: index) as? AssetCell
+            {
+                let data = videoAssets[index.row]
+                AssetManager.shared.load(url: data.url, completion: nil, progression: cell.progress(name:value:))
+            }
+        }
+    }
+    
+    //MARK: table
     func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
@@ -151,7 +203,7 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             cell.ib_share.isHidden = !AssetManager.shared.has(cache: data.url)
-            
+            cell.ib_download.isHidden = !cell.ib_share.isHidden
             return cell
         }
         
