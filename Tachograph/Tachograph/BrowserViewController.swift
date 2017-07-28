@@ -226,13 +226,14 @@ class BrowerViewController:UITableViewController, UITableViewDataSourcePrefetchi
             else
             {
                 cell.ib_image.image = UIImage(named: "icon.thm")
+                AssetManager.shared.load(url: data.icon, completion:
+                {
+                    cell.ib_image.image = UIImage(data: $1)
+                })
             }
             
             cell.ib_share.isHidden = AssetManager.shared.has(url: data.url)
-            AssetManager.shared.load(url: data.icon, completion:
-            {
-                cell.ib_image.image = try! UIImage(data: Data(contentsOf: $1))
-            })
+            
             return cell
         }
         

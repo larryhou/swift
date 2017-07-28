@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
+class AssetManager:NSObject, URLSessionDownloadDelegate
 {
     class AssetProgression:Codable
     {
@@ -25,7 +25,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
     }
     
     static private(set) var shared:AssetManager = AssetManager()
-    typealias LoadCompleteHandler = (String, URL)->Void
+    typealias LoadCompleteHandler = (String, Data)->Void
     typealias LoadProgressHandler = (String, Float)->Void
     
     private var progress:[String:AssetProgression] = [:]
@@ -37,12 +37,6 @@ class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
     private func getUserWorkspace()->URL
     {
         return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    }
-    
-    //MARK: file manager
-    func fileManager(_ fileManager: FileManager, shouldMoveItemAt srcURL: URL, to dstURL: URL) -> Bool
-    {
-        return true
     }
     
     //MARK: session delegate
@@ -59,19 +53,13 @@ class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
                 tasks.removeValue(forKey: name)
             }
             
-            let handler = handlers[name]
-            var destination = getUserWorkspace()
-            destination.appendPathComponent(name)
-            
-            do
+            if let data = try? Data(contentsOf: location)
             {
-                FileManager.default.delegate = self
-                try FileManager.default.moveItem(at: location, to: destination)
-                handler?.0?(name, destination)
-            }
-            catch
-            {
-                handler?.0?(name, location)
+                handlers[name]?.0?(name, data)
+                
+                var destination = getUserWorkspace()
+                destination.appendPathComponent(name)
+                try? data.write(to: destination)
             }
         }
     }
@@ -129,7 +117,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
     {
         var location = getUserWorkspace()
         location.appendPathComponent(name(from: url))
-        if FileManager.default.fileExists(atPath: location.absoluteString)
+        if FileManager.default.fileExists(atPath: location.path)
         {
             return location
         }
@@ -201,7 +189,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate, FileManagerDelegate
     {
         if self.session == nil
         {
-            self.session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+            self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
         }
         
         if let url = URL(string: url)
