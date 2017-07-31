@@ -48,7 +48,7 @@ struct AssetsMessage:Codable
     let listing:[Asset]
 }
 //{ "rval": 0, "msg_id": 1280, "listing": [ { "path": "\/mnt\/mmc01\/DCIM", "type": "nor_video" }, { "path": "\/mnt\/mmc01\/EVENT", "type": "event_video" }, { "path": "\/mnt\/mmc01\/PICTURE", "type": "cap_img" } ] }
-struct StorageMessage:Codable
+struct PathComponentsMessage:Codable
 {
     struct Folder:Codable
     {
@@ -76,7 +76,7 @@ struct CaptureNotification:Codable
 enum RemoteCommand:Int
 {
     case query = 1, fetchVersion = 11, fetchToken = 0x101/*257*/
-    case fetchStorage = 0x500/*1280*/, fetchRouteVideos = 0x508/*1288*/, fetchEventVideos = 0x509/*1289*/, fetchImages = 0x50A/*1290*/
+    case fetchAssetPaths = 0x500/*1280*/, fetchRouteVideos = 0x508/*1288*/, fetchEventVideos = 0x509/*1289*/, fetchImages = 0x50A/*1290*/
     case captureVideo = 0x201/*513*/, captureImage = 0x301/*769*/, notification = 7
 }
 
@@ -160,9 +160,9 @@ class CameraModel:TCPSessionDelegate
     
     func tcpUpdate(session: TCPSession)
     {
-        if _sentQueue.count > 0 && ready
+        if _taskQueue.count > 0 && ready
         {
-            _session.send(data: _sentQueue.remove(at: 0))
+            _session.send(data: _taskQueue.remove(at: 0))
         }
     }
     
@@ -249,8 +249,8 @@ class CameraModel:TCPSessionDelegate
                 response = msg
                 preload()
             
-            case .fetchStorage:
-                let msg = try _decoder.decode(StorageMessage.self, from: bytes)
+            case .fetchAssetPaths:
+                let msg = try _decoder.decode(PathComponentsMessage.self, from: bytes)
                 var route = "", event = "", image = ""
                 for item in msg.listing
                 {
@@ -329,7 +329,7 @@ class CameraModel:TCPSessionDelegate
         delegate?.model(command: command, data: response)
         print(response)
         
-        if command == .fetchStorage
+        if command == .fetchAssetPaths
         {
             ready = true
         }
@@ -409,10 +409,10 @@ class CameraModel:TCPSessionDelegate
         fetchVersion()
         query(type: "app_status")
         query(type: "date_time")
-        fetchStorage()
+        fetchAssetPaths()
     }
     
-    private var _sentQueue:[[String:Any]] = []
+    private var _taskQueue:[[String:Any]] = []
     func query(type:String = "date_time")
     {
         let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.query.rawValue, "type" : type]
@@ -431,9 +431,9 @@ class CameraModel:TCPSessionDelegate
         _session.send(data: params)
     }
     
-    func fetchStorage()
+    func fetchAssetPaths()
     {
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchStorage.rawValue]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchAssetPaths.rawValue]
         _session.send(data: params)
     }
     
@@ -456,18 +456,18 @@ class CameraModel:TCPSessionDelegate
     {
         let offset = (num == 0 ? storage.count : num) / 20 * 20
         let params:[String:Any] = ["token" : self.token, "msg_id" : command.rawValue, "param" : offset]
-        _sentQueue.append(params)
+        _taskQueue.append(params)
     }
     
     func captureImage()
     {
         let params:[String:Any] = ["token" : self.token, "msg_id": RemoteCommand.captureImage.rawValue]
-        _sentQueue.append(params)
+        _taskQueue.append(params)
     }
     
     func captureVideo()
     {
         let params:[String:Any] = ["token" : self.token, "msg_id": RemoteCommand.captureVideo.rawValue]
-        _sentQueue.append(params)
+        _taskQueue.append(params)
     }
 }
