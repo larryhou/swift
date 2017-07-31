@@ -18,7 +18,16 @@ class ViewController: UITabBarController, CameraModelDelegate
 {
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
-        
+        if let viewControllers = self.viewControllers
+        {
+            for item in viewControllers
+            {
+                if item is ModelObserver
+                {
+                    (item as! ModelObserver).model(update: update, type: type)
+                }
+            }
+        }
     }
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
@@ -37,24 +46,7 @@ class ViewController: UITabBarController, CameraModelDelegate
     
     func model(command: RemoteCommand, data: Codable)
     {
-        if command == .fetchToken
-        {
-            model.fetchVersion()
-            model.query(type: "app_status")
-            model.query(type: "date_time")
-            model.fetchStorage()
-        }
-        else if command == .fetchImages
-        {
-//            model.captureImage()
-        }
-    }
-    
-    func modelReady()
-    {
-        model.fetchRouteVideos()
-        model.fetchEventVideos()
-        model.fetchImages()
+        
     }
     
     var model:CameraModel!
@@ -64,8 +56,6 @@ class ViewController: UITabBarController, CameraModelDelegate
         
         model = CameraModel.shared
         model.delegate = self
-        
-        model.fetchToken()
     }
     
     override var prefersStatusBarHidden:Bool { return true }

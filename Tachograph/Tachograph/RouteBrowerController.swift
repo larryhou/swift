@@ -40,7 +40,16 @@ class AssetCell:UITableViewCell
     }
 }
 
-class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDataSource,  ModelObserver
+class EventBrowserController:RouteBrowerController
+{
+    override func loadModel()
+    {
+        loading = true
+        CameraModel.shared.fetchEventVideos()
+    }
+}
+
+class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDataSource,  ModelObserver
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var movieView: UIView!
@@ -55,17 +64,19 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
-        videoAssets = CameraModel.shared.routeVideos
-        tableView.reloadData()
-        
         formatter = DateFormatter()
         formatter.dateFormat = "HH:mm/MM-dd"
-        AssetManager.shared.removeUserStorage()
-        
-        setup()
+        loadViews()
+        loadModel()
     }
     
-    func setup()
+    func loadModel()
+    {
+        loading = true
+        CameraModel.shared.fetchRouteVideos()
+    }
+    
+    func loadViews()
     {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -79,6 +90,7 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
+        if type == .image {return}
         videoAssets.insert(update, at: 0)
         
         let index = IndexPath(row: 0, section: 0)
@@ -155,9 +167,7 @@ class BrowerViewController:UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             loadingIndicator.startAnimating()
-            
-            loading = true
-            CameraModel.shared.fetchRouteVideos()
+            loadModel()
         }
     }
     

@@ -12,9 +12,11 @@ import Foundation
 protocol TCPSessionDelegate
 {
     func tcp(session:TCPSession, data:Data)
+    @objc optional func tcp(session:TCPSession, state:TCPSessionState)
     @objc optional func tcp(session:TCPSession, sendEvent:Stream.Event)
     @objc optional func tcp(session:TCPSession, readEvent:Stream.Event)
     @objc optional func tcp(session:TCPSession, error:Error)
+    @objc optional func tcpUpdate(session:TCPSession)
     @objc optional func close()
 }
 
@@ -64,9 +66,10 @@ struct QueuedMessage
     }
 }
 
-enum TCPSessionState
+@objc
+enum TCPSessionState:Int
 {
-    case none, connecting, connected, closed, reconnecting
+    case none, connecting, connected, closed
 }
 
 class TCPSession:NSObject, StreamDelegate
@@ -78,12 +81,24 @@ class TCPSession:NSObject, StreamDelegate
     private var _sendStream:OutputStream!
     private var _timer:Timer!
     
-    private(set) var state:TCPSessionState = .none
+    private var _state:TCPSessionState = .none
+    private(set) var state:TCPSessionState
+    {
+        get {return _state}
+        set
+        {
+            if _state != newValue
+            {
+                _state = newValue
+                delegate?.tcp?(session: self, state: _state)
+            }
+        }
+    }
     
     lazy private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: TCPSession.BUFFER_SIZE)
     private var _queue:[QueuedMessage] = []
     
-    var connected:Bool { return _flags == 0x11 }
+    var connected:Bool { return _state == .connected }
     
     private var address:String?, port:UInt32 = 0
     func connect(address:String, port:UInt32)
@@ -115,22 +130,33 @@ class TCPSession:NSObject, StreamDelegate
     
     func reconnect()
     {
-        state = .reconnecting
+        state = .connecting
         if let address = self.address, port != 0
         {
             connect(address: address, port: port)
         }
     }
     
+    func clear()
+    {
+        _queue.removeAll()
+    }
+    
     @objc private func sendUpdate()
     {
+        delegate?.tcpUpdate?(session: self)
         guard let stream = _sendStream else { return }
-        if stream.hasSpaceAvailable && _queue.count > 0
+        if stream.hasSpaceAvailable
         {
-            _flags |= 0x10
-            if connected { state = .connected }
+            if !connected
+            {
+                state = .connected
+            }
             
-            send(_queue.removeFirst())
+            if _queue.count > 0
+            {
+                send(_queue.removeFirst())
+            }
         }
     }
     
@@ -144,9 +170,6 @@ class TCPSession:NSObject, StreamDelegate
             delegate?.tcp?(session: self, readEvent: eventCode)
             if eventCode == .hasBytesAvailable
             {
-                _flags |= 0x01
-                if connected { state = .connected }
-                
                 if let stream = _readStream, stream.hasBytesAvailable
                 {
                     delegate?.tcp(session: self, data: read())
