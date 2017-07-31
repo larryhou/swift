@@ -48,7 +48,7 @@ struct AssetsMessage:Codable
     let listing:[Asset]
 }
 //{ "rval": 0, "msg_id": 1280, "listing": [ { "path": "\/mnt\/mmc01\/DCIM", "type": "nor_video" }, { "path": "\/mnt\/mmc01\/EVENT", "type": "event_video" }, { "path": "\/mnt\/mmc01\/PICTURE", "type": "cap_img" } ] }
-struct PathComponentsMessage:Codable
+struct AssetIndexMessage:Codable
 {
     struct Folder:Codable
     {
@@ -76,7 +76,7 @@ struct CaptureNotification:Codable
 enum RemoteCommand:Int
 {
     case query = 1, fetchVersion = 11, fetchToken = 0x101/*257*/
-    case fetchAssetPaths = 0x500/*1280*/, fetchRouteVideos = 0x508/*1288*/, fetchEventVideos = 0x509/*1289*/, fetchImages = 0x50A/*1290*/
+    case fetchAssetIndex = 0x500/*1280*/, fetchRouteVideos = 0x508/*1288*/, fetchEventVideos = 0x509/*1289*/, fetchImages = 0x50A/*1290*/
     case captureVideo = 0x201/*513*/, captureImage = 0x301/*769*/, notification = 7
 }
 
@@ -100,7 +100,7 @@ class CameraModel:TCPSessionDelegate
         case image, event, route
     }
     
-    struct PathComponents
+    struct AssetIndex
     {
         let image, event, route:String
     }
@@ -224,7 +224,7 @@ class CameraModel:TCPSessionDelegate
     var tokenImages:[CameraAsset] = []
     
     var version:VersionMessage?
-    var pathComponents:PathComponents!
+    var assetIndex:AssetIndex!
     
     var token:Int = 1
     func processMessage(data:Dictionary<String, Any>, bytes:Data) throws
@@ -249,8 +249,8 @@ class CameraModel:TCPSessionDelegate
                 response = msg
                 preload()
             
-            case .fetchAssetPaths:
-                let msg = try _decoder.decode(PathComponentsMessage.self, from: bytes)
+            case .fetchAssetIndex:
+                let msg = try _decoder.decode(AssetIndexMessage.self, from: bytes)
                 var route = "", event = "", image = ""
                 for item in msg.listing
                 {
@@ -267,8 +267,8 @@ class CameraModel:TCPSessionDelegate
                     }
                 }
                 response = msg
-                self.pathComponents = PathComponents(image: image, event: event, route: route)
-                print(self.pathComponents)
+                self.assetIndex = AssetIndex(image: image, event: event, route: route)
+                print(self.assetIndex)
             
             case .fetchRouteVideos:
                 let msg = try _decoder.decode(AssetsMessage.self, from: bytes)
@@ -329,7 +329,7 @@ class CameraModel:TCPSessionDelegate
         delegate?.model(command: command, data: response)
         print(response)
         
-        if command == .fetchAssetPaths
+        if command == .fetchAssetIndex
         {
             ready = true
         }
@@ -366,9 +366,9 @@ class CameraModel:TCPSessionDelegate
         let subpath:String
         switch type
         {
-            case .event:subpath = path!.event
-            case .image:subpath = path!.image
-            case .route:subpath = path!.route
+            case .event:subpath = assetIndex.event
+            case .image:subpath = assetIndex.image
+            case .route:subpath = assetIndex.route
         }
         let server = "http://\(LIVE_SERVER.addr)/\(subpath)"
         return CameraAsset(id: id, name: name, url: "\(server)/\(name)",
@@ -409,7 +409,7 @@ class CameraModel:TCPSessionDelegate
         fetchVersion()
         query(type: "app_status")
         query(type: "date_time")
-        fetchAssetPaths()
+        fetchAssetIndex()
     }
     
     private var _taskQueue:[[String:Any]] = []
@@ -431,9 +431,9 @@ class CameraModel:TCPSessionDelegate
         _session.send(data: params)
     }
     
-    func fetchAssetPaths()
+    func fetchAssetIndex()
     {
-        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchAssetPaths.rawValue]
+        let params:[String:Any] = ["token" : self.token, "msg_id" : RemoteCommand.fetchAssetIndex.rawValue]
         _session.send(data: params)
     }
     
