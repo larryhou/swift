@@ -36,11 +36,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AQR-E3-60u">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.thm" translatesAutoresizingMaskIntoConstraints="NO" id="AQR-E3-60u">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
                                         </imageView>
                                     </subviews>
                                 </view>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="AQR-E3-60u" firstAttribute="leading" secondItem="O4L-gg-WBN" secondAttribute="leading" id="2Ra-le-fHm"/>
                                     <constraint firstAttribute="trailing" secondItem="AQR-E3-60u" secondAttribute="trailing" id="9sA-f6-a0x"/>
