@@ -14,26 +14,57 @@
         </array>
     </customFonts>
     <scenes>
-        <!--抓图-->
-        <scene sceneID="OnN-Nx-Ubh">
+        <!--照片-->
+        <scene sceneID="nO8-nx-1by">
             <objects>
-                <viewController id="H5y-Ri-dey" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LGu-ko-kgD"/>
-                        <viewControllerLayoutGuide type="bottom" id="Paz-qO-4vn"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NCU-x8-mmf">
+                <collectionViewController id="XD0-Ui-ThD" customClass="ImageBrowserController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="xdh-VH-ROy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" tag="3" title="抓图" id="UoC-Ql-VuI">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="OUy-TZ-p8T">
+                            <size key="itemSize" width="120" height="120"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="O4L-gg-WBN" customClass="ImageCell" customModule="Tachograph" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AQR-E3-60u">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="AQR-E3-60u" firstAttribute="leading" secondItem="O4L-gg-WBN" secondAttribute="leading" id="2Ra-le-fHm"/>
+                                    <constraint firstAttribute="trailing" secondItem="AQR-E3-60u" secondAttribute="trailing" id="9sA-f6-a0x"/>
+                                    <constraint firstItem="AQR-E3-60u" firstAttribute="top" secondItem="O4L-gg-WBN" secondAttribute="top" id="JFI-xX-4mW"/>
+                                    <constraint firstAttribute="bottom" secondItem="AQR-E3-60u" secondAttribute="bottom" id="R4A-fd-4vb"/>
+                                </constraints>
+                                <size key="customSize" width="120" height="90"/>
+                                <connections>
+                                    <outlet property="ib_image" destination="AQR-E3-60u" id="8rK-iH-fgd"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="XD0-Ui-ThD" id="b8b-Ro-uig"/>
+                            <outlet property="delegate" destination="XD0-Ui-ThD" id="kcz-9P-2Ht"/>
+                        </connections>
+                    </collectionView>
+                    <tabBarItem key="tabBarItem" title="照片" id="7QA-o8-PLZ">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                     </tabBarItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lUl-Z5-C1x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vw7-Gj-brY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="481" y="605"/>
+            <point key="canvasLocation" x="480.80000000000001" y="556.37181409295351"/>
         </scene>
         <!--下载-->
         <scene sceneID="Bwx-HG-6vi">
@@ -322,7 +353,7 @@
                     <connections>
                         <segue destination="FJI-aa-x5L" kind="relationship" relationship="viewControllers" id="i13-iU-Qwo"/>
                         <segue destination="Xyq-aO-LnI" kind="relationship" relationship="viewControllers" id="6hZ-Pt-9YE"/>
-                        <segue destination="H5y-Ri-dey" kind="relationship" relationship="viewControllers" id="UT9-Zr-mYV"/>
+                        <segue destination="XD0-Ui-ThD" kind="relationship" relationship="viewControllers" id="9C2-1L-VmP"/>
                         <segue destination="X3o-SW-ZRs" kind="relationship" relationship="viewControllers" id="IJb-xi-6p8"/>
                     </connections>
                 </tabBarController>

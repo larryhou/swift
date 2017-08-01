@@ -46,10 +46,11 @@ class EventBrowserController:RouteBrowerController
     {
         loading = true
         CameraModel.shared.fetchEventVideos()
+        type = .event
     }
 }
 
-class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDataSource,  ModelObserver
+class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDataSource, CameraModelDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var movieView: UIView!
@@ -59,6 +60,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     
     var loadingIndicator:UIActivityIndicatorView!
     var playController:AVPlayerViewController!
+    var type = CameraModel.AssetType.route
     
     override func viewDidLoad()
     {
@@ -67,7 +69,12 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
         formatter = DateFormatter()
         formatter.dateFormat = "HH:mm/MM-dd"
         loadViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
         loadModel()
+        CameraModel.shared.delegate = self
     }
     
     func loadModel()
@@ -90,7 +97,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
-        if type == .image {return}
+        if type != self.type {return}
         videoAssets.insert(update, at: 0)
         
         let index = IndexPath(row: 0, section: 0)
@@ -99,7 +106,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
-        if type == .route && self.videoAssets.count != assets.count
+        if type == self.type && self.videoAssets.count != assets.count
         {
             loading = false
             videoAssets = assets

@@ -14,7 +14,7 @@ struct ServerInfo
 }
 
 #if NATIVE_DEBUG
-let LIVE_SERVER = ServerInfo(addr: "10.66.237.35", port: 8800)
+let LIVE_SERVER = ServerInfo(addr: "10.66.195.140", port: 8800)
 #else
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif
@@ -82,7 +82,6 @@ enum RemoteCommand:Int
 
 protocol CameraModelDelegate:NSObjectProtocol
 {
-    func model(command:RemoteCommand, data:Codable)
     func model(assets:[CameraModel.CameraAsset], type:CameraModel.AssetType)
     func model(update:CameraModel.CameraAsset, type:CameraModel.AssetType)
 }
@@ -139,7 +138,9 @@ class CameraModel:TCPSessionDelegate
         
         _session.delegate = self
         _timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(heartbeat), userInfo: nil, repeats: true)
-//        _timer?.invalidate()
+        #if NATIVE_DEBUG
+        _timer?.invalidate()
+        #endif
     }
     
     @objc func heartbeat()
@@ -326,9 +327,7 @@ class CameraModel:TCPSessionDelegate
                 response = msg
         }
         
-        delegate?.model(command: command, data: response)
         print(response)
-        
         if command == .fetchAssetIndex
         {
             ready = true
