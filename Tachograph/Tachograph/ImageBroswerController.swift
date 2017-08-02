@@ -74,6 +74,7 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     
     func model(assets: [CameraModel.CameraAsset], type: CameraModel.AssetType)
     {
+        if type != .image {return}
         takenImages = assets
         collectionView?.reloadData()
     }

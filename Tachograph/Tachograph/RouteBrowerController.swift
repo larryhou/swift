@@ -42,6 +42,12 @@ class AssetCell:UITableViewCell
 
 class EventBrowserController:RouteBrowerController
 {
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        assetType = .event
+    }
+    
     override func loadModel()
     {
         loading = true
@@ -59,6 +65,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     
     var loadingIndicator:UIActivityIndicatorView!
     var playController:AVPlayerViewController!
+    var assetType:CameraModel.AssetType = .route
     
     override func viewDidLoad()
     {
@@ -95,6 +102,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
     {
+        if type != assetType {return}
         videoAssets.insert(update, at: 0)
         
         let index = IndexPath(row: 0, section: 0)
