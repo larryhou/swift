@@ -82,6 +82,7 @@ class ImagePreviewController:ImagePeekController
         }
         
         baseTransform = transform
+        animator.addCompletion { _ in self.positionAdjust() }
         animator.startAnimation()
     }
     
