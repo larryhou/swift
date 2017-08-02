@@ -14,7 +14,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--照片-->
+        <!--CAPTURED PHOTOS-->
         <scene sceneID="nO8-nx-1by">
             <objects>
                 <collectionViewController id="XD0-Ui-ThD" customClass="ImageBrowserController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
@@ -59,13 +59,52 @@
                             <outlet property="delegate" destination="XD0-Ui-ThD" id="kcz-9P-2Ht"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="照片" id="7QA-o8-PLZ">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" title="CAPTURED PHOTOS" id="vwO-vD-8C5"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vw7-Gj-brY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="480.80000000000001" y="556.37181409295351"/>
+            <point key="canvasLocation" x="1281" y="555"/>
+        </scene>
+        <!--Image Peek Controller-->
+        <scene sceneID="vmA-LG-sjL">
+            <objects>
+                <viewController storyboardIdentifier="ImagePeekController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f7X-QM-TVc" customClass="ImagePeekController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sfX-gj-QBX"/>
+                        <viewControllerLayoutGuide type="bottom" id="VNi-Rg-Uhq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d6F-Tw-VMB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="coH-3t-vQ7">
+                                <rect key="frame" x="168.5" y="314.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uI5-3p-eVX">
+                                <rect key="frame" x="0.0" y="228" width="375" height="211"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uI5-3p-eVX" secondAttribute="height" multiplier="16:9" id="4LH-UM-BMR"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uI5-3p-eVX" firstAttribute="centerY" secondItem="d6F-Tw-VMB" secondAttribute="centerY" id="QcD-xf-YIb"/>
+                            <constraint firstItem="uI5-3p-eVX" firstAttribute="leading" secondItem="d6F-Tw-VMB" secondAttribute="leading" id="SZX-dZ-dYG"/>
+                            <constraint firstItem="coH-3t-vQ7" firstAttribute="centerX" secondItem="d6F-Tw-VMB" secondAttribute="centerX" id="XX3-2E-iXK"/>
+                            <constraint firstAttribute="trailing" secondItem="uI5-3p-eVX" secondAttribute="trailing" id="rlA-h8-9wA"/>
+                            <constraint firstItem="coH-3t-vQ7" firstAttribute="centerY" secondItem="d6F-Tw-VMB" secondAttribute="centerY" id="zoR-T3-IkW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image" destination="uI5-3p-eVX" id="jac-oW-CL2"/>
+                        <outlet property="indicator" destination="coH-3t-vQ7" id="kIV-bf-OdD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CsB-oU-LDP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2253.5999999999999" y="545.57721139430294"/>
         </scene>
         <!--下载-->
         <scene sceneID="Bwx-HG-6vi">
@@ -354,13 +393,74 @@
                     <connections>
                         <segue destination="FJI-aa-x5L" kind="relationship" relationship="viewControllers" id="i13-iU-Qwo"/>
                         <segue destination="Xyq-aO-LnI" kind="relationship" relationship="viewControllers" id="6hZ-Pt-9YE"/>
-                        <segue destination="XD0-Ui-ThD" kind="relationship" relationship="viewControllers" id="9C2-1L-VmP"/>
+                        <segue destination="R2b-J1-hKP" kind="relationship" relationship="viewControllers" id="9C2-1L-VmP"/>
                         <segue destination="X3o-SW-ZRs" kind="relationship" relationship="viewControllers" id="IJb-xi-6p8"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Z9-TV-bp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1492" y="6"/>
+        </scene>
+        <!--照片-->
+        <scene sceneID="Gck-dh-gTp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R2b-J1-hKP" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="照片" id="7QA-o8-PLZ">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DgQ-JH-0iv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="K1F-OB-dzH">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="XD0-Ui-ThD" kind="relationship" relationship="rootViewController" id="hOm-Le-D3p"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LP1-C0-wx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="480" y="555.9220389805098"/>
+        </scene>
+        <!--Image Preview Controller-->
+        <scene sceneID="wWm-tz-1K7">
+            <objects>
+                <viewController storyboardIdentifier="ImagePreviewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ng7-aI-lcj" customClass="ImagePreviewController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ODT-XJ-tmY"/>
+                        <viewControllerLayoutGuide type="bottom" id="icA-0A-Lh6"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="WpE-dP-wjT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-XL-Rga">
+                                <rect key="frame" x="168.5" y="314.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3k-l7-AIY">
+                                <rect key="frame" x="0.0" y="228" width="375" height="211"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8qe-XL-Rga" firstAttribute="centerX" secondItem="WpE-dP-wjT" secondAttribute="centerX" id="Nqg-6Z-kvT"/>
+                            <constraint firstItem="8qe-XL-Rga" firstAttribute="centerY" secondItem="WpE-dP-wjT" secondAttribute="centerY" id="p8s-av-gxN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image" destination="f3k-l7-AIY" id="WWi-qq-aAG"/>
+                        <outlet property="indicator" destination="8qe-XL-Rga" id="5E6-nT-mZr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jek-A6-Hmq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2953" y="546"/>
         </scene>
     </scenes>
     <resources>

@@ -14,7 +14,7 @@ struct ServerInfo
 }
 
 #if NATIVE_DEBUG
-let LIVE_SERVER = ServerInfo(addr: "10.66.195.140", port: 8800)
+let LIVE_SERVER = ServerInfo(addr: "10.66.195.125", port: 8800)
 #else
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif
@@ -356,8 +356,8 @@ class CameraModel:TCPSessionDelegate
                 asset = CameraAsset(id: id, name: "sample.mp4", url: sample, icon: url, timestamp: timestamp)
             case .image:
                 asset = CameraAsset(id: id, name: "sample.mp4",
-                                    url: "\(server)/images/\(index).jpg",
-                                    icon: "\(server)/images/\(index).thm",
+                                    url: "\(server)/images/x\(index).jpg",
+                                    icon: "\(server)/images/x\(index).thm",
                                     timestamp: timestamp)
         }
         return asset

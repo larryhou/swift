@@ -11,10 +11,10 @@ import UIKit
 
 class ImageCell:UICollectionViewCell
 {
-    @IBOutlet var ib_image:UIImageView!
+    @IBOutlet weak var ib_image:UIImageView!
 }
 
-class ImageBrowserController:UICollectionViewController, UICollectionViewDelegateFlowLayout, CameraModelDelegate
+class ImageBrowserController:UICollectionViewController, UICollectionViewDelegateFlowLayout,UIViewControllerPreviewingDelegate, CameraModelDelegate
 {
     var takenImages:[CameraModel.CameraAsset] = []
     private var size = CGSize()
@@ -24,6 +24,10 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        collectionView?.allowsSelection = true
+        navigationController?.navigationBar.titleTextAttributes = [.font:UIFont(name: "Courier New", size: 30)!]
+        registerForPreviewing(with: self, sourceView: view)
+        
         let fit = fitsize(length: view.frame.width)
         size = CGSize(width: fit.0, height: fit.0/4*3)
         insets = UIEdgeInsets(top: fit.1, left: fit.1, bottom: fit.1, right: fit.1)
@@ -139,6 +143,44 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        print(indexPath)
+        let data = takenImages[indexPath.row]
+        print("select", data)
+        if let preview = storyboard?.instantiateViewController(withIdentifier: "ImagePreviewController") as? ImagePreviewController
+        {
+            preview.url = data.url
+            show(preview, sender: self)
+        }
+    }
+    
+    //MARK: 3d-touch
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
+    {
+        if let index = collectionView?.indexPathForItem(at: location)
+        {
+            if let cell = collectionView?.cellForItem(at: index)
+            {
+                previewingContext.sourceRect = cell.superview!.convert(cell.frame, to: view)
+            }
+            
+            let data = takenImages[index.row]
+            if let peek = storyboard?.instantiateViewController(withIdentifier: "ImagePeekController") as? ImagePeekController
+            {
+                peek.url = data.url
+                let size = view.frame.size
+                peek.preferredContentSize = CGSize(width: size.width, height: size.width/16*9)
+                return peek
+            }
+        }
+        
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
+    {
+        if let preview = storyboard?.instantiateViewController(withIdentifier: "ImagePreviewController") as? ImagePreviewController
+        {
+            preview.url = (viewControllerToCommit as! ImagePeekController).url
+            show(preview, sender: self)
+        }
     }
 }

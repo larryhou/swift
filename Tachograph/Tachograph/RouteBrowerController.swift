@@ -13,11 +13,11 @@ import AVKit
 
 class AssetCell:UITableViewCell
 {
-    @IBOutlet var ib_image:UIImageView!
-    @IBOutlet var ib_time:UILabel!
-    @IBOutlet var ib_progress:UIProgressView!
-    @IBOutlet var ib_id:UILabel!
-    @IBOutlet var ib_share:UIButton!
+    @IBOutlet weak var ib_image:UIImageView!
+    @IBOutlet weak var ib_time:UILabel!
+    @IBOutlet weak var ib_progress:UIProgressView!
+    @IBOutlet weak var ib_id:UILabel!
+    @IBOutlet weak var ib_share:UIButton!
     @IBOutlet weak var ib_download: UIButton!
     
     var data:CameraModel.CameraAsset?
