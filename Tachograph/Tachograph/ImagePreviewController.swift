@@ -63,7 +63,8 @@ class ImagePreviewController:ImagePeekController
         {
             alpha = 0
             navigationAlpha = navigationController!.navigationBar.alpha
-            scaleRange = (view.frame.height / frameImage.width, view.frame.width / frameImage.height)
+            let scale = max(view.frame.height / frameImage.width, view.frame.width / frameImage.height)
+            scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
         }
         else
