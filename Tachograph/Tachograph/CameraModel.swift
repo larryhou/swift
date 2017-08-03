@@ -355,7 +355,7 @@ class CameraModel:TCPSessionDelegate
                 let url = "\(server)/videos/\(index).thm"
                 asset = CameraAsset(id: id, name: "sample.mp4", url: sample, icon: url, timestamp: timestamp)
             case .image:
-                asset = CameraAsset(id: id, name: "sample.mp4",
+                asset = CameraAsset(id: id, name: "x\(index).jpg",
                                     url: "\(server)/images/x\(index).jpg",
                                     icon: "\(server)/images/x\(index).thm",
                                     timestamp: timestamp)

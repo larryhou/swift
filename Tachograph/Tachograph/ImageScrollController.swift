@@ -42,6 +42,7 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
             {
                 let data = imageAssets[index]
                 let review = manager.fetch(storyboard)
+                print("index", index, data)
                 review.index = index
                 review.url = data.url
                 review.data = data
