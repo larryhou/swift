@@ -118,16 +118,16 @@
 		6B4280751F0628B200567C24 /* Tachograph */ = {
 			isa = PBXGroup;
 			children = (
-				6B9D4B1D1F32F5920074E1AF /* InstanceManager.swift */,
 				6B915AF31F2B6617000E9077 /* Tachograph.entitlements */,
+				6B9D4B1D1F32F5920074E1AF /* InstanceManager.swift */,
 				6B4280A91F065C7A00567C24 /* TCPSession.swift */,
 				6B70559B1F0BA31800C64BFB /* RouteBrowerController.swift */,
 				6B3E5A931F2F575500B654AE /* ImageBroswerController.swift */,
 				6B9D4B191F32BB740074E1AF /* NativeBrowserController.swift */,
 				6B09D8101F303F9F00F61205 /* ImagePreviewController.swift */,
+				6B9D4B1B1F32EFF00074E1AF /* ImageScrollController.swift */,
 				6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */,
 				6BCD30741F074D95001F0F30 /* CameraModel.swift */,
-				6B9D4B1B1F32EFF00074E1AF /* ImageScrollController.swift */,
 				6B4280761F0628B200567C24 /* AppDelegate.swift */,
 				6B4280781F0628B200567C24 /* ViewController.swift */,
 				6B42807A1F0628B200567C24 /* Main.storyboard */,

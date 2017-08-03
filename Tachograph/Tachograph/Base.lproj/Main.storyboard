@@ -439,14 +439,14 @@
                                 <gestureRecognizers/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-08-04" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="882-Ev-2Bb">
-                                <rect key="frame" x="136" y="650" width="103" height="17"/>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                <rect key="frame" x="133.5" y="649" width="109" height="18"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="icA-0A-Lh6" firstAttribute="top" secondItem="882-Ev-2Bb" secondAttribute="bottom" id="1xh-FM-f3w"/>
+                            <constraint firstAttribute="bottom" secondItem="882-Ev-2Bb" secondAttribute="bottom" id="1xh-FM-f3w"/>
                             <constraint firstItem="882-Ev-2Bb" firstAttribute="centerX" secondItem="WpE-dP-wjT" secondAttribute="centerX" id="6CD-Nr-LfM"/>
                             <constraint firstItem="8qe-XL-Rga" firstAttribute="centerX" secondItem="WpE-dP-wjT" secondAttribute="centerX" id="Nqg-6Z-kvT"/>
                             <constraint firstItem="8qe-XL-Rga" firstAttribute="centerY" secondItem="WpE-dP-wjT" secondAttribute="centerY" id="p8s-av-gxN"/>

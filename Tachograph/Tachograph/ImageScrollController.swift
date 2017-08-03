@@ -41,10 +41,10 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
             if index >= 0 && index < imageAssets.count
             {
                 let data = imageAssets[index]
-                print("index", index, data.url)
                 let review = manager.fetch(storyboard)
                 review.index = index
                 review.url = data.url
+                review.data = data
                 return review
             }
         }
@@ -64,7 +64,9 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
     {
         if let controller = viewController as? ImagePreviewController
         {
-            return fetchImageController(index: controller.index - 1)
+            let review = fetchImageController(index: controller.index - 1)
+            review?.view.backgroundColor = controller.view.backgroundColor
+            return review
         }
         return nil
     }
@@ -73,7 +75,9 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
     {
         if let controller = viewController as? ImagePreviewController
         {
-            return fetchImageController(index: controller.index + 1)
+            let review = fetchImageController(index: controller.index + 1)
+            review?.view.backgroundColor = controller.view.backgroundColor
+            return review
         }
         return nil
     }

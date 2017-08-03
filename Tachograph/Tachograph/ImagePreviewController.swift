@@ -40,7 +40,10 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     var scaleRange:(CGFloat, CGFloat) = (1.0, 3.0)
     override var shouldAutorotate: Bool {return true}
     var frameImage = CGRect()
+    var dateFormatter = DateFormatter()
     var index:Int = -1
+    
+    var panGestureRecognizer:UIPanGestureRecognizer?
     
     override func viewDidLoad()
     {
@@ -48,11 +51,14 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         scaleRange = (scaleRange.0, view.frame.height / image.frame.height)
         frameImage = image.frame
         
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss E"
+        
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
         image.addGestureRecognizer(pan)
+        panGestureRecognizer = pan
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapUpdate(sender:)))
         image.addGestureRecognizer(tap)
@@ -65,7 +71,14 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         super.viewWillAppear(animated)
         if let data = self.data
         {
-            timelabel.text = data.timestamp.description
+            timelabel.text = dateFormatter.string(from: data.timestamp)
+        }
+        if let navigationController = self.navigationController
+        {
+            if UIDevice.current.orientation.isLandscape
+            {
+                navigationAlpha = navigationController.navigationBar.alpha
+            }
         }
         orientationUpdate()
     }
@@ -88,25 +101,27 @@ class ImagePreviewController:ImagePeekController, ReusableObject
             scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
             textColor = .white
+            panGestureRecognizer?.isEnabled = false
         }
         else
         {
             alpha = navigationAlpha
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
             rotation = orientation == .portrait ?  0 : CGFloat.pi
+            panGestureRecognizer?.isEnabled = true
             textColor = .black
         }
         
         let transform = CGAffineTransform(rotationAngle: rotation)
         let animator = UIViewPropertyAnimator.init(duration: 0.5, dampingRatio: 0.9)
         {
+            navigationController.navigationBar.alpha = alpha
             self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
-            self.navigationController?.navigationBar.alpha = alpha
             self.timelabel.textColor = textColor
         }
         
         baseTransform = transform
-        animator.addCompletion { _ in self.positionAdjust() }
+        animator.addCompletion{ _ in self.positionAdjust()}
         animator.startAnimation()
     }
     
