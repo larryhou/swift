@@ -55,18 +55,21 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
     {
-        for review in previousViewControllers
+        for controller in previousViewControllers
         {
-            manager.recycle(target: review as! ImagePreviewController)
+            if let review = controller as? ImagePreviewController
+            {
+                manager.recycle(target: review)
+            }
         }
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
-        if let controller = viewController as? ImagePreviewController
+        if let current = viewController as? ImagePreviewController
         {
-            let review = fetchImageController(index: controller.index - 1)
-            review?.view.backgroundColor = controller.view.backgroundColor
+            let review = fetchImageController(index: current.index - 1)
+            review?.view.backgroundColor = current.view.backgroundColor
             return review
         }
         return nil
@@ -74,10 +77,10 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
-        if let controller = viewController as? ImagePreviewController
+        if let current = viewController as? ImagePreviewController
         {
-            let review = fetchImageController(index: controller.index + 1)
-            review?.view.backgroundColor = controller.view.backgroundColor
+            let review = fetchImageController(index: current.index + 1)
+            review?.view.backgroundColor = current.view.backgroundColor
             return review
         }
         return nil

@@ -60,9 +60,6 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         image.addGestureRecognizer(pan)
         panGestureRecognizer = pan
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapUpdate(sender:)))
-        image.addGestureRecognizer(tap)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
@@ -73,30 +70,21 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         {
             timelabel.text = dateFormatter.string(from: data.timestamp)
         }
-        if let navigationController = self.navigationController
-        {
-            if UIDevice.current.orientation.isLandscape
-            {
-                navigationAlpha = navigationController.navigationBar.alpha
-            }
-        }
+        
         orientationUpdate()
     }
     
     var baseTransform = CGAffineTransform.identity
-    var navigationAlpha:CGFloat = 1
     
     @objc func orientationUpdate()
     {
         guard let navigationController = self.navigationController else {return}
-        
         let rotation, alpha:CGFloat
         let orientation = UIDevice.current.orientation
         let textColor:UIColor
         if orientation.isLandscape
         {
             alpha = 0
-            navigationAlpha = navigationController.navigationBar.alpha
             let scale = max(view.frame.height / frameImage.width, view.frame.width / frameImage.height)
             scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
@@ -105,7 +93,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         }
         else
         {
-            alpha = navigationAlpha
+            alpha = 1
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
             rotation = orientation == .portrait ?  0 : CGFloat.pi
             panGestureRecognizer?.isEnabled = true
@@ -113,7 +101,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         }
         
         let transform = CGAffineTransform(rotationAngle: rotation)
-        let animator = UIViewPropertyAnimator.init(duration: 0.5, dampingRatio: 0.9)
+        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.9)
         {
             navigationController.navigationBar.alpha = alpha
             self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
@@ -121,23 +109,11 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         }
         
         baseTransform = transform
-        animator.addCompletion{ _ in self.positionAdjust()}
-        animator.startAnimation()
-    }
-    
-    @objc func tapUpdate(sender:UITapGestureRecognizer)
-    {
-        if let navigationBar = navigationController?.navigationBar
-        {
-            if UIDevice.current.orientation.isLandscape {return}
-            let alpha:CGFloat = navigationBar.alpha >= 0.5 ? 0.0 : 1.0
-            let animator = UIViewPropertyAnimator.init(duration: 0.5, dampingRatio: 1.0)
-            {
-                navigationBar.alpha = alpha
-                self.view.backgroundColor = alpha == 0 ? UIColor(white: 0.9, alpha: 1.0) : .white
-            }
-            animator.startAnimation()
+        animator.addCompletion
+        { _ in
+            self.positionAdjust()
         }
+        animator.startAnimation()
     }
     
     var panAnimator:UIViewPropertyAnimator?
