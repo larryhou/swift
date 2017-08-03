@@ -14,7 +14,7 @@ struct ServerInfo
 }
 
 #if NATIVE_DEBUG
-let LIVE_SERVER = ServerInfo(addr: "10.66.195.125", port: 8800)
+let LIVE_SERVER = ServerInfo(addr: "10.66.195.136", port: 8800)
 #else
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif

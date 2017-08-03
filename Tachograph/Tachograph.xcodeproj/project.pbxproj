@@ -19,6 +19,9 @@
 		6B42809A1F0628B200567C24 /* TachographUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280991F0628B200567C24 /* TachographUITests.swift */; };
 		6B4280AA1F065C7A00567C24 /* TCPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4280A91F065C7A00567C24 /* TCPSession.swift */; };
 		6B70559C1F0BA31800C64BFB /* RouteBrowerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B70559B1F0BA31800C64BFB /* RouteBrowerController.swift */; };
+		6B9D4B1A1F32BB740074E1AF /* NativeBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D4B191F32BB740074E1AF /* NativeBrowserController.swift */; };
+		6B9D4B1C1F32EFF00074E1AF /* ImageScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D4B1B1F32EFF00074E1AF /* ImageScrollController.swift */; };
+		6B9D4B1E1F32F5920074E1AF /* InstanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D4B1D1F32F5920074E1AF /* InstanceManager.swift */; };
 		6BA429EB1F0F8A4200BEAED0 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */; };
 		6BCD30751F074D95001F0F30 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD30741F074D95001F0F30 /* CameraModel.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +63,9 @@
 		6B4280A91F065C7A00567C24 /* TCPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSession.swift; sourceTree = "<group>"; };
 		6B70559B1F0BA31800C64BFB /* RouteBrowerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBrowerController.swift; sourceTree = "<group>"; };
 		6B915AF31F2B6617000E9077 /* Tachograph.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tachograph.entitlements; sourceTree = "<group>"; };
+		6B9D4B191F32BB740074E1AF /* NativeBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeBrowserController.swift; sourceTree = "<group>"; };
+		6B9D4B1B1F32EFF00074E1AF /* ImageScrollController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollController.swift; sourceTree = "<group>"; };
+		6B9D4B1D1F32F5920074E1AF /* InstanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceManager.swift; sourceTree = "<group>"; };
 		6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		6BCD30741F074D95001F0F30 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,13 +118,16 @@
 		6B4280751F0628B200567C24 /* Tachograph */ = {
 			isa = PBXGroup;
 			children = (
+				6B9D4B1D1F32F5920074E1AF /* InstanceManager.swift */,
 				6B915AF31F2B6617000E9077 /* Tachograph.entitlements */,
 				6B4280A91F065C7A00567C24 /* TCPSession.swift */,
 				6B70559B1F0BA31800C64BFB /* RouteBrowerController.swift */,
 				6B3E5A931F2F575500B654AE /* ImageBroswerController.swift */,
+				6B9D4B191F32BB740074E1AF /* NativeBrowserController.swift */,
 				6B09D8101F303F9F00F61205 /* ImagePreviewController.swift */,
 				6BA429EA1F0F8A4200BEAED0 /* AssetManager.swift */,
 				6BCD30741F074D95001F0F30 /* CameraModel.swift */,
+				6B9D4B1B1F32EFF00074E1AF /* ImageScrollController.swift */,
 				6B4280761F0628B200567C24 /* AppDelegate.swift */,
 				6B4280781F0628B200567C24 /* ViewController.swift */,
 				6B42807A1F0628B200567C24 /* Main.storyboard */,
@@ -287,10 +296,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B9D4B1E1F32F5920074E1AF /* InstanceManager.swift in Sources */,
 				6B4280791F0628B200567C24 /* ViewController.swift in Sources */,
+				6B9D4B1A1F32BB740074E1AF /* NativeBrowserController.swift in Sources */,
 				6B70559C1F0BA31800C64BFB /* RouteBrowerController.swift in Sources */,
 				6B3E5A941F2F575500B654AE /* ImageBroswerController.swift in Sources */,
 				6B4280AA1F065C7A00567C24 /* TCPSession.swift in Sources */,
+				6B9D4B1C1F32EFF00074E1AF /* ImageScrollController.swift in Sources */,
 				6B42807F1F0628B200567C24 /* Tachograph.xcdatamodeld in Sources */,
 				6B4280771F0628B200567C24 /* AppDelegate.swift in Sources */,
 				6BCD30751F074D95001F0F30 /* CameraModel.swift in Sources */,

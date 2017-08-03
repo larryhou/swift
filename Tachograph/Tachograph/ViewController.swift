@@ -13,6 +13,7 @@ class ViewController: UITabBarController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
     }
     
     override var prefersStatusBarHidden:Bool { return true }

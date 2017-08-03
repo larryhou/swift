@@ -175,12 +175,32 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         tasks.removeValue(forKey: name)
     }
     
-    func removeUserStorage()
+    private var developmentPattern:NSRegularExpression?
+    func removeUserStorage(development:Bool = true)
     {
+        if developmentPattern == nil
+        {
+            developmentPattern = try? NSRegularExpression(pattern: "x[0-9]{3}.jpg$", options: .caseInsensitive)
+        }
+        
         let location = locate()
         if let list = try? FileManager.default.contentsOfDirectory(at: location, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
         {
-            list.forEach({ try? FileManager.default.removeItem(at: $0) })
+            list.forEach
+            {
+                if !development
+                {
+                    try? FileManager.default.removeItem(at: $0)
+                }
+                else
+                {
+                    let range = NSMakeRange(0, $0.path.count)
+                    if let num = developmentPattern?.numberOfMatches(in: $0.path, options: .reportCompletion, range: range), num > 0
+                    {
+                        try? FileManager.default.removeItem(at: $0)
+                    }
+                }
+            }
         }
     }
     

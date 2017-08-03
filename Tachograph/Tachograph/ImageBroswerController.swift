@@ -144,12 +144,12 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        let data = takenImages[indexPath.row]
-        print("select", data)
-        if let preview = storyboard?.instantiateViewController(withIdentifier: "ImagePreviewController") as? ImagePreviewController
+        if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
         {
-            preview.url = data.url
-            show(preview, sender: self)
+            scroll.index = indexPath.row
+            scroll.imageAssets = takenImages
+            scroll.view.frame = view.frame
+            show(scroll, sender: self)
         }
     }
     

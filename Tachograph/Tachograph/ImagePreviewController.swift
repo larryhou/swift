@@ -27,11 +27,20 @@ extension CGAffineTransform
     }
 }
 
-class ImagePreviewController:ImagePeekController
+class ImagePreviewController:ImagePeekController, ReusableObject
 {
+    static func instantiate(_ data: Any?) -> ReusableObject
+    {
+        let storyboard = data as! UIStoryboard
+        return storyboard.instantiateViewController(withIdentifier: "ImagePreviewController") as! ImagePreviewController
+    }
+    
+    @IBOutlet weak var timelabel: UILabel!
+    
     var scaleRange:(CGFloat, CGFloat) = (1.0, 3.0)
     override var shouldAutorotate: Bool {return true}
     var frameImage = CGRect()
+    var index:Int = -1
     
     override func viewDidLoad()
     {
@@ -48,8 +57,17 @@ class ImagePreviewController:ImagePeekController
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapUpdate(sender:)))
         image.addGestureRecognizer(tap)
         
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        if let data = self.data
+        {
+            timelabel.text = data.timestamp.description
+        }
+        orientationUpdate()
     }
     
     var baseTransform = CGAffineTransform.identity
@@ -57,21 +75,26 @@ class ImagePreviewController:ImagePeekController
     
     @objc func orientationUpdate()
     {
+        guard let navigationController = self.navigationController else {return}
+        
         let rotation, alpha:CGFloat
         let orientation = UIDevice.current.orientation
+        let textColor:UIColor
         if orientation.isLandscape
         {
             alpha = 0
-            navigationAlpha = navigationController!.navigationBar.alpha
+            navigationAlpha = navigationController.navigationBar.alpha
             let scale = max(view.frame.height / frameImage.width, view.frame.width / frameImage.height)
             scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
+            textColor = .white
         }
         else
         {
             alpha = navigationAlpha
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
             rotation = orientation == .portrait ?  0 : CGFloat.pi
+            textColor = .black
         }
         
         let transform = CGAffineTransform(rotationAngle: rotation)
@@ -79,6 +102,7 @@ class ImagePreviewController:ImagePeekController
         {
             self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
             self.navigationController?.navigationBar.alpha = alpha
+            self.timelabel.textColor = textColor
         }
         
         baseTransform = transform
@@ -166,6 +190,7 @@ class ImagePreviewController:ImagePeekController
 class ImagePeekController: UIViewController
 {
     var url:String!
+    var data:CameraModel.CameraAsset?
     
     @IBOutlet weak var image:UIImageView!
     @IBOutlet weak var indicator:UIActivityIndicatorView!
@@ -191,7 +216,14 @@ class ImagePeekController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
         indicator.stopAnimating()
+        
+        self.image.image = nil
         
         let manager = AssetManager.shared
         if let location = manager.get(cache: url)
