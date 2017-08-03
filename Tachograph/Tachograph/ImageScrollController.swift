@@ -30,7 +30,7 @@ class ImageScrollController: UIPageViewController, UIPageViewControllerDataSourc
             review.url = imageAssets[index].url
             review.data = imageAssets[index]
         }
-        AssetManager.shared.removeUserStorage(development: true)
+        
         setViewControllers([review], direction: .forward, animated: false, completion: nil)
     }
     

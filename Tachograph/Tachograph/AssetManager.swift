@@ -175,13 +175,28 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         tasks.removeValue(forKey: name)
     }
     
-    private var developmentPattern:NSRegularExpression?
+    func fetchAssets(suffix:String = "jpg")->[URL]
+    {
+        let location = locate()
+        let pattern = try? NSRegularExpression(pattern: ".\(suffix)$", options: .caseInsensitive)
+        if let files = try? FileManager.default.contentsOfDirectory(at: location, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+        {
+            return files.filter
+            {
+                let range = NSMakeRange(0, $0.path.count)
+                if let num = pattern?.numberOfMatches(in: $0.path, options: .reportCompletion, range: range), num > 0
+                {
+                    return true
+                }
+                return false
+            }
+        }
+        return []
+    }
+    
     func removeUserStorage(development:Bool = true)
     {
-        if developmentPattern == nil
-        {
-            developmentPattern = try? NSRegularExpression(pattern: "x[0-9]{3}.jpg$", options: .caseInsensitive)
-        }
+        let pattern = try? NSRegularExpression(pattern: "x[0-9]{3}.jpg$", options: .caseInsensitive)
         
         let location = locate()
         if let list = try? FileManager.default.contentsOfDirectory(at: location, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
@@ -195,7 +210,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
                 else
                 {
                     let range = NSMakeRange(0, $0.path.count)
-                    if let num = developmentPattern?.numberOfMatches(in: $0.path, options: .reportCompletion, range: range), num > 0
+                    if let num = pattern?.numberOfMatches(in: $0.path, options: .reportCompletion, range: range), num > 0
                     {
                         try? FileManager.default.removeItem(at: $0)
                     }

@@ -41,7 +41,6 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     override var shouldAutorotate: Bool {return true}
     var frameImage = CGRect()
     var dateFormatter = DateFormatter()
-    var index:Int = -1
     
     var panGestureRecognizer:UIPanGestureRecognizer?
     
@@ -182,6 +181,7 @@ class ImagePeekController: UIViewController
 {
     var url:String!
     var data:CameraModel.CameraAsset?
+    var index:Int = -1
     
     @IBOutlet weak var image:UIImageView!
     @IBOutlet weak var indicator:UIActivityIndicatorView!

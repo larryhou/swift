@@ -148,7 +148,6 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
         {
             scroll.index = indexPath.row
             scroll.imageAssets = takenImages
-            scroll.view.frame = view.frame
             show(scroll, sender: self)
         }
     }

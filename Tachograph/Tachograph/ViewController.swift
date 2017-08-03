@@ -14,6 +14,9 @@ class ViewController: UITabBarController
     {
         super.viewDidLoad()
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        #if !NATIVE_DEBUG
+        AssetManager.shared.removeUserStorage(development: true)
+        #endif
     }
     
     override var prefersStatusBarHidden:Bool { return true }

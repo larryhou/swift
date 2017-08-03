@@ -107,17 +107,85 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CsB-oU-LDP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2253.5999999999999" y="545.57721139430294"/>
+            <point key="canvasLocation" x="2329" y="555"/>
         </scene>
-        <!--Page View Controller-->
-        <scene sceneID="7TQ-Uu-EZG">
+        <!--Native Browser Controller-->
+        <scene sceneID="99v-5V-FhH">
             <objects>
-                <pageViewController storyboardIdentifier="NativeBrowserController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="xhg-Bb-XXQ" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Slc-g1-oYd"/>
-                </pageViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="f50-iM-LkK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController storyboardIdentifier="NativeBrowserController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9M2-bi-Wah" customClass="NativeBrowserController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="UQo-rg-ULp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NativeAssetCell" rowHeight="70" id="DBQ-GG-oNG" customClass="NativeAssetCell" customModule="Tachograph" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DBQ-GG-oNG" id="WRv-BD-e2I">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sample_20170804.mp4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="B6E-MK-RXE">
+                                            <rect key="frame" x="96" y="5" width="259" height="37"/>
+                                            <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="32"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.thm" translatesAutoresizingMaskIntoConstraints="NO" id="Adw-RY-1ht">
+                                            <rect key="frame" x="5" y="5" width="80" height="60"/>
+                                            <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="ACe-xN-0t4"/>
+                                                <constraint firstAttribute="width" constant="80" id="ImT-jO-eoU"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.25Mb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DW-XA-xdS">
+                                            <rect key="frame" x="96" y="46.5" width="58" height="19"/>
+                                            <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5DW-XA-xdS" secondAttribute="trailing" constant="20" symbolic="YES" id="7cQ-aF-MCP"/>
+                                        <constraint firstItem="B6E-MK-RXE" firstAttribute="leading" secondItem="Adw-RY-1ht" secondAttribute="trailing" constant="11" id="9U4-uF-SH9"/>
+                                        <constraint firstItem="B6E-MK-RXE" firstAttribute="top" secondItem="WRv-BD-e2I" secondAttribute="top" constant="5" id="JD3-T9-5x7"/>
+                                        <constraint firstItem="Adw-RY-1ht" firstAttribute="top" secondItem="WRv-BD-e2I" secondAttribute="top" constant="5" id="XQ8-dP-Neg"/>
+                                        <constraint firstItem="5DW-XA-xdS" firstAttribute="leading" secondItem="Adw-RY-1ht" secondAttribute="trailing" constant="11" id="fNm-6V-loS"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="B6E-MK-RXE" secondAttribute="trailing" constant="20" symbolic="YES" id="j3C-Ge-mas"/>
+                                        <constraint firstItem="Adw-RY-1ht" firstAttribute="leading" secondItem="WRv-BD-e2I" secondAttribute="leading" constant="5" id="ldi-zf-9jO"/>
+                                        <constraint firstItem="5DW-XA-xdS" firstAttribute="top" secondItem="B6E-MK-RXE" secondAttribute="bottom" constant="4.5" id="w5C-ZS-gFC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="name" destination="B6E-MK-RXE" id="rI3-en-rVB"/>
+                                    <outlet property="size" destination="5DW-XA-xdS" id="jnG-Oe-VLq"/>
+                                    <outlet property="thumb" destination="Adw-RY-1ht" id="GGb-R0-dih"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9M2-bi-Wah" id="6bt-cT-J6a"/>
+                            <outlet property="delegate" destination="9M2-bi-Wah" id="L0R-n2-bhn"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zlr-gT-PQ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1281" y="1456"/>
+            <point key="canvasLocation" x="1352.8" y="1468.5157421289357"/>
+        </scene>
+        <!--下载-->
+        <scene sceneID="VdM-J4-kYb">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="V4l-ch-LlL" customClass="NativeScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="下载" id="Qi4-bZ-bPk">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
+                    </tabBarItem>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ovv-9Z-wUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="479" y="1470"/>
         </scene>
         <!--行程-->
         <scene sceneID="yNe-Zh-1Q2">
@@ -386,7 +454,7 @@
                         <segue destination="FJI-aa-x5L" kind="relationship" relationship="viewControllers" id="i13-iU-Qwo"/>
                         <segue destination="Xyq-aO-LnI" kind="relationship" relationship="viewControllers" id="6hZ-Pt-9YE"/>
                         <segue destination="R2b-J1-hKP" kind="relationship" relationship="viewControllers" id="9C2-1L-VmP"/>
-                        <segue destination="fAn-IS-kcZ" kind="relationship" relationship="viewControllers" id="sUR-gQ-pgK"/>
+                        <segue destination="V4l-ch-LlL" kind="relationship" relationship="viewControllers" id="8U5-G5-v28"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Z9-TV-bp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,7 +528,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jek-A6-Hmq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2953" y="546"/>
+            <point key="canvasLocation" x="3047" y="555"/>
         </scene>
         <!--Image Scroll Controller-->
         <scene sceneID="hqD-VY-6LU">
@@ -468,28 +536,7 @@
                 <pageViewController storyboardIdentifier="ImageScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="cAo-qs-70c" customClass="ImageScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hlH-8Z-ZUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3846" y="546"/>
-        </scene>
-        <!--下载-->
-        <scene sceneID="zOj-y4-5eq">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fAn-IS-kcZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="下载" id="AU0-vR-ls4">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
-                    </tabBarItem>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xGX-wz-fLJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="xhg-Bb-XXQ" kind="relationship" relationship="rootViewController" id="6ct-cB-ggI"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8ke-Oe-nD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="481" y="1456"/>
+            <point key="canvasLocation" x="3793" y="555"/>
         </scene>
     </scenes>
     <resources>
