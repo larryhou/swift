@@ -66,7 +66,8 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     {
         super.viewWillAppear(animated)
         
-        if lastUrl == self.url {return}
+        if lastUrl == url {return}
+        lastUrl = url
         
         orientationUpdate()
     }
