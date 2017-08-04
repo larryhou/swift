@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina3_5" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,27 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="记录仪" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMH-SO-Iw4">
-                                <rect key="frame" x="69.5" y="124" width="181" height="72"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="60"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="benz-log" translatesAutoresizingMaskIntoConstraints="NO" id="9u9-PR-PYk">
-                                <rect key="frame" x="110" y="28" width="100" height="100"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="cfv-8s-p6o"/>
-                                    <constraint firstAttribute="height" constant="100" id="j8l-X7-XyA"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="benz" translatesAutoresizingMaskIntoConstraints="NO" id="P88-oS-9fl">
-                                <rect key="frame" x="0.0" y="300" width="320" height="180"/>
+                                <rect key="frame" x="0.0" y="244" width="320" height="180"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                 </accessibility>
@@ -46,16 +30,33 @@
                                     <constraint firstAttribute="width" secondItem="P88-oS-9fl" secondAttribute="height" multiplier="16:9" id="ceV-Sw-d71"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车记" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maJ-xQ-A8n">
+                                <rect key="frame" x="119" y="344" width="201" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="BBa-4W-abw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="100"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Bin-gV-gy2">
+                                <rect key="frame" x="110" y="62" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Ysw-oY-UN5"/>
+                                    <constraint firstAttribute="width" constant="100" id="n8y-Ia-Six"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Bin-gV-gy2" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2ES-PG-0Cb"/>
+                            <constraint firstAttribute="trailing" secondItem="maJ-xQ-A8n" secondAttribute="trailing" id="4Gv-Yh-lrI"/>
                             <constraint firstAttribute="trailing" secondItem="P88-oS-9fl" secondAttribute="trailing" id="DmU-bU-XYn"/>
-                            <constraint firstItem="9u9-PR-PYk" firstAttribute="centerX" secondItem="eMH-SO-Iw4" secondAttribute="centerX" id="YTn-9A-u86"/>
-                            <constraint firstItem="eMH-SO-Iw4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="efE-3j-YJk"/>
-                            <constraint firstItem="9u9-PR-PYk" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" symbolic="YES" id="fCi-73-CA7"/>
+                            <constraint firstItem="maJ-xQ-A8n" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" symbolic="YES" id="VAP-tp-reg"/>
+                            <constraint firstItem="maJ-xQ-A8n" firstAttribute="top" secondItem="P88-oS-9fl" secondAttribute="bottom" constant="-80" id="Vhq-1K-Ljs"/>
+                            <constraint firstItem="P88-oS-9fl" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="50" id="ZUX-Zh-uhL"/>
                             <constraint firstItem="P88-oS-9fl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="jO8-4V-Jz8"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="P88-oS-9fl" secondAttribute="bottom" id="mdp-oB-pIc"/>
-                            <constraint firstItem="eMH-SO-Iw4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-80" id="unJ-dv-Tfo"/>
+                            <constraint firstItem="Bin-gV-gy2" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="42" id="x3X-KS-06L"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -66,6 +67,6 @@
     </scenes>
     <resources>
         <image name="benz" width="438" height="246"/>
-        <image name="benz-log" width="200" height="200"/>
+        <image name="logo" width="200" height="200"/>
     </resources>
 </document>

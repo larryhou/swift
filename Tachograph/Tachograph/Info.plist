@@ -26,7 +26,7 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>保存行车记录仪视频</string>
+	<string>行车记录仪请求访问相册</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
