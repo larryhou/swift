@@ -62,9 +62,13 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
+    var lastUrl:String?
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        
+        if lastUrl == self.url {return}
+        
         if let data = self.data
         {
             timelabel.text = dateFormatter.string(from: data.timestamp)

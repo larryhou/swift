@@ -94,6 +94,13 @@ class VideoScrollController: UIPageViewController, UIPageViewControllerDataSourc
         {
             setViewControllers([initController], direction: .forward, animated: false, completion: nil)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    @objc func orientationUpdate()
+    {
+
     }
     
     override func viewWillAppear(_ animated: Bool)

@@ -20,6 +20,8 @@ class ViewController: UITabBarController
         
         UIBarButtonItem.appearance().setTitleTextAttributes([.font:UIFont.systemFont(ofSize: 20, weight: .light)], for: .normal)
         UINavigationBar.appearance().titleTextAttributes = [.font:UIFont.systemFont(ofSize: 30, weight: .thin)]
+        UITabBarItem.appearance().setTitleTextAttributes([.font:UIFont.systemFont(ofSize: 20, weight: .light)], for:.normal)
+        UITabBarItem.appearance().titlePositionAdjustment.vertical = -10
         
         let size = CGSize(width: 1, height: 1)
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -38,6 +40,8 @@ class ViewController: UITabBarController
     {
         return UIInterfaceOrientation.portrait
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .all}
     
     override func didReceiveMemoryWarning()
     {

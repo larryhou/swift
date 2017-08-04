@@ -206,7 +206,7 @@
         <!--本机下载资源-->
         <scene sceneID="VdM-J4-kYb">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="V4l-ch-LlL" customClass="NativeScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="V4l-ch-LlL" customClass="NativeScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="本机下载资源" id="JHo-VH-HMq">
                         <barButtonItem key="backBarButtonItem" title="资源库" id="2W8-Mi-Sqz"/>
                     </navigationItem>
@@ -215,7 +215,7 @@
             </objects>
             <point key="canvasLocation" x="1281" y="1469"/>
         </scene>
-        <!--行程-->
+        <!--录像-->
         <scene sceneID="yNe-Zh-1Q2">
             <objects>
                 <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="FJI-aa-x5L" customClass="RouteBrowerController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
@@ -330,7 +330,7 @@
                             <constraint firstAttribute="trailing" secondItem="BiD-Fl-N0s" secondAttribute="trailing" id="vHZ-nh-bCT"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="行程" id="asx-6i-hj7">
+                    <tabBarItem key="tabBarItem" tag="1" title="录像" id="asx-6i-hj7">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                     </tabBarItem>
                     <connections>
@@ -342,7 +342,7 @@
             </objects>
             <point key="canvasLocation" x="481" y="-914"/>
         </scene>
-        <!--事件-->
+        <!--紧急-->
         <scene sceneID="tDf-te-Ngt">
             <objects>
                 <viewController id="Xyq-aO-LnI" customClass="EventBrowserController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
@@ -457,7 +457,7 @@
                             <constraint firstItem="aUX-tf-CHp" firstAttribute="top" secondItem="iZ6-CY-F6l" secondAttribute="bottom" id="rVK-g4-aib"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="2" title="事件" id="PeW-rG-FbF">
+                    <tabBarItem key="tabBarItem" tag="2" title="紧急" id="PeW-rG-FbF">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                     </tabBarItem>
                     <connections>
@@ -479,10 +479,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="RPT-GH-ClZ" kind="relationship" relationship="viewControllers" id="8U5-G5-v28"/>
                         <segue destination="FJI-aa-x5L" kind="relationship" relationship="viewControllers" id="i13-iU-Qwo"/>
                         <segue destination="Xyq-aO-LnI" kind="relationship" relationship="viewControllers" id="6hZ-Pt-9YE"/>
                         <segue destination="R2b-J1-hKP" kind="relationship" relationship="viewControllers" id="9C2-1L-VmP"/>
-                        <segue destination="RPT-GH-ClZ" kind="relationship" relationship="viewControllers" id="8U5-G5-v28"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Z9-TV-bp6" userLabel="First Responder" sceneMemberID="firstResponder"/>

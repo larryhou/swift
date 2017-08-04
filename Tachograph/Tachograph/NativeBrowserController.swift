@@ -93,7 +93,6 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             {
                 scroll.videoAssets = assets
                 scroll.index = indexPath.row
-//                show(scroll, sender: self)
                 present(scroll, animated: true, completion: nil)
             }
         }
