@@ -17,6 +17,18 @@ class ViewController: UITabBarController
         #if !NATIVE_DEBUG
         AssetManager.shared.removeUserStorage(development: true)
         #endif
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font:UIFont.systemFont(ofSize: 20, weight: .light)], for: .normal)
+        UINavigationBar.appearance().titleTextAttributes = [.font:UIFont.systemFont(ofSize: 30, weight: .thin)]
+        
+        let size = CGSize(width: 1, height: 1)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        UIColor(white: 1.0, alpha: 0.75).setFill()
+        UIRectFill(CGRect(origin: CGPoint(), size: size))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        UINavigationBar.appearance().setBackgroundImage(image, for:.default)
     }
     
     override var prefersStatusBarHidden:Bool { return true }

@@ -55,7 +55,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         image.addGestureRecognizer(pan)
         panGestureRecognizer = pan
         
@@ -94,7 +94,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         {
             alpha = 1
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
-            rotation = orientation == .portrait ?  0 : CGFloat.pi
+            rotation = 0//orientation == .portrait ?  0 : CGFloat.pi
             panGestureRecognizer?.isEnabled = true
             textColor = .black
         }

@@ -25,7 +25,6 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     {
         super.viewDidLoad()
         collectionView?.allowsSelection = true
-        navigationController?.navigationBar.titleTextAttributes = [.font:UIFont(name: "Courier New", size: 30)!]
         registerForPreviewing(with: self, sourceView: view)
         
         let fit = fitsize(length: view.frame.width)

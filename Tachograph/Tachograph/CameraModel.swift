@@ -14,7 +14,7 @@ struct ServerInfo
 }
 
 #if NATIVE_DEBUG
-let LIVE_SERVER = ServerInfo(addr: "10.66.195.136", port: 8800)
+let LIVE_SERVER = ServerInfo(addr: "10.66.195.147", port: 8800)
 #else
 let LIVE_SERVER = ServerInfo(addr: "192.168.42.1", port: 7878)
 #endif
@@ -88,10 +88,27 @@ protocol CameraModelDelegate:NSObjectProtocol
 
 class CameraModel:TCPSessionDelegate
 {
+    struct NativeAssetInfo
+    {
+        let location:URL
+        let size:UInt64
+    }
+
     struct CameraAsset
     {
         let id, name, url, icon:String
         let timestamp:Date
+        
+        var info:NativeAssetInfo? = nil
+        
+        init(id:String, name:String, url:String, icon:String, timestamp:Date)
+        {
+            self.id = id
+            self.name = name
+            self.url = url
+            self.icon = icon
+            self.timestamp = timestamp
+        }
     }
     
     enum AssetType
@@ -352,8 +369,9 @@ class CameraModel:TCPSessionDelegate
         switch type
         {
             case .event, .route:
-                let url = "\(server)/videos/\(index).thm"
-                asset = CameraAsset(id: id, name: "sample.mp4", url: sample, icon: url, timestamp: timestamp)
+                asset = CameraAsset(id: id, name: "sample.mp4", url: sample,
+                                    icon: "\(server)/videos/\(index).thm",
+                                    timestamp: timestamp)
             case .image:
                 asset = CameraAsset(id: id, name: "x\(index).jpg",
                                     url: "\(server)/images/x\(index).jpg",

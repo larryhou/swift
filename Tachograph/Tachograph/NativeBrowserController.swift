@@ -17,11 +17,6 @@ class NativeAssetCell:UITableViewCell
     @IBOutlet weak var size:UILabel!
 }
 
-class NativeVideoController: AVPlayerViewController
-{
-    
-}
-
 class NativeBrowserController: UITableViewController, UIViewControllerPreviewingDelegate
 {
     var isVideo = false
@@ -46,7 +41,8 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             let timestamp = attributes!.fileCreationDate()
             let thumb = String(name.split(separator: ".").first!) + ".thm"
             
-            let asset = CameraModel.CameraAsset(id: id, name: name, url: url.path, icon: thumb, timestamp: timestamp!)
+            var asset = CameraModel.CameraAsset(id: id, name: name, url: url.path, icon: thumb, timestamp: timestamp!)
+            asset.info = CameraModel.NativeAssetInfo(location: url, size: attributes!.fileSize())
             assets.append(asset)
         }
         self.assets = assets
@@ -69,33 +65,50 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let url = locations[indexPath.row]
-        let attributes = try? FileManager.default.attributesOfItem(atPath: url.path) as NSDictionary
-        
+        let data = assets[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "NativeAssetCell") as? NativeAssetCell
         {
-            let size = Double(attributes!.fileSize())
+            let size = Double(data.info!.size)
             
-            cell.name.text = url.lastPathComponent
-            cell.size.text = String.init(format: "%.3fM", size / 1024 / 1024)
-            cell.thumb.image = try! UIImage(data: Data(contentsOf: url))
+            cell.name.text = data.name
+            cell.size.text = String(format: "%.3fM", size / 1024 / 1024)
+            
+            cell.thumb.image = nil
+            if let thumb = AssetManager.shared.get(cache: data.icon)
+            {
+                cell.thumb.image = try! UIImage(data: Data(contentsOf: thumb))
+            }
             return cell
         }
         
         return UITableViewCell()
     }
     
-    //MARK: previewing
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
+        tableView.deselectRow(at: indexPath, animated: true)
+        if isVideo
         {
-            scroll.imageAssets = assets
-            scroll.index = (viewControllerToCommit as! ImagePeekController).index
-            show(scroll, sender: self)
+            if let scroll = storyboard?.instantiateViewController(withIdentifier: "VideoScrollController") as? VideoScrollController
+            {
+                scroll.videoAssets = assets
+                scroll.index = indexPath.row
+//                show(scroll, sender: self)
+                present(scroll, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
+            {
+                scroll.imageAssets = assets
+                scroll.index = indexPath.row
+                show(scroll, sender: self)
+            }
         }
     }
     
+    //MARK: previewing
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
     {
         guard let index = tableView.indexPathForRow(at: location), !isVideo else {return nil}
@@ -117,6 +130,16 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
         
         return nil
     }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
+    {
+        if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
+        {
+            scroll.imageAssets = assets
+            scroll.index = (viewControllerToCommit as! ImagePeekController).index
+            show(scroll, sender: self)
+        }
+    }
 }
 
 class NativeScrollController:UIPageViewController, UIPageViewControllerDataSource
@@ -126,8 +149,7 @@ class NativeScrollController:UIPageViewController, UIPageViewControllerDataSourc
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.dataSource = self
-        
+        dataSource = self
         nativeControllers = []
         
         var controller = storyboard?.instantiateViewController(withIdentifier: "NativeBrowserController") as! NativeBrowserController
