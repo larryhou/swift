@@ -12,6 +12,7 @@ import AVKit
 
 class VideoPlayController: AVPlayerViewController, ReusableObject
 {
+    var PlayerStatusContext:String?
     static func instantiate(_ data: Any?) -> ReusableObject
     {
         let storyboard = data as! UIStoryboard
@@ -24,6 +25,8 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.player = AVPlayer()
         
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
@@ -88,23 +91,43 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        if let identifier = self.observerIdentifier
+        {
+            self.player?.removeTimeObserver(identifier)
+            self.observerIdentifier = nil
+        }
+    }
+    
     var lastUrl:String?
+    var observerIdentifier:Any?
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        guard let player = self.player else {return}
         
         guard let url = self.url else
         {
-            self.player?.pause()
-            self.player?.replaceCurrentItem(with: nil)
+            player.pause()
+            player.replaceCurrentItem(with: nil)
             return
         }
         
-        if lastUrl == url {return}
-        
-        if self.player == nil
+        let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        observerIdentifier = player.addPeriodicTimeObserver(forInterval: interval, queue: .main)
         {
-            self.player = AVPlayer()
+            if let duration = player.currentItem?.duration, $0 >= duration
+            {
+                self.play(from:0)
+            }
+        }
+        
+        if lastUrl == url
+        {
+            play(from:0)
+            return
         }
         
         let item:AVPlayerItem
@@ -117,10 +140,19 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
             item = AVPlayerItem(url: URL(fileURLWithPath: url))
         }
         
-        self.player?.replaceCurrentItem(with: item)
-        self.player?.play()
+        player.replaceCurrentItem(with: item)
+        player.play()
         
         lastUrl = url
+    }
+    
+    func play(from position:Double = 0)
+    {
+        guard let player = self.player else {return}
+        
+        let position = CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        player.seek(to: position)
+        player.play()
     }
 }
 

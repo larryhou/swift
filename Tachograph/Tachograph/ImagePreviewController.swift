@@ -35,12 +35,9 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         return storyboard.instantiateViewController(withIdentifier: "ImagePreviewController") as! ImagePreviewController
     }
     
-    @IBOutlet weak var timelabel: UILabel!
-    
     var scaleRange:(CGFloat, CGFloat) = (1.0, 3.0)
     override var shouldAutorotate: Bool {return true}
     var frameImage = CGRect()
-    var dateFormatter = DateFormatter()
     
     weak var panGesture:UIPanGestureRecognizer?
     
@@ -50,12 +47,10 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         scaleRange = (scaleRange.0, view.frame.height / image.frame.height)
         frameImage = image.frame
         
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss E"
-        
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
         image.addGestureRecognizer(pan)
         panGesture = pan
         
@@ -71,11 +66,6 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         super.viewWillAppear(animated)
         
         if lastUrl == self.url {return}
-        
-        if let data = self.data
-        {
-            timelabel.text = dateFormatter.string(from: data.timestamp)
-        }
         
         orientationUpdate()
     }
@@ -97,14 +87,12 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         guard let navigationController = self.navigationController else {return}
         let rotation, alpha:CGFloat
         let orientation = UIDevice.current.orientation
-        let textColor:UIColor
         if orientation.isLandscape
         {
             alpha = 0
             let scale = max(view.frame.height / frameImage.width, view.frame.width / frameImage.height)
             scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
-            textColor = .white
             panGesture?.isEnabled = false
         }
         else
@@ -113,15 +101,13 @@ class ImagePreviewController:ImagePeekController, ReusableObject
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
             rotation = 0//orientation == .portrait ?  0 : CGFloat.pi
             panGesture?.isEnabled = true
-            textColor = .black
         }
         
         let transform = CGAffineTransform(rotationAngle: rotation)
         let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.9)
-        {
+        { [unowned self] in
             navigationController.navigationBar.alpha = alpha
             self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
-            self.timelabel.textColor = textColor
         }
         
         baseTransform = transform
@@ -158,7 +144,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         rect.origin.y = max(min(rect.origin.y, 0), (view.frame.height - rect.height)/2)
         rect = view.convert(rect, to: image.superview)
         let animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut)
-        {
+        { [unowned self] in
             self.image.frame = rect
         }
         animator.startAnimation()
@@ -170,7 +156,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         
         let transform = baseTransform.scaledBy(x: scale, y: scale)
         let animator = UIViewPropertyAnimator(duration: 0.4, dampingRatio: 0.85)
-        {
+        { [unowned self] in
             self.image.transform = transform
         }
         if (relatedUpdate) {animator.addCompletion{ _ in self.positionAdjust() }}
@@ -210,10 +196,10 @@ class ImagePeekController: UIViewController
         { (action:UIPreviewAction, ctrl:UIViewController) in
             self.saveToAlbum(needAlert: false)
         })
-        actions.append(UIPreviewAction(title: "分享", style: .default)
-        { (action:UIPreviewAction, ctrl:UIViewController) in
-            self.share()
-        })
+//        actions.append(UIPreviewAction(title: "分享", style: .default)
+//        { (action:UIPreviewAction, ctrl:UIViewController) in
+//            self.share()
+//        })
         return actions
     }
     
