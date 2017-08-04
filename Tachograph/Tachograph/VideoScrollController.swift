@@ -34,6 +34,7 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
     
     @objc func pressUpdate(sender:UILongPressGestureRecognizer)
     {
+        if sender.state != .began {return}
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
         alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))

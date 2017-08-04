@@ -82,9 +82,9 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     
     @objc func pressUpdate(sender:UILongPressGestureRecognizer)
     {
+        if sender.state != .began {return}
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
-        alertController.addAction(UIAlertAction(title: "识别二维码", style: .default, handler:{ _ in self.readBarcode() }))
         alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
         alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
@@ -208,11 +208,7 @@ class ImagePeekController: UIViewController
         var actions:[UIPreviewAction] = []
         actions.append(UIPreviewAction(title: "保存到相册", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
-            self.saveToAlbum()
-        })
-        actions.append(UIPreviewAction(title: "识别二维码", style: .default)
-        { (action:UIPreviewAction, ctrl:UIViewController) in
-            self.readBarcode()
+            self.saveToAlbum(needAlert: false)
         })
         actions.append(UIPreviewAction(title: "分享", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
@@ -259,14 +255,12 @@ class ImagePeekController: UIViewController
         }
     }
     
-    func readBarcode()
-    {
-        
-    }
-    
-    func saveToAlbum()
+    var alertWaiting = false
+    func saveToAlbum(needAlert:Bool = true)
     {
         guard let url = self.url else {return}
+        
+        alertWaiting = needAlert
         if let location = AssetManager.shared.get(cache: url)
         {
             if let data = try? Data(contentsOf: location), let image = UIImage(data: data)
@@ -278,6 +272,9 @@ class ImagePeekController: UIViewController
     
     @objc func image(_ image:UIImage, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
+        if !alertWaiting {return}
+        alertWaiting = false
+        
         var message:String?
         
         let title:String
