@@ -46,6 +46,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             assets.append(asset)
         }
         self.assets = assets
+        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int

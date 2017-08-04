@@ -203,11 +203,11 @@
             </objects>
             <point key="canvasLocation" x="4564" y="1469"/>
         </scene>
-        <!--本机下载资源-->
+        <!--本机资源-->
         <scene sceneID="VdM-J4-kYb">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="V4l-ch-LlL" customClass="NativeScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="本机下载资源" id="JHo-VH-HMq">
+                    <navigationItem key="navigationItem" title="本机资源" id="JHo-VH-HMq">
                         <barButtonItem key="backBarButtonItem" title="资源库" id="2W8-Mi-Sqz"/>
                     </navigationItem>
                 </pageViewController>
