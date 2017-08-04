@@ -125,6 +125,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             
             let size = view.frame.size
             peek.preferredContentSize = CGSize(width: size.width, height: size.width/16*9)
+            peek.presentController = self
             return peek
         }
         

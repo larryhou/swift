@@ -44,6 +44,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        presentController = self
         scaleRange = (scaleRange.0, view.frame.height / image.frame.height)
         frameImage = image.frame
         
@@ -189,17 +190,19 @@ class ImagePeekController: UIViewController
     @IBOutlet weak var image:UIImageView!
     @IBOutlet weak var indicator:UIActivityIndicatorView!
     
+    weak var presentController:UIViewController?
+    
     override var previewActionItems: [UIPreviewActionItem]
     {
         var actions:[UIPreviewAction] = []
         actions.append(UIPreviewAction(title: "保存到相册", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
-            self.saveToAlbum(needAlert: false)
+            self.saveToAlbum()
         })
-//        actions.append(UIPreviewAction(title: "分享", style: .default)
-//        { (action:UIPreviewAction, ctrl:UIViewController) in
-//            self.share()
-//        })
+        actions.append(UIPreviewAction(title: "分享", style: .default)
+        { (action:UIPreviewAction, ctrl:UIViewController) in
+            self.share()
+        })
         return actions
     }
     
@@ -233,20 +236,17 @@ class ImagePeekController: UIViewController
     
     func share()
     {
-        guard let url = self.url else {return}
+        guard let url = self.url, let presentController = self.presentController else {return}
         if let location = AssetManager.shared.get(cache: url)
         {
             let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
-            present(controller, animated: true, completion: nil)
+            presentController.present(controller, animated: true, completion: nil)
         }
     }
     
-    var alertWaiting = false
-    func saveToAlbum(needAlert:Bool = true)
+    func saveToAlbum()
     {
         guard let url = self.url else {return}
-        
-        alertWaiting = needAlert
         if let location = AssetManager.shared.get(cache: url)
         {
             if let data = try? Data(contentsOf: location), let image = UIImage(data: data)
@@ -258,8 +258,7 @@ class ImagePeekController: UIViewController
     
     @objc func image(_ image:UIImage, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
-        if !alertWaiting {return}
-        alertWaiting = false
+        guard let presentController = self.presentController else {return}
         
         var message:String?
         
@@ -275,6 +274,6 @@ class ImagePeekController: UIViewController
         }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "知道了", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+        presentController.present(alert, animated: true, completion: nil)
     }
 }

@@ -166,7 +166,9 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
             {
                 peek.url = data.url
                 let size = view.frame.size
+                peek.index = index.row
                 peek.preferredContentSize = CGSize(width: size.width, height: size.width/16*9)
+                peek.presentController = self
                 return peek
             }
         }
@@ -176,10 +178,11 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
     {
-        if let preview = storyboard?.instantiateViewController(withIdentifier: "ImagePreviewController") as? ImagePreviewController
+        if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
         {
-            preview.url = (viewControllerToCommit as! ImagePeekController).url
-            show(preview, sender: self)
+            scroll.index = (viewControllerToCommit as! ImagePeekController).index
+            scroll.imageAssets = takenImages
+            show(scroll, sender: self)
         }
     }
 }
