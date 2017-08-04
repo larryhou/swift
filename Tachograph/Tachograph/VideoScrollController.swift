@@ -27,6 +27,53 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
         
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
+        
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(pressUpdate(sender:)))
+        view.addGestureRecognizer(press)
+    }
+    
+    @objc func pressUpdate(sender:UILongPressGestureRecognizer)
+    {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
+        alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
+        alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func saveToAlbum()
+    {
+        guard let url = self.url else {return}
+        UISaveVideoAtPathToSavedPhotosAlbum(url, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func video(_ videoPath:String, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
+    {
+        var message:String?
+        
+        let title:String
+        if error == nil
+        {
+            title = "视频保存成功"
+        }
+        else
+        {
+            title = "视频保存失败"
+            message = error.debugDescription
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "知道了", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func share()
+    {
+        guard let url = self.url else {return}
+        if let location = AssetManager.shared.get(cache: url)
+        {
+            let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
+            present(controller, animated: true, completion: nil)
+        }
     }
     
     @objc func pinchUpdate(sender:UIPinchGestureRecognizer)

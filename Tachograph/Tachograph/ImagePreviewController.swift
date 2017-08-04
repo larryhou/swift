@@ -42,7 +42,7 @@ class ImagePreviewController:ImagePeekController, ReusableObject
     var frameImage = CGRect()
     var dateFormatter = DateFormatter()
     
-    var panGestureRecognizer:UIPanGestureRecognizer?
+    weak var panGesture:UIPanGestureRecognizer?
     
     override func viewDidLoad()
     {
@@ -57,7 +57,10 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         image.addGestureRecognizer(pan)
-        panGestureRecognizer = pan
+        panGesture = pan
+        
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(pressUpdate(sender:)))
+        image.addGestureRecognizer(press)
         
         NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
     }
@@ -77,6 +80,16 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         orientationUpdate()
     }
     
+    @objc func pressUpdate(sender:UILongPressGestureRecognizer)
+    {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
+        alertController.addAction(UIAlertAction(title: "识别二维码", style: .default, handler:{ _ in self.readBarcode() }))
+        alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
+        alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
     var baseTransform = CGAffineTransform.identity
     
     @objc func orientationUpdate()
@@ -92,14 +105,14 @@ class ImagePreviewController:ImagePeekController, ReusableObject
             scaleRange = (scale, scale)
             rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
             textColor = .white
-            panGestureRecognizer?.isEnabled = false
+            panGesture?.isEnabled = false
         }
         else
         {
             alpha = 1
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
             rotation = 0//orientation == .portrait ?  0 : CGFloat.pi
-            panGestureRecognizer?.isEnabled = true
+            panGesture?.isEnabled = true
             textColor = .black
         }
         
@@ -195,15 +208,15 @@ class ImagePeekController: UIViewController
         var actions:[UIPreviewAction] = []
         actions.append(UIPreviewAction(title: "保存到相册", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
-            
+            self.saveToAlbum()
         })
         actions.append(UIPreviewAction(title: "识别二维码", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
-            
+            self.readBarcode()
         })
         actions.append(UIPreviewAction(title: "分享", style: .default)
         { (action:UIPreviewAction, ctrl:UIViewController) in
-            
+            self.share()
         })
         return actions
     }
@@ -234,5 +247,51 @@ class ImagePeekController: UIViewController
                 self.image?.image = UIImage(data: $1)
             })
         }
+    }
+    
+    func share()
+    {
+        guard let url = self.url else {return}
+        if let location = AssetManager.shared.get(cache: url)
+        {
+            let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
+            present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func readBarcode()
+    {
+        
+    }
+    
+    func saveToAlbum()
+    {
+        guard let url = self.url else {return}
+        if let location = AssetManager.shared.get(cache: url)
+        {
+            if let data = try? Data(contentsOf: location), let image = UIImage(data: data)
+            {
+                UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+            }
+        }
+    }
+    
+    @objc func image(_ image:UIImage, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
+    {
+        var message:String?
+        
+        let title:String
+        if error == nil
+        {
+            title = "图片保存成功"
+        }
+        else
+        {
+            title = "图片保存失败"
+            message = error.debugDescription
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "知道了", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
