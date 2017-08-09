@@ -135,30 +135,19 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
             }
         }
         
-        if lastUrl == url
+        if lastUrl == url { return }
+        
+        let item:AVPlayerItem
+        if url.hasPrefix("http")
         {
-            self.player?.play()
-            return
+            item = AVPlayerItem(url: URL(string: url)!)
+        }
+        else
+        {
+            item = AVPlayerItem(url: URL(fileURLWithPath: url))
         }
         
-        DispatchQueue.global().async
-        {
-            let item:AVPlayerItem
-            if url.hasPrefix("http")
-            {
-                item = AVPlayerItem(url: URL(string: url)!)
-            }
-            else
-            {
-                item = AVPlayerItem(url: URL(fileURLWithPath: url))
-            }
-            
-            player.replaceCurrentItem(with: item)
-            DispatchQueue.main.async
-            {
-                player.play()
-            }
-        }
+        player.replaceCurrentItem(with: item)
         
         lastUrl = url
     }
@@ -166,6 +155,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
+        self.player?.play()
     }
     
     func play(from position:Double = 0)
