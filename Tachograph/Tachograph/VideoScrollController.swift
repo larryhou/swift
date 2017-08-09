@@ -31,7 +31,6 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     
     var index:Int = -1
     var url:String?
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -136,26 +135,37 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
             }
         }
         
-        if lastUrl == url {return}
-        
-        let item:AVPlayerItem
-        if url.hasPrefix("http")
+        if lastUrl == url
         {
-            item = AVPlayerItem(url: URL(string: url)!)
-        }
-        else
-        {
-            item = AVPlayerItem(url: URL(fileURLWithPath: url))
+            self.player?.play()
+            return
         }
         
-        player.replaceCurrentItem(with: item)
+        DispatchQueue.global().async
+        {
+            let item:AVPlayerItem
+            if url.hasPrefix("http")
+            {
+                item = AVPlayerItem(url: URL(string: url)!)
+            }
+            else
+            {
+                item = AVPlayerItem(url: URL(fileURLWithPath: url))
+            }
+            
+            player.replaceCurrentItem(with: item)
+            DispatchQueue.main.async
+            {
+                player.play()
+            }
+        }
+        
         lastUrl = url
     }
     
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        self.player?.play()
     }
     
     func play(from position:Double = 0)
