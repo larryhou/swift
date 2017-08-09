@@ -27,20 +27,25 @@ class PageController<PageType, PageAssetType>: UIPageViewController, UIPageViewC
         super.viewDidLoad()
         self.dataSource = self
         
-        pageControllers.append(PageType.instantiate(storyboard!) as! PageType)
-        pageControllers.append(PageType.instantiate(storyboard!) as! PageType)
-        pageControllers.append(PageType.instantiate(storyboard!) as! PageType)
+        pageControllers.append(instantiate())
+        pageControllers.append(instantiate())
+        pageControllers.append(instantiate())
         if let initController = fetchController(forward: true, position: nil)
         {
             setViewControllers([initController], direction: .forward, animated: false, completion: nil)
         }
     }
     
+    private func instantiate()->PageType
+    {
+        return PageType.instantiate(storyboard!) as! PageType
+    }
+    
     func fetchController(forward:Bool, position:PageType?)->PageType?
     {
         guard let assets = self.pageAssets else {return nil}
         
-        let index:Int
+        let dataIndex:Int
         var playController:PageType
         if let position = position
         {
@@ -48,25 +53,25 @@ class PageController<PageType, PageAssetType>: UIPageViewController, UIPageViewC
             if forward
             {
                 viewIndex = viewIndex == pageControllers.count - 1 ? 0 : viewIndex + 1
-                index = position.index + 1
+                dataIndex = position.index + 1
             }
             else
             {
                 viewIndex = viewIndex == 0 ? pageControllers.count - 1 : viewIndex - 1
-                index = position.index - 1
+                dataIndex = position.index - 1
             }
             
-            if index < 0 || index >= assets.count {return nil}
+            if dataIndex < 0 || dataIndex >= assets.count {return nil}
             playController = pageControllers[viewIndex]
         }
         else
         {
             playController = pageControllers[0]
-            index = self.index
+            dataIndex = self.index
         }
         
-        playController.pageAsset = assets[index]
-        playController.index = index
+        playController.pageAsset = assets[dataIndex]
+        playController.index = dataIndex
         return playController
     }
     
