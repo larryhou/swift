@@ -146,7 +146,7 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
         if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
         {
             scroll.index = indexPath.row
-            scroll.imageAssets = takenImages
+            scroll.pageAssets = takenImages
             show(scroll, sender: self)
         }
     }
@@ -181,7 +181,7 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
         if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
         {
             scroll.index = (viewControllerToCommit as! ImagePeekController).index
-            scroll.imageAssets = takenImages
+            scroll.pageAssets = takenImages
             show(scroll, sender: self)
         }
     }

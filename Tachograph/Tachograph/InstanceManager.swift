@@ -14,15 +14,30 @@ import Foundation
     @objc optional func recycle()
     @objc optional func fetch()
     @objc optional func clear()
+    @objc optional func dispose()
 }
 
 class InstanceManager<T> where T:ReusableObject & Equatable
 {
     private var manager:[T] = []
+    private var instances:[T] = []
+    private var instanceCount:Int {return instances.count}
+    private(set) var recycledCount = 0
+    private(set) var reusedCount = 0
     
     init()
     {
         
+    }
+    
+    func spawn<X>(_ data:X? = nil, count:Int)
+    {
+        for _ in 0..<count
+        {
+            let target = T.instantiate(data) as! T
+            instances.append(target)
+            manager.append(target)
+        }
     }
     
     func fetch<X>(_ data:X? = nil)->T
@@ -30,11 +45,13 @@ class InstanceManager<T> where T:ReusableObject & Equatable
         let target:T
         if manager.count > 0
         {
-            target = manager.removeLast()
+            reusedCount += 1
+            target = manager.remove(at: 0)
         }
         else
         {
             target = T.instantiate(data) as! T
+            instances.append(target)
         }
         target.fetch?()
         return target
@@ -42,10 +59,11 @@ class InstanceManager<T> where T:ReusableObject & Equatable
     
     func recycle(target:T)
     {
-        target.recycle?()
         if !manager.contains{ $0 == target }
         {
+            recycledCount += 1
             manager.append(target)
+            target.recycle?()
         }
     }
     
@@ -55,10 +73,22 @@ class InstanceManager<T> where T:ReusableObject & Equatable
         {
             manager.remove(at: 0).clear?()
         }
+        
+        recycledCount = 0
+        reusedCount = 0
+    }
+    
+    func dispose()
+    {
+        clear()
+        while instances.count > 0
+        {
+            instances.remove(at: 0).dispose?()
+        }
     }
     
     deinit
     {
-        self.clear()
+        self.dispose()
     }
 }

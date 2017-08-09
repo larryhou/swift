@@ -27,12 +27,28 @@ extension CGAffineTransform
     }
 }
 
-class ImagePreviewController:ImagePeekController, ReusableObject
+class ImageScrollController: PageController<ImagePreviewController, CameraModel.CameraAsset>
 {
-    static func instantiate(_ data: Any?) -> ReusableObject
+    
+}
+
+class ImagePreviewController:ImagePeekController, PageProtocol
+{
+    static func instantiate(_ storyboard: UIStoryboard) -> PageProtocol
     {
-        let storyboard = data as! UIStoryboard
-        return storyboard.instantiateViewController(withIdentifier: "ImagePreviewController") as! ImagePreviewController
+        return storyboard.instantiateViewController(withIdentifier: "ImagePreviewController") as! PageProtocol
+    }
+    
+    var pageAsset: Any?
+    {
+        didSet
+        {
+            if let data = self.pageAsset as? CameraModel.CameraAsset
+            {
+                self.url = data.url
+                self.data = data
+            }
+        }
     }
     
     var scaleRange:(CGFloat, CGFloat) = (1.0, 3.0)
@@ -101,8 +117,8 @@ class ImagePreviewController:ImagePeekController, ReusableObject
         {
             alpha = 1
             scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
-            rotation = 0//orientation == .portrait ?  0 : CGFloat.pi
             panGesture?.isEnabled = true
+            rotation = 0
         }
         
         let transform = CGAffineTransform(rotationAngle: rotation)
@@ -112,12 +128,14 @@ class ImagePreviewController:ImagePeekController, ReusableObject
             self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
         }
         
-        baseTransform = transform
         animator.addCompletion
         { _ in
             self.positionAdjust()
         }
+        
         animator.startAnimation()
+        
+        baseTransform = transform
     }
     
     var panAnimator:UIViewPropertyAnimator?

@@ -45,7 +45,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             asset.info = CameraModel.NativeAssetInfo(location: url, size: attributes!.fileSize())
             assets.append(asset)
         }
-        self.assets = assets
+        self.assets = assets.reversed()
         tableView.reloadData()
     }
     
@@ -92,7 +92,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
         {
             if let scroll = storyboard?.instantiateViewController(withIdentifier: "VideoScrollController") as? VideoScrollController
             {
-                scroll.videoAssets = assets
+                scroll.pageAssets = assets
                 scroll.index = indexPath.row
                 present(scroll, animated: true, completion: nil)
             }
@@ -101,7 +101,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
         {
             if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
             {
-                scroll.imageAssets = assets
+                scroll.pageAssets = assets
                 scroll.index = indexPath.row
                 show(scroll, sender: self)
             }
@@ -136,7 +136,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
     {
         if let scroll = storyboard?.instantiateViewController(withIdentifier: "ImageScrollController") as? ImageScrollController
         {
-            scroll.imageAssets = assets
+            scroll.pageAssets = assets
             scroll.index = (viewControllerToCommit as! ImagePeekController).index
             show(scroll, sender: self)
         }

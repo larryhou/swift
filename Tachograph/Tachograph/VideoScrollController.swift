@@ -10,13 +10,23 @@ import Foundation
 import UIKit
 import AVKit
 
-class VideoPlayController: AVPlayerViewController, ReusableObject
+class VideoPlayController: AVPlayerViewController, PageProtocol
 {
     var PlayerStatusContext:String?
-    static func instantiate(_ data: Any?) -> ReusableObject
+    static func instantiate(_ storyboard: UIStoryboard) -> PageProtocol
     {
-        let storyboard = data as! UIStoryboard
-        return storyboard.instantiateViewController(withIdentifier: "VideoPlayController") as! ReusableObject
+        return storyboard.instantiateViewController(withIdentifier: "VideoPlayController") as! PageProtocol
+    }
+    
+    var pageAsset: Any?
+    {
+        didSet
+        {
+            if let data = self.pageAsset as? CameraModel.CameraAsset
+            {
+                self.url = data.url
+            }
+        }
     }
     
     var index:Int = -1
@@ -94,6 +104,8 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
+        self.player?.pause()
+        
         if let identifier = self.observerIdentifier
         {
             self.player?.removeTimeObserver(identifier)
@@ -124,11 +136,7 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
             }
         }
         
-        if lastUrl == url
-        {
-            play(from:0)
-            return
-        }
+        if lastUrl == url {return}
         
         let item:AVPlayerItem
         if url.hasPrefix("http")
@@ -141,9 +149,13 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
         }
         
         player.replaceCurrentItem(with: item)
-        player.play()
-        
         lastUrl = url
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        self.player?.play()
     }
     
     func play(from position:Double = 0)
@@ -156,33 +168,8 @@ class VideoPlayController: AVPlayerViewController, ReusableObject
     }
 }
 
-class VideoScrollController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
+class VideoScrollController: PageController<VideoPlayController, CameraModel.CameraAsset>
 {
-    var manager:InstanceManager<VideoPlayController>!
-    var index:Int = -1
-    var videoAssets:[CameraModel.CameraAsset]?
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        self.dataSource = self
-        self.delegate = self
-        
-        manager = InstanceManager<VideoPlayController>()
-        
-        if let initController = fetchVideoController(index: index)
-        {
-            setViewControllers([initController], direction: .forward, animated: false, completion: nil)
-        }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
-    }
-    
-    @objc func orientationUpdate()
-    {
-
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -199,48 +186,5 @@ class VideoScrollController: UIPageViewController, UIPageViewControllerDataSourc
         {
             self.navigationController?.navigationBar.alpha = 1
         }.startAnimation()
-    }
-    
-    func fetchVideoController(index:Int) -> VideoPlayController?
-    {
-        if let assets = self.videoAssets, index >= 0 && index < assets.count
-        {
-            let data = assets[index]
-            let preview = manager.fetch(storyboard)
-            preview.index = index
-            preview.url = data.url
-            return preview
-        }
-        
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
-    {
-        if let current = viewController as? VideoPlayController
-        {
-            return fetchVideoController(index: current.index - 1)
-        }
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
-    {
-        if let current = viewController as? VideoPlayController
-        {
-            return fetchVideoController(index: current.index + 1)
-        }
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
-    {
-        for controller in previousViewControllers
-        {
-            if let videoController = controller as? VideoPlayController
-            {
-                manager.recycle(target: videoController)
-            }
-        }
     }
 }
