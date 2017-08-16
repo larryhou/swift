@@ -14,12 +14,84 @@ class ImageCell:UICollectionViewCell
     @IBOutlet weak var ib_image:UIImageView!
 }
 
-class ImageBrowserController:UICollectionViewController, UICollectionViewDelegateFlowLayout,UIViewControllerPreviewingDelegate, CameraModelDelegate
+class OptimizedViewFlowLayout:UICollectionViewFlowLayout
+{
+    var spacing:CGFloat = 1
+    func setup(containerWidth width:CGFloat, column:Int, margin:CGFloat, cellAspect ratio:CGFloat = 0.75)
+    {
+        let column = CGFloat(column)
+        let cellWidth = floor((width - (column + 1) * margin)/column)
+        let spacing = (width - column * cellWidth)/(column + 1)
+        self.minimumLineSpacing = spacing
+        self.minimumInteritemSpacing = spacing
+        self.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        self.itemSize = CGSize(width: cellWidth, height: cellWidth * ratio)
+        self.spacing = spacing
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?
+    {
+        if var elements = super.layoutAttributesForElements(in: rect)
+        {
+            for i in 1..<elements.count
+            {
+                let item = elements[i]
+                let prev = elements[i - 1]
+                
+                let start = prev.frame.maxX
+                if start + spacing + item.frame.size.width < collectionViewContentSize.width
+                {
+                    var frame = item.frame
+                    frame.origin.x = start + spacing
+                    item.frame = frame
+                }
+            }
+            
+            return elements
+        }
+        
+        return nil
+    }
+}
+
+extension ImageBrowserController:UICollectionViewDelegateFlowLayout
+{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return layout.itemSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
+    {
+        return layout.sectionInset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return layout.spacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return layout.spacing
+    }
+}
+
+class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewingDelegate, CameraModelDelegate
 {
     var takenImages:[CameraModel.CameraAsset] = []
-    private var size = CGSize()
-    private var insets = UIEdgeInsets()
+    
     private var column = 3
+    private var layout:OptimizedViewFlowLayout!
+    
+    override var collectionViewLayout: UICollectionViewLayout
+    {
+        if layout == nil
+        {
+            layout = OptimizedViewFlowLayout()
+        }
+        return layout
+    }
     
     override func viewDidLoad()
     {
@@ -27,37 +99,11 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
         collectionView?.allowsSelection = true
         registerForPreviewing(with: self, sourceView: view)
         
-        let fit = fitsize(length: view.frame.width)
-        size = CGSize(width: fit.0, height: fit.0/4*3)
-        insets = UIEdgeInsets(top: fit.1, left: fit.1, bottom: fit.1, right: fit.1)
-        column = fit.2
-    }
-    
-    func fitsize(length:CGFloat, column:CGFloat = 2, margin:CGFloat = 10, limitWidth:CGFloat = 120, limitMargin:CGFloat = 20)->(CGFloat, CGFloat, Int)
-    {
-        var margin = margin
-        var width = (length - (column + 1) * margin)/column
-        if width > limitWidth
+        column = 2
+        if let layout = collectionViewLayout as? OptimizedViewFlowLayout
         {
-            width = limitWidth
-            let remain = length - column * width - margin * (column + 1)
-            if remain > width
-            {
-                return fitsize(length: length, column: column + 1, margin: margin)
-            }
-            else
-            {
-                let gap = (length - column * width)/(column + 1)
-                if gap > limitMargin
-                {
-                    return fitsize(length: length, column: column + 1, margin: margin)
-                }
-                
-                margin = gap
-            }
+            layout.setup(containerWidth: view.frame.width, column: column, margin: 1)
         }
-        
-        return (width, margin, Int(column))
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -85,26 +131,12 @@ class ImageBrowserController:UICollectionViewController, UICollectionViewDelegat
         collectionView?.insertItems(at: [index])
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        return self.size
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-    {
-        return self.insets
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
-    {
-        return self.insets.bottom
-    }
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int
     {
         return 1
     }
     
+    //MARK: data
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return takenImages.count
