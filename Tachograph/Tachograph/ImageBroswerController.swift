@@ -14,7 +14,7 @@ class ImageCell:UICollectionViewCell
     @IBOutlet weak var ib_image:UIImageView!
 }
 
-class OptimizedViewFlowLayout:UICollectionViewFlowLayout
+class AssetCollectionFlowLayout:UICollectionViewFlowLayout
 {
     var spacing:CGFloat = 1
     func setup(containerWidth width:CGFloat, column:Int, margin:CGFloat, cellAspect ratio:CGFloat = 0.75)
@@ -82,13 +82,13 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
     var takenImages:[CameraModel.CameraAsset] = []
     
     private var column = 3
-    private var layout:OptimizedViewFlowLayout!
+    private var layout:AssetCollectionFlowLayout!
     
     override var collectionViewLayout: UICollectionViewLayout
     {
         if layout == nil
         {
-            layout = OptimizedViewFlowLayout()
+            layout = AssetCollectionFlowLayout()
         }
         return layout
     }
@@ -100,7 +100,7 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
         registerForPreviewing(with: self, sourceView: view)
         
         column = 2
-        if let layout = collectionViewLayout as? OptimizedViewFlowLayout
+        if let layout = collectionViewLayout as? AssetCollectionFlowLayout
         {
             layout.setup(containerWidth: view.frame.width, column: column, margin: 1)
         }
