@@ -1,15 +1,15 @@
 //
-//  ViewOrientationTests.swift
-//  ViewOrientationTests
+//  NavigationTransitionTests.swift
+//  NavigationTransitionTests
 //
 //  Created by larryhou on 14/08/2017.
 //  Copyright © 2017 larryhou. All rights reserved.
 //
 
 import XCTest
-@testable import ViewOrientation
+@testable import NavigationTransition
 
-class ViewOrientationTests: XCTestCase {
+class NavigationTransitionTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
