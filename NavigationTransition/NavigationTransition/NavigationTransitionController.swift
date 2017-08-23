@@ -224,7 +224,6 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         if operation == .push
         {
             toView.backgroundColor = .clear
-            toView.transform = CGAffineTransform.identity
             transitionContext.containerView.insertSubview(toView, aboveSubview: fromView)
             transitionAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear)
             {
