@@ -39,7 +39,12 @@ class InteractiveNavigationController : UINavigationController
 @objc protocol NavigationTransitionDelegate
 {
     @objc optional func transitionShouldBegin(_ transitionController:NavigationTransitionController, gesture:UIPanGestureRecognizer)->Bool
-    @objc optional func transitionStartUserInteraction(_ transitionController:NavigationTransitionController, transitionContext: UIViewControllerContextTransitioning)->UIViewPropertyAnimator
+    @objc optional func transitionStartUserInteraction(_ transitionController:NavigationTransitionController, transitionContext: UIViewControllerContextTransitioning, operation:UINavigationControllerOperation)->UIViewPropertyAnimator
+}
+
+@objc protocol TransitionControllerDelegate
+{
+    @objc optional func transitionUpdate(percentComplete percent:CGFloat)
 }
 
 class NavigationTransitionController : NSObject
@@ -52,7 +57,6 @@ class NavigationTransitionController : NSObject
     var transitionContext:UIViewControllerContextTransitioning!
     var operation:UINavigationControllerOperation = .none
     var anchor = CGPoint(x: 0.5, y: 0.5)
-    var iframe = CGRect.zero
     
     var delegate:NavigationTransitionDelegate?
     
@@ -190,7 +194,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         self.transitionContext = transitionContext
         self.gesture.addTarget(self, action: #selector(interactionUpdate(_:)))
         
-        if let animator = delegate?.transitionStartUserInteraction?(self, transitionContext: transitionContext)
+        if let animator = delegate?.transitionStartUserInteraction?(self, transitionContext: transitionContext, operation: operation)
         {
             self.transitionAnimator = animator
         }
@@ -207,46 +211,50 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     
     func startUserInteraction(transitionContext:UIViewControllerContextTransitioning)->UIViewPropertyAnimator
     {
-        let fromController = transitionContext.viewController(forKey: .from)!
+        let _ = transitionContext.viewController(forKey: .from)!
         let toController = transitionContext.viewController(forKey: .to)!
         
         let fromView = transitionContext.view(forKey: .from)!
         let toView = transitionContext.view(forKey: .to)!
         
-        iframe = transitionContext.initialFrame(for: fromController)
         toView.frame = transitionContext.finalFrame(for: toController)
+        toView.clipsToBounds = true
         
-        let topView:UIView, topViewAlpha:CGFloat
+        let transitionAnimator:UIViewPropertyAnimator
         if operation == .push
         {
-            topView = toView
-            topView.alpha = 0.0
-            topViewAlpha = 1.0
-            transitionContext.containerView.addSubview(toView)
+            toView.backgroundColor = .clear
+            toView.transform = CGAffineTransform.identity
+            transitionContext.containerView.insertSubview(toView, aboveSubview: fromView)
+            transitionAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear)
+            {
+                toView.backgroundColor = .white
+            }
         }
         else
         {
-            topView = fromView
-            topViewAlpha = 0.0
-            transitionContext.containerView.insertSubview(toView, at: 0)
-        }
-        
-        //        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-        //        effectView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        //        effectView.frame = transitionContext.containerView.frame
-        //        transitionContext.containerView.addSubview(effectView)
-        
-        let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1.1)
-        {
-            //            effectView.effect = nil
-            topView.alpha = topViewAlpha
+            transitionContext.containerView.insertSubview(toView, belowSubview: fromView)
+            transitionAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear)
+            {
+                fromView.backgroundColor = .clear
+                fromView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+                fromView.layer.cornerRadius = 20
+                fromView.alpha = 0.5
+            }
         }
         
         transitionAnimator.addCompletion
         { position in
-            
-            //            effectView.removeFromSuperview()
+            if position == .end
+            {
+                transitionContext.finishInteractiveTransition()
+            }
+            else
+            {
+                transitionContext.cancelInteractiveTransition()
+            }
             transitionContext.completeTransition(position == .end)
+            print("complete", fromView.frame)
         }
         
         return transitionAnimator
@@ -266,38 +274,43 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         }
         else
         {
-            transitionAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
+            transitionAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 0.0)
         }
     }
     
     @objc func interactionUpdate(_ sender:UIPanGestureRecognizer)
     {
-        print(#function, sender.state.description)
         switch sender.state
         {
             case .began, .changed:
                 let translation = sender.translation(in: transitionContext.containerView)
-                let fractionComplete = transitionAnimator.fractionComplete + fraction(of: translation)
+                var fractionComplete = transitionAnimator.fractionComplete + fraction(of: translation)
+                fractionComplete = min(1, max(0, fractionComplete))
                 transitionAnimator.fractionComplete = fractionComplete
                 transitionContext.updateInteractiveTransition(fractionComplete)
                 sender.setTranslation(CGPoint.zero, in: transitionContext.containerView)
-                updateControllers(with: translation)
-                iframe = transitionContext.view(forKey: .from)!.frame
+                updateControllers(with: translation, percentComplete: fractionComplete)
             case .ended, .cancelled, .failed:
+                gesture.removeTarget(self, action: #selector(interactionUpdate(_:)))
                 finishInteraction()
             default:break
         }
     }
     
-    func updateControllers(with translation:CGPoint)
+    func updateControllers(with translation:CGPoint, percentComplete percent:CGFloat)
     {
-        let toX = iframe.origin.x + iframe.width  * anchor.x + translation.x
-        let toY = iframe.origin.y + iframe.height * anchor.y + translation.y
         let fromController = transitionContext.viewController(forKey: .from)!
+        if let delegate = fromController as? TransitionControllerDelegate
+        {
+            delegate.transitionUpdate?(percentComplete: percent)
+        }
+        
+        let touchPoint = gesture.location(in: transitionContext.containerView)
+        
         let fromView = fromController.view!
         var frame = fromView.frame
-        frame.origin.x = toX - frame.width  * anchor.x
-        frame.origin.y = toY - frame.height * anchor.y
+        frame.origin.x = touchPoint.x - frame.width  * anchor.x
+        frame.origin.y = touchPoint.y - frame.height * anchor.y
         fromView.frame = frame
     }
     
@@ -306,16 +319,27 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         guard transitionContext.isInteractive else {return}
         
         let position = completionAnimatingPosition()
-        if position == .end
+        if position == .start
         {
-            transitionContext.finishInteractiveTransition()
+            let view = transitionContext.view(forKey: .from)!
+            let rect = transitionContext.containerView.frame
+            let restoreAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
+            {
+                view.frame.origin.x += rect.midX - view.frame.midX
+                view.frame.origin.y += rect.midY - view.frame.midY
+            }
+            gesture.isEnabled = false
+            restoreAnimator.addCompletion
+            { [unowned self] _ in
+                self.gesture.isEnabled = true
+                self.animate(to: position)
+            }
+            restoreAnimator.startAnimation()
         }
         else
         {
-            transitionContext.cancelInteractiveTransition()
+            animate(to: position)
         }
-        
-        animate(to: position)
     }
     
     func completionAnimatingPosition()->UIViewAnimatingPosition
