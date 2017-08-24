@@ -88,6 +88,7 @@ class NavigationTransitionController : NSObject
     }
 }
 
+//MARK: UIGestureRecognizerDelegate
 extension NavigationTransitionController : UIGestureRecognizerDelegate
 {
     //MARK: subclass override
@@ -109,6 +110,7 @@ extension NavigationTransitionController : UIGestureRecognizerDelegate
     }
 }
 
+//MARK: UINavigationControllerDelegate
 extension NavigationTransitionController : UINavigationControllerDelegate
 {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
@@ -133,6 +135,7 @@ extension NavigationTransitionController : UINavigationControllerDelegate
     }
 }
 
+//MARK: UIViewControllerAnimatedTransitioning
 extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
 {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval
@@ -161,6 +164,7 @@ extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
     }
 }
 
+//MARK: UIViewControllerInteractiveTransitioning
 extension NavigationTransitionController : UIViewControllerInteractiveTransitioning
 {
     final func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
