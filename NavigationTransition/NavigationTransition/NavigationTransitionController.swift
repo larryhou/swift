@@ -96,7 +96,7 @@ extension NavigationTransitionController : UIGestureRecognizerDelegate
         if !interactive
         {
             let translation = gesture.translation(in: gesture.view)
-            let vertical = translation.y > 0 && abs(translation.y) > abs(translation.x)
+            let vertical = abs(translation.y) > abs(translation.x)
             return vertical && navigationController.viewControllers.count >= 2
         }
         
