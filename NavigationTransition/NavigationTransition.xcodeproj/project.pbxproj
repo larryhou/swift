@@ -15,6 +15,7 @@
 		6BB023381F41843200E95E07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB023361F41843200E95E07 /* LaunchScreen.storyboard */; };
 		6BB023431F41843300E95E07 /* NavigationTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB023421F41843300E95E07 /* NavigationTransitionTests.swift */; };
 		6BB0234E1F41843300E95E07 /* NavigationTransitionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB0234D1F41843300E95E07 /* NavigationTransitionUITests.swift */; };
+		6BDAFDE51F4EFDEA0023730B /* SwipeVerticalTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDAFDE41F4EFDEA0023730B /* SwipeVerticalTransitionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		6BB0234D1F41843300E95E07 /* NavigationTransitionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransitionUITests.swift; sourceTree = "<group>"; };
 		6BB0234F1F41843300E95E07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BC1D9FE1F41BE530090B46A /* 125.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 125.jpg; sourceTree = "<group>"; };
+		6BDAFDE41F4EFDEA0023730B /* SwipeVerticalTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeVerticalTransitionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		6BB0232A1F41843200E95E07 /* NavigationTransition */ = {
 			isa = PBXGroup;
 			children = (
+				6BDAFDE31F4EFDA90023730B /* Transitions */,
 				6BB0232B1F41843200E95E07 /* AppDelegate.swift */,
 				6BB023311F41843200E95E07 /* Main.storyboard */,
 				6B1FD3921F42F52A0047754D /* HomeViewController.swift */,
@@ -107,7 +110,6 @@
 				6BB023341F41843200E95E07 /* Assets.xcassets */,
 				6BB023361F41843200E95E07 /* LaunchScreen.storyboard */,
 				6BB023391F41843200E95E07 /* Info.plist */,
-				6B1FD3941F43FFD80047754D /* NavigationTransitionController.swift */,
 			);
 			path = NavigationTransition;
 			sourceTree = "<group>";
@@ -128,6 +130,15 @@
 				6BB0234F1F41843300E95E07 /* Info.plist */,
 			);
 			path = NavigationTransitionUITests;
+			sourceTree = "<group>";
+		};
+		6BDAFDE31F4EFDA90023730B /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				6B1FD3941F43FFD80047754D /* NavigationTransitionController.swift */,
+				6BDAFDE41F4EFDEA0023730B /* SwipeVerticalTransitionController.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +275,7 @@
 				6B1FD3951F43FFD80047754D /* NavigationTransitionController.swift in Sources */,
 				6B1FD3931F42F52A0047754D /* HomeViewController.swift in Sources */,
 				6BB0232C1F41843200E95E07 /* AppDelegate.swift in Sources */,
+				6BDAFDE51F4EFDEA0023730B /* SwipeVerticalTransitionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

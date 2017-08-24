@@ -30,17 +30,6 @@ func clamp<T>(_ value:T, _ lower:T, _ upper:T)->T where T:Comparable
     return min(upper, max(lower, value))
 }
 
-class InteractiveNavigationController : UINavigationController
-{
-    var transitionController:NavigationTransitionController!
-    
-    override func loadView()
-    {
-        super.loadView()
-        transitionController = NavigationTransitionController(navigationController: self, duration: 0.3)
-    }
-}
-
 class NavigationTransitionController : NSObject
 {
     unowned let navigationController:UINavigationController
@@ -195,7 +184,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     }
     
     //MARK: subclass override
-    func createTransitionAnimator(transitionContext:UIViewControllerContextTransitioning)->UIViewPropertyAnimator
+    @objc func createTransitionAnimator(transitionContext:UIViewControllerContextTransitioning)->UIViewPropertyAnimator
     {
         let toController = transitionContext.viewController(forKey: .to)!
         
@@ -275,7 +264,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     }
     
     //MARK: subclass override
-    func interactionUpdate(with translation:CGPoint)
+    @objc func interactionUpdate(with translation:CGPoint)
     {
         let percentComplete = clamp(transitionAnimator.fractionComplete + fraction(of: translation), 0, 1)
         transitionAnimator.fractionComplete = percentComplete
@@ -284,7 +273,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     }
     
     //MARK: subclass override
-    func updateInteractiveTransition(_ percentComplete:CGFloat, with translation:CGPoint)
+    @objc func updateInteractiveTransition(_ percentComplete:CGFloat, with translation:CGPoint)
     {
         let fromController = transitionContext.viewController(forKey: .from)!
         let touchOffset = gesture.location(in: transitionContext.containerView)
@@ -296,7 +285,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     }
     
     //MARK: subclass override
-    func restoreInteraction()
+    @objc func restoreInteraction()
     {
         let view = transitionContext.view(forKey: .from)!
         let rect = transitionContext.containerView.frame

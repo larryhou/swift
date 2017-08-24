@@ -14,6 +14,17 @@ class HomeViewController: UITableViewController
     
 }
 
+class InteractiveNavigationController : UINavigationController
+{
+    var transitionController:NavigationTransitionController!
+    
+    override func loadView()
+    {
+        super.loadView()
+        transitionController = SwipeVerticalTransitionController(navigationController: self, duration: 0.3)
+    }
+}
+
 class ImagePreviewController: UIViewController
 {
     override func viewDidLoad()
