@@ -25,6 +25,11 @@ extension UIGestureRecognizerState
     }
 }
 
+func clamp<T>(_ value:T, _ lower:T, _ upper:T)->T where T:Comparable
+{
+    return min(upper, max(lower, value))
+}
+
 class InteractiveNavigationController : UINavigationController
 {
     var transitionController:NavigationTransitionController!
@@ -34,17 +39,6 @@ class InteractiveNavigationController : UINavigationController
         super.loadView()
         transitionController = NavigationTransitionController(navigationController: self, duration: 0.3)
     }
-}
-
-@objc protocol NavigationTransitionDelegate
-{
-    @objc optional func transitionShouldBegin(_ transitionController:NavigationTransitionController, gesture:UIPanGestureRecognizer)->Bool
-    @objc optional func transitionStartUserInteraction(_ transitionController:NavigationTransitionController, transitionContext: UIViewControllerContextTransitioning, operation:UINavigationControllerOperation)->UIViewPropertyAnimator
-}
-
-@objc protocol TransitionControllerDelegate
-{
-    @objc optional func transitionUpdate(percentComplete percent:CGFloat)
 }
 
 class NavigationTransitionController : NSObject
@@ -57,8 +51,6 @@ class NavigationTransitionController : NSObject
     var transitionContext:UIViewControllerContextTransitioning!
     var operation:UINavigationControllerOperation = .none
     var anchor = CGPoint(x: 0.5, y: 0.5)
-    
-    var delegate:NavigationTransitionDelegate?
     
     init(navigationController controller:UINavigationController, duration:TimeInterval = 0.5)
     {
@@ -99,22 +91,11 @@ class NavigationTransitionController : NSObject
 
 extension NavigationTransitionController : UIGestureRecognizerDelegate
 {
+    //MARK: subclass override
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
     {
         if !interactive
         {
-            let delegateAllowed:Bool
-            if let allowed = delegate?.transitionShouldBegin?(self, gesture: gesture)
-            {
-                delegateAllowed = allowed
-            }
-            else
-            {
-                delegateAllowed = true
-            }
-            
-            guard delegateAllowed else {return false}
-            
             let translation = gesture.translation(in: gesture.view)
             let vertical = translation.y > 0 && abs(translation.y) > abs(translation.x)
             return vertical && navigationController.viewControllers.count >= 2
@@ -191,27 +172,31 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         print(#function)
         
         interactive = true
+        gesture.addTarget(self, action: #selector(interactionUpdate(_:)))
+        transitionAnimator = createTransitionAnimator(transitionContext: transitionContext)
+        transitionAnimator.addCompletion
+        { position in
+            if position == .end
+            {
+                transitionContext.finishInteractiveTransition()
+            }
+            else
+            {
+                transitionContext.cancelInteractiveTransition()
+            }
+            transitionContext.completeTransition(position == .end)
+        }
+        
         self.transitionContext = transitionContext
-        self.gesture.addTarget(self, action: #selector(interactionUpdate(_:)))
-        
-        if let animator = delegate?.transitionStartUserInteraction?(self, transitionContext: transitionContext, operation: operation)
-        {
-            self.transitionAnimator = animator
-        }
-        else
-        {
-            self.transitionAnimator = startUserInteraction(transitionContext: transitionContext)
-        }
-        
         if !transitionContext.isInteractive
         {
             animate(to: .end)
         }
     }
     
-    func startUserInteraction(transitionContext:UIViewControllerContextTransitioning)->UIViewPropertyAnimator
+    //MARK: subclass override
+    func createTransitionAnimator(transitionContext:UIViewControllerContextTransitioning)->UIViewPropertyAnimator
     {
-        let _ = transitionContext.viewController(forKey: .from)!
         let toController = transitionContext.viewController(forKey: .to)!
         
         let fromView = transitionContext.view(forKey: .from)!
@@ -242,20 +227,6 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
             }
         }
         
-        transitionAnimator.addCompletion
-        { position in
-            if position == .end
-            {
-                transitionContext.finishInteractiveTransition()
-            }
-            else
-            {
-                transitionContext.cancelInteractiveTransition()
-            }
-            transitionContext.completeTransition(position == .end)
-            print("complete", fromView.frame)
-        }
-        
         return transitionAnimator
     }
     
@@ -277,68 +248,66 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         }
     }
     
+    //MARK: subclass override
     @objc func interactionUpdate(_ sender:UIPanGestureRecognizer)
     {
         switch sender.state
         {
             case .began, .changed:
                 let translation = sender.translation(in: transitionContext.containerView)
-                var fractionComplete = transitionAnimator.fractionComplete + fraction(of: translation)
-                fractionComplete = min(1, max(0, fractionComplete))
-                transitionAnimator.fractionComplete = fractionComplete
-                transitionContext.updateInteractiveTransition(fractionComplete)
+                let percentComplete = clamp(transitionAnimator.fractionComplete + fraction(of: translation), 0, 1)
+                transitionAnimator.fractionComplete = percentComplete
+                transitionContext.updateInteractiveTransition(percentComplete)
                 sender.setTranslation(CGPoint.zero, in: transitionContext.containerView)
-                updateControllers(with: translation, percentComplete: fractionComplete)
+                updateInteractiveTransition(percentComplete, with: translation)
             case .ended, .cancelled, .failed:
                 gesture.removeTarget(self, action: #selector(interactionUpdate(_:)))
-                finishInteraction()
+                if transitionContext.isInteractive
+                {
+                    let position = completionAnimatingPosition()
+                    if position == .start
+                    {
+                        restoreInteraction()
+                    }
+                    else
+                    {
+                        animate(to: position)
+                    }
+                }
+            
             default:break
         }
     }
     
-    func updateControllers(with translation:CGPoint, percentComplete percent:CGFloat)
+    //MARK: subclass override
+    func updateInteractiveTransition(_ percentComplete:CGFloat, with translation:CGPoint)
     {
         let fromController = transitionContext.viewController(forKey: .from)!
-        if let delegate = fromController as? TransitionControllerDelegate
-        {
-            delegate.transitionUpdate?(percentComplete: percent)
-        }
-        
-        let touchPoint = gesture.location(in: transitionContext.containerView)
-        
+        let touchOffset = gesture.location(in: transitionContext.containerView)
         let fromView = fromController.view!
         var frame = fromView.frame
-        frame.origin.x = touchPoint.x - frame.width  * anchor.x
-        frame.origin.y = touchPoint.y - frame.height * anchor.y
+        frame.origin.x = touchOffset.x - frame.width  * anchor.x
+        frame.origin.y = touchOffset.y - frame.height * anchor.y
         fromView.frame = frame
     }
     
-    func finishInteraction()
+    //MARK: subclass override
+    func restoreInteraction()
     {
-        guard transitionContext.isInteractive else {return}
-        
-        let position = completionAnimatingPosition()
-        if position == .start
+        let view = transitionContext.view(forKey: .from)!
+        let rect = transitionContext.containerView.frame
+        let restoreAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
         {
-            let view = transitionContext.view(forKey: .from)!
-            let rect = transitionContext.containerView.frame
-            let restoreAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
-            {
-                view.frame.origin.x += rect.midX - view.frame.midX
-                view.frame.origin.y += rect.midY - view.frame.midY
-            }
-            gesture.isEnabled = false
-            restoreAnimator.addCompletion
-            { [unowned self] _ in
-                self.gesture.isEnabled = true
-                self.animate(to: position)
-            }
-            restoreAnimator.startAnimation()
+            view.frame.origin.x += rect.midX - view.frame.midX
+            view.frame.origin.y += rect.midY - view.frame.midY
         }
-        else
-        {
-            animate(to: position)
+        gesture.isEnabled = false
+        restoreAnimator.addCompletion
+        { [unowned self] _ in
+            self.gesture.isEnabled = true
+            self.animate(to: .start)
         }
+        restoreAnimator.startAnimation()
     }
     
     func completionAnimatingPosition()->UIViewAnimatingPosition
