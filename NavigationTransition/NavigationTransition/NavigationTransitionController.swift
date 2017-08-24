@@ -43,14 +43,13 @@ class InteractiveNavigationController : UINavigationController
 
 class NavigationTransitionController : NSObject
 {
-    unowned var navigationController:UINavigationController
-    var gesture:UIPanGestureRecognizer
-    var duration:TimeInterval
-    
-    var transitionAnimator:UIViewPropertyAnimator!
-    var transitionContext:UIViewControllerContextTransitioning!
-    var operation:UINavigationControllerOperation = .none
-    var anchor = CGPoint(x: 0.5, y: 0.5)
+    unowned let navigationController:UINavigationController
+    private(set) var gesture:UIPanGestureRecognizer
+    private(set) var duration:TimeInterval
+    private(set) var transitionAnimator:UIViewPropertyAnimator!
+    private(set) var transitionContext:UIViewControllerContextTransitioning!
+    private(set) var operation:UINavigationControllerOperation = .none
+    private(set) var anchor = CGPoint(x: 0.5, y: 0.5)
     
     init(navigationController controller:UINavigationController, duration:TimeInterval = 0.5)
     {
@@ -72,7 +71,7 @@ class NavigationTransitionController : NSObject
         }
     }
     
-    var initialized = false, interactive = false
+    private(set) var initialized = false, interactive = false
     @objc func transitionUpdate(_ sender:UIPanGestureRecognizer)
     {
         if (sender.state == .began && !interactive)
