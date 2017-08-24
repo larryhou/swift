@@ -62,7 +62,7 @@ class NavigationTransitionController : NSObject
         
         self.gesture.delegate = self
         self.gesture.maximumNumberOfTouches = 1
-        self.gesture.addTarget(self, action: #selector(transitionUpdate(_:)))
+        self.gesture.addTarget(self, action: #selector(triggerGestureUpdate(_:)))
         self.navigationController.view.addGestureRecognizer(self.gesture)
         
         if let popGesture = self.navigationController.interactivePopGestureRecognizer
@@ -72,7 +72,7 @@ class NavigationTransitionController : NSObject
     }
     
     private(set) var initialized = false, interactive = false
-    @objc func transitionUpdate(_ sender:UIPanGestureRecognizer)
+    @objc final func triggerGestureUpdate(_ sender:UIPanGestureRecognizer)
     {
         if (sender.state == .began && !interactive)
         {
@@ -147,7 +147,7 @@ extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
     
     func animationEnded(_ transitionCompleted: Bool)
     {
-        gesture.removeTarget(self, action: #selector(interactionUpdate(_:)))
+        gesture.removeTarget(self, action: #selector(interactionGestureUpdate(_:)))
         transitionAnimator = nil
         transitionContext = nil
         initialized = false
@@ -163,12 +163,12 @@ extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
 
 extension NavigationTransitionController : UIViewControllerInteractiveTransitioning
 {
-    func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
+    final func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
     {
         print(#function)
         
         interactive = true
-        gesture.addTarget(self, action: #selector(interactionUpdate(_:)))
+        gesture.addTarget(self, action: #selector(interactionGestureUpdate(_:)))
         transitionAnimator = createTransitionAnimator(transitionContext: transitionContext)
         transitionAnimator.addCompletion
         { position in
@@ -244,20 +244,16 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         }
     }
     
-    //MARK: subclass override
-    @objc func interactionUpdate(_ sender:UIPanGestureRecognizer)
+    @objc final func interactionGestureUpdate(_ sender:UIPanGestureRecognizer)
     {
         switch sender.state
         {
             case .began, .changed:
                 let translation = sender.translation(in: transitionContext.containerView)
-                let percentComplete = clamp(transitionAnimator.fractionComplete + fraction(of: translation), 0, 1)
-                transitionAnimator.fractionComplete = percentComplete
-                transitionContext.updateInteractiveTransition(percentComplete)
+                interactionUpdate(with: translation)
                 sender.setTranslation(CGPoint.zero, in: transitionContext.containerView)
-                updateInteractiveTransition(percentComplete, with: translation)
             case .ended, .cancelled, .failed:
-                gesture.removeTarget(self, action: #selector(interactionUpdate(_:)))
+                gesture.removeTarget(self, action: #selector(interactionGestureUpdate(_:)))
                 if transitionContext.isInteractive
                 {
                     let position = completionAnimatingPosition()
@@ -270,9 +266,17 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
                         animate(to: position)
                     }
                 }
-            
             default:break
         }
+    }
+    
+    //MARK: subclass override
+    func interactionUpdate(with translation:CGPoint)
+    {
+        let percentComplete = clamp(transitionAnimator.fractionComplete + fraction(of: translation), 0, 1)
+        transitionAnimator.fractionComplete = percentComplete
+        transitionContext.updateInteractiveTransition(percentComplete)
+        updateInteractiveTransition(percentComplete, with: translation)
     }
     
     //MARK: subclass override
