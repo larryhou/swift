@@ -110,7 +110,6 @@ extension NavigationTransitionController : UIGestureRecognizerDelegate
     }
 }
 
-//MARK: delegate
 extension NavigationTransitionController : UINavigationControllerDelegate
 {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
@@ -135,7 +134,6 @@ extension NavigationTransitionController : UINavigationControllerDelegate
     }
 }
 
-//MARK: custom transition
 extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
 {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval
@@ -164,7 +162,6 @@ extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
     }
 }
 
-//MARK: interaction
 extension NavigationTransitionController : UIViewControllerInteractiveTransitioning
 {
     func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
