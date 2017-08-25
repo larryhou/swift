@@ -103,7 +103,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             {
                 scroll.pageAssets = assets
                 scroll.index = indexPath.row
-                show(scroll, sender: self)
+                present(scroll, animated: true, completion: nil)
             }
         }
     }
@@ -138,7 +138,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
         {
             scroll.pageAssets = assets
             scroll.index = (viewControllerToCommit as! ImagePeekController).index
-            show(scroll, sender: self)
+            present(scroll, animated: true, completion: nil)
         }
     }
 }

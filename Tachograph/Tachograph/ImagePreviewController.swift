@@ -29,7 +29,49 @@ extension CGAffineTransform
 
 class ImageScrollController: PageController<ImagePreviewController, CameraModel.CameraAsset>
 {
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+        view.addGestureRecognizer(pan)
+    }
     
+    var fractionComplete = CGFloat.nan
+    var dismissAnimator:UIViewPropertyAnimator!
+    @objc func panUpdate(sender:UIPanGestureRecognizer)
+    {
+        switch sender.state
+        {
+            case .began:
+                dismissAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
+                { [unowned self] in
+                    self.view.frame.origin.y = self.view.frame.height
+                }
+                dismissAnimator.addCompletion
+                { [unowned self] position in
+                    if position == .end
+                    {
+                        self.dismiss(animated: false, completion: nil)
+                    }
+                    self.fractionComplete = CGFloat.nan
+                }
+                dismissAnimator.pauseAnimation()
+            case .changed:
+                if fractionComplete.isNaN {fractionComplete = 0}
+                
+                let translation = sender.translation(in: view)
+                fractionComplete += translation.y / view.frame.height
+                fractionComplete = min(1, max(0, fractionComplete))
+                dismissAnimator.fractionComplete = fractionComplete
+                sender.setTranslation(CGPoint.zero, in: view)
+            default:
+                if dismissAnimator.fractionComplete <= 0.25
+                {
+                    dismissAnimator.isReversed = true
+                }
+                dismissAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
+        }
+    }
 }
 
 class ImagePreviewController:ImagePeekController, PageProtocol
@@ -52,7 +94,6 @@ class ImagePreviewController:ImagePeekController, PageProtocol
     }
     
     var scaleRange:(CGFloat, CGFloat) = (1.0, 3.0)
-    override var shouldAutorotate: Bool {return true}
     var frameImage = CGRect()
     
     weak var panGesture:UIPanGestureRecognizer?
@@ -67,25 +108,18 @@ class ImagePreviewController:ImagePeekController, PageProtocol
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
         view.addGestureRecognizer(pinch)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
-        image.addGestureRecognizer(pan)
-        panGesture = pan
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+//        image.addGestureRecognizer(pan)
+//        panGesture = pan
         
         let press = UILongPressGestureRecognizer(target: self, action: #selector(pressUpdate(sender:)))
         image.addGestureRecognizer(press)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationUpdate), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
-    var lastUrl:String?
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        
-        if lastUrl == url {return}
-        lastUrl = url
-        
-        orientationUpdate()
+        image.transform = CGAffineTransform.identity
     }
     
     @objc func pressUpdate(sender:UILongPressGestureRecognizer)
@@ -96,46 +130,6 @@ class ImagePreviewController:ImagePeekController, PageProtocol
         alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
         alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
-    }
-    
-    var baseTransform = CGAffineTransform.identity
-    
-    @objc func orientationUpdate()
-    {
-        guard let navigationController = self.navigationController else {return}
-        let rotation, alpha:CGFloat
-        let orientation = UIDevice.current.orientation
-        if orientation.isLandscape
-        {
-            alpha = 0
-            let scale = max(view.frame.height / frameImage.width, view.frame.width / frameImage.height)
-            scaleRange = (scale, scale)
-            rotation = orientation == .landscapeLeft ?  CGFloat.pi / 2 : -CGFloat.pi / 2
-            panGesture?.isEnabled = false
-        }
-        else
-        {
-            alpha = 1
-            scaleRange = (view.frame.width / frameImage.width, view.frame.height / frameImage.height)
-            panGesture?.isEnabled = true
-            rotation = 0
-        }
-        
-        let transform = CGAffineTransform(rotationAngle: rotation)
-        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.9)
-        { [unowned self] in
-            navigationController.navigationBar.alpha = alpha
-            self.image.transform = transform.scaledBy(x: self.scaleRange.0, y: self.scaleRange.0)
-        }
-        
-        animator.addCompletion
-        { _ in
-            self.positionAdjust()
-        }
-        
-        animator.startAnimation()
-        
-        baseTransform = transform
     }
     
     var panAnimator:UIViewPropertyAnimator?
@@ -174,7 +168,7 @@ class ImagePreviewController:ImagePeekController, PageProtocol
     {
         scale = fitted ? scaleRange.0 : min(max(scaleRange.0, scale), scaleRange.1)
         
-        let transform = baseTransform.scaledBy(x: scale, y: scale)
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
         let animator = UIViewPropertyAnimator(duration: 0.4, dampingRatio: 0.85)
         { [unowned self] in
             self.image.transform = transform
@@ -192,7 +186,7 @@ class ImagePreviewController:ImagePeekController, PageProtocol
                 sender.scale = image.transform.scaleX
             case .changed:
                 scale = sender.scale
-                image.transform = baseTransform.scaledBy(x: scale, y: scale)
+                image.transform = CGAffineTransform(scaleX: scale, y: scale)
             case .ended:
                 scaleAdjust()
             default:break

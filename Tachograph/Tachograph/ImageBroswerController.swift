@@ -179,7 +179,7 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
         {
             scroll.index = indexPath.row
             scroll.pageAssets = takenImages
-            show(scroll, sender: self)
+            present(scroll, animated: true, completion: nil)
         }
     }
     
@@ -214,7 +214,7 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
         {
             scroll.index = (viewControllerToCommit as! ImagePeekController).index
             scroll.pageAssets = takenImages
-            show(scroll, sender: self)
+            present(scroll, animated: true, completion: nil)
         }
     }
 }

@@ -37,9 +37,6 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
         
         self.player = AVPlayer()
         
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchUpdate(sender:)))
-        view.addGestureRecognizer(pinch)
-        
         let press = UILongPressGestureRecognizer(target: self, action: #selector(pressUpdate(sender:)))
         view.addGestureRecognizer(press)
     }
@@ -86,17 +83,6 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
         {
             let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
             present(controller, animated: true, completion: nil)
-        }
-    }
-    
-    @objc func pinchUpdate(sender:UIPinchGestureRecognizer)
-    {
-        if sender.state == .changed
-        {
-            if sender.scale <= 0.5
-            {
-                dismiss(animated: true, completion: nil)
-            }
         }
     }
     
@@ -177,6 +163,46 @@ class VideoScrollController: PageController<VideoPlayController, CameraModel.Cam
         {
             self.navigationController?.navigationBar.alpha = 0
         }.startAnimation()
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+        view.addGestureRecognizer(pan)
+    }
+    
+    var fractionComplete = CGFloat.nan
+    var dismissAnimator:UIViewPropertyAnimator!
+    @objc func panUpdate(sender:UIPanGestureRecognizer)
+    {
+        switch sender.state
+        {
+            case .began:
+                dismissAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
+                { [unowned self] in
+                    self.view.frame.origin.y = self.view.frame.height
+                }
+                dismissAnimator.addCompletion
+                { [unowned self] position in
+                    if position == .end
+                    {
+                        self.dismiss(animated: false, completion: nil)
+                    }
+                    self.fractionComplete = CGFloat.nan
+                }
+                dismissAnimator.pauseAnimation()
+            case .changed:
+                if fractionComplete.isNaN {fractionComplete = 0}
+                
+                let translation = sender.translation(in: view)
+                fractionComplete += translation.y / view.frame.height
+                fractionComplete = min(1, max(0, fractionComplete))
+                dismissAnimator.fractionComplete = fractionComplete
+                sender.setTranslation(CGPoint.zero, in: view)
+            default:
+                if dismissAnimator.fractionComplete <= 0.25
+                {
+                    dismissAnimator.isReversed = true
+                }
+                dismissAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool)

@@ -34,14 +34,7 @@ class ViewController: UITabBarController
     }
     
     override var prefersStatusBarHidden:Bool { return true }
-    
-    override var shouldAutorotate: Bool {return false}
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation
-    {
-        return UIInterfaceOrientation.portrait
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .all}
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
     
     override func didReceiveMemoryWarning()
     {

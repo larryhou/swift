@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ddJ-pe-0ac">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ddJ-pe-0ac">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -177,7 +177,7 @@
         <!--Video Scroll Controller-->
         <scene sceneID="40z-op-ZeV">
             <objects>
-                <pageViewController storyboardIdentifier="VideoScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="Mql-Ms-ULx" customClass="VideoScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="VideoScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="Mql-Ms-ULx" customClass="VideoScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUS-In-Zs3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3793" y="1469"/>
@@ -185,7 +185,7 @@
         <!--Video Play Controller-->
         <scene sceneID="3jN-Dk-FUA">
             <objects>
-                <viewController storyboardIdentifier="VideoPlayController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fxh-xp-Fen" customClass="VideoPlayController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideoPlayController" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fxh-xp-Fen" customClass="VideoPlayController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dRD-Z3-NVF"/>
                         <viewControllerLayoutGuide type="bottom" id="v15-kn-A4D"/>
@@ -495,12 +495,11 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DgQ-JH-0iv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="K1F-OB-dzH">
-                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -526,15 +525,20 @@
                             <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-XL-Rga">
                                 <rect key="frame" x="177" y="323" width="20" height="20"/>
                             </activityIndicatorView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3k-l7-AIY">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f3k-l7-AIY">
                                 <rect key="frame" x="0.0" y="228" width="375" height="211"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="f3k-l7-AIY" secondAttribute="height" multiplier="16:9" id="D9X-EL-mdg"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="f3k-l7-AIY" firstAttribute="centerY" secondItem="WpE-dP-wjT" secondAttribute="centerY" id="KN1-f8-JZT"/>
                             <constraint firstItem="8qe-XL-Rga" firstAttribute="centerX" secondItem="WpE-dP-wjT" secondAttribute="centerX" id="Nqg-6Z-kvT"/>
+                            <constraint firstAttribute="trailing" secondItem="f3k-l7-AIY" secondAttribute="trailing" id="QDU-ly-32I"/>
+                            <constraint firstItem="f3k-l7-AIY" firstAttribute="leading" secondItem="WpE-dP-wjT" secondAttribute="leading" id="dI5-hL-jE4"/>
                             <constraint firstItem="8qe-XL-Rga" firstAttribute="centerY" secondItem="WpE-dP-wjT" secondAttribute="centerY" id="p8s-av-gxN"/>
                         </constraints>
                     </view>
@@ -550,7 +554,7 @@
         <!--Image Scroll Controller-->
         <scene sceneID="hqD-VY-6LU">
             <objects>
-                <pageViewController storyboardIdentifier="ImageScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="cAo-qs-70c" customClass="ImageScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="ImageScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="cAo-qs-70c" customClass="ImageScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hlH-8Z-ZUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3793" y="555"/>
@@ -564,7 +568,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze0-du-1en">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
