@@ -65,7 +65,6 @@ class ViewTransitionController: UIViewController
                 {
                     animator.isReversed = true
                 }
-                print("fraction", fractionComplete)
                 animator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
         }
     }
