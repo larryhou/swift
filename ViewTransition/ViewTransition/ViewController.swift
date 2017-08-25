@@ -163,6 +163,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         options.append(TransitionOption(label: "flipFromRight", value: .transitionFlipFromRight))
         options.append(TransitionOption(label: "flipFromTop", value: .transitionFlipFromTop))
         options.append(TransitionOption(label: "flipFromBottom", value: .transitionFlipFromBottom))
+        options.append(TransitionOption(label: "crossDissolve", value: .transitionCrossDissolve))
         options.append(TransitionOption(label: "curlUp", value: .transitionCurlUp))
         options.append(TransitionOption(label: "curlDown", value: .transitionCurlDown))
         data.append(options)
