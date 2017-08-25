@@ -32,6 +32,7 @@ class ViewTransitionController: UIViewController
         view.addGestureRecognizer(pan)
     }
     
+    var fractionComplete = CGFloat.nan
     var animator:UIViewPropertyAnimator!
     @objc func panUpdate(_ sender:UIPanGestureRecognizer)
     {
@@ -39,7 +40,7 @@ class ViewTransitionController: UIViewController
         switch sender.state
         {
             case .began:
-                animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut)
+                animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
                 { [unowned self] in
                     self.view.frame.origin.y = self.view.frame.height
                 }
@@ -49,17 +50,23 @@ class ViewTransitionController: UIViewController
                     {
                         self.dismiss(animated: false, completion: nil)
                     }
+                    self.fractionComplete = CGFloat.nan
                 }
                 animator.pauseAnimation()
+                fallthrough
             case .changed:
-                let fractionComplete = animator.fractionComplete + translation.y/view.frame.height
+                if fractionComplete.isNaN {fractionComplete = 0}
+                fractionComplete = fractionComplete + translation.y/view.frame.height
+                fractionComplete = min(1, max(0, fractionComplete))
                 animator.fractionComplete = fractionComplete
                 sender.setTranslation(CGPoint.zero, in: view)
+                print("fraction", fractionComplete)
             default:
                 if animator.fractionComplete <= 0.25
                 {
                     animator.isReversed = true
                 }
+                print("fraction", fractionComplete)
                 animator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
         }
     }
