@@ -197,7 +197,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         {
             toView.backgroundColor = .clear
             transitionContext.containerView.insertSubview(toView, aboveSubview: fromView)
-            toView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75).translatedBy(x: 0, y: 50)
+            toView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75).translatedBy(x: 0, y: 200)
             toView.layer.cornerRadius = 20
             toView.alpha = 0.2
             let frame = transitionContext.finalFrame(for: toController)
