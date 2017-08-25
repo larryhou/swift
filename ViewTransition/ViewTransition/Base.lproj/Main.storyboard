@@ -105,15 +105,13 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANt-44-4TK">
                                         <rect key="frame" x="107" y="8" width="160" height="84"/>
                                         <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="60"/>
-                                        <state key="normal" title="START">
-                                            <color key="titleColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
+                                        <state key="normal" title="START"/>
                                         <connections>
                                             <action selector="presentTransition:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ndL-VU-eqq"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ANt-44-4TK" firstAttribute="centerY" secondItem="i55-of-jlA" secondAttribute="centerY" id="KfA-I3-aMo"/>
                                     <constraint firstItem="ANt-44-4TK" firstAttribute="centerX" secondItem="i55-of-jlA" secondAttribute="centerX" id="VPD-ed-MTU"/>
