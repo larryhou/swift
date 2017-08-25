@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//NOTE: duration = 0.8
 class SwipeVerticalTransitionController: NavigationTransitionController
 {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
@@ -24,11 +25,6 @@ class SwipeVerticalTransitionController: NavigationTransitionController
     
     override func createTransitionAnimator(transitionContext: UIViewControllerContextTransitioning) -> UIViewPropertyAnimator
     {
-        if operation == .push
-        {
-            return super.createTransitionAnimator(transitionContext: transitionContext)
-        }
-        
         let fromController = transitionContext.viewController(forKey: .from)!
         let toController = transitionContext.viewController(forKey: .to)!
         
@@ -37,16 +33,38 @@ class SwipeVerticalTransitionController: NavigationTransitionController
         
         toView.frame = transitionContext.finalFrame(for: toController)
         
-        var frame = fromView.frame
-        frame.origin.y = frame.height
-        fromView.frame = frame
-        
-        let animator = UIViewPropertyAnimator(duration: duration, curve: .easeOut)
+        if operation == .push
         {
-            fromView.frame.origin.y = 0
+            transitionContext.containerView.insertSubview(toView, aboveSubview: fromView)
+            var frame = toView.frame
+            frame.origin.y = frame.height
+            toView.frame = frame
+            toView.layer.cornerRadius = 20
+            toView.backgroundColor = .red
+            return UIViewPropertyAnimator(duration: duration, curve: .easeInOut)
+            {
+                toView.frame.origin.y = 0
+                toView.layer.cornerRadius = 0
+                toView.backgroundColor = .white
+            }
         }
-        
-        return animator
+        else
+        {
+            transitionContext.containerView.insertSubview(toView, belowSubview: fromView)
+            var frame = fromView.frame
+            frame.origin.y = frame.height
+            return UIViewPropertyAnimator(duration: duration, curve: .easeInOut)
+            {
+                fromView.frame = frame
+                fromView.layer.cornerRadius = 20
+                fromView.backgroundColor = .red
+            }
+        }
+    }
+    
+    override func fraction(of translation: CGPoint) -> CGFloat
+    {
+        return super.fraction(of: translation) / 4
     }
     
     override func interactionUpdate(with translation: CGPoint)
@@ -56,11 +74,11 @@ class SwipeVerticalTransitionController: NavigationTransitionController
     
     override func updateInteractiveTransition(_ percentComplete: CGFloat, with translation: CGPoint)
     {
-        super.updateInteractiveTransition(percentComplete, with: translation)
+        
     }
     
-    override func restoreInteraction()
+    override func createRecoverAnimator() -> UIViewPropertyAnimator?
     {
-        super.restoreInteraction()
+        return nil
     }
 }

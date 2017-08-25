@@ -39,6 +39,7 @@ class NavigationTransitionController : NSObject
     private(set) var transitionContext:UIViewControllerContextTransitioning!
     private(set) var operation:UINavigationControllerOperation = .none
     private(set) var anchor = CGPoint(x: 0.5, y: 0.5)
+    private(set) var fractionComplete:CGFloat = 0.0
     
     init(navigationController controller:UINavigationController, duration:TimeInterval = 0.5)
     {
@@ -144,7 +145,6 @@ extension NavigationTransitionController : UIViewControllerAnimatedTransitioning
         transitionContext = nil
         initialized = false
         interactive = false
-        print(#function)
     }
     
     func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating
@@ -158,8 +158,6 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
 {
     final func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
     {
-        print(#function)
-        
         interactive = true
         gesture.addTarget(self, action: #selector(interactionGestureUpdate(_:)))
         transitionAnimator = createTransitionAnimator(transitionContext: transitionContext)
@@ -219,7 +217,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         return transitionAnimator
     }
     
-    func fraction(of translation:CGPoint)->CGFloat
+    @objc func fraction(of translation:CGPoint)->CGFloat
     {
         return (operation == .push ? -1.0 : 1.0) * translation.y / transitionContext.containerView.bounds.midY * 2
     }
@@ -241,22 +239,39 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     {
         switch sender.state
         {
-            case .began, .changed:
+            case .began,.changed:
+                if fractionComplete.isNaN { fractionComplete = 0 }
                 let translation = sender.translation(in: transitionContext.containerView)
+                fractionComplete = clamp(fractionComplete + fraction(of: translation), 0, 1)
                 interactionUpdate(with: translation)
                 sender.setTranslation(CGPoint.zero, in: transitionContext.containerView)
             case .ended, .cancelled, .failed:
+                transitionAnimator.fractionComplete = fractionComplete
+                fractionComplete = CGFloat.nan
                 gesture.removeTarget(self, action: #selector(interactionGestureUpdate(_:)))
                 if transitionContext.isInteractive
                 {
                     let position = completionAnimatingPosition()
                     if position == .start
                     {
-                        restoreInteraction()
+                        if let restoreAnimator = createRecoverAnimator()
+                        {
+                            gesture.isEnabled = false
+                            restoreAnimator.addCompletion
+                            { [unowned self] _ in
+                                self.gesture.isEnabled = true
+                                self.animate(to: .start)
+                            }
+                            restoreAnimator.startAnimation()
+                        }
+                        else
+                        {
+                            animate(to: .start)
+                        }
                     }
                     else
                     {
-                        animate(to: position)
+                        animate(to: .end)
                     }
                 }
             default:break
@@ -266,10 +281,9 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     //MARK: subclass override
     @objc func interactionUpdate(with translation:CGPoint)
     {
-        let percentComplete = clamp(transitionAnimator.fractionComplete + fraction(of: translation), 0, 1)
-        transitionAnimator.fractionComplete = percentComplete
-        transitionContext.updateInteractiveTransition(percentComplete)
-        updateInteractiveTransition(percentComplete, with: translation)
+        transitionAnimator.fractionComplete = fractionComplete
+        transitionContext.updateInteractiveTransition(fractionComplete)
+        updateInteractiveTransition(fractionComplete, with: translation)
     }
     
     //MARK: subclass override
@@ -285,7 +299,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
     }
     
     //MARK: subclass override
-    @objc func restoreInteraction()
+    @objc func createRecoverAnimator()->UIViewPropertyAnimator?
     {
         let view = transitionContext.view(forKey: .from)!
         let rect = transitionContext.containerView.frame
@@ -294,19 +308,16 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
             view.frame.origin.x += rect.midX - view.frame.midX
             view.frame.origin.y += rect.midY - view.frame.midY
         }
-        gesture.isEnabled = false
-        restoreAnimator.addCompletion
-        { [unowned self] _ in
-            self.gesture.isEnabled = true
-            self.animate(to: .start)
-        }
-        restoreAnimator.startAnimation()
+        return restoreAnimator
     }
     
-    func completionAnimatingPosition()->UIViewAnimatingPosition
+    @objc var velocityMagnitudeThreshold:CGFloat {return 1200}
+    @objc var completionThreshold:CGFloat {return 0.33}
+    
+    @objc func completionAnimatingPosition()->UIViewAnimatingPosition
     {
         let velocity = gesture.velocity(in: transitionContext.containerView)
-        let flicking = sqrt(velocity.x * velocity.x + velocity.y * velocity.y) > 1200
+        let flicking = sqrt(velocity.x * velocity.x + velocity.y * velocity.y) > velocityMagnitudeThreshold
         let down = flicking && velocity.y > 0
         let up = flicking && velocity.y < 0
         
@@ -319,7 +330,7 @@ extension NavigationTransitionController : UIViewControllerInteractiveTransition
         {
             position = .start
         }
-        else if transitionAnimator.fractionComplete >= 0.33
+        else if transitionAnimator.fractionComplete >= completionThreshold
         {
             position = .end
         }
