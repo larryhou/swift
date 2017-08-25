@@ -60,7 +60,6 @@ class ViewTransitionController: UIViewController
                 fractionComplete = min(1, max(0, fractionComplete))
                 animator.fractionComplete = fractionComplete
                 sender.setTranslation(CGPoint.zero, in: view)
-                print("fraction", fractionComplete)
             default:
                 if animator.fractionComplete <= 0.25
                 {
