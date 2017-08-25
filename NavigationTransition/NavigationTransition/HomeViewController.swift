@@ -21,7 +21,7 @@ class InteractiveNavigationController : UINavigationController
     override func loadView()
     {
         super.loadView()
-        transitionController = SwipeVerticalTransitionController(navigationController: self, duration: 0.5)
+        transitionController = NavigationTransitionController(navigationController: self, duration: 0.2)
     }
 }
 
