@@ -10,6 +10,7 @@ import UIKit
 
 class BlurController:UIViewController
 {
+    @IBOutlet weak var blurView: UIVisualEffectView!
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -27,7 +28,7 @@ class BlurController:UIViewController
                 dismissAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
                 { [unowned self] in
                     self.view.frame.origin.y = self.view.frame.height
-//                    self.view.layer.cornerRadius = 20
+                    self.blurView.layer.cornerRadius = 20
                 }
                 dismissAnimator.addCompletion
                 { [unowned self] position in

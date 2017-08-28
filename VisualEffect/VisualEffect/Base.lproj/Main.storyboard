@@ -111,6 +111,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xys-Kn-9LP"/>
                     </view>
+                    <connections>
+                        <outlet property="blurView" destination="7Yf-HN-3e2" id="FpZ-id-WIy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gBl-Qe-TdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
