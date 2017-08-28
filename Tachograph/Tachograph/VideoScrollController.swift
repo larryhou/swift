@@ -154,7 +154,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     }
 }
 
-class VideoScrollController: PageController<VideoPlayController, CameraModel.CameraAsset>
+class VideoScrollController: PageController<VideoPlayController, CameraModel.CameraAsset>, UIGestureRecognizerDelegate
 {
     override func viewWillAppear(_ animated: Bool)
     {
@@ -165,7 +165,13 @@ class VideoScrollController: PageController<VideoPlayController, CameraModel.Cam
         }.startAnimation()
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+        pan.delegate = self
         view.addGestureRecognizer(pan)
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
+    {
+        return UIDevice.current.orientation.isPortrait
     }
     
     var fractionComplete = CGFloat.nan

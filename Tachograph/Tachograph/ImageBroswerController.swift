@@ -217,4 +217,6 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
             present(scroll, animated: true, completion: nil)
         }
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
 }

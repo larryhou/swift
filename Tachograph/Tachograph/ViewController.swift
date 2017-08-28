@@ -8,6 +8,12 @@
 
 import UIKit
 
+class RotableNavigationController:UINavigationController
+{
+    override var shouldAutorotate: Bool {return true}
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .all}
+}
+
 class ViewController: UITabBarController
 {
     override func viewDidLoad()
@@ -34,7 +40,43 @@ class ViewController: UITabBarController
     }
     
     override var prefersStatusBarHidden:Bool { return true }
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
+    
+    override var shouldAutorotate: Bool { return frontestController?.shouldAutorotate ?? false }
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { return frontestController?.preferredInterfaceOrientationForPresentation ?? .portrait}
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask
+    {
+        return frontestController?.supportedInterfaceOrientations ?? .portrait
+    }
+    
+    var frontestController:UIViewController?
+    {
+        guard let selectedViewController = self.selectedViewController else { return nil }
+        var current:UIViewController = selectedViewController
+        while true
+        {
+            if current is UINavigationController, let navi = current as? UINavigationController
+            {
+                if let next = navi.viewControllers.last
+                {
+                    current = next
+                }
+                else
+                {
+                    break
+                }
+            }
+            else
+            if let next = current.presentedViewController
+            {
+                current = next
+            }
+            else
+            {
+                break
+            }
+        }
+        return current
+    }
     
     override func didReceiveMemoryWarning()
     {

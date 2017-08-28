@@ -177,7 +177,7 @@
         <!--Video Scroll Controller-->
         <scene sceneID="40z-op-ZeV">
             <objects>
-                <pageViewController storyboardIdentifier="VideoScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="Mql-Ms-ULx" customClass="VideoScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="VideoScrollController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="Mql-Ms-ULx" customClass="VideoScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUS-In-Zs3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3793" y="1469"/>
@@ -489,7 +489,7 @@
         <!--照片-->
         <scene sceneID="Gck-dh-gTp">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R2b-J1-hKP" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R2b-J1-hKP" customClass="RotableNavigationController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="照片" id="7QA-o8-PLZ">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                     </tabBarItem>
@@ -554,7 +554,7 @@
         <!--Image Scroll Controller-->
         <scene sceneID="hqD-VY-6LU">
             <objects>
-                <pageViewController storyboardIdentifier="ImageScrollController" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="cAo-qs-70c" customClass="ImageScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="ImageScrollController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" pageSpacing="1" navigationOrientation="horizontal" spineLocation="none" id="cAo-qs-70c" customClass="ImageScrollController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hlH-8Z-ZUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3793" y="555"/>
@@ -562,7 +562,7 @@
         <!--下载-->
         <scene sceneID="SZk-QV-dPQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RPT-GH-ClZ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RPT-GH-ClZ" customClass="RotableNavigationController" customModule="Tachograph" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="下载" id="Qi4-bZ-bPk">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                     </tabBarItem>

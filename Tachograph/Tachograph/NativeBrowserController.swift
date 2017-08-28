@@ -185,4 +185,6 @@ class NativeScrollController:UIPageViewController, UIPageViewControllerDataSourc
             return nativeControllers[0]
         }
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
 }

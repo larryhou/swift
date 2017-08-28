@@ -231,4 +231,6 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
         
         return UITableViewCell()
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
 }

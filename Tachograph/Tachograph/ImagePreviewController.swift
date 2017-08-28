@@ -27,13 +27,19 @@ extension CGAffineTransform
     }
 }
 
-class ImageScrollController: PageController<ImagePreviewController, CameraModel.CameraAsset>
+class ImageScrollController: PageController<ImagePreviewController, CameraModel.CameraAsset>, UIGestureRecognizerDelegate
 {
     override func viewDidLoad()
     {
         super.viewDidLoad()
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
+        pan.delegate = self
         view.addGestureRecognizer(pan)
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
+    {
+        return UIDevice.current.orientation.isPortrait
     }
     
     var fractionComplete = CGFloat.nan
@@ -46,6 +52,7 @@ class ImageScrollController: PageController<ImagePreviewController, CameraModel.
                 dismissAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
                 { [unowned self] in
                     self.view.frame.origin.y = self.view.frame.height
+                    self.view.layer.cornerRadius = 40
                 }
                 dismissAnimator.addCompletion
                 { [unowned self] position in
