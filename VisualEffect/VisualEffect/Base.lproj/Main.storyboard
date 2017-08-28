@@ -61,31 +61,36 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gdL-Jz-Tgz">
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdL-Jz-Tgz">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="vIV-5C-IVs">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vIV-5C-IVs">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLUR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGt-NY-C1R">
-                                                        <rect key="frame" x="44" y="271" width="287" height="144"/>
+                                                        <rect key="frame" x="44" y="251.5" width="287" height="144"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="120"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="TGt-NY-C1R" firstAttribute="centerY" secondItem="vIV-5C-IVs" secondAttribute="centerY" id="8Ch-OZ-NBj"/>
+                                                    <constraint firstItem="TGt-NY-C1R" firstAttribute="centerX" secondItem="vIV-5C-IVs" secondAttribute="centerX" id="RcM-Im-Shw"/>
+                                                </constraints>
                                             </view>
                                             <vibrancyEffect>
                                                 <blurEffect style="light"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="gdL-Jz-Tgz" secondAttribute="bottom" id="8E4-sI-mp7"/>
+                                        <constraint firstAttribute="trailing" secondItem="gdL-Jz-Tgz" secondAttribute="trailing" id="I4c-Dy-jAE"/>
+                                        <constraint firstItem="gdL-Jz-Tgz" firstAttribute="leading" secondItem="LBR-8s-ffG" secondAttribute="leading" id="L8O-mp-OmC"/>
+                                        <constraint firstItem="gdL-Jz-Tgz" firstAttribute="top" secondItem="LBR-8s-ffG" secondAttribute="top" id="V0g-AX-L1n"/>
+                                    </constraints>
                                 </view>
-                                <constraints>
-                                    <constraint firstItem="TGt-NY-C1R" firstAttribute="centerY" secondItem="7Yf-HN-3e2" secondAttribute="centerY" id="oAu-bT-aXw"/>
-                                    <constraint firstItem="TGt-NY-C1R" firstAttribute="centerX" secondItem="7Yf-HN-3e2" secondAttribute="centerX" id="x9z-nB-aA3"/>
-                                </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
                         </subviews>
