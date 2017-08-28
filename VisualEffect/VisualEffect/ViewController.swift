@@ -16,6 +16,7 @@ class BlurController:UIViewController
         super.viewDidLoad()
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(sender:)))
         view.addGestureRecognizer(pan)
+        blurView.clipsToBounds = true
     }
     
     var fractionComplete = CGFloat.nan
@@ -28,7 +29,7 @@ class BlurController:UIViewController
                 dismissAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
                 { [unowned self] in
                     self.view.frame.origin.y = self.view.frame.height
-                    self.blurView.layer.cornerRadius = 20
+                    self.blurView.layer.cornerRadius = 40
                 }
                 dismissAnimator.addCompletion
                 { [unowned self] position in
