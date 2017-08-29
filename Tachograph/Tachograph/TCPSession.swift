@@ -261,9 +261,9 @@ class TCPSession:NSObject, StreamDelegate
     func read()->Data
     {
         var data = Data()
-        while _readStream.hasBytesAvailable
+        while let stream = _readStream, stream.hasBytesAvailable
         {
-            let num = _readStream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
+            let num = stream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
             data.append(_buffer, count: num)
         }
         return data
@@ -272,10 +272,10 @@ class TCPSession:NSObject, StreamDelegate
     func read(count:Int)->Data
     {
         var data = Data()
-        while _readStream.hasBytesAvailable
+        while let stream = _readStream, stream.hasBytesAvailable
         {
             let remain = count - data.count
-            let num = _readStream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))
+            let num = stream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))
             data.append(_buffer, count: num)
         }
         return data
