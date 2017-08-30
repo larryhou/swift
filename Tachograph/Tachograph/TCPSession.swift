@@ -95,7 +95,7 @@ class TCPSession:NSObject, StreamDelegate
         }
     }
     
-    lazy private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: TCPSession.BUFFER_SIZE)
+    private var _buffer:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: TCPSession.BUFFER_SIZE)
     private var _queue:[QueuedMessage] = []
     
     var connected:Bool { return _state == .connected }
@@ -261,7 +261,8 @@ class TCPSession:NSObject, StreamDelegate
     func read()->Data
     {
         var data = Data()
-        while let stream = _readStream, stream.hasBytesAvailable
+        guard let stream = _readStream else { close(); return data; }
+        while stream.hasBytesAvailable
         {
             let num = stream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
             data.append(_buffer, count: num)
@@ -272,7 +273,8 @@ class TCPSession:NSObject, StreamDelegate
     func read(count:Int)->Data
     {
         var data = Data()
-        while let stream = _readStream, stream.hasBytesAvailable
+        guard let stream = _readStream else { close(); return data; }
+        while stream.hasBytesAvailable
         {
             let remain = count - data.count
             let num = stream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))

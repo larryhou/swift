@@ -380,6 +380,7 @@ class CameraModel:TCPSessionDelegate
         }
         return asset
         #else
+        if assetIndex == nil {return nil}
         let subpath:String
         switch type
         {
