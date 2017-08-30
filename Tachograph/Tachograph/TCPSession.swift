@@ -262,10 +262,19 @@ class TCPSession:NSObject, StreamDelegate
     {
         var data = Data()
         guard let stream = _readStream else { close(); return data; }
-        while stream.hasBytesAvailable
+        while stream.hasBytesAvailable && stream.streamError == nil
         {
             let num = stream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
-            data.append(_buffer, count: num)
+            if num > 0
+            {
+                data.append(_buffer, count: num)
+            }
+            else if let error = stream.streamError
+            {
+                close()
+                print(error)
+                break
+            }
         }
         return data
     }
@@ -274,11 +283,20 @@ class TCPSession:NSObject, StreamDelegate
     {
         var data = Data()
         guard let stream = _readStream else { close(); return data; }
-        while stream.hasBytesAvailable
+        while stream.hasBytesAvailable && stream.streamError == nil
         {
             let remain = count - data.count
             let num = stream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))
-            data.append(_buffer, count: num)
+            if num > 0
+            {
+                data.append(_buffer, count: num)
+            }
+            else if let error = stream.streamError
+            {
+                close()
+                print(error)
+                break
+            }
         }
         return data
     }
