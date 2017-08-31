@@ -261,43 +261,40 @@ class TCPSession:NSObject, StreamDelegate
     func read()->Data
     {
         var data = Data()
-        guard let stream = _readStream else { close(); return data; }
-        while stream.hasBytesAvailable && stream.streamError == nil
-        {
-            let num = stream.read(_buffer, maxLength: TCPSession.BUFFER_SIZE)
-            if num > 0
-            {
-                data.append(_buffer, count: num)
-            }
-            else if let error = stream.streamError
-            {
-                close()
-                print(error)
-                break
-            }
-        }
+        while read(to: &data, size: TCPSession.BUFFER_SIZE) {}
         return data
+    }
+    
+    @discardableResult
+    private func read(to data: inout Data, size:Int)->Bool
+    {
+        guard let stream = _readStream, stream.hasBytesAvailable && stream.streamError == nil else { return false }
+        let num = stream.read(_buffer, maxLength: size)
+        if num > 0
+        {
+            data.append(_buffer, count: num)
+            return true
+        }
+        else if let error = stream.streamError
+        {
+            close()
+            print(error)
+        }
+        
+        return false
     }
     
     func read(count:Int)->Data
     {
         var data = Data()
-        guard let stream = _readStream else { close(); return data; }
-        while stream.hasBytesAvailable && stream.streamError == nil
+        
+        var bytesAvailable = true
+        while bytesAvailable
         {
             let remain = count - data.count
-            let num = stream.read(_buffer, maxLength: min(remain, TCPSession.BUFFER_SIZE))
-            if num > 0
-            {
-                data.append(_buffer, count: num)
-            }
-            else if let error = stream.streamError
-            {
-                close()
-                print(error)
-                break
-            }
+            bytesAvailable = read(to: &data, size: min(remain, TCPSession.BUFFER_SIZE))
         }
+        
         return data
     }
     
