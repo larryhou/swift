@@ -124,7 +124,6 @@ class TCPSession:NSObject, StreamDelegate
         
         state = .connecting
         
-        _flags = 0
         _timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(sendUpdate), userInfo: nil, repeats: true)
     }
     
@@ -133,6 +132,7 @@ class TCPSession:NSObject, StreamDelegate
         state = .connecting
         if let address = self.address, port != 0
         {
+            close()
             connect(address: address, port: port)
         }
     }
@@ -160,7 +160,6 @@ class TCPSession:NSObject, StreamDelegate
         }
     }
     
-    private var _flags:Int = 0
     func stream(_ aStream: Stream, handle eventCode: Stream.Event)
     {
         print(eventCode.description)
@@ -314,7 +313,6 @@ class TCPSession:NSObject, StreamDelegate
         
         _queue.removeAll(keepingCapacity: false)
         _timer.invalidate()
-        _flags = 0
         
         state = .closed
         delegate?.close?()
