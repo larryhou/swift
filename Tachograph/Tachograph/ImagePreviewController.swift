@@ -239,7 +239,7 @@ class ImagePeekController: UIViewController
         self.image.image = nil
         
         let manager = AssetManager.shared
-        if let location = manager.get(cache: url)
+        if let location = manager.get(cacheOf: url)
         {
             image.image = try! UIImage(data: Data(contentsOf: location))
         }
@@ -257,7 +257,7 @@ class ImagePeekController: UIViewController
     func share()
     {
         guard let url = self.url, let presentController = self.presentController else {return}
-        if let location = AssetManager.shared.get(cache: url)
+        if let location = AssetManager.shared.get(cacheOf: url)
         {
             let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
             presentController.present(controller, animated: true, completion: nil)
@@ -267,7 +267,7 @@ class ImagePeekController: UIViewController
     func saveToAlbum()
     {
         guard let url = self.url else {return}
-        if let location = AssetManager.shared.get(cache: url)
+        if let location = AssetManager.shared.get(cacheOf: url)
         {
             if let data = try? Data(contentsOf: location), let image = UIImage(data: data)
             {

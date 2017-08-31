@@ -29,7 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void)
     {
-        
+        if identifier == AssetManager.identifier
+        {
+            AssetManager.shared.externalCompletion = completionHandler
+        }
+        else
+        {
+            completionHandler()
+        }
     }
     
     func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool

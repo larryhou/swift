@@ -75,7 +75,7 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
             cell.size.text = String(format: "%.3fM", size / 1024 / 1024)
             
             cell.thumb.image = nil
-            if let thumb = AssetManager.shared.get(cache: data.icon)
+            if let thumb = AssetManager.shared.get(cacheOf: data.icon)
             {
                 cell.thumb.image = try! UIImage(data: Data(contentsOf: thumb))
             }

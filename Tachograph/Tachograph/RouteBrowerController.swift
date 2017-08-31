@@ -131,7 +131,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
         if let list = tableView.indexPathsForRows(in: rect)
         {
             let data = videoAssets[list[0].row]
-            if let location = AssetManager.shared.get(cache: data.url)
+            if let location = AssetManager.shared.get(cacheOf: data.url)
             {
                 let controller = UIActivityViewController(activityItems: [location], applicationActivities:nil)
                 present(controller, animated: true, completion: nil)
@@ -211,7 +211,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
             cell.ib_progress.progress = 0.0
             cell.ib_id.text = data.id
             cell.data = data
-            if let url = AssetManager.shared.get(cache: data.icon)
+            if let url = AssetManager.shared.get(cacheOf: data.icon)
             {
                 cell.ib_image.image = try! UIImage(data: Data(contentsOf: url))
             }
@@ -224,7 +224,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
                 })
             }
             
-            cell.ib_share.isHidden = !AssetManager.shared.has(cache: data.url)
+            cell.ib_share.isHidden = !AssetManager.shared.has(cacheOf: data.url)
             cell.ib_download.isHidden = !cell.ib_share.isHidden
             return cell
         }

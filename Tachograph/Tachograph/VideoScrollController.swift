@@ -79,7 +79,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     func share()
     {
         guard let url = self.url else {return}
-        if let location = AssetManager.shared.get(cache: url)
+        if let location = AssetManager.shared.get(cacheOf: url)
         {
             let controller = UIActivityViewController(activityItems: [location], applicationActivities: nil)
             present(controller, animated: true, completion: nil)

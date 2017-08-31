@@ -147,7 +147,7 @@ class ImageBrowserController:UICollectionViewController,UIViewControllerPreviewi
         let data = takenImages[indexPath.row]
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCell
         {
-            if let url = AssetManager.shared.get(cache: data.icon)
+            if let url = AssetManager.shared.get(cacheOf: data.icon)
             {
                 cell.ib_image.image = try! UIImage(data: Data(contentsOf: url))
             }

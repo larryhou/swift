@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AssetManager:NSObject, URLSessionDownloadDelegate
+class AssetManager:NSObject
 {
     class AssetProgression:Codable
     {
@@ -23,6 +23,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             self.bytesWritten = 0
         } 
     }
+    static let identifier:String = "assets.download"
     
     static private(set) var shared:AssetManager = AssetManager()
     typealias LoadCompleteHandler = (String, Data)->Void
@@ -32,6 +33,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     private var handlers:[String:(LoadCompleteHandler?, LoadProgressHandler?)] = [:]
     private var tasks:[String:URLSessionDownloadTask] = [:]
     
+    var externalCompletion:(()->Void)?
     var session:URLSession!
     
     private func locate(append:String? = nil)->URL
@@ -44,80 +46,30 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         return location
     }
     
-    //MARK: session delegate
-    @available(iOS 7.0, *)
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
-    {
-        if let url = downloadTask.originalRequest?.url
-        {
-            let name:String = get(name: url.absoluteString)
-            defer
-            {
-                clean(name: name)
-            }
-            
-            if let data = try? Data(contentsOf: location)
-            {
-                handlers[name]?.0?(name, data)
-                
-                let destination = locate(append: name)
-                try? data.write(to: destination)
-            }
-        }
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64)
-    {
-        if let url = downloadTask.originalRequest?.url
-        {
-            let name:String = get(name: url.absoluteString)
-            if let item = progress[name]
-            {
-                item.bytesWritten = fileOffset
-                item.bytesExpectedTotal = expectedTotalBytes
-                handlers[name]?.1?(name, get(progress: item))
-            }
-        }
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
-    {
-        if let url = downloadTask.originalRequest?.url
-        {
-            let name:String = get(name: url.absoluteString)
-            if let item = progress[name]
-            {
-                item.bytesWritten = totalBytesWritten
-                item.bytesExpectedTotal = totalBytesExpectedToWrite
-                handlers[name]?.1?(name, get(progress: item))
-            }
-        }
-    }
-    
     //MARK: manager
-    func get(progress name:String)->Float
+    func get(progressOf name:String)->Float
     {
         if let item = progress[name]
         {
-            return get(progress:item)
+            return get(progressOf:item)
         }
         
         return Float.nan
     }
     
-    private func get(progress item:AssetProgression)->Float
+    private func get(progressOf item:AssetProgression)->Float
     {
         return (Float)(Double(item.bytesWritten) / Double(item.bytesExpectedTotal))
     }
     
-    private func get(name url:String)->String
+    internal func get(nameOf url:String)->String
     {
         return String(url.split(separator: "/").last!)
     }
     
-    func get(cache url:String)->URL?
+    func get(cacheOf url:String)->URL?
     {
-        let location = locate(append: get(name: url))
+        let location = locate(append: get(nameOf: url))
         if FileManager.default.fileExists(atPath: location.path)
         {
             return location
@@ -125,19 +77,19 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         return nil
     }
     
-    func has(cache url:String)->Bool
+    func has(cacheOf url:String)->Bool
     {
-        let location = locate(append: get(name: url))
+        let location = locate(append: get(nameOf: url))
         return FileManager.default.fileExists(atPath: location.path)
     }
     
-    private func writeResumeData(_ data:Data, name:String)
+    internal func writeResumeData(_ data:Data, name:String)
     {
         let location = locate(append: "\(name).dl")
         try? data.write(to: location)
     }
     
-    private func readResumeData(name:String)->Data?
+    internal func readResumeData(name:String)->Data?
     {
         let location = locate(append: "\(name).dl")
         let data = try? Data(contentsOf: location)
@@ -147,7 +99,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func cancel(url:String, resumable:Bool = true)
     {
-        let name:String = get(name: url)
+        let name:String = get(nameOf: url)
         if let task = tasks[name]
         {
             if resumable
@@ -221,7 +173,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func resume(url:String)
     {
-        let name:String = get(name: url)
+        let name:String = get(nameOf: url)
         if let task = tasks[name]
         {
             task.resume()
@@ -230,7 +182,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func suspend(url:String)
     {
-        let name:String = get(name: url)
+        let name:String = get(nameOf: url)
         if let task = tasks[name]
         {
             task.suspend()
@@ -239,7 +191,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     
     func has(task url:String)->Bool
     {
-        let name = get(name: url)
+        let name = get(nameOf: url)
         return tasks[name] != nil
     }
     
@@ -247,12 +199,13 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
     {
         if self.session == nil
         {
-            self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
+            self.session = URLSession(configuration: .background(withIdentifier: AssetManager.identifier),
+                                      delegate: self, delegateQueue: .main)
         }
         
         if let url = URL(string: url)
         {
-            let name = get(name: url.absoluteString)
+            let name = get(nameOf: url.absoluteString)
             handlers[name] = (completeHandler, progressHandler)
             if let task = tasks[name]
             {
@@ -269,6 +222,7 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
             let task:URLSessionDownloadTask
             if let data = readResumeData(name: name)
             {
+                print("downloadTask(withResumeData:)", name, data.count)
                 task = session.downloadTask(withResumeData: data)
             }
             else
@@ -280,3 +234,84 @@ class AssetManager:NSObject, URLSessionDownloadDelegate
         }
     }
 }
+
+extension AssetManager:URLSessionDownloadDelegate
+{
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
+    {
+        if let url = downloadTask.originalRequest?.url
+        {
+            let name:String = get(nameOf: url.absoluteString)
+            defer
+            {
+                clean(name: name)
+            }
+            
+            if let data = try? Data(contentsOf: location)
+            {
+                handlers[name]?.0?(name, data)
+                
+                let destination = locate(append: name)
+                try? data.write(to: destination)
+            }
+        }
+        
+        if externalCompletion != nil
+        {
+            externalCompletion?()
+            externalCompletion = nil
+        }
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64)
+    {
+        if let url = downloadTask.originalRequest?.url
+        {
+            let name:String = get(nameOf: url.absoluteString)
+            if let item = progress[name]
+            {
+                item.bytesWritten = fileOffset
+                item.bytesExpectedTotal = expectedTotalBytes
+                handlers[name]?.1?(name, get(progressOf: item))
+            }
+        }
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
+    {
+        if let url = downloadTask.originalRequest?.url
+        {
+            let name:String = get(nameOf: url.absoluteString)
+            if let item = progress[name]
+            {
+                item.bytesWritten = totalBytesWritten
+                item.bytesExpectedTotal = totalBytesExpectedToWrite
+                handlers[name]?.1?(name, get(progressOf: item))
+            }
+        }
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)
+    {
+        if let task = task as? URLSessionDownloadTask, let url = task.originalRequest?.url
+        {
+            let name = get(nameOf: url.path)
+            task.cancel(byProducingResumeData:
+            {
+                if let data = $0
+                {
+                    print("cancel(byProducingResumeData:)", name, data.count)
+                    self.writeResumeData(data, name: name)
+                }
+            })
+        }
+        
+        if externalCompletion != nil
+        {
+            externalCompletion?()
+            externalCompletion = nil
+        }
+    }
+}
+
+
