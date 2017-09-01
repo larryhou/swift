@@ -14,6 +14,19 @@ class RotableNavigationController:UINavigationController
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .all}
 }
 
+class AlertManager
+{
+    class func show(title:String? = nil, message:String? = nil)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
+        if let keyWindow = UIApplication.shared.keyWindow, let rootController = keyWindow.rootViewController
+        {
+            rootController.present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
 class ViewController: UITabBarController
 {
     override func viewDidLoad()

@@ -17,7 +17,7 @@ class NativeAssetCell:UITableViewCell
     @IBOutlet weak var size:UILabel!
 }
 
-class NativeBrowserController: UITableViewController, UIViewControllerPreviewingDelegate
+class NativeBrowserController: UITableViewController, UIViewControllerPreviewingDelegate, AssetManagerDelegate
 {
     var isVideo = false
     var locations:[URL] = []
@@ -29,8 +29,22 @@ class NativeBrowserController: UITableViewController, UIViewControllerPreviewing
         self.registerForPreviewing(with: self, sourceView: view)
     }
     
+    func assetManager(_ manager: AssetManager, delete url: String)
+    {
+        for n in 0..<assets.count
+        {
+            if assets[n].url.contains(url)
+            {
+                assets.remove(at: n)
+                tableView.deleteRows(at: [IndexPath(row: n, section: 0)], with: .automatic)
+                break
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool)
     {
+        AssetManager.shared.delegate = self
         var assets:[CameraModel.CameraAsset] = []
         locations = AssetManager.shared.fetchAssets(suffix: isVideo ? "mp4" : "jpg")
         for url in locations

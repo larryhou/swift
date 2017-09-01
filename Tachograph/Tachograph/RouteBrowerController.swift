@@ -22,7 +22,7 @@ class AssetCell:UITableViewCell
     
     var data:CameraModel.CameraAsset?
     
-    func progress(name:String, value:Float)
+    func progressUpdate(name:String, value:Float)
     {
         if value < 1.0 || Float.nan == value
         {
@@ -55,7 +55,8 @@ class EventBrowserController:RouteBrowerController
     }
 }
 
-class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDataSource, CameraModelDelegate
+class RouteBrowerController:UIViewController,
+    UITableViewDelegate, UITableViewDataSource, CameraModelDelegate, AssetManagerDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var movieView: UIView!
@@ -80,6 +81,7 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
     {
         loadModel()
         CameraModel.shared.delegate = self
+        AssetManager.shared.delegate = self
     }
     
     func loadModel()
@@ -98,6 +100,19 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
         playController.entersFullScreenWhenPlaybackBegins = true
         playController.view.frame = CGRect(origin: CGPoint(), size: movieView.frame.size)
         movieView.addSubview(playController.view)
+    }
+    
+    func assetManager(_ manager: AssetManager, progress: Float, of name: String)
+    {
+        for cell in tableView.visibleCells
+        {
+            if let assetCell = cell as? AssetCell, let data = assetCell.data, data.name == name
+            {
+                let progress = AssetManager.shared.get(progressOf: name)
+                assetCell.progressUpdate(name: name, value: progress)
+                break
+            }
+        }
     }
     
     func model(update: CameraModel.CameraAsset, type: CameraModel.AssetType)
@@ -144,12 +159,8 @@ class RouteBrowerController:UIViewController, UITableViewDelegate, UITableViewDa
         let rect = sender.superview!.convert(sender.frame, to: tableView)
         if let list = tableView.indexPathsForRows(in: rect)
         {
-            let index = list[0]
-            if let cell = tableView.cellForRow(at: index) as? AssetCell
-            {
-                let data = videoAssets[index.row]
-                AssetManager.shared.load(url: data.url, completion: nil, progression: cell.progress(name:value:))
-            }
+            let data = videoAssets[list[0].row]
+            AssetManager.shared.load(url: data.url, completion: nil, progression: nil)
         }
     }
     

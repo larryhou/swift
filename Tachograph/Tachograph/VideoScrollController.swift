@@ -47,8 +47,19 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
         alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
+        alertController.addAction(UIAlertAction(title: "删除", style: .destructive, handler:{ _ in self.delete() }))
         alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func delete()
+    {
+        guard let url = self.url else {return}
+        dismiss(animated: true)
+        {
+            let success = AssetManager.shared.remove(url)
+            AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: url)
+        }
     }
     
     func saveToAlbum()
@@ -59,21 +70,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     
     @objc func video(_ videoPath:String, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
-        var message:String?
-        
-        let title:String
-        if error == nil
-        {
-            title = "视频保存成功"
-        }
-        else
-        {
-            title = "视频保存失败"
-            message = error.debugDescription
-        }
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "知道了", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+        AlertManager.show(title: error == nil ? "视频保存成功" : "视频保存失败", message: error?.debugDescription)
     }
     
     func share()

@@ -8,6 +8,12 @@
 
 import Foundation
 
+@objc protocol AssetManagerDelegate
+{
+    @objc optional func assetManager(_ manager:AssetManager, delete url:String)
+    @objc optional func assetManager(_ manager:AssetManager, progress:Float, of name:String)
+}
+
 class AssetManager:NSObject
 {
     class AssetProgression:Codable
@@ -33,6 +39,7 @@ class AssetManager:NSObject
     private var handlers:[String:(LoadCompleteHandler?, LoadProgressHandler?)] = [:]
     private var tasks:[String:URLSessionDownloadTask] = [:]
     
+    var delegate:AssetManagerDelegate?
     var externalCompletion:(()->Void)?
     var session:URLSession!
     
@@ -144,6 +151,22 @@ class AssetManager:NSObject
             }
         }
         return []
+    }
+    
+    @discardableResult
+    func remove(_ url:String)->Bool
+    {
+        do
+        {
+            try FileManager.default.removeItem(atPath: url)
+            delegate?.assetManager?(self, delete: url)
+            return true
+        }
+        catch
+        {
+            print(error)
+            return false
+        }
     }
     
     func removeUserStorage(development:Bool = true)
@@ -267,12 +290,14 @@ extension AssetManager:URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = get(nameOf: url.absoluteString)
+            let name:String = get(nameOf: url.path)
             if let item = progress[name]
             {
                 item.bytesWritten = fileOffset
                 item.bytesExpectedTotal = expectedTotalBytes
-                handlers[name]?.1?(name, get(progressOf: item))
+                let progress = get(progressOf: item)
+                handlers[name]?.1?(name, progress)
+                delegate?.assetManager?(self, progress: progress, of: name)
             }
         }
     }
@@ -281,12 +306,14 @@ extension AssetManager:URLSessionDownloadDelegate
     {
         if let url = downloadTask.originalRequest?.url
         {
-            let name:String = get(nameOf: url.absoluteString)
+            let name:String = get(nameOf: url.path)
             if let item = progress[name]
             {
                 item.bytesWritten = totalBytesWritten
                 item.bytesExpectedTotal = totalBytesExpectedToWrite
-                handlers[name]?.1?(name, get(progressOf: item))
+                let progress = get(progressOf: item)
+                handlers[name]?.1?(name, progress)
+                delegate?.assetManager?(self, progress: progress, of: name)
             }
         }
     }

@@ -135,6 +135,7 @@ class ImagePreviewController:ImagePeekController, PageProtocol
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "保存到相册", style: .default, handler:{ _ in self.saveToAlbum() }))
         alertController.addAction(UIAlertAction(title: "分享", style: .default, handler:{ _ in self.share() }))
+        alertController.addAction(UIAlertAction(title: "删除", style: .destructive, handler:{ _ in self.delete() }))
         alertController.addAction(UIAlertAction.init(title: "取消", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
@@ -254,6 +255,19 @@ class ImagePeekController: UIViewController
         }
     }
     
+    func delete()
+    {
+        guard let url = self.url else {return}
+        if let location = AssetManager.shared.get(cacheOf: url)
+        {
+            dismiss(animated: true)
+            {
+                let success = AssetManager.shared.remove(location.path)
+                AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: location.path)
+            }
+        }
+    }
+    
     func share()
     {
         guard let url = self.url, let presentController = self.presentController else {return}
@@ -278,22 +292,6 @@ class ImagePeekController: UIViewController
     
     @objc func image(_ image:UIImage, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
-        guard let presentController = self.presentController else {return}
-        
-        var message:String?
-        
-        let title:String
-        if error == nil
-        {
-            title = "图片保存成功"
-        }
-        else
-        {
-            title = "图片保存失败"
-            message = error.debugDescription
-        }
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "知道了", style: .cancel, handler: nil))
-        presentController.present(alert, animated: true, completion: nil)
+        AlertManager.show(title: error == nil ? "图片保存成功" : "图片保存失败", message: error?.debugDescription)
     }
 }
