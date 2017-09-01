@@ -80,7 +80,7 @@ enum RemoteCommand:Int
     case captureVideo = 0x201/*513*/, captureImage = 0x301/*769*/, notification = 7
 }
 
-protocol CameraModelDelegate:NSObjectProtocol
+protocol CameraModelDelegate
 {
     func model(assets:[CameraModel.CameraAsset], type:CameraModel.AssetType)
     func model(update:CameraModel.CameraAsset, type:CameraModel.AssetType)
@@ -160,14 +160,18 @@ class CameraModel:TCPSessionDelegate
         #endif
     }
     
+    var networkObserver:((Bool)->Void)?
+    
     @objc func heartbeat()
     {
         if _session.connected
         {
             query(type: "app_status")
+            networkObserver?(true)
         }
         else
         {
+            networkObserver?(false)
             if _session.state != .connecting
             {
                 _session.clear()

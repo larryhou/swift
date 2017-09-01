@@ -50,6 +50,19 @@ class ViewController: UITabBarController
         UIGraphicsEndImageContext()
         
         UINavigationBar.appearance().setBackgroundImage(image, for:.default)
+        CameraModel.shared.networkObserver = networkObserver(_:)
+    }
+    
+    lazy var errorColor:UIColor = { UIColor(red: 1.000, green: 0.894, blue: 0.894, alpha: 1.0) }()
+    
+    var connected:Bool = true
+    func networkObserver(_ connected:Bool)
+    {
+        if self.connected != connected
+        {
+            self.tabBar.barTintColor = connected ? nil : self.errorColor
+            self.connected = connected
+        }
     }
     
     override var prefersStatusBarHidden:Bool { return true }
