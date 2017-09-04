@@ -16,13 +16,23 @@ class RotableNavigationController:UINavigationController
 
 class AlertManager
 {
-    class func show(title:String? = nil, message:String? = nil)
+    class func show(title:String? = nil, message:String? = nil, sender:UIViewController? = nil)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
-        if let keyWindow = UIApplication.shared.keyWindow, let rootController = keyWindow.rootViewController
+        if let keyWindow = UIApplication.shared.keyWindow
         {
-            rootController.present(alert, animated: true, completion: nil)
+            let controller:UIViewController?
+            if sender != nil
+            {
+                controller = sender
+            }
+            else
+            {
+                controller = keyWindow.rootViewController
+            }
+            
+            controller?.present(alert, animated: true, completion: nil)
         }
     }
 }

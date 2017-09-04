@@ -263,7 +263,7 @@ class ImagePeekController: UIViewController
             dismiss(animated: true)
             {
                 let success = AssetManager.shared.remove(location.path)
-                AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: location.path)
+                AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: location.path, sender: self)
             }
         }
     }
@@ -292,6 +292,6 @@ class ImagePeekController: UIViewController
     
     @objc func image(_ image:UIImage, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
-        AlertManager.show(title: error == nil ? "图片保存成功" : "图片保存失败", message: error?.debugDescription)
+        AlertManager.show(title: error == nil ? "图片保存成功" : "图片保存失败", message: error?.debugDescription, sender:self)
     }
 }

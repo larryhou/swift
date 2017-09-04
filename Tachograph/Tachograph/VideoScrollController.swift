@@ -58,7 +58,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
         dismiss(animated: true)
         {
             let success = AssetManager.shared.remove(url)
-            AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: url)
+            AlertManager.show(title: success ? "文件删除成功" : "文件删除失败", message: url, sender: self)
         }
     }
     
@@ -70,7 +70,7 @@ class VideoPlayController: AVPlayerViewController, PageProtocol
     
     @objc func video(_ videoPath:String, didFinishSavingWithError error:NSError?, contextInfo context:Any?)
     {
-        AlertManager.show(title: error == nil ? "视频保存成功" : "视频保存失败", message: error?.debugDescription)
+        AlertManager.show(title: error == nil ? "视频保存成功" : "视频保存失败", message: error?.debugDescription, sender: self)
     }
     
     func share()
