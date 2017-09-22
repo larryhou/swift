@@ -26,9 +26,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C3e-jE-6O9">
-                                <rect key="frame" x="3" y="242" width="69" height="23"/>
+                                <rect key="frame" x="3" y="245" width="65" height="20"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="#FF8899" id="DcT-7r-qQI">
-                                    <font key="font" size="15" name="SFMono-Regular"/>
+                                    <font key="font" size="14" name="SFMono-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
