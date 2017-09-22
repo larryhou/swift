@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ColorCell" customModule="ColorPicker" customModuleProvider="target">
+            <connections>
+                <outlet property="background" destination="3Rl-Md-v9t" id="c5a-7n-nZk"/>
+                <outlet property="label" destination="C3e-jE-6O9" id="ZPo-0r-njl"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="3Rl-Md-v9t">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <view key="contentView" id="gFf-Ud-Qh6">
+                        <rect key="frame" x="1" y="1" width="478" height="270"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C3e-jE-6O9">
+                                <rect key="frame" x="3" y="242" width="69" height="23"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="#FF8899" id="DcT-7r-qQI">
+                                    <font key="font" size="15" name="SFMono-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="C3e-jE-6O9" firstAttribute="top" secondItem="gFf-Ud-Qh6" secondAttribute="top" constant="5" id="RW7-3m-0QR"/>
+                            <constraint firstItem="C3e-jE-6O9" firstAttribute="leading" secondItem="gFf-Ud-Qh6" secondAttribute="leading" constant="5" id="bcO-uI-aKe"/>
+                        </constraints>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="fillColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="3Rl-Md-v9t" secondAttribute="trailing" id="9KV-gp-303"/>
+                <constraint firstItem="3Rl-Md-v9t" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="ScB-xr-EXj"/>
+                <constraint firstItem="3Rl-Md-v9t" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="WX8-hI-YcM"/>
+                <constraint firstAttribute="bottom" secondItem="3Rl-Md-v9t" secondAttribute="bottom" id="YIM-b2-O6b"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>
