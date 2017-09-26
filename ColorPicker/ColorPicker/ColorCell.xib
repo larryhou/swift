@@ -8,8 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ColorCell" customModule="ColorPicker" customModuleProvider="target">
             <connections>
-                <outlet property="background" destination="3Rl-Md-v9t" id="c5a-7n-nZk"/>
-                <outlet property="label" destination="C3e-jE-6O9" id="ZPo-0r-njl"/>
+                <outlet property="background" destination="FGW-U0-Ytd" id="Xdv-C7-w86"/>
+                <outlet property="label" destination="R89-nT-Znc" id="VFb-vJ-7QR"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -19,35 +19,54 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="3Rl-Md-v9t">
+                <box boxType="custom" cornerRadius="5" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="FGW-U0-Ytd">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
-                    <view key="contentView" id="gFf-Ud-Qh6">
+                    <view key="contentView" id="uVT-9M-y0E">
                         <rect key="frame" x="1" y="1" width="478" height="270"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C3e-jE-6O9">
-                                <rect key="frame" x="3" y="245" width="65" height="20"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="#FF8899" id="DcT-7r-qQI">
-                                    <font key="font" size="14" name="SFMono-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <box boxType="custom" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="led-bI-KLK">
+                                <rect key="frame" x="0.0" y="0.0" width="478" height="25"/>
+                                <view key="contentView" id="s0A-5a-LGV">
+                                    <rect key="frame" x="1" y="1" width="476" height="23"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R89-nT-Znc">
+                                            <rect key="frame" x="204" y="2" width="69" height="20"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="#FFCC99" id="gFi-ni-Caf">
+                                                <font key="font" size="14" name="SFMono-Regular"/>
+                                                <color key="textColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="R89-nT-Znc" firstAttribute="centerY" secondItem="s0A-5a-LGV" secondAttribute="centerY" id="OQp-42-mgu"/>
+                                        <constraint firstItem="R89-nT-Znc" firstAttribute="centerX" secondItem="s0A-5a-LGV" secondAttribute="centerX" id="c10-d9-EaM"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="gsp-na-HP9"/>
+                                </constraints>
+                                <color key="borderColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="fillColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </box>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="C3e-jE-6O9" firstAttribute="top" secondItem="gFf-Ud-Qh6" secondAttribute="top" constant="5" id="RW7-3m-0QR"/>
-                            <constraint firstItem="C3e-jE-6O9" firstAttribute="leading" secondItem="gFf-Ud-Qh6" secondAttribute="leading" constant="5" id="bcO-uI-aKe"/>
+                            <constraint firstAttribute="trailing" secondItem="led-bI-KLK" secondAttribute="trailing" id="Fw0-fU-xbL"/>
+                            <constraint firstAttribute="bottom" secondItem="led-bI-KLK" secondAttribute="bottom" id="TP1-BZ-DNq"/>
+                            <constraint firstItem="led-bI-KLK" firstAttribute="leading" secondItem="uVT-9M-y0E" secondAttribute="leading" id="uo4-zS-NXa"/>
                         </constraints>
                     </view>
-                    <color key="borderColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="borderColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="fillColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="3Rl-Md-v9t" secondAttribute="trailing" id="9KV-gp-303"/>
-                <constraint firstItem="3Rl-Md-v9t" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="ScB-xr-EXj"/>
-                <constraint firstItem="3Rl-Md-v9t" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="WX8-hI-YcM"/>
-                <constraint firstAttribute="bottom" secondItem="3Rl-Md-v9t" secondAttribute="bottom" id="YIM-b2-O6b"/>
+                <constraint firstAttribute="trailing" secondItem="FGW-U0-Ytd" secondAttribute="trailing" id="3y6-tY-nkL"/>
+                <constraint firstAttribute="bottom" secondItem="FGW-U0-Ytd" secondAttribute="bottom" id="YK6-6u-2jK"/>
+                <constraint firstItem="FGW-U0-Ytd" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="vdl-SJ-QyX"/>
+                <constraint firstItem="FGW-U0-Ytd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="xBl-bX-IdX"/>
             </constraints>
         </customView>
     </objects>

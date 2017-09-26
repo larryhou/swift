@@ -52,17 +52,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Core Data Saving and Undo support
 
-    @IBAction func saveAction(_ sender: AnyObject?) {
+    @IBAction func saveAction(_ sender: AnyObject?)
+    {
         // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
         let context = persistentContainer.viewContext
 
-        if !context.commitEditing() {
+        if !context.commitEditing()
+        {
             NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
         }
-        if context.hasChanges {
-            do {
+        if context.hasChanges
+        {
+            do
+            {
                 try context.save()
-            } catch {
+            }
+            catch
+            {
                 // Customize this code block to include application-specific recovery steps.
                 let nserror = error as NSError
                 NSApplication.shared.presentError(nserror)

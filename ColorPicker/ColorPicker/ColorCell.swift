@@ -23,9 +23,8 @@ class ColorCell: NSCollectionViewItem
         didSet
         {
             background.fillColor = NSColor(cgColor: color)!
+            background.borderColor = NSColor(cgColor: color)!
             
-            let opposite = color.opposite
-            label.textColor = NSColor(cgColor: opposite)
             if let items = color.components
             {
                 label.stringValue = String(format: "#%02X%02X%02X",
