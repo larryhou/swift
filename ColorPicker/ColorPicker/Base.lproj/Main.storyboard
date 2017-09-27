@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="box content view" minToolsVersion="7.0"/>
@@ -74,93 +75,60 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Edit" id="5QF-Oa-p0T">
+                            <menuItem title="Themes" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Edit" id="W48-6f-4Dl">
+                                <menu key="submenu" title="Themes" id="Oab-lK-3Zy">
                                     <items>
-                                        <menuItem title="Undo" keyEquivalent="z" id="dRJ-4n-Yzg">
+                                        <menuItem title="Tranditional " tag="1" keyEquivalent="t" id="vF5-Zu-xmm">
                                             <connections>
-                                                <action selector="undo:" target="Ady-hI-5gd" id="M6e-cu-g7V"/>
+                                                <action selector="setTheme:" target="Ady-hI-5gd" id="blk-MI-mOC"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Redo" keyEquivalent="Z" id="6dh-zS-Vam">
+                                        <menuItem title="Mordern RGB" keyEquivalent="m" id="rKy-tJ-Np0">
                                             <connections>
-                                                <action selector="redo:" target="Ady-hI-5gd" id="oIA-Rs-6OD"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="WRV-NI-Exz"/>
-                                        <menuItem title="Cut" keyEquivalent="x" id="uRl-iY-unG">
-                                            <connections>
-                                                <action selector="cut:" target="Ady-hI-5gd" id="YJe-68-I9s"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Copy" keyEquivalent="c" id="x3v-GG-iWU">
-                                            <connections>
-                                                <action selector="copy:" target="Ady-hI-5gd" id="G1f-GL-Joy"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Paste" keyEquivalent="v" id="gVA-U4-sdL">
-                                            <connections>
-                                                <action selector="paste:" target="Ady-hI-5gd" id="UvS-8e-Qdg"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Paste and Match Style" keyEquivalent="V" id="WeT-3V-zwk">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="pasteAsPlainText:" target="Ady-hI-5gd" id="cEh-KX-wJQ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Delete" id="pa3-QI-u2k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="delete:" target="Ady-hI-5gd" id="0Mk-Ml-PaM"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
-                                            <connections>
-                                                <action selector="selectAll:" target="Ady-hI-5gd" id="VNm-Mi-diN"/>
+                                                <action selector="setTheme:" target="Ady-hI-5gd" id="67c-GN-CDJ"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Themes" id="H8h-7b-M4v">
+                            <menuItem title="Collections" id="H8h-7b-M4v">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Themes" id="X8O-fe-oYX">
+                                <menu key="submenu" title="Collections" id="X8O-fe-oYX">
                                     <items>
                                         <menuItem title="Complementary" tag="2" keyEquivalent="2" id="mEN-2l-eTV">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="GOx-W9-68u"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="GOx-W9-68u"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Triadic" tag="3" keyEquivalent="3" id="QLH-gJ-pGt">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="ztr-Zk-XTe"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="ztr-Zk-XTe"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Tetradic" tag="4" keyEquivalent="4" id="b95-1g-J0D">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="oW2-Ts-KKn"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="oW2-Ts-KKn"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Neutral 30°" tag="5" keyEquivalent="5" id="DWG-Im-n1Z">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="cNq-xY-yrW"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="cNq-xY-yrW"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Neutral 15°" tag="6" keyEquivalent="6" id="Mmc-Df-da6">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="Fu4-zY-pve"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="Fu4-zY-pve"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Neutral 10°" tag="7" keyEquivalent="7" id="ExF-za-X6J">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="WAA-8W-A8W"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="WAA-8W-A8W"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Neutral  5°" tag="8" keyEquivalent="8" id="1Iu-E2-ZBp">
+                                        <menuItem title="Neutral 5°" tag="8" keyEquivalent="8" id="1Iu-E2-ZBp">
                                             <connections>
-                                                <action selector="setColorTheme:" target="Ady-hI-5gd" id="pb1-0n-3LF"/>
+                                                <action selector="setCollection:" target="Ady-hI-5gd" id="pb1-0n-3LF"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -219,7 +187,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="ColorPicker" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="COLOR PICKER" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA">
+                    <window key="window" title="COLOR PICKER" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="960" height="540"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -322,7 +290,7 @@
                     </view>
                     <connections>
                         <outlet property="barView" destination="Oho-ti-Z2M" id="tpP-4k-HXP"/>
-                        <outlet property="colorCollection" destination="JgC-aE-1Kc" id="44S-E4-b3Z"/>
+                        <outlet property="colorCollectionView" destination="JgC-aE-1Kc" id="44S-E4-b3Z"/>
                         <outlet property="platterView" destination="4wi-D0-6CF" id="B33-u7-BuA"/>
                     </connections>
                 </viewController>

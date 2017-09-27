@@ -8,16 +8,21 @@
 
 import Cocoa
 
+enum ColorCollection:Int
+{
+    case complementary = 2, triadic, tetradic, analogous, neutral_15, neutral_10, neutral_05
+}
+
 enum ColorTheme:Int
 {
-    case complementary = 2, triadic, tetradic, analogous, neutral, neutral_36, neutral_72
+    case rgb = 0, traditional
 }
 
 class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
 {
     @IBOutlet weak var platterView: ColorPlatterView!
     @IBOutlet weak var barView: ColorBarView!
-    @IBOutlet weak var colorCollection: NSCollectionView!
+    @IBOutlet weak var colorCollectionView: NSCollectionView!
     
     let id = NSUserInterfaceItemIdentifier("ColorCell")
     
@@ -25,24 +30,52 @@ class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
     let spacing:CGFloat = 5, column:CGFloat = 2
     
     var assets:[CGColor] = []
-    var theme:ColorTheme = .neutral
+    var collection:ColorCollection = .neutral_15
+    var theme:ColorTheme = .rgb
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        colorCollection.register(ColorCell.self, forItemWithIdentifier: id)
+        colorCollectionView.register(ColorCell.self, forItemWithIdentifier: id)
         
-        barView.position = CGPoint(x: 5, y: 0)
-        colorPicker(barView, eventWith: NSColor.red.cgColor)
-        
-        reload()
+        barView.restoreOrigin()
+        colorPicker(barView, eventWith: barView.color(at: barView.position))
+        NSEvent.addLocalMonitorForEvents(matching: .keyUp)
+        {
+            self.keyUp(with: $0)
+            return $0
+        }
+    }
+    
+    override func keyUp(with event: NSEvent)
+    {
+        if event.keyCode == 123
+        {
+            let value = collection.rawValue - 1
+            collection = ColorCollection(rawValue: value < 2 ? 8 : value)!
+            synchronize()
+        }
+        else if event.keyCode == 124
+        {
+            let value = collection.rawValue + 1
+            collection = ColorCollection(rawValue: value > 8 ? 2 : value)!
+            synchronize()
+        }
     }
     
     //MARK: memu
-    @IBAction func setColorTheme(_ sender:NSMenuItem)
+    @IBAction func setTheme(_ sender:NSMenuItem)
     {
         theme = ColorTheme(rawValue: sender.tag)!
+        
+        barView.theme = theme
+        colorPicker(barView, eventWith: barView.color(at: barView.position))
+    }
+    
+    @IBAction func setCollection(_ sender:NSMenuItem)
+    {
+        collection = ColorCollection(rawValue: sender.tag)!
         synchronize()
     }
     
@@ -63,9 +96,9 @@ class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
     
     func reload()
     {
-        size.width = (colorCollection.frame.width - (column - 1) * spacing) / column
+        size.width = (colorCollectionView.frame.width - (column - 1) * spacing) / column
         size.height = size.width / 16 * 9
-        colorCollection.reloadData()
+        colorCollectionView.reloadData()
     }
     
     func windowDidResize(_ notification: Notification)
@@ -86,25 +119,25 @@ class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
     func synchronize()
     {
         assets.removeAll()
-        switch theme
+        switch collection
         {
             case .complementary:
-                assets = barView.seekComplementoryColors()
+                assets = barView.getComplementoryColors()
             case .triadic:
-                assets = barView.seekTriadicColors()
+                assets = barView.getTriadicColors()
             case .tetradic:
-                assets = barView.seekTetradicColors()
+                assets = barView.getTetradicColors()
             case .analogous:
-                assets = barView.seekAnalogousColors()
-            case .neutral:
-                assets = barView.seekNeutralColors()
-            case .neutral_36:
-                assets = barView.seekNeutralColors(density: 36)
-            case .neutral_72:
-                assets = barView.seekNeutralColors(density: 72)
+                assets = barView.getAdjacentColors(angle: 30)
+            case .neutral_15:
+                assets = barView.getAdjacentColors(angle: 15)
+            case .neutral_10:
+                assets = barView.getAdjacentColors(angle: 10)
+            case .neutral_05:
+                assets = barView.getAdjacentColors(angle: 5)
         }
         
-        if theme == .complementary
+        if collection == .complementary
         {
             assets = [platterView.blendColor(assets[0])]
             assets.append(assets[0].opposite)
