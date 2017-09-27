@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-PNG_IMAGE_PATH=${1}
+# PNG_IMAGE_PATH=${1}
+# convert ${PNG_IMAGE_PATH} -trim AppIcon.png
 
-convert ${PNG_IMAGE_PATH} -trim AppIcon.png
 num=512
 while [ ${num} -ge 16 ]
 do

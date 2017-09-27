@@ -42,7 +42,7 @@
 		6BA9DD941F74B95B00D9139D /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		6BA9DD961F753DB800D9139D /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
 		6BA9DD971F753DB800D9139D /* ColorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCell.xib; sourceTree = "<group>"; };
-		6BAB18B01F73CBF800208FF6 /* ColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BAB18B01F73CBF800208FF6 /* Pickerr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pickerr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAB18B31F73CBF800208FF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BAB18B51F73CBF800208FF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6BAB18B81F73CBF800208FF6 /* ColorPicker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorPicker.xcdatamodel; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		6BAB18B11F73CBF800208FF6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6BAB18B01F73CBF800208FF6 /* ColorPicker.app */,
+				6BAB18B01F73CBF800208FF6 /* Pickerr.app */,
 				6BAB18C51F73CBF800208FF6 /* ColorPickerTests.xctest */,
 				6BAB18D01F73CBF800208FF6 /* ColorPickerUITests.xctest */,
 			);
@@ -142,9 +142,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6BAB18AF1F73CBF800208FF6 /* ColorPicker */ = {
+		6BAB18AF1F73CBF800208FF6 /* Pickerr */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6BAB18D91F73CBF800208FF6 /* Build configuration list for PBXNativeTarget "ColorPicker" */;
+			buildConfigurationList = 6BAB18D91F73CBF800208FF6 /* Build configuration list for PBXNativeTarget "Pickerr" */;
 			buildPhases = (
 				6BAB18AC1F73CBF800208FF6 /* Sources */,
 				6BAB18AD1F73CBF800208FF6 /* Frameworks */,
@@ -154,9 +154,9 @@
 			);
 			dependencies = (
 			);
-			name = ColorPicker;
+			name = Pickerr;
 			productName = ColorPicker;
-			productReference = 6BAB18B01F73CBF800208FF6 /* ColorPicker.app */;
+			productReference = 6BAB18B01F73CBF800208FF6 /* Pickerr.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6BAB18C41F73CBF800208FF6 /* ColorPickerTests */ = {
@@ -234,7 +234,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6BAB18AF1F73CBF800208FF6 /* ColorPicker */,
+				6BAB18AF1F73CBF800208FF6 /* Pickerr */,
 				6BAB18C41F73CBF800208FF6 /* ColorPickerTests */,
 				6BAB18CF1F73CBF800208FF6 /* ColorPickerUITests */,
 			);
@@ -303,12 +303,12 @@
 /* Begin PBXTargetDependency section */
 		6BAB18C71F73CBF800208FF6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6BAB18AF1F73CBF800208FF6 /* ColorPicker */;
+			target = 6BAB18AF1F73CBF800208FF6 /* Pickerr */;
 			targetProxy = 6BAB18C61F73CBF800208FF6 /* PBXContainerItemProxy */;
 		};
 		6BAB18D21F73CBF800208FF6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6BAB18AF1F73CBF800208FF6 /* ColorPicker */;
+			target = 6BAB18AF1F73CBF800208FF6 /* Pickerr */;
 			targetProxy = 6BAB18D11F73CBF800208FF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -442,7 +442,7 @@
 				INFOPLIST_FILE = ColorPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.ColorPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.macapp.ColorPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -459,7 +459,7 @@
 				INFOPLIST_FILE = ColorPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.ColorPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.macapp.ColorPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -543,7 +543,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6BAB18D91F73CBF800208FF6 /* Build configuration list for PBXNativeTarget "ColorPicker" */ = {
+		6BAB18D91F73CBF800208FF6 /* Build configuration list for PBXNativeTarget "Pickerr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6BAB18DA1F73CBF800208FF6 /* Debug */,
