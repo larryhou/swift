@@ -17,7 +17,7 @@ extension CGColor
         {
             items[i] = 1 - items[i]
         }
-        return CGColor(colorSpace: colorSpace!, components: items)!
+        return CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: items)!
     }
 }
 

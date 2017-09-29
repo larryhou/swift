@@ -58,18 +58,49 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Themes" id="5QF-Oa-p0T">
+                            <menuItem title="Themes" id="fIf-nJ-Lx3">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Themes" id="Oab-lK-3Zy">
+                                <menu key="submenu" title="Themes" id="8eS-os-so6">
                                     <items>
+                                        <menuItem title="Mordern RGB" state="on" keyEquivalent="m" id="rKy-tJ-Np0">
+                                            <connections>
+                                                <action selector="setTheme:" target="Ady-hI-5gd" id="67c-GN-CDJ"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Tranditional " tag="1" keyEquivalent="t" id="vF5-Zu-xmm">
                                             <connections>
                                                 <action selector="setTheme:" target="Ady-hI-5gd" id="blk-MI-mOC"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Mordern RGB" keyEquivalent="m" id="rKy-tJ-Np0">
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Color Spaces" id="djZ-7W-8kX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Color Spaces" id="Dmu-FC-DkB">
+                                    <items>
+                                        <menuItem title="sRGB" state="on" tag="1" keyEquivalent="1" id="ELX-fZ-6ZQ">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
-                                                <action selector="setTheme:" target="Ady-hI-5gd" id="67c-GN-CDJ"/>
+                                                <action selector="setDisplayColorSpace:" target="Ady-hI-5gd" id="JQx-Qt-BCl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Generic RGB" tag="2" keyEquivalent="2" id="E0X-Wb-EPE">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="setDisplayColorSpace:" target="Ady-hI-5gd" id="dXb-cZ-G0D"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Device RGB" tag="3" keyEquivalent="3" id="KZG-nD-Tud">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="setDisplayColorSpace:" target="Ady-hI-5gd" id="UUE-wt-Pf6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Display P3" tag="4" keyEquivalent="4" id="tJB-Hb-LkG">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="setDisplayColorSpace:" target="Ady-hI-5gd" id="s1C-AX-NTO"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -160,7 +191,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ColorPicker" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Pickerr" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -169,7 +200,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="ColorPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="Pickerr" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="COLOR PICKER" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="960" height="540"/>
@@ -187,12 +218,12 @@
         <!--Delegate-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="ColorPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Pickerr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="960" height="540"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="4wi-D0-6CF" customClass="ColorPlatterView" customModule="ColorPicker" customModuleProvider="target">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="4wi-D0-6CF" customClass="ColorPlatterView" customModule="Pickerr" customModuleProvider="target">
                                 <rect key="frame" x="10" y="10" width="520" height="520"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="4wi-D0-6CF" secondAttribute="height" multiplier="1:1" id="4oT-V2-fWR"/>
@@ -201,7 +232,7 @@
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="8w7-Nb-hXJ"/>
                                 </connections>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Oho-ti-Z2M" customClass="ColorBarView" customModule="ColorPicker" customModuleProvider="target">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Oho-ti-Z2M" customClass="ColorBarView" customModule="Pickerr" customModuleProvider="target">
                                 <rect key="frame" x="535" y="10" width="44" height="520"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="R4k-mC-JdN"/>
@@ -278,6 +309,22 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menuItem title="Menu" id="6fZ-ov-ZrG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Menu" id="n5u-Tg-tMC">
+                        <items>
+                            <menuItem title="UIColor" id="pg0-9e-bah">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="CGColor" id="3To-G6-wg1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="CSS" id="3lQ-Xg-axx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
             </objects>
             <point key="canvasLocation" x="375" y="873"/>
         </scene>

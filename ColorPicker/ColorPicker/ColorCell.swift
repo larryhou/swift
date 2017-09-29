@@ -45,12 +45,12 @@ class ColorCell: NSCollectionViewItem
                                                Int(round(items[1] * 255)),
                                                Int(round(items[2] * 255)))
                 case .decimal:
-                    label.stringValue = String(format: "%03d %03d %03d",
+                    label.stringValue = String(format: "r:%03d g:%03d b:%03d",
                                                Int(round(items[0] * 255)),
                                                Int(round(items[1] * 255)),
                                                Int(round(items[2] * 255)))
                 case .float:
-                    label.stringValue = String(format: "%5.3f %5.3f %5.3f",items[0],items[1],items[2])
+                    label.stringValue = String(format: "r:%4.2f g:%4.2f b:%4.2f",items[0],items[1],items[2])
             }
         }
     }
@@ -59,15 +59,17 @@ class ColorCell: NSCollectionViewItem
     {
         didSet
         {
-            let newColor = NSColor(cgColor: color)!
-            background.fillColor = newColor
-            background.borderColor = newColor
+            let optColor = NSColor(cgColor: color)!.usingColorSpace(sharedColorSpace)!
+            background.borderColor = optColor
+            background.fillColor = optColor
+            self.color = optColor.cgColor
+            
             style = .hex
             
-            if let items = color.components
+            if let items = optColor.cgColor.components
             {
                 let components = items.map({$0 * 0.75})
-                label.textColor = NSColor(colorSpace: newColor.colorSpace, components: components, count:components.count)
+                label.textColor = NSColor(colorSpace: optColor.colorSpace, components: components, count:components.count)
             }
         }
     }

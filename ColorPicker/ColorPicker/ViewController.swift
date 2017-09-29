@@ -18,6 +18,13 @@ enum ColorTheme:Int
     case rgb = 0, traditional
 }
 
+enum ColorSpaceType:Int
+{
+    case sRGB = 1, genericRGB, deviceRGB, displayP3
+}
+
+var sharedColorSpace:NSColorSpace = .sRGB
+
 class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
 {
     @IBOutlet weak var platterView: ColorPlatterView!
@@ -67,6 +74,14 @@ class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
     //MARK: memu
     @IBAction func setTheme(_ sender:NSMenuItem)
     {
+        if let parent = sender.parent?.submenu
+        {
+            for item in parent.items
+            {
+                item.state = item == sender ? .on : .off
+            }
+        }
+        
         theme = ColorTheme(rawValue: sender.tag)!
         
         barView.theme = theme
@@ -77,6 +92,28 @@ class ViewController: NSViewController, NSWindowDelegate, ColorPickerDelegate
     {
         collection = ColorCollection(rawValue: sender.tag)!
         synchronize()
+    }
+    
+    @IBAction func setDisplayColorSpace(_ sender:NSMenuItem)
+    {
+        let type = ColorSpaceType(rawValue: sender.tag)!
+        switch type
+        {
+            case .sRGB: sharedColorSpace = .sRGB
+            case .genericRGB: sharedColorSpace = .genericRGB
+            case .deviceRGB: sharedColorSpace = .deviceRGB
+            case .displayP3: sharedColorSpace = .displayP3
+        }
+        
+        if let parent = sender.parent?.submenu
+        {
+            for item in parent.items
+            {
+                item.state = item == sender ? .on : .off
+            }
+        }
+        
+        colorCollectionView.reloadData()
     }
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
