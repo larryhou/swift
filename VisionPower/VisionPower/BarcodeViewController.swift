@@ -36,11 +36,11 @@ class BarcodeViewController: UIViewController
         
         view.insertSubview(currentController.view, at: 0)
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(switchMode(_:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(switchInputMode(_:)))
         view.addGestureRecognizer(pan)
     }
     
-    @objc func switchMode(_ sender:UIPanGestureRecognizer)
+    @objc func switchInputMode(_ sender:UIPanGestureRecognizer)
     {
         guard sender.state == .began else {return}
         
