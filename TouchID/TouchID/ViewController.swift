@@ -157,14 +157,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         query[kSecUseOperationPrompt as String] = "读取Keychain密码"
         
         background.async
-        {[unown, self]
+        {
             var result:AnyObject?
             let status = SecItemCopyMatching(query as CFDictionary, &result)
             
             var message:String = self.interpret(status: status)
             if let result = result as? Data, status == errSecSuccess
             {
-                if let data = String(data: result, encoding: String.Encoding.utf8)
+                if let data = String(data: result, encoding: .utf8)
                 {
                     if status == errSecSuccess
                     {

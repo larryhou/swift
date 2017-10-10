@@ -66,6 +66,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击选择照片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2h-f5-CaX">
+                                <rect key="frame" x="66" y="319" width="241.5" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
+                                <color key="textColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uOw-99-zCm">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </imageView>
@@ -90,8 +96,10 @@
                             <constraint firstItem="HwW-xw-B9Q" firstAttribute="top" secondItem="WPB-Hd-nYZ" secondAttribute="top" constant="10" id="Inq-iZ-XgM"/>
                             <constraint firstItem="bWe-dm-aAa" firstAttribute="centerY" secondItem="HwW-xw-B9Q" secondAttribute="centerY" id="TCE-cp-RMp"/>
                             <constraint firstItem="WPB-Hd-nYZ" firstAttribute="trailing" secondItem="HwW-xw-B9Q" secondAttribute="trailing" id="Wpm-Bb-61P"/>
+                            <constraint firstItem="T2h-f5-CaX" firstAttribute="centerX" secondItem="uOw-99-zCm" secondAttribute="centerX" id="abd-kf-0Ju"/>
                             <constraint firstItem="uOw-99-zCm" firstAttribute="leading" secondItem="UNA-E0-YPg" secondAttribute="leading" id="adZ-Ah-luI"/>
                             <constraint firstAttribute="trailing" secondItem="uOw-99-zCm" secondAttribute="trailing" id="sRf-uS-6PP"/>
+                            <constraint firstItem="T2h-f5-CaX" firstAttribute="centerY" secondItem="uOw-99-zCm" secondAttribute="centerY" id="tr3-kM-V91"/>
                             <constraint firstItem="HwW-xw-B9Q" firstAttribute="leading" secondItem="bWe-dm-aAa" secondAttribute="trailing" constant="8" id="ygR-YX-ghq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WPB-Hd-nYZ"/>
