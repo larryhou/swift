@@ -32,8 +32,14 @@ class VisionPowerTests: XCTestCase
     
     func testPerformanceExample()
     {
+        let layout = AlbumPreviewViewLayout()
         // This is an example of a performance test case.
-        self.measure {
+        self.measure
+        {
+            for _ in 0...1000
+            {
+                layout.fitgrid(dimension:1080)
+            }
             // Put the code you want to measure the time of here.
         }
     }

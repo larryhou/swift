@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B0A56311F5FE39500B16095 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0A56301F5FE39500B16095 /* PhotoViewController.swift */; };
+		6B0A56331F5FE3B900B16095 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0A56321F5FE3B900B16095 /* CameraViewController.swift */; };
+		6B0A56351F5FE79100B16095 /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0A56341F5FE79100B16095 /* BarcodeViewController.swift */; };
 		6B27C7FF1F5D6060001EC600 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27C7FE1F5D6060001EC600 /* AppDelegate.swift */; };
 		6B27C8011F5D6060001EC600 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27C8001F5D6060001EC600 /* MainViewController.swift */; };
 		6B27C8041F5D6060001EC600 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B27C8021F5D6060001EC600 /* Main.storyboard */; };
@@ -15,6 +18,7 @@
 		6B27C80C1F5D6060001EC600 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B27C80A1F5D6060001EC600 /* LaunchScreen.storyboard */; };
 		6B27C8171F5D6061001EC600 /* VisionPowerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27C8161F5D6061001EC600 /* VisionPowerTests.swift */; };
 		6B27C8221F5D6061001EC600 /* VisionPowerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27C8211F5D6061001EC600 /* VisionPowerUITests.swift */; };
+		6BEE8FA91F6BE48600F0575D /* PhotoSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE8FA81F6BE48600F0575D /* PhotoSelectViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B0A56301F5FE39500B16095 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		6B0A56321F5FE3B900B16095 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		6B0A56341F5FE79100B16095 /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
 		6B27C7FB1F5D6060001EC600 /* VisionPower.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionPower.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B27C7FE1F5D6060001EC600 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B27C8001F5D6060001EC600 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +56,7 @@
 		6B27C81D1F5D6061001EC600 /* VisionPowerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisionPowerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B27C8211F5D6061001EC600 /* VisionPowerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionPowerUITests.swift; sourceTree = "<group>"; };
 		6B27C8231F5D6061001EC600 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BEE8FA81F6BE48600F0575D /* PhotoSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,10 @@
 			children = (
 				6B27C7FE1F5D6060001EC600 /* AppDelegate.swift */,
 				6B27C8001F5D6060001EC600 /* MainViewController.swift */,
+				6B0A56301F5FE39500B16095 /* PhotoViewController.swift */,
+				6BEE8FA81F6BE48600F0575D /* PhotoSelectViewController.swift */,
+				6B0A56321F5FE3B900B16095 /* CameraViewController.swift */,
+				6B0A56341F5FE79100B16095 /* BarcodeViewController.swift */,
 				6B27C8021F5D6060001EC600 /* Main.storyboard */,
 				6B27C8081F5D6060001EC600 /* Assets.xcassets */,
 				6B27C80A1F5D6060001EC600 /* LaunchScreen.storyboard */,
@@ -262,9 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BEE8FA91F6BE48600F0575D /* PhotoSelectViewController.swift in Sources */,
 				6B27C8011F5D6060001EC600 /* MainViewController.swift in Sources */,
+				6B0A56331F5FE3B900B16095 /* CameraViewController.swift in Sources */,
 				6B27C8071F5D6060001EC600 /* VisionPower.xcdatamodeld in Sources */,
+				6B0A56311F5FE39500B16095 /* PhotoViewController.swift in Sources */,
 				6B27C7FF1F5D6060001EC600 /* AppDelegate.swift in Sources */,
+				6B0A56351F5FE79100B16095 /* BarcodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +479,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = VisionPowerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.VisionPowerTests;
@@ -480,6 +497,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PRLP6W5S32;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = VisionPowerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.larryhou.samples.VisionPowerTests;
