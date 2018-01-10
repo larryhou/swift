@@ -26,15 +26,7 @@ extension AVAssetExportSessionStatus
     }
 }
 
-extension CMTimeRange
-{
-    var description:String
-    {
-        return "f:\(start.seconds) t:\(end.seconds) d:\(duration.seconds)"
-    }
-}
-
-enum VideoTransitionDirection
+fileprivate enum VideoTransitionDirection
 {
     case right, left, top, bottom
 }
@@ -46,8 +38,8 @@ enum VideoTransition
 
 class MovieEditor
 {
-    var asset:AVAsset!
-    var insertClips:[CMTimeRange]!
+    private(set) var asset:AVAsset!
+    private(set) var insertClips:[CMTimeRange]!
     
     private var assetComposition:AVMutableComposition!
     private var transitionClips:[CMTimeRange]!
@@ -172,7 +164,7 @@ class MovieEditor
         return (videoComposition, mix)
     }
     
-    func getTransitionInstuctions(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, transition:VideoTransition)->[AVMutableVideoCompositionLayerInstruction]
+    private func getTransitionInstuctions(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, transition:VideoTransition)->[AVMutableVideoCompositionLayerInstruction]
     {
         switch transition
         {
@@ -201,7 +193,7 @@ class MovieEditor
         }
     }
     
-    func dissolve(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange)->[AVMutableVideoCompositionLayerInstruction]
+    private func dissolve(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange)->[AVMutableVideoCompositionLayerInstruction]
     {
         let src = AVMutableVideoCompositionLayerInstruction(assetTrack: srcTrack)
         src.setOpacityRamp(fromStartOpacity: 1.0, toEndOpacity: 0.0, timeRange: range)
@@ -211,7 +203,7 @@ class MovieEditor
     }
     
     //MARK: push transition effect
-    func push(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    private func push(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
     {
         let size = srcTrack.naturalSize
         let center = CGAffineTransform.identity
@@ -243,7 +235,7 @@ class MovieEditor
     }
     
     //MARK: erase transition effect
-    func erase(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    private func erase(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
     {
         let size = srcTrack.naturalSize
         let full = CGRect(origin: CGPoint.zero, size: size)
