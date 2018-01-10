@@ -138,7 +138,6 @@ class MovieEditor
                 mixParameters.append(parameter)
                 
                 parameter = AVMutableAudioMixInputParameters(track: audioTracks[1 - index])
-                parameter.setVolume(0.0, at: transitionClips[i].start)
                 parameter.setVolumeRamp(fromStartVolume: 0.0, toEndVolume: 1.0, timeRange: transitionClips[i])
                 mixParameters.append(parameter)
             }
