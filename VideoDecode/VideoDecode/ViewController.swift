@@ -70,7 +70,7 @@ class ViewController: UIViewController
         }
         
         let editor = MovieEditor(transition: .RANDOM, transitionDuration: 1.0)
-        if let exporter = editor.cut(asset: asset, withClips: ranges)
+        if let exporter = editor.cut(asset: asset, with: ranges)
         {
             self.exporter = exporter
             let manager = FileManager.default

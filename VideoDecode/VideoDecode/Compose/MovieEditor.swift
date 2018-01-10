@@ -34,7 +34,7 @@ extension CMTimeRange
     }
 }
 
-enum TransitionDirection
+enum VideoTransitionDirection
 {
     case right, left, top, bottom
 }
@@ -49,9 +49,9 @@ class MovieEditor
     var asset:AVAsset!
     var insertClips:[CMTimeRange]!
     
-    var assetComposition:AVMutableComposition!
-    var transitionClips:[CMTimeRange]!
-    var passClips:[CMTimeRange]!
+    private var assetComposition:AVMutableComposition!
+    private var transitionClips:[CMTimeRange]!
+    private var passClips:[CMTimeRange]!
     
     var videoTransition:VideoTransition
     var transitionDuration:TimeInterval
@@ -62,7 +62,7 @@ class MovieEditor
         self.transitionDuration = duration
     }
     
-    func cut(asset:AVAsset, withClips clips:[CMTimeRange], transition:VideoTransition? = nil)->AVAssetExportSession?
+    func cut(asset:AVAsset, with clips:[CMTimeRange], transition:VideoTransition? = nil)->AVAssetExportSession?
     {
         guard asset.isReadable else { return nil }
         let insertClips:[CMTimeRange] = clips.filter({ !$0.duration.seconds.isNaN })
@@ -211,7 +211,7 @@ class MovieEditor
     }
     
     //MARK: push transition effect
-    func push(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:TransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    func push(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
     {
         let size = srcTrack.naturalSize
         let center = CGAffineTransform.identity
@@ -243,7 +243,7 @@ class MovieEditor
     }
     
     //MARK: erase transition effect
-    func erase(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:TransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    func erase(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:VideoTransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
     {
         let size = srcTrack.naturalSize
         let full = CGRect(origin: CGPoint.zero, size: size)
