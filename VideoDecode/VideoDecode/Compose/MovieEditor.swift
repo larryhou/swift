@@ -189,11 +189,11 @@ class MovieEditor
             case .ERASE_RIGHT:
                 return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
             case .ERASE_LEFT:
-                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .left)
             case .ERASE_TOP:
-                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .top)
             case .ERASE_BOTTOM:
-                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .bottom)
             case .RANDOM:
                 let transitions:[VideoTransition] = [.DISSOLVE, .PUSH_TOP, .PUSH_BOTTOM, .PUSH_LEFT, .PUSH_RIGHT, .ERASE_TOP, .ERASE_BOTTOM, .ERASE_RIGHT, .ERASE_LEFT]
                 let index = Int(GKRandomSource.sharedRandom().nextUniform() * Float(transitions.count))
