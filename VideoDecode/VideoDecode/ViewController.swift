@@ -69,7 +69,7 @@ class ViewController: UIViewController
             ranges.append(range)
         }
         
-        let editor = MovieEditor()
+        let editor = MovieEditor(transition: .RANDOM, transitionDuration: 1.0)
         if let exporter = editor.cut(asset: asset, withClips: ranges)
         {
             self.exporter = exporter

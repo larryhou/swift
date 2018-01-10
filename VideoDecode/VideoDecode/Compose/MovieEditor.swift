@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import GameplayKit
 
 extension AVAssetExportSessionStatus
 {
@@ -33,22 +34,44 @@ extension CMTimeRange
     }
 }
 
+enum TransitionDirection
+{
+    case right, left, top, bottom
+}
+
+enum VideoTransition
+{
+    case DISSOLVE, PUSH_RIGHT, PUSH_LEFT, PUSH_TOP, PUSH_BOTTOM, ERASE_RIGHT, ERASE_LEFT, ERASE_TOP, ERASE_BOTTOM, RANDOM
+}
+
 class MovieEditor
 {
     var asset:AVAsset!
     var insertClips:[CMTimeRange]!
     
-    var transitionDuration = 1.5
     var assetComposition:AVMutableComposition!
     var transitionClips:[CMTimeRange]!
     var passClips:[CMTimeRange]!
     
-    func cut(asset:AVAsset,
-             withClips clips:[CMTimeRange])->AVAssetExportSession?
+    var videoTransition:VideoTransition
+    var transitionDuration:TimeInterval
+    
+    init(transition:VideoTransition = .DISSOLVE, transitionDuration duration:TimeInterval = 1.0)
+    {
+        self.videoTransition = transition
+        self.transitionDuration = duration
+    }
+    
+    func cut(asset:AVAsset, withClips clips:[CMTimeRange], transition:VideoTransition? = nil)->AVAssetExportSession?
     {
         guard asset.isReadable else { return nil }
         let insertClips:[CMTimeRange] = clips.filter({ !$0.duration.seconds.isNaN })
         guard insertClips.count > 0 else { return nil }
+        
+        if let transition = transition
+        {
+            self.videoTransition = transition
+        }
         
         self.asset = asset
         self.insertClips = insertClips
@@ -124,11 +147,7 @@ class MovieEditor
             {
                 let range = transitionClips[i]
                 let instruction = AVMutableVideoCompositionInstruction()
-                let src = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTracks[index])
-                src.setOpacityRamp(fromStartOpacity: 1.0, toEndOpacity: 0.0, timeRange: range)
-                let dst = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTracks[1 - index])
-                dst.setOpacityRamp(fromStartOpacity: 0.0, toEndOpacity: 1.0, timeRange: range)
-                instruction.layerInstructions = [src, dst]
+                instruction.layerInstructions = getTransitionInstuctions(srcTrack: videoTracks[index], dstTrack: videoTracks[1-index], range: range, transition: videoTransition)
                 instruction.timeRange = range
                 videoInstuctions.append(instruction)
                 
@@ -151,5 +170,107 @@ class MovieEditor
         let mix = AVMutableAudioMix()
         mix.inputParameters = mixParameters
         return (videoComposition, mix)
+    }
+    
+    func getTransitionInstuctions(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, transition:VideoTransition)->[AVMutableVideoCompositionLayerInstruction]
+    {
+        switch transition
+        {
+            case .DISSOLVE:
+                return dissolve(srcTrack: srcTrack, dstTrack: dstTrack, range: range)
+            case .PUSH_RIGHT:
+                return push(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+            case .PUSH_LEFT:
+                return push(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .left)
+            case .PUSH_TOP:
+                return push(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .top)
+            case .PUSH_BOTTOM:
+                return push(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .bottom)
+            case .ERASE_RIGHT:
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+            case .ERASE_LEFT:
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+            case .ERASE_TOP:
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+            case .ERASE_BOTTOM:
+                return erase(srcTrack: srcTrack, dstTrack: dstTrack, range: range, direction: .right)
+            case .RANDOM:
+                let transitions:[VideoTransition] = [.DISSOLVE, .PUSH_TOP, .PUSH_BOTTOM, .PUSH_LEFT, .PUSH_RIGHT, .ERASE_TOP, .ERASE_BOTTOM, .ERASE_RIGHT, .ERASE_LEFT]
+                let index = Int(GKRandomSource.sharedRandom().nextUniform() * Float(transitions.count))
+                return getTransitionInstuctions(srcTrack: srcTrack, dstTrack: dstTrack, range: range, transition: transitions[index])
+        }
+    }
+    
+    func dissolve(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange)->[AVMutableVideoCompositionLayerInstruction]
+    {
+        let src = AVMutableVideoCompositionLayerInstruction(assetTrack: srcTrack)
+        src.setOpacityRamp(fromStartOpacity: 1.0, toEndOpacity: 0.0, timeRange: range)
+        let dst = AVMutableVideoCompositionLayerInstruction(assetTrack: dstTrack)
+        dst.setOpacityRamp(fromStartOpacity: 0.0, toEndOpacity: 1.0, timeRange: range)
+        return [src, dst]
+    }
+    
+    //MARK: push transition effect
+    func push(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:TransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    {
+        let size = srcTrack.naturalSize
+        let center = CGAffineTransform.identity
+        let left = center.translatedBy(x: -size.width, y: 0)
+        let right = center.translatedBy(x: size.width, y: 0)
+        let top = center.translatedBy(x: 0, y: -size.height)
+        let bottom = center.translatedBy(x: 0, y: size.height)
+        
+        let src = AVMutableVideoCompositionLayerInstruction(assetTrack: srcTrack)
+        let dst = AVMutableVideoCompositionLayerInstruction(assetTrack: dstTrack)
+        
+        switch direction
+        {
+            case .left:
+                src.setTransformRamp(fromStart: center, toEnd: left, timeRange: range)
+                dst.setTransformRamp(fromStart: right, toEnd: center, timeRange: range)
+            case .right:
+                src.setTransformRamp(fromStart: center, toEnd: right, timeRange: range)
+                dst.setTransformRamp(fromStart: left, toEnd: center, timeRange: range)
+            case .top:
+                src.setTransformRamp(fromStart: center, toEnd: top, timeRange: range)
+                dst.setTransformRamp(fromStart: bottom, toEnd: center, timeRange: range)
+            case .bottom:
+                src.setTransformRamp(fromStart: center, toEnd: bottom, timeRange: range)
+                dst.setTransformRamp(fromStart: top, toEnd: center, timeRange: range)
+        }
+        
+        return [src, dst]
+    }
+    
+    //MARK: erase transition effect
+    func erase(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, direction:TransitionDirection)->[AVMutableVideoCompositionLayerInstruction]
+    {
+        let size = srcTrack.naturalSize
+        let full = CGRect(origin: CGPoint.zero, size: size)
+        let left = CGRect(origin: CGPoint.zero, size: CGSize(width: 0, height: size.height))
+        let right = left.offsetBy(dx: size.width, dy: 0)
+        let top = CGRect(origin: CGPoint.zero, size: CGSize(width: size.width, height: 0))
+        let bottom = top.offsetBy(dx: 0, dy: size.height)
+        
+        let src = AVMutableVideoCompositionLayerInstruction(assetTrack: srcTrack)
+        let dst = AVMutableVideoCompositionLayerInstruction(assetTrack: dstTrack)
+        
+        switch direction
+        {
+            case .left:
+                src.setCropRectangleRamp(fromStartCropRectangle: full, toEndCropRectangle: left, timeRange: range)
+                dst.setCropRectangleRamp(fromStartCropRectangle: right, toEndCropRectangle: full, timeRange: range)
+            case .right:
+                src.setCropRectangleRamp(fromStartCropRectangle: full, toEndCropRectangle: right, timeRange: range)
+                dst.setCropRectangleRamp(fromStartCropRectangle: left, toEndCropRectangle: full, timeRange: range)
+            case .top:
+                src.setCropRectangleRamp(fromStartCropRectangle: full, toEndCropRectangle: top, timeRange: range)
+                dst.setCropRectangleRamp(fromStartCropRectangle: bottom, toEndCropRectangle: full, timeRange: range)
+            case .bottom:
+                src.setCropRectangleRamp(fromStartCropRectangle: full, toEndCropRectangle: bottom, timeRange: range)
+                dst.setCropRectangleRamp(fromStartCropRectangle: top, toEndCropRectangle: full, timeRange: range)
+        }
+        
+        return [src, dst]
     }
 }
