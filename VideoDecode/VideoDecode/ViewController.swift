@@ -91,13 +91,7 @@ class ViewController: UIViewController
     @IBAction func record(_ sender: UIButton)
     {
         recordButton.isHidden = true
-        ScreenRecorder.shared.startRecording
-        { (error) in
-            if error == nil, let cameraView = RPScreenRecorder.shared().cameraPreviewView
-            {
-                self.view.addSubview(cameraView)
-            }
-        }
+        ScreenRecorder.shared.startRecording()
     }
     
     @IBAction func stop(_ sender: UITapGestureRecognizer)

@@ -10,8 +10,6 @@ import Foundation
 import ReplayKit
 import AVKit
 
-
-
 extension RPSampleBufferType:CustomStringConvertible
 {
     public var description:String
@@ -25,159 +23,19 @@ extension RPSampleBufferType:CustomStringConvertible
     }
 }
 
-extension AVAssetWriterStatus:CustomStringConvertible
-{
-    public var description:String
-    {
-        switch self
-        {
-            case .cancelled:return "cancelled"
-            case .completed:return "completed"
-            case .writing:return "writing"
-            case .unknown:return "unknown"
-            case .failed:return "failed"
-        }
-    }
-}
-
-class AssetWriter
-{
-    private let writer:AVAssetWriter
-    let url:URL
-    
-    private var movieTracks:[RPSampleBufferType:AVAssetWriterInput] = [:]
-    
-    init(url:URL) throws
-    {
-        self.url = url
-        if FileManager.default.fileExists(atPath: url.path)
-        {
-            try? FileManager.default.removeItem(at: url)
-        }
-        
-        self.writer = try AVAssetWriter(url: url, fileType: .mp4)
-    }
-    
-    private var initialized = false
-    private func setup(sample:CMSampleBuffer)
-    {
-        if (initialized) { return }
-        initialized = true
-        
-        let videoOptions:[String:Any] = [
-            AVVideoCodecKey: AVVideoCodecType.h264,
-            AVVideoWidthKey: UIScreen.main.bounds.width, AVVideoHeightKey: UIScreen.main.bounds.height
-        ]
-        movieTracks[.video] = AVAssetWriterInput(mediaType: .video, outputSettings: videoOptions)
-        
-        if let format = CMSampleBufferGetFormatDescription(sample), let stream = CMAudioFormatDescriptionGetStreamBasicDescription(format)
-        {
-            let audioOptions:[String:Any] = [
-                AVFormatIDKey: kAudioFormatMPEG4AAC,
-                AVNumberOfChannelsKey: stream.pointee.mChannelsPerFrame,
-                AVSampleRateKey: stream.pointee.mSampleRate,
-            ]
-            movieTracks[.audioApp] = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOptions)
-            movieTracks[.audioMic] = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOptions)
-            
-            for (_, track) in movieTracks
-            {
-                track.expectsMediaDataInRealTime = true
-                if writer.canAdd(track)
-                {
-                    writer.add(track)
-                }
-                else
-                {
-                    print("[AssetWriter] add track input fails")
-                }
-            }
-        }
-        
-        writer.startWriting()
-        writer.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
-    }
-    
-    private let queueAudio = DispatchQueue(label: "audio_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-    private let queueVideo = DispatchQueue(label: "video_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-    func append(sample:CMSampleBuffer, type:RPSampleBufferType)
-    {
-        if !initialized
-        {
-            setup(sample: sample)
-        }
-        
-        guard CMSampleBufferDataIsReady(sample) else {return}
-        
-        if let track = movieTracks[type], track.isReadyForMoreMediaData
-        {
-            if type == .video
-            {
-                queueVideo.async
-                {
-                    track.append(sample)
-                    if self.writer.status == .failed
-                    {
-                        print(self.writer.error!)
-                    }
-                }
-            }
-            else
-            {
-                queueAudio.async
-                {
-                    track.append(sample)
-                    if self.writer.status == .failed
-                    {
-                        print(self.writer.error!)
-                    }
-                }
-            }
-        }
-    }
-    
-    func save(completion:(()->Void)? = nil)
-    {
-//        Timer.scheduledTimer(withTimeInterval: 1/10, repeats: true)
-//        { (timer) in
-//
-//            var num = 0
-//            for (_, track) in self.movieTracks
-//            {
-//                if track.isReadyForMoreMediaData { num += 1 }
-//            }
-//
-//            if num == self.movieTracks.count
-//            {
-//                self.writer.finishWriting
-//                {
-//                    print("finish", self.writer.status, self.writer.error ?? "success")
-//                    completion?()
-//                }
-//            }
-//        }
-        
-        self.writer.finishWriting
-        {
-            print("finish", self.writer.status, self.writer.error ?? "success")
-            completion?()
-        }
-    }
-}
-
 fileprivate let recordMovie = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("record.mov")
 fileprivate let exportMovie = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("export.mp4")
 
 class ScreenRecorder
 {
-    static let shared:ScreenRecorder = ScreenRecorder()
+    static let shared:ScreenRecorder = ScreenRecorder(cameraViewport: CGSize(width: 100, height: 100))
     
     private let cameraViewport:CGSize
     private var writer:AssetWriter!
     
     private var syncdata:[[Double]] = []
     
-    init(cameraViewport:CGSize = CGSize(width: 100, height: 150))
+    init(cameraViewport:CGSize = CGSize(width: 50, height: 50))
     {
         self.cameraViewport = cameraViewport
     }
@@ -198,8 +56,20 @@ class ScreenRecorder
             print(error as Any)
             DispatchQueue.main.async
             {
-                recorder.cameraPreviewView?.frame = CGRect(origin: CGPoint.zero, size: self.cameraViewport)
-                recorder.cameraPreviewView?.mask = self.drawCameraShape(size: self.cameraViewport)
+                if let cameraView = recorder.cameraPreviewView
+                {
+                    cameraView.frame = CGRect(origin: CGPoint.zero, size: self.cameraViewport)
+                    cameraView.mask = self.drawCameraShape(size: self.cameraViewport)
+                    if let rootView = UIApplication.shared.keyWindow?.rootViewController?.view
+                    {
+                        let options:UIViewAnimationOptions = [.curveLinear, .transitionCrossDissolve]
+                        UIView.transition(with: rootView, duration: 1.0, options: options, animations:
+                        {
+                            rootView.addSubview(cameraView)
+                        }, completion: nil)
+                    }
+                }
+                
                 completion?(error)
             }
         }
@@ -311,6 +181,15 @@ class ScreenRecorder
                 {
                     self.startExportSession(clipContext: clipContext, completion: completion)
                 }
+                
+                if let cameraView = RPScreenRecorder.shared().cameraPreviewView, let rootView = cameraView.superview
+                {
+                    let options:UIViewAnimationOptions = [.curveLinear, .transitionCrossDissolve]
+                    UIView.transition(with: rootView, duration: 0.25, options: options, animations:
+                    {
+                        cameraView.removeFromSuperview()
+                    }, completion: nil)
+                }
             }
         }
     }
@@ -334,6 +213,144 @@ class ScreenRecorder
         if exporter.progress == 1.0
         {
             timer.invalidate()
+        }
+    }
+}
+
+extension AVAssetWriterStatus:CustomStringConvertible
+{
+    public var description:String
+    {
+        switch self
+        {
+        case .cancelled:return "cancelled"
+        case .completed:return "completed"
+        case .writing:return "writing"
+        case .unknown:return "unknown"
+        case .failed:return "failed"
+        }
+    }
+}
+
+class AssetWriter
+{
+    private let writer:AVAssetWriter
+    let url:URL
+    
+    private var movieTracks:[RPSampleBufferType:AVAssetWriterInput] = [:]
+    
+    init(url:URL) throws
+    {
+        self.url = url
+        if FileManager.default.fileExists(atPath: url.path)
+        {
+            try? FileManager.default.removeItem(at: url)
+        }
+        
+        self.writer = try AVAssetWriter(url: url, fileType: .mp4)
+    }
+    
+    private var initialized = false
+    private func setup(sample:CMSampleBuffer)
+    {
+        if (initialized) { return }
+        initialized = true
+        
+        let videoOptions:[String:Any] = [
+            AVVideoCodecKey: AVVideoCodecType.h264,
+            AVVideoWidthKey: UIScreen.main.bounds.width, AVVideoHeightKey: UIScreen.main.bounds.height]
+        movieTracks[.video] = AVAssetWriterInput(mediaType: .video, outputSettings: videoOptions)
+        
+        if let format = CMSampleBufferGetFormatDescription(sample), let stream = CMAudioFormatDescriptionGetStreamBasicDescription(format)
+        {
+            let audioOptions:[String:Any] = [
+                AVFormatIDKey: kAudioFormatMPEG4AAC,
+                AVNumberOfChannelsKey: stream.pointee.mChannelsPerFrame,
+                AVSampleRateKey: stream.pointee.mSampleRate]
+            movieTracks[.audioApp] = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOptions)
+            movieTracks[.audioMic] = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOptions)
+            
+            for (type, track) in movieTracks
+            {
+                track.expectsMediaDataInRealTime = true
+                if writer.canAdd(track)
+                {
+                    writer.add(track)
+                }
+                else
+                {
+                    print("[AssetWriter] add track[\(type)] input fails")
+                }
+            }
+        }
+        
+        writer.startWriting()
+        writer.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
+    }
+    
+    private let queueAudio = DispatchQueue(label: "audio_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
+    private let queueVideo = DispatchQueue(label: "video_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
+    func append(sample:CMSampleBuffer, type:RPSampleBufferType)
+    {
+        if !initialized
+        {
+            setup(sample: sample)
+        }
+        
+        guard CMSampleBufferDataIsReady(sample) else {return}
+        
+        if let track = movieTracks[type], track.isReadyForMoreMediaData
+        {
+            if type == .video
+            {
+                queueVideo.async
+                {
+                    track.append(sample)
+                    if self.writer.status == .failed
+                    {
+                        print(self.writer.error!)
+                    }
+                }
+            }
+            else
+            {
+                queueAudio.async
+                {
+                    track.append(sample)
+                    if self.writer.status == .failed
+                    {
+                        print(self.writer.error!)
+                    }
+                }
+            }
+        }
+    }
+    
+    func save(completion:(()->Void)? = nil)
+    {
+//        Timer.scheduledTimer(withTimeInterval: 1/10, repeats: true)
+//        { (timer) in
+//
+//            var num = 0
+//            for (_, track) in self.movieTracks
+//            {
+//                if track.isReadyForMoreMediaData { num += 1 }
+//            }
+//
+//            if num == self.movieTracks.count
+//            {
+//                self.writer.finishWriting
+//                {
+//                    print("finish", self.writer.status, self.writer.error ?? "success")
+//                    completion?()
+//                }
+//            }
+//        }
+        
+        self.writer.finishWriting
+        {
+            print("finish", self.writer.status, self.writer.error ?? "success")
+            completion?()
         }
     }
 }
