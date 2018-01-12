@@ -17,6 +17,7 @@
 		6BDED49E2003790600AEE27D /* VideoDecodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDED49D2003790600AEE27D /* VideoDecodeUITests.swift */; };
 		6BDED4AC2003797D00AEE27D /* movie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6BDED4AB2003797D00AEE27D /* movie.bundle */; };
 		6BDED4AF2004BB3700AEE27D /* MovieEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDED4AE2004BB3700AEE27D /* MovieEditor.swift */; };
+		6BDED4B12006087900AEE27D /* ScreenRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDED4B02006087900AEE27D /* ScreenRecorder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		6BDED49F2003790600AEE27D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BDED4AB2003797D00AEE27D /* movie.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = movie.bundle; sourceTree = "<group>"; };
 		6BDED4AE2004BB3700AEE27D /* MovieEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieEditor.swift; sourceTree = "<group>"; };
+		6BDED4B02006087900AEE27D /* ScreenRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				6BDED4AE2004BB3700AEE27D /* MovieEditor.swift */,
+				6BDED4B02006087900AEE27D /* ScreenRecorder.swift */,
 			);
 			path = Compose;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				6BDED4832003790600AEE27D /* VideoDecode.xcdatamodeld in Sources */,
 				6BDED47B2003790600AEE27D /* AppDelegate.swift in Sources */,
 				6BDED4AF2004BB3700AEE27D /* MovieEditor.swift in Sources */,
+				6BDED4B12006087900AEE27D /* ScreenRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

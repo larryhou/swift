@@ -10,9 +10,9 @@ import Foundation
 import AVFoundation
 import GameplayKit
 
-extension AVAssetExportSessionStatus
+extension AVAssetExportSessionStatus:CustomStringConvertible
 {
-    var description:String
+    public var description:String
     {
         switch self
         {
@@ -91,8 +91,20 @@ class MovieEditor
         self.transitionClips = []
         self.passClips = []
         
-        let assetVideoTrack = asset.tracks(withMediaType: .video)[0]
-        let assetAudioTrack = asset.tracks(withMediaType: .audio)[0]
+        let assetVideoTracks = asset.tracks(withMediaType: .video)
+        let assetAudioTracks = asset.tracks(withMediaType: .audio)
+        
+        let extraTracks:[AVMutableCompositionTrack]?
+        if assetAudioTracks.count > 1
+        {
+            extraTracks = [
+            assetComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)!,
+            assetComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)!]
+        }
+        else
+        {
+            extraTracks = nil
+        }
         
         var anchor = kCMTimeZero
         let overlap = CMTime(seconds: transitionDuration, preferredTimescale: 100)
@@ -100,8 +112,9 @@ class MovieEditor
         {
             let index = i % 2
             let range = insertClips[i]
-            try? videoTracks[index].insertTimeRange(range, of: assetVideoTrack, at: anchor)
-            try? audioTracks[index].insertTimeRange(range, of: assetAudioTrack, at: anchor)
+            try? videoTracks[index].insertTimeRange(range, of: assetVideoTracks[0], at: anchor)
+            try? audioTracks[index].insertTimeRange(range, of: assetAudioTracks[0], at: anchor)
+            try? extraTracks?[index].insertTimeRange(range, of: assetAudioTracks[1], at: anchor)
             
             var passClip = CMTimeRange(start: anchor, duration: range.duration)
             if i > 0
@@ -143,25 +156,36 @@ class MovieEditor
                 instruction.timeRange = range
                 videoInstuctions.append(instruction)
                 
-                var parameter = AVMutableAudioMixInputParameters(track: audioTracks[index])
-                parameter.setVolumeRamp(fromStartVolume: 1.0, toEndVolume: 0.0, timeRange: transitionClips[i])
-                parameter.setVolume(1.0, at: transitionClips[i].end)
-                mixParameters.append(parameter)
-                
-                parameter = AVMutableAudioMixInputParameters(track: audioTracks[1 - index])
-                parameter.setVolumeRamp(fromStartVolume: 0.0, toEndVolume: 1.0, timeRange: transitionClips[i])
-                mixParameters.append(parameter)
+                mixParameters.append(contentsOf: getMixParameters(srcTrack: audioTracks[index], dstTrack: audioTracks[1-index], range: transitionClips[i]))
+                if let extraTracks = extraTracks
+                {
+                    mixParameters.append(contentsOf: getMixParameters(srcTrack: extraTracks[index], dstTrack: extraTracks[1-index], range: transitionClips[i]))
+                }
             }
         }
         
         let videoComposition = AVMutableVideoComposition()
-        videoComposition.renderSize = assetVideoTrack.naturalSize
+        videoComposition.renderSize = assetVideoTracks[0].naturalSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
         videoComposition.instructions = videoInstuctions
         
         let mix = AVMutableAudioMix()
         mix.inputParameters = mixParameters
         return (videoComposition, mix)
+    }
+    
+    private func getMixParameters(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange)->[AVMutableAudioMixInputParameters]
+    {
+        var result:[AVMutableAudioMixInputParameters] = []
+        var parameter = AVMutableAudioMixInputParameters(track: srcTrack)
+        parameter.setVolumeRamp(fromStartVolume: 1.0, toEndVolume: 0.0, timeRange: range)
+        parameter.setVolume(1.0, at: range.end)
+        result.append(parameter)
+        
+        parameter = AVMutableAudioMixInputParameters(track: dstTrack)
+        parameter.setVolumeRamp(fromStartVolume: 0.0, toEndVolume: 1.0, timeRange: range)
+        result.append(parameter)
+        return result
     }
     
     private func getTransitionInstuctions(srcTrack:AVMutableCompositionTrack, dstTrack:AVMutableCompositionTrack, range:CMTimeRange, transition:VideoTransition)->[AVMutableVideoCompositionLayerInstruction]

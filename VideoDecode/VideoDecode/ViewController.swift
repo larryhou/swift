@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import ReplayKit
 
 extension AVAssetReaderStatus
 {
@@ -34,7 +35,10 @@ class ViewController: UIViewController
     var background = DispatchQueue(label: "track_read_queue")
     
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var viewport: UIImageView!
+    @IBOutlet weak var recordButton: UIButton!
+    
+    @IBOutlet weak var loopIndicator: UILabel!
+    @IBOutlet weak var timeIndicator: UILabel!
     
     var trackOutput:AVAssetReaderTrackOutput!
     var reader:AVAssetReader!
@@ -42,130 +46,85 @@ class ViewController: UIViewController
     var exporter:AVAssetExportSession!
     
     var outputURL:URL!
+    var formatter:DateFormatter!
     
+    var playCount = 0
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        progressView.isHidden = true
+        formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
         // Do any additional setup after loading the view, typically from a nib.
         guard let bundle = Bundle.main.path(forResource: "movie", ofType: "bundle") else {return}
         
         let location = URL(fileURLWithPath: "\(bundle)/funny.mp4")
-        let asset = AVAsset(url: location)
+        let layer = AVPlayerLayer(player: AVPlayer(url: location))
+        layer.videoGravity = .resizeAspectFill
+        layer.frame = view.frame
+        view.layer.insertSublayer(layer, at: 0)
+        layer.player?.play()
         
-        let duration = asset.duration
-        var position = CMTime(value: 0, timescale: duration.timescale)
-        
-        let CUT_INTERVAL = CMTime(value: 10, timescale: 1)
-        let CUT_DURATION = CMTime(value: 5, timescale: 1)
-        
-        var ranges:[CMTimeRange] = []
-        while position < duration
-        {
-            let available = duration - position
-            let length = min(available, CUT_DURATION)
-            
-            let range = CMTimeRange(start: position, duration: length)
-            position = position + length + CUT_INTERVAL
-            ranges.append(range)
-        }
-        
-        let editor = MovieEditor(transition: .RANDOM, transitionDuration: 1.0)
-        if let exporter = editor.cut(asset: asset, with: ranges)
-        {
-            self.exporter = exporter
-            let manager = FileManager.default
-            outputURL = manager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("sample.mp4")
-            if manager.fileExists(atPath: outputURL.path)
+        loopIndicator.text = String(format: "#%02d", playCount)
+        layer.player?.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: .main, using:
+        { (position) in
+            if let duration = layer.player?.currentItem?.duration
             {
-                try? manager.removeItem(at: outputURL)
-            }
-            
-            exporter.outputURL = outputURL
-            Timer.scheduledTimer(timeInterval: 1/30, target: self, selector: #selector(progressUpdate(_:)), userInfo: nil, repeats: true)
-            exporter.exportAsynchronously
-            { [unowned self] in
-                print("[EXPORT]", "done", exporter.status.description)
-                
-                DispatchQueue.main.async
+                if position == duration
                 {
-                    self.decodeMovie(url: self.outputURL)
+                    layer.player?.seek(to: kCMTimeZero)
+                    layer.player?.play()
+                    self.loopIndicator.text = String(format: "#%02d", self.playCount)
                 }
             }
             
-            let press = UILongPressGestureRecognizer.init(target: self, action: #selector(pressUpdate(_:)))
-            view.addGestureRecognizer(press)
-        }
-    }
-    
-    @objc func pressUpdate(_ guesture:UILongPressGestureRecognizer)
-    {
-        if guesture.state == .began
-        {
-            let share = UIActivityViewController(activityItems: [outputURL], applicationActivities: nil)
-            self.present(share, animated: true, completion: nil)
-        }
-    }
-    
-    @objc func progressUpdate(_ timer:Timer)
-    {
-        progressView.progress = exporter.progress
-        if exporter.progress == 1.0
-        {
-            progressView.isHidden = true
-            timer.invalidate()
-        }
-    }
-    
-    func decodeMovie(url:URL)
-    {
-        let asset = AVAsset(url: url)
-        let videoTrack = asset.tracks(withMediaType: .video)
+            self.timeIndicator.text = self.formatter.string(from: Date())
+        })
         
-        if let reader = try? AVAssetReader(asset: asset)
-        {
-            self.reader = reader
-            let options:[CFString:Any] = [kCVPixelBufferPixelFormatTypeKey:kCVPixelFormatType_32BGRA]
-            trackOutput = AVAssetReaderTrackOutput(track: videoTrack[0], outputSettings: options as [String : Any])
-            trackOutput.alwaysCopiesSampleData = false
-            reader.add(trackOutput)
-            reader.startReading()
-            
-            Timer.scheduledTimer(timeInterval: 1/30, target: self, selector: #selector(readVideoSample(_:)), userInfo: nil, repeats: true)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(stop(_:)))
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
+    }
+    
+    @IBAction func record(_ sender: UIButton)
+    {
+        recordButton.isHidden = true
+        ScreenRecorder.shared.startRecording
+        { (error) in
+            if error == nil, let cameraView = RPScreenRecorder.shared().cameraPreviewView
+            {
+                self.view.addSubview(cameraView)
+            }
         }
     }
     
-    @objc func readVideoSample(_ timer:Timer)
+    @IBAction func stop(_ sender: UITapGestureRecognizer)
     {
-        if reader.status == .reading
-        {
-            background.async
-            { [unowned self] in
-                if let sample = self.trackOutput.copyNextSampleBuffer()
-                {
-                    if let cvImageBuffer = CMSampleBufferGetImageBuffer(sample)
-                    {
-                        let ciImage = CIImage(cvImageBuffer: cvImageBuffer)
-                        DispatchQueue.main.async
-                        {
-                            self.viewport.image = UIImage(ciImage: ciImage)
-                        }
-                    }
-                }
-            }
-        }
-        else if reader.status == .completed
-        {
-            print("[PLAY]", "done")
-            timer.invalidate()
+        guard sender.state == .recognized else { return }
+        
+        progressView.isHidden = false
+        ScreenRecorder.shared.progressObserver = progressUpdate(_:)
+        ScreenRecorder.shared.stopRecording(clipContext: "0-5;15-20;")
+        { (url, status) in
+            print(status)
+            self.recordButton.isHidden = false
+            self.progressView.isHidden = true
         }
     }
+    
+    func progressUpdate(_ value:Float)
+    {
+        progressView.progress = value
+    }
+    
+    override var prefersStatusBarHidden: Bool {return true}
     
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
