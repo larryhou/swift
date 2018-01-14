@@ -137,7 +137,7 @@ class ScreenRecorder
     var fetchUnityTime:(()->Double)? // get game timestamp for timesync
     private func synchronize(timestamp value:Double)
     {
-        print("sychronize")
+        print("sychronize", value)
         if let time = fetchUnityTime?()
         {
             syncdata.append([value, time])
@@ -248,11 +248,11 @@ extension AVAssetWriterStatus:CustomStringConvertible
     {
         switch self
         {
-        case .cancelled:return "cancelled"
-        case .completed:return "completed"
-        case .writing:return "writing"
-        case .unknown:return "unknown"
-        case .failed:return "failed"
+            case .cancelled:return "cancelled"
+            case .completed:return "completed"
+            case .writing:return "writing"
+            case .unknown:return "unknown"
+            case .failed:return "failed"
         }
     }
 }
@@ -315,46 +315,34 @@ class AssetWriter
     }
     
     var lastime:CMTime = kCMTimeZero
-    
-    private let queueAudio = DispatchQueue(label: "audio_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-    private let queueVideo = DispatchQueue(label: "video_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
+    private let background = DispatchQueue(label: "video_encode_queue")
     func append(sample:CMSampleBuffer, type:RPSampleBufferType)
     {
-        if !initialized
-        {
-            setup(sample: sample)
-        }
+        guard CMSampleBufferIsValid(sample) else {return}
         
-        guard CMSampleBufferIsValid(sample) else
+        background.sync
         {
-            print(sample)
-            return
-        }
-        
-        if let track = movieTracks[type], track.isReadyForMoreMediaData
-        {
-            if type == .video
+            if !initialized
             {
-                let position = CMSampleBufferGetPresentationTimeStamp(sample)
-                print(position.seconds, (position - lastime).seconds)
-                lastime = position
-                queueVideo.async
+                setup(sample: sample)
+            }
+            
+            if let track = movieTracks[type], track.isReadyForMoreMediaData
+            {
+                if type == .video
                 {
                     track.append(sample)
-                    if self.writer.status == .failed
+                    if writer.status == .failed
                     {
-                        print(self.writer.error!)
+                        print(type, writer.error!)
                     }
                 }
-            }
-            else
-            {
-                queueAudio.async
+                else
                 {
                     track.append(sample)
-                    if self.writer.status == .failed
+                    if writer.status == .failed
                     {
-                        print(self.writer.error!)
+                        print(type, writer.error!)
                     }
                 }
             }
@@ -363,25 +351,6 @@ class AssetWriter
     
     func save(completion:(()->Void)? = nil)
     {
-//        Timer.scheduledTimer(withTimeInterval: 1/10, repeats: true)
-//        { (timer) in
-//
-//            var num = 0
-//            for (_, track) in self.movieTracks
-//            {
-//                if track.isReadyForMoreMediaData { num += 1 }
-//            }
-//
-//            if num == self.movieTracks.count
-//            {
-//                self.writer.finishWriting
-//                {
-//                    print("finish", self.writer.status, self.writer.error ?? "success")
-//                    completion?()
-//                }
-//            }
-//        }
-        
         self.writer.finishWriting
         {
             print("finish", self.writer.status, self.writer.error ?? "success")
