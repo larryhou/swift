@@ -100,7 +100,7 @@ class ViewController: UIViewController
         
         progressView.isHidden = false
         ScreenRecorder.shared.progressObserver = progressUpdate(_:)
-        ScreenRecorder.shared.stopRecording(clipContext: "0-5;15-20;")
+        ScreenRecorder.shared.stopRecording(clipContext: "0-5;10-15")
         { (url, status) in
             print(status)
             self.recordButton.isHidden = false

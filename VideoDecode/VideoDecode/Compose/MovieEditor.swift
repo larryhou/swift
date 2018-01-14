@@ -107,7 +107,7 @@ class MovieEditor
         }
         
         var anchor = kCMTimeZero
-        let overlap = CMTime(seconds: transitionDuration, preferredTimescale: 100)
+        let overlap = CMTime(seconds: transitionDuration, preferredTimescale: 600)
         for i in 0..<insertClips.count
         {
             let index = i % 2

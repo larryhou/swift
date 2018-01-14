@@ -23,7 +23,7 @@ extension RPSampleBufferType:CustomStringConvertible
     }
 }
 
-fileprivate let recordMovie = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("record.mov")
+fileprivate let recordMovie = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("record.mp4")
 fileprivate let exportMovie = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("export.mp4")
 
 class ScreenRecorder
@@ -53,9 +53,9 @@ class ScreenRecorder
         recorder.cameraPosition = .front
         recorder.startCapture(handler: receiveScreenSample(sample:type:error:))
         { (error) in
-            print(error as Any)
             DispatchQueue.main.async
             {
+                self.setupCamera()
                 if let cameraView = recorder.cameraPreviewView
                 {
                     cameraView.frame = CGRect(origin: CGPoint.zero, size: self.cameraViewport)
@@ -71,6 +71,31 @@ class ScreenRecorder
                 }
                 
                 completion?(error)
+            }
+        }
+    }
+    
+    private func setupCamera()
+    {
+        guard let cameraView = RPScreenRecorder.shared().cameraPreviewView else {return}
+        if cameraView.constraints.count > 0 {return}
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(switchCamera(_:)))
+        tap.numberOfTapsRequired = 1
+        cameraView.addGestureRecognizer(tap)
+    }
+    
+    @objc private func switchCamera(_ gesture:UITapGestureRecognizer)
+    {
+        if gesture.state == .recognized
+        {
+            let position = RPScreenRecorder.shared().cameraPosition
+            switch position
+            {
+                case .back:
+                    RPScreenRecorder.shared().cameraPosition = .front
+                case .front:
+                    RPScreenRecorder.shared().cameraPosition = .back
             }
         }
     }
@@ -248,6 +273,7 @@ class AssetWriter
         }
         
         self.writer = try AVAssetWriter(url: url, fileType: .mp4)
+        self.writer.movieTimeScale = 600
     }
     
     private var initialized = false
@@ -288,6 +314,8 @@ class AssetWriter
         writer.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
     }
     
+    var lastime:CMTime = kCMTimeZero
+    
     private let queueAudio = DispatchQueue(label: "audio_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
     private let queueVideo = DispatchQueue(label: "video_encode_queue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
     func append(sample:CMSampleBuffer, type:RPSampleBufferType)
@@ -297,12 +325,19 @@ class AssetWriter
             setup(sample: sample)
         }
         
-        guard CMSampleBufferDataIsReady(sample) else {return}
+        guard CMSampleBufferIsValid(sample) else
+        {
+            print(sample)
+            return
+        }
         
         if let track = movieTracks[type], track.isReadyForMoreMediaData
         {
             if type == .video
             {
+                let position = CMSampleBufferGetPresentationTimeStamp(sample)
+                print(position.seconds, (position - lastime).seconds)
+                lastime = position
                 queueVideo.async
                 {
                     track.append(sample)
