@@ -125,6 +125,30 @@ class ScreenRecorder
                 let translation = gesture.translation(in: view)
                 view.frame = view.frame.offsetBy(dx: translation.x, dy: translation.y)
                 gesture.setTranslation(CGPoint.zero, in: view)
+            case .ended:
+                let bounds = UIScreen.main.bounds, frame = view.frame
+                var offset = CGPoint.zero
+                if frame.maxX > bounds.width
+                {
+                    offset.x = bounds.width - frame.maxX
+                }
+                else if frame.minX < 0
+                {
+                    offset.x = -frame.minX
+                }
+            
+                if frame.maxY > bounds.height
+                {
+                    offset.y = bounds.height - frame.maxY
+                }
+                else if frame.minY < 0
+                {
+                    offset.y = -frame.minY
+                }
+                UIView.animate(withDuration: 0.5)
+                {
+                    view.frame = frame.offsetBy(dx: offset.x, dy: offset.y)
+                }
             default:break
         }
     }
