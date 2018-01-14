@@ -74,6 +74,7 @@ class ViewController: UIViewController
             {
                 if position == duration
                 {
+                    self.playCount += 1
                     layer.player?.seek(to: kCMTimeZero)
                     layer.player?.play()
                     self.loopIndicator.text = String(format: "#%02d", self.playCount)
