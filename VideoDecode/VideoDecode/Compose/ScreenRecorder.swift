@@ -105,7 +105,7 @@ class ScreenRecorder
         guard let cameraView = RPScreenRecorder.shared().cameraPreviewView else {return}
         if cameraView.constraints.count > 0 {return}
         
-        let tap = UITouchGestureRecognizer(target: self, action: #selector(switchCamera(_:)))
+        let tap = UITouchGestureRecognizer(target: self, action: #selector(changeCamera(_:)))
         cameraView.addGestureRecognizer(tap)
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(moveCameraPreview(_:)))
@@ -129,7 +129,7 @@ class ScreenRecorder
         }
     }
     
-    @objc private func switchCamera(_ gesture:UITouchGestureRecognizer)
+    @objc private func changeCamera(_ gesture:UITouchGestureRecognizer)
     {
         guard gesture.state == .began else { return }
         if gesture.numberOfTouches >= 2
