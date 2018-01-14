@@ -9,6 +9,7 @@
 import Foundation
 import ReplayKit
 import AVKit
+import UIKit.UIGestureRecognizerSubclass
 
 extension RPSampleBufferType:CustomStringConvertible
 {
@@ -20,6 +21,29 @@ extension RPSampleBufferType:CustomStringConvertible
             case .audioMic:return "audio_mic"
             case .video:return "video"
         }
+    }
+}
+
+class UITouchGestureRecognizer:UIGestureRecognizer
+{
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent)
+    {
+        self.state = .began
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent)
+    {
+        self.state = .changed
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent)
+    {
+        self.state = .ended
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent)
+    {
+        self.state = .cancelled
     }
 }
 
@@ -75,27 +99,67 @@ class ScreenRecorder
         }
     }
     
+    //MARK: camera
     private func setupCamera()
     {
         guard let cameraView = RPScreenRecorder.shared().cameraPreviewView else {return}
         if cameraView.constraints.count > 0 {return}
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(switchCamera(_:)))
-        tap.numberOfTapsRequired = 1
+        let tap = UITouchGestureRecognizer(target: self, action: #selector(switchCamera(_:)))
         cameraView.addGestureRecognizer(tap)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(moveCameraPreview(_:)))
+        pan.maximumNumberOfTouches = 1
+        cameraView.addGestureRecognizer(pan)
+        tap.require(toFail: pan)
     }
     
-    @objc private func switchCamera(_ gesture:UITapGestureRecognizer)
+    @objc private func moveCameraPreview(_ gesture:UIPanGestureRecognizer)
     {
-        if gesture.state == .recognized
+        guard let view = gesture.view else {return}
+        switch gesture.state
+        {
+            case .began:
+                gesture.setTranslation(CGPoint.zero, in: view)
+            case .changed:
+                let translation = gesture.translation(in: view)
+                view.frame = view.frame.offsetBy(dx: translation.x, dy: translation.y)
+                gesture.setTranslation(CGPoint.zero, in: view)
+            default:break
+        }
+    }
+    
+    @objc private func switchCamera(_ gesture:UITouchGestureRecognizer)
+    {
+        guard gesture.state == .began else { return }
+        if gesture.numberOfTouches >= 2
         {
             let position = RPScreenRecorder.shared().cameraPosition
             switch position
             {
-                case .back:
-                    RPScreenRecorder.shared().cameraPosition = .front
-                case .front:
-                    RPScreenRecorder.shared().cameraPosition = .back
+                case .back: RPScreenRecorder.shared().cameraPosition = .front
+                case .front: RPScreenRecorder.shared().cameraPosition = .back
+            }
+        }
+        else
+        {
+            if let view = RPScreenRecorder.shared().cameraPreviewView
+            {
+                let alpha:CGFloat
+                if view.alpha == 1.0
+                {
+                    alpha = 0.2
+                }
+                else
+                {
+                    alpha = 1.0
+                }
+                
+                view.layer.removeAllAnimations()
+                UIView.animate(withDuration: 0.2)
+                {
+                    view.alpha = alpha
+                }
             }
         }
     }
@@ -112,6 +176,7 @@ class ScreenRecorder
         return UIImageView(image: image)
     }
     
+    //MARK: sample
     private var synctime:CMTime = kCMTimeZero
     private func receiveScreenSample(sample:CMSampleBuffer, type:RPSampleBufferType, error:Error?)
     {
@@ -120,11 +185,11 @@ class ScreenRecorder
             writer.append(sample: sample, type: type)
             if type == .video
             {
-                let time = CMSampleBufferGetPresentationTimeStamp(sample)
-                if Int(time.seconds) % 5 == 0 && (time - synctime).seconds >= 1
+                let position = CMSampleBufferGetPresentationTimeStamp(sample) - writer.timeOffset
+                if Int(position.seconds) % 5 == 0 && (position - synctime).seconds >= 1
                 {
-                    synctime = time
-                    synchronize(timestamp: time.seconds)
+                    synctime = position
+                    synchronize(timestamp: position.seconds)
                 }
             }
         }
@@ -310,11 +375,14 @@ class AssetWriter
             }
         }
         
+        timeOffset = CMSampleBufferGetPresentationTimeStamp(sample)
+        
         writer.startWriting()
-        writer.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
+        writer.startSession(atSourceTime: timeOffset)
     }
     
-    var lastime:CMTime = kCMTimeZero
+    private(set) var timeOffset:CMTime = kCMTimeZero
+    
     private let background = DispatchQueue(label: "video_encode_queue")
     func append(sample:CMSampleBuffer, type:RPSampleBufferType)
     {
