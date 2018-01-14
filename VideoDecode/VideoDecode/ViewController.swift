@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import ReplayKit
+import ScreenRecording
 
 extension AVAssetReaderStatus
 {
