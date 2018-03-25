@@ -12,25 +12,22 @@ import AVFoundation
 class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
 {
     @IBOutlet weak var previewView: CameraPreviewView!
-    @IBOutlet weak var overlay: CameraOverlayView!
+    @IBOutlet weak var metadataView: CameraMetadataView!
     
     private var session:AVCaptureSession!
-    private var metadataQueue:dispatch_queue_t!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         session = AVCaptureSession()
-        session.sessionPreset = AVCaptureSessionPresetPhoto
+        session.sessionPreset = .photo
         previewView.session = session
-        (previewView.layer as! AVCaptureVideoPreviewLayer).videoGravity = AVLayerVideoGravityResizeAspectFill
+        (previewView.layer as! AVCaptureVideoPreviewLayer).videoGravity = .resizeAspectFill
         
-        metadataQueue = dispatch_queue_create("MetadataOutput", DISPATCH_QUEUE_SERIAL)
-        
-        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo)
+        AVCaptureDevice.requestAccess(for: .video)
         { (success:Bool) -> Void in
-            let status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
             if success
             {
                 self.configSession()
@@ -42,10 +39,10 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         }
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        if !session.running
+        if !session.isRunning
         {
             session.startRunning()
         }
@@ -53,12 +50,12 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     
     func applicationWillEnterForeground()
     {
-        overlay.setMetadataObjects([], faces: [])
+        metadataView.setMetadataObjects([])
     }
     
-    func findCamera(position:AVCaptureDevicePosition)->AVCaptureDevice!
+    func findCamera(position:AVCaptureDevice.Position)->AVCaptureDevice!
     {
-        let list = AVCaptureDevice.devices() as! [AVCaptureDevice]
+        let list = AVCaptureDevice.devices()
         for device in list
         {
             if device.position == position
@@ -74,7 +71,7 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     {
         session.beginConfiguration()
         
-        let camera = findCamera(.Back)
+        guard let camera = findCamera(position: .back) else {return}
         do
         {
             let cameraInput = try AVCaptureDeviceInput(device: camera)
@@ -83,7 +80,7 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
                 session.addInput(cameraInput)
             }
             
-            setupCamera(camera)
+            setupCamera(camera: camera)
         }
         catch {}
         
@@ -91,14 +88,14 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         if session.canAddOutput(metadata)
         {
             session.addOutput(metadata)
-            metadata.setMetadataObjectsDelegate(self, queue: metadataQueue)
+            metadata.setMetadataObjectsDelegate(self, queue: .main)
             
-            var metadataTypes = metadata.availableMetadataObjectTypes as! [String]
+            var metadataTypes = metadata.availableMetadataObjectTypes
             for i in 0..<metadataTypes.count
             {
-                if metadataTypes[i] == "face"
+                if metadataTypes[i] == .face
                 {
-                    metadataTypes.removeAtIndex(i)
+                    metadataTypes.remove(at: i)
                     break
                 }
             }
@@ -122,34 +119,34 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
             return
         }
         
-        if camera.isFocusModeSupported(.ContinuousAutoFocus)
+        if camera.isFocusModeSupported(.continuousAutoFocus)
         {
-            camera.focusMode = .ContinuousAutoFocus
+            camera.focusMode = .continuousAutoFocus
         }
         
-        if camera.autoFocusRangeRestrictionSupported
+        if camera.isAutoFocusRangeRestrictionSupported
         {
-//            camera.autoFocusRangeRestriction = .Near
+//            camera.autoFocusRangeRestriction = .near
         }
         
-        if camera.smoothAutoFocusSupported
+        if camera.isSmoothAutoFocusSupported
         {
-            camera.smoothAutoFocusEnabled = true
+            camera.isSmoothAutoFocusEnabled = true
         }
         
         camera.unlockForConfiguration()
     }
     
     //MARK: metadataObjects processing
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!)
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection)
     {
         var codes:[AVMetadataMachineReadableCodeObject] = []
         var faces:[AVMetadataFaceObject] = []
         
         let layer = previewView.layer as! AVCaptureVideoPreviewLayer
-        for item in metadataObjects as! [AVMetadataObject]
+        for item in metadataObjects
         {
-            let mrc = layer.transformedMetadataObjectForMetadataObject(item)
+            guard let mrc = layer.transformedMetadataObject(for: item) else {continue}
             switch mrc
             {
                 case is AVMetadataMachineReadableCodeObject:
@@ -163,38 +160,52 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
                     print(mrc)
             }
         }
-        
-        dispatch_async(dispatch_get_main_queue())
+        DispatchQueue.main.async
         {
-            self.overlay.setMetadataObjects(codes, faces: faces)
+            self.metadataView.setMetadataObjects(codes)
+            self.showMetadataObjects(self.metadataView.mrcObjects)
         }
     }
     
-    //MARK: orientation
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    func showMetadataObjects(_ objects:[AVMetadataMachineReadableCodeObject])
     {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        if let resultController = self.presentedViewController as? ResultViewController
+        {
+            resultController.mrcObjects = objects
+            resultController.reload()
+        }
+        else
+        {
+            guard let resultController = storyboard?.instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController else
+            {
+                return
+            }
+            resultController.mrcObjects = objects
+            resultController.view.frame = view.frame
+            present(resultController, animated: true, completion: nil)
+        }
         
-        let orientation = UIDevice.currentDevice().orientation
+    }
+    
+    //MARK: orientation
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
+    {
+        super.viewWillTransition(to: size, with: coordinator)
+        let orientation = UIDevice.current.orientation
         if orientation.isLandscape || orientation.isPortrait
         {
             let layer = previewView.layer as! AVCaptureVideoPreviewLayer
             if layer.connection != nil
             {
-                layer.connection.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+                layer.connection?.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
             }
         }
+        
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
-    {
-        return .All
-    }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .all }
     
-    override func prefersStatusBarHidden() -> Bool
-    {
-        return true
-    }
+    override var prefersStatusBarHidden: Bool { return true }
 
     override func didReceiveMemoryWarning()
     {

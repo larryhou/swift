@@ -10,9 +10,19 @@ import Foundation
 import AVFoundation
 import UIKit
 
+extension CGPoint
+{
+    func distance(to point:CGPoint)->CGFloat
+    {
+        let dx = point.x - self.x
+        let dy = point.y - self.y
+        return sqrt(dx * dx + dy * dy)
+    }
+}
+
 class CameraPreviewView:UIView
 {
-    override static func layerClass()->AnyClass
+    override static var layerClass:AnyClass
     {
         return AVCaptureVideoPreviewLayer.self
     }
@@ -31,116 +41,151 @@ class CameraPreviewView:UIView
     }
 }
 
-class CameraOverlayView:UIView
+class CameraMetadataView:UIView
 {
-    @IBOutlet weak var label:UILabel!
-    @IBOutlet weak var type:UILabel!
+    var mrcObjects:[AVMetadataMachineReadableCodeObject]!
     
-    private var codes:[AVMetadataMachineReadableCodeObject]!
-    private var faces:[AVMetadataFaceObject]!
-    
-    func setMetadataObjects(codes:[AVMetadataMachineReadableCodeObject], faces:[AVMetadataFaceObject])
+    func setMetadataObjects(_ mrcObjects:[AVMetadataMachineReadableCodeObject])
     {
-        self.codes = codes
-        self.faces = faces
+        self.mrcObjects = unique(of: mrcObjects)
         setNeedsDisplay()
     }
     
-    func getMRCEdges(from:AVMetadataMachineReadableCodeObject)->CGPath
+    func getRelatedArea(of mrcObject:AVMetadataMachineReadableCodeObject)->CGPath
     {
-        var points:[CGPoint] = []
-        for corner in (from.corners as! [NSDictionary])
-        {
-            let x = corner.valueForKeyPath("X") as! CGFloat
-            let y = corner.valueForKeyPath("Y") as! CGFloat
-            points.append(CGPoint(x: x, y: y))
-        }
+        var points:[CGPoint] = mrcObject.corners
         
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, points[0].x, points[0].y)
+        let path = CGMutablePath()
+        path.move(to: points[0])
         for i in 1..<points.count
         {
-            CGPathAddLineToPoint(path, nil, points[i].x, points[i].y)
+            path.addLine(to: points[i])
         }
         
-        CGPathAddLineToPoint(path, nil, points[0].x, points[0].y)
-        
+        path.addLine(to: points[0])
+    
         return path
     }
     
-    func getFaceEdges(from:AVMetadataFaceObject)->CGPath
+    func getRelatedCorners(of mrcObject:AVMetadataMachineReadableCodeObject)->CGPath
     {
-        let path = CGPathCreateMutable()
-        let radius:CGFloat = floor(min(5.0, from.bounds.width / 2, from.bounds.height))
-        CGPathAddRoundedRect(path, nil, from.bounds, radius, radius)
-        return path
-    }
-    
-    override func drawRect(rect: CGRect)
-    {
-        let context = UIGraphicsGetCurrentContext()
-        var target:CGPath!
+        let points = mrcObject.corners
+        let length:CGFloat = 10
         
-        label.textColor = UIColor.whiteColor()
-        label.text = ""
-        
-        type.text = ""
-        if codes != nil && codes.count > 0
+        let path = CGMutablePath()
+        for n in 0..<points.count
         {
-            CGContextSaveGState(context)
-            CGContextSetStrokeColorWithColor(context, UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0).CGColor)
-            CGContextSetLineJoin(context, .Miter)
-            CGContextSetLineCap(context, .Square)
-            CGContextSetLineWidth(context, 2.0)
+            let pf = points[n]
+            let pt = n < points.count - 1 ? points[n + 1] : points[0]
             
-            for mrc in codes
+            let angle = atan2(pt.y - pf.y, pt.x - pf.x)
+            let dx = length * cos(angle)
+            let dy = length * sin(angle)
+            
+            path.move(to: pf)
+            path.addLine(to: CGPoint(x: pf.x + dx, y: pf.y + dy))
+            
+            path.move(to: pt)
+            path.addLine(to: CGPoint(x: pt.x - dx, y: pt.y - dy))
+        }
+        return path
+    }
+    
+    func unique(of objects:[AVMetadataMachineReadableCodeObject])->[AVMetadataMachineReadableCodeObject]
+    {
+        guard objects.count >= 2 else {return objects}
+        
+        var list = objects.map({character(of: $0)})
+        list.sort(by: {$0.offset < $1.offset})
+        
+        var result:[AVMetadataMachineReadableCodeObject] = []
+        
+        var refer = list[0]
+        result.append(refer.object)
+        
+        for n in 1..<list.count
+        {
+            let current = list[n]
+            if current.center.distance(to: refer.center) < refer.radius
             {
-                let path = getMRCEdges(mrc)
-                CGContextAddPath(context, path)
-                if target == nil
+                if current.radius > refer.radius
                 {
-                    target = path
-                    type.text = mrc.type
-                    
-                    label.text = mrc.stringValue
-                    label.sizeToFit()
-                    
-                    if mrc.stringValue != nil
+                    result[result.count - 1] = current.object
+                }
+                else {continue}
+            }
+            else
+            {
+                result.append(current.object)
+            }
+            refer = current
+        }
+        
+        return result
+    }
+    
+    func character(of mrcObject:AVMetadataMachineReadableCodeObject)->(center:CGPoint, radius:CGFloat, object:AVMetadataMachineReadableCodeObject, offset:CGFloat)
+    {
+        var center = CGPoint()
+        for corner in mrcObject.corners
+        {
+            center.x += corner.x
+            center.y += corner.y
+        }
+        center.x /= 4
+        center.y /= 4
+        
+        let frameCenter = CGPoint(x: frame.origin.x + frame.width / 2, y: frame.origin.y + frame.height / 2)
+        
+        let offset = frameCenter.distance(to: center)
+        
+        let distances = mrcObject.corners.map{ $0.distance(to: center) }
+        
+        let radius = distances.reduce(0, {$0 + $1}) / CGFloat(distances.count)
+        return (center, radius, mrcObject, offset)
+    }
+    
+    override func draw(_ rect: CGRect)
+    {
+        guard let context = UIGraphicsGetCurrentContext() else {return}
+        
+        if mrcObjects != nil && mrcObjects.count > 0
+        {
+            context.saveGState()
+            context.setLineJoin(.miter)
+            context.setLineCap(.square)
+            
+            for n in 0..<mrcObjects.count
+            {
+                let mrc = mrcObjects[n]
+                let color:UIColor = n == 0 ? .green : .yellow
+                
+                context.setStrokeColor(color.cgColor)
+                
+                context.setLineWidth(2.0)
+                context.addPath(getRelatedCorners(of: mrc))
+                context.strokePath()
+                
+                let area = getRelatedArea(of: mrc)
+                
+                context.setLineWidth(0.5)
+                context.addPath(area)
+                context.strokePath()
+                
+                context.addPath(area)
+                context.setFillColor(color.withAlphaComponent(0.1).cgColor)
+                context.fillPath()
+                
+                if n == 0
+                {
+                    if let stringValue = mrc.stringValue
                     {
-                        UIPasteboard.generalPasteboard().string = mrc.stringValue
+                        UIPasteboard.general.string = stringValue
                     }
                 }
             }
             
-            CGContextStrokePath(context)
-            CGContextRestoreGState(context)
+            context.restoreGState()
         }
-        
-        if target != nil
-        {
-            CGContextSaveGState(context)
-            CGContextAddPath(context, target)
-            CGContextSetFillColorWithColor(context, UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.2).CGColor)
-            CGContextFillPath(context)
-            CGContextRestoreGState(context)
-        }
-        
-        if faces != nil && faces.count > 0
-        {
-            CGContextSaveGState(context)
-            CGContextSetStrokeColorWithColor(context, UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).CGColor)
-            CGContextSetLineJoin(context, .Miter)
-            CGContextSetLineCap(context, .Square)
-            CGContextSetLineWidth(context, 1.0)
-            
-            for mrc in faces
-            {
-                CGContextAddPath(context, getFaceEdges(mrc))
-            }
-            
-            CGContextStrokePath(context)
-            CGContextRestoreGState(context)
-        }
-        
     }
 }

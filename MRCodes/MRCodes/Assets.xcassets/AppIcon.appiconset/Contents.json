@@ -1,82 +1,112 @@
 {
   "images" : [
     {
+      "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "icon_20x20@x2.jpg",
+      "scale" : "2x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "icon_20x20@x3.jpg",
+      "scale" : "3x"
+    },
+    {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "AppIcon29@x2.png",
+      "filename" : "icon_29x29@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "AppIcon29@x3.png",
+      "filename" : "icon_29x29@x3.jpg",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "AppIcon40@x2.png",
+      "filename" : "icon_40x40@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "AppIcon40@x3.png",
+      "filename" : "icon_40x40@x3.jpg",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "AppIcon60@x2.png",
+      "filename" : "icon_60x60@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "AppIcon60@x3.png",
+      "filename" : "icon_60x60@x3.jpg",
       "scale" : "3x"
     },
     {
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "icon_20x20.jpg",
+      "scale" : "1x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "icon_20x20@x2.jpg",
+      "scale" : "2x"
+    },
+    {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "AppIcon29.png",
+      "filename" : "icon_29x29.jpg",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "AppIcon29@x2-1.png",
+      "filename" : "icon_29x29@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "AppIcon40.png",
+      "filename" : "icon_40x40.jpg",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "AppIcon40@x2-1.png",
+      "filename" : "icon_40x40@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "AppIcon76.png",
+      "filename" : "icon_76x76.jpg",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "AppIcon76@x2.png",
+      "filename" : "icon_76x76@x2.jpg",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "AppIcon83.5@x2.png",
+      "filename" : "icon_83.5x83.5@x2.jpg",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "appstore.jpg",
+      "scale" : "1x"
     }
   ],
   "info" : {
