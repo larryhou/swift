@@ -39,6 +39,12 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        print("touch")
+        self.presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
