@@ -11,10 +11,16 @@ import AVFoundation
 
 class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
 {
+    private var FocusContext:String?
+    private var ExposureContext:String?
+    private var LensContext:String?
+    
+    @IBOutlet weak var torchSwitcher: UISwitch!
     @IBOutlet weak var previewView: CameraPreviewView!
     @IBOutlet weak var metadataView: CameraMetadataView!
     
     private var session:AVCaptureSession!
+    private var activeCamera:AVCaptureDevice?
 
     override func viewDidLoad()
     {
@@ -41,7 +47,6 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        print("touch")
         if let resultController = presentedViewController as? ResultViewController
         {
             resultController.animate(visible: false)
@@ -51,6 +56,7 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        torchSwitcher.isHidden = true
         if !session.isRunning
         {
             session.startRunning()
@@ -81,6 +87,8 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         session.beginConfiguration()
         
         guard let camera = findCamera(position: .back) else {return}
+        self.activeCamera = camera
+        
         do
         {
             let cameraInput = try AVCaptureDeviceInput(device: camera)
@@ -144,6 +152,58 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         }
         
         camera.unlockForConfiguration()
+        
+//        camera.addObserver(self, forKeyPath: "adjustingFocus", options: .new, context: &FocusContext)
+//        camera.addObserver(self, forKeyPath: "exposureDuration", options: .new, context: &ExposureContext)
+        camera.addObserver(self, forKeyPath: "lensPosition", options: .new, context: &LensContext)
+    }
+    
+    @IBAction func torchStatusChange(_ sender: UISwitch)
+    {
+        guard let camera = self.activeCamera else { return }
+        guard camera.isTorchAvailable else {return}
+        
+        do { try camera.lockForConfiguration() } catch { return }
+        
+        if sender.isOn
+        {
+            if camera.isTorchModeSupported(.on)
+            {
+                try? camera.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
+            }
+        }
+        else
+        {
+            if camera.isTorchModeSupported(.off)
+            {
+                camera.torchMode = .off
+            }
+            
+            checkTorchSwitcher(for: camera)
+        }
+        
+        camera.unlockForConfiguration()
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
+    {
+        if context == &FocusContext || context == &ExposureContext || context == &LensContext, let camera = object as? AVCaptureDevice
+        {
+            print(camera.exposureDuration.seconds, camera.activeFormat.minExposureDuration.seconds, camera.activeFormat.maxExposureDuration.seconds,camera.iso, camera.lensPosition)
+            checkTorchSwitcher(for: camera)
+        }
+    }
+    
+    func checkTorchSwitcher(`for` camera:AVCaptureDevice)
+    {
+        if camera.iso >= 400
+        {
+            torchSwitcher.isHidden = false;
+        }
+        else
+        {
+            torchSwitcher.isHidden = !camera.isTorchActive
+        }
     }
     
     //MARK: metadataObjects processing
@@ -160,7 +220,6 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
             {
                 case is AVMetadataMachineReadableCodeObject:
                     codes.append(mrc as! AVMetadataMachineReadableCodeObject)
-                    print("MRC", item)
                 
                 case is AVMetadataFaceObject:
                     faces.append(mrc as! AVMetadataFaceObject)

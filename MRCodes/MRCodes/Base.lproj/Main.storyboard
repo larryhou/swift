@@ -31,18 +31,27 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ne5-oZ-oDk">
+                                <rect key="frame" x="163" y="626" width="51" height="31"/>
+                                <connections>
+                                    <action selector="torchStatusChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="oCg-0U-XaN"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ne5-oZ-oDk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CHp-OQ-7cS"/>
                             <constraint firstItem="C2e-tG-9fp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EHy-wY-VOl"/>
                             <constraint firstItem="C2e-tG-9fp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="F5y-Lv-N2y"/>
                             <constraint firstAttribute="trailing" secondItem="C2e-tG-9fp" secondAttribute="trailing" id="U2S-hh-i9B"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ne5-oZ-oDk" secondAttribute="bottom" constant="10" id="e3K-nN-E75"/>
                             <constraint firstItem="C2e-tG-9fp" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="wQT-jd-43Y"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="metadataView" destination="C2e-tG-9fp" id="a5z-G9-hsg"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="5iM-Bh-f0v"/>
+                        <outlet property="torchSwitcher" destination="ne5-oZ-oDk" id="n1O-M3-hd5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
