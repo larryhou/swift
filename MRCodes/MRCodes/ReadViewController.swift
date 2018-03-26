@@ -189,7 +189,7 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     {
         if context == &FocusContext || context == &ExposureContext || context == &LensContext, let camera = object as? AVCaptureDevice
         {
-            print(camera.exposureDuration.seconds, camera.activeFormat.minExposureDuration.seconds, camera.activeFormat.maxExposureDuration.seconds,camera.iso, camera.lensPosition)
+//            print(camera.exposureDuration.seconds, camera.activeFormat.minExposureDuration.seconds, camera.activeFormat.maxExposureDuration.seconds,camera.iso, camera.lensPosition)
             checkTorchSwitcher(for: camera)
         }
     }

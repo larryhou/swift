@@ -46,10 +46,16 @@ class ResultViewController: UIViewController
         let top = bottom.offsetBy(dx: 0, dy: -frame.height)
         
         let to = visible ? top : bottom
-        UIView.animate(withDuration: 0.3)
+        UIView.animate(withDuration: 0.3, animations:
         {
             self.resultView.frame = to
-        }
+        }, completion:
+        {
+            if $0 && !visible
+            {
+                self.dismiss(animated: true, completion: nil)
+            }
+        })
     }
     
     func reload()
