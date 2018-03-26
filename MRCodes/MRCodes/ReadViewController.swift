@@ -42,7 +42,10 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         print("touch")
-        self.presentedViewController?.dismiss(animated: true, completion: nil)
+        if let resultController = presentedViewController as? ResultViewController
+        {
+            resultController.animate(visible: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -179,6 +182,8 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         {
             resultController.mrcObjects = objects
             resultController.reload()
+            
+            resultController.animate(visible: true)
         }
         else
         {
@@ -188,7 +193,7 @@ class ReadViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
             }
             resultController.mrcObjects = objects
             resultController.view.frame = view.frame
-            present(resultController, animated: true, completion: nil)
+            present(resultController, animated: false, completion: nil)
         }
         
     }

@@ -26,9 +26,7 @@ class ResultViewController: UIViewController
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        
-        let frame = view.frame
-        view.frame = frame.offsetBy(dx: 0, dy: frame.height - resultView.frame.height)
+        view.isHidden = true
         
         reload()
     }
@@ -36,6 +34,22 @@ class ResultViewController: UIViewController
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
+        resultView.frame = resultView.frame.offsetBy(dx: 0, dy: resultView.frame.height)
+        animate(visible: true)
+        view.isHidden = false
+    }
+    
+    func animate(visible:Bool)
+    {
+        let frame = resultView.frame
+        let bottom = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: frame.size)
+        let top = bottom.offsetBy(dx: 0, dy: -frame.height)
+        
+        let to = visible ? top : bottom
+        UIView.animate(withDuration: 0.3)
+        {
+            self.resultView.frame = to
+        }
     }
     
     func reload()
