@@ -70,11 +70,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vGt-gS-RJt">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vGt-gS-RJt" customClass="ResultView" customModule="MRCodes" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="567" width="375" height="100"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVC-0k-Fnf">
-                                        <rect key="frame" x="3" y="14" width="364" height="86"/>
+                                        <rect key="frame" x="3" y="12" width="364" height="88"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
@@ -82,7 +82,7 @@
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" shipmentTrackingNumber="YES" flightNumber="YES"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djf-5I-hUn">
-                                        <rect key="frame" x="8" y="4" width="30.5" height="10"/>
+                                        <rect key="frame" x="8" y="2" width="30.5" height="10"/>
                                         <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="10"/>
                                         <color key="textColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -91,7 +91,7 @@
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.74644156678082196" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="3VY-sz-EFz"/>
-                                    <constraint firstItem="djf-5I-hUn" firstAttribute="top" secondItem="vGt-gS-RJt" secondAttribute="top" constant="4" id="3zC-kk-tha"/>
+                                    <constraint firstItem="djf-5I-hUn" firstAttribute="top" secondItem="vGt-gS-RJt" secondAttribute="top" constant="2" id="3zC-kk-tha"/>
                                     <constraint firstItem="qVC-0k-Fnf" firstAttribute="top" secondItem="djf-5I-hUn" secondAttribute="bottom" id="Eez-We-vyj"/>
                                     <constraint firstItem="djf-5I-hUn" firstAttribute="leading" secondItem="vGt-gS-RJt" secondAttribute="leadingMargin" id="Oxa-P5-iF1"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="djf-5I-hUn" secondAttribute="trailing" constant="20" symbolic="YES" id="WZb-6R-HOB"/>
@@ -99,11 +99,6 @@
                                     <constraint firstAttribute="bottom" secondItem="qVC-0k-Fnf" secondAttribute="bottom" id="sYG-Y6-CLT"/>
                                     <constraint firstItem="qVC-0k-Fnf" firstAttribute="trailing" secondItem="vGt-gS-RJt" secondAttribute="trailingMargin" id="tiy-yQ-RzX"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

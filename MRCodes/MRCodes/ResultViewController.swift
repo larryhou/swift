@@ -10,6 +10,19 @@ import Foundation
 import AVFoundation
 import UIKit
 
+class ResultView: UIView
+{
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        layer.cornerRadius = 8
+        if #available(iOS 11, *)
+        {
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+    }
+}
+
 class ResultViewController: UIViewController
 {
     var mrcObjects:[AVMetadataMachineReadableCodeObject]!
