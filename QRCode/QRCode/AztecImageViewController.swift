@@ -19,21 +19,21 @@ class AztecImageViewController:UIViewController, UITextViewDelegate
         super.viewDidLoad()
         
         aztecImageView.layer.borderWidth = 1.0
-        aztecImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        aztecImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        aztecImageView.inputCompactStyle = compactStyleSwitch.on
+        aztecImageView.inputCompactStyle = compactStyleSwitch.isOn
     }
     
-    @IBAction func compactStyleDidChange(sender: UISwitch)
+    @IBAction func compactStyleDidChange(_ sender: UISwitch)
     {
-        aztecImageView.inputCompactStyle = sender.on
+        aztecImageView.inputCompactStyle = sender.isOn
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
     {
         if text == "\n"
         {
@@ -44,7 +44,7 @@ class AztecImageViewController:UIViewController, UITextViewDelegate
         return true
     }
     
-    func textViewDidChange(textView: UITextView)
+    func textViewDidChange(_ textView: UITextView)
     {
         aztecImageView.inputMessage = textView.text
     }

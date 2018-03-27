@@ -9,8 +9,32 @@
 import Foundation
 import UIKit
 
+class GeneratorImageView: UIImageView
+{
+    func stripOutputImage(of filter:CIFilter?)->UIImage?
+    {
+        guard let image = filter?.outputImage else {return nil}
+        UIGraphicsBeginImageContext(frame.size)
+        defer
+        {
+            UIGraphicsEndImageContext()
+        }
+        
+        guard let context = UIGraphicsGetCurrentContext() else {return nil}
+        
+        context.interpolationQuality = .none
+        
+        if let cgImage = CIContext().createCGImage(image, from: image.extent)
+        {
+            context.draw(cgImage, in: context.boundingBoxOfClipPath)
+        }
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
 @IBDesignable
-class PDF417ImageView:UIImageView
+class PDF417ImageView:GeneratorImageView
 {
     private static let DEFAULT_MESSAGE = "larryhou"
     
@@ -78,7 +102,8 @@ class PDF417ImageView:UIImageView
     func drawPDF417Image()
     {
         let filter = CIFilter(name: "CIPDF417BarcodeGenerator")
-        let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(preferredAspectRatio, forKey: "inputPreferredAspectRatio")
@@ -86,20 +111,7 @@ class PDF417ImageView:UIImageView
         filter?.setValue(compactStyle, forKey: "inputCompactStyle")
         filter?.setValue(alwaysSpecifyCompaction, forKey: "inputAlwaysSpecifyCompaction")
         
-        let image = (filter?.outputImage)!
-        let scale = frame.width / image.extent.width
-        UIGraphicsBeginImageContext(CGSize(width: image.extent.width * scale, height: image.extent.height * scale))
-        
-        let context = UIGraphicsGetCurrentContext()
-        CGContextSetInterpolationQuality(context, .None)
-        
-        let cgImage = CIContext().createCGImage(image, fromRect: image.extent)
-        CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage)
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        self.image = scaledImage
+        self.image = stripOutputImage(of: filter)
     }
     
     override func prepareForInterfaceBuilder()

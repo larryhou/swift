@@ -39,7 +39,7 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
         styles.append(CompactStyleInfo(mode: 3, name: "Byte"))
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
@@ -49,24 +49,24 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
         compactionModePicker.selectRow(2, inComponent: 0, animated: false)
     }
     
-    @IBAction func aspactRatioDidChange(sender: UISlider)
+    @IBAction func aspactRatioDidChange(_ sender: UISlider)
     {
         aspactRatioIndicator.text = String(format:"%2.0f", sender.value)
         imageView.preferredAspectRatio = Double(sender.value)
     }
     
-    @IBAction func compactStyleDidChange(sender: UISwitch)
+    @IBAction func compactStyleDidChange(_ sender: UISwitch)
     {
-        imageView.compactStyle = sender.on
+        imageView.compactStyle = sender.isOn
     }
     
-    @IBAction func alwaysSpecifyCompactionDidChange(sender: UISwitch)
+    @IBAction func alwaysSpecifyCompactionDidChange(_ sender: UISwitch)
     {
-        imageView.alwaysSpecifyCompaction = sender.on
+        imageView.alwaysSpecifyCompaction = sender.isOn
     }
     
     //MARK: text
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
     {
         if text == "\n"
         {
@@ -77,28 +77,28 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
         return true
     }
     
-    func textViewDidChange(textView: UITextView)
+    func textViewDidChange(_ textView: UITextView)
     {
         imageView.inputMessage = textView.text
     }
     
     //MARK: picker
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         return styles.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
         return styles[row].name
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         imageView.compactionMode = styles[row].mode
     }

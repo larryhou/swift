@@ -11,10 +11,8 @@ import UIKit
 
 class TabBarViewController:UITabBarController
 {
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
+    override var supportedInterfaceOrientations:UIInterfaceOrientationMask
     {
-        return [UIInterfaceOrientationMask.Portrait]
+        return [.portrait]
     }
-    
-    
 }

@@ -25,24 +25,24 @@ class BarcodeImageViewController:UIViewController, UITextFieldDelegate
         
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         quietSpaceDidChange(quietSpaceSlider)
     }
     
-    @IBAction func quietSpaceDidChange(sender: UISlider)
+    @IBAction func quietSpaceDidChange(_ sender: UISlider)
     {
         quietSpaceIndicator.text = String(format: "%5.2f", sender.value)
         barcodeImageView.inputQuietSpace = Double(sender.value)
     }
     
-    @IBAction func inputTextDidChange(sender: UITextField)
+    @IBAction func inputTextDidChange(_ sender: UITextField)
     {
         barcodeImageView.inputMessage = sender.text!
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         textField.resignFirstResponder()
         return true

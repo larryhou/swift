@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 @IBDesignable
-class QRImageView:UIImageView
+class QRImageView:GeneratorImageView
 {
     private static let DEFAULT_MESSAGE = "larryhou"
     
@@ -67,39 +67,29 @@ class QRImageView:UIImageView
     private func drawQRImageWithScaleTransform()
     {
         let filter = CIFilter(name: "CIQRCodeGenerator")
-        let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
+        let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
         
         var image = (filter?.outputImage)!
         let scale = self.frame.width / image.extent.width
-        image = image.imageByApplyingTransform(CGAffineTransformMakeScale(scale, scale))
+        image = image.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
         
-        self.image = UIImage(CIImage: image)
+        self.image = UIImage(ciImage: image)
     }
     
     private func drawQRImageWithCoreGraphics()
     {
         let filter = CIFilter(name: "CIQRCodeGenerator")
-        let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
+        let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
         
-        let image = (filter?.outputImage)!
-        UIGraphicsBeginImageContext(frame.size)
         
-        let context = UIGraphicsGetCurrentContext()
-        CGContextSetInterpolationQuality(context, .None)
         
-        let cgImage = CIContext().createCGImage(image, fromRect: image.extent)
-        CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage)
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        self.image = scaledImage
+        self.image = stripOutputImage(of: filter)
     }
     
     override func prepareForInterfaceBuilder()

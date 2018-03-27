@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 @IBDesignable
-class BarcodeImageView:UIImageView
+class BarcodeImageView:GeneratorImageView
 {
     private static let DEFAULT_MESSAGE = "larryhou"
     
@@ -42,25 +42,12 @@ class BarcodeImageView:UIImageView
     func drawBarcodeImage()
     {
         let filter = CIFilter(name: "CICode128BarcodeGenerator")
-        let data = NSString(string: inputMessage).dataUsingEncoding(NSUTF8StringEncoding)
+        let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(inputQuietSpace, forKey: "inputQuietSpace")
         
-        let image = (filter?.outputImage)!
-        
-        UIGraphicsBeginImageContext(frame.size)
-        let context = UIGraphicsGetCurrentContext()
-        
-        CGContextSetInterpolationQuality(context, .None)
-        
-        let cgImage = CIContext().createCGImage(image, fromRect: image.extent)
-        CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage)
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        self.image = scaledImage
+        self.image = stripOutputImage(of: filter)
     }
     
     override func prepareForInterfaceBuilder()

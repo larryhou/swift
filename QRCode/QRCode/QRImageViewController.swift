@@ -20,26 +20,26 @@ class QRImageViewController: UIViewController, UITextViewDelegate
         super.viewDidLoad()
         
         inputTextView.layer.borderWidth = 1.0
-        inputTextView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        inputTextView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
         inputTextView.text = ""
         
         inputQRView.layer.borderWidth = 1.0
-        inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
         levelDidChange(levelControl)
     }
     
-    func textViewDidChange(textView: UITextView)
+    func textViewDidChange(_ textView: UITextView)
     {
         inputQRView.inputMessage = textView.text
     }
     
-    @IBAction func levelDidChange(sender:UISegmentedControl)
+    @IBAction func levelDidChange(_ sender:UISegmentedControl)
     {
         switch sender.selectedSegmentIndex
         {
@@ -54,7 +54,7 @@ class QRImageViewController: UIViewController, UITextViewDelegate
         }
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
     {
         if text == "\n"
         {
