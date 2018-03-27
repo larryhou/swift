@@ -24,7 +24,6 @@ class AztecImageViewController:UIViewController, UITextViewDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        aztecImageView.inputCompactStyle = compactStyleSwitch.isOn
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
