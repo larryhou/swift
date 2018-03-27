@@ -12,7 +12,6 @@ import UIKit
 class AztecImageViewController:UIViewController, UITextViewDelegate
 {
     @IBOutlet weak var aztecImageView: AztecImageView!
-    @IBOutlet weak var compactStyleSwitch: UISwitch!
     
     override func viewDidLoad()
     {
@@ -26,11 +25,6 @@ class AztecImageViewController:UIViewController, UITextViewDelegate
     {
         super.viewWillAppear(animated)
         aztecImageView.inputCompactStyle = compactStyleSwitch.isOn
-    }
-    
-    @IBAction func compactStyleDidChange(_ sender: UISwitch)
-    {
-        aztecImageView.inputCompactStyle = sender.isOn
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
