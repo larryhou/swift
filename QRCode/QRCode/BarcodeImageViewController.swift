@@ -12,8 +12,6 @@ import UIKit
 class BarcodeImageViewController:UIViewController, UITextFieldDelegate
 {
     @IBOutlet weak var inputTextView: UITextField!
-    @IBOutlet weak var quietSpaceSlider: UISlider!
-    @IBOutlet weak var quietSpaceIndicator: UILabel!
     @IBOutlet weak var barcodeImageView: BarcodeImageView!
     
     override func viewDidLoad()
@@ -28,13 +26,6 @@ class BarcodeImageViewController:UIViewController, UITextFieldDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        quietSpaceDidChange(quietSpaceSlider)
-    }
-    
-    @IBAction func quietSpaceDidChange(_ sender: UISlider)
-    {
-        quietSpaceIndicator.text = String(format: "%5.2f", sender.value)
-        barcodeImageView.inputQuietSpace = Double(sender.value)
     }
     
     @IBAction func inputTextDidChange(_ sender: UITextField)

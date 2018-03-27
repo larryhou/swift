@@ -13,7 +13,7 @@ import UIKit
 class BarcodeImageView:GeneratorImageView
 {
     @IBInspectable
-    var inputQuietSpace:Double = 7.0 // 7.0[0.0,20.0]
+    var inputQuietSpace:Double = 0.0 // 7.0[0.0,20.0]
     {
         didSet { drawBarcodeImage() }
     }

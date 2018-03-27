@@ -223,29 +223,11 @@
                                     <outlet property="delegate" destination="led-Cv-pAQ" id="ZGz-Vz-tdj"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuietSpace:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg4-Uw-sPS">
-                                <rect key="frame" x="16" y="74" width="113" height="20"/>
-                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="7" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="eee-dU-Eop">
-                                <rect key="frame" x="135" y="69" width="173.5" height="31"/>
-                                <connections>
-                                    <action selector="quietSpaceDidChange:" destination="led-Cv-pAQ" eventType="valueChanged" id="xuH-nb-66G"/>
-                                </connections>
-                            </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSJ-8h-aNG">
-                                <rect key="frame" x="307.5" y="73" width="51.5" height="20"/>
-                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wSP-nP-CQT" customClass="BarcodeImageView" customModule="QRCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="233.5" width="343" height="200"/>
+                                <rect key="frame" x="10" y="258" width="355" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="wSP-nP-CQT" secondAttribute="height" multiplier="1:1" id="9JH-NP-FWy"/>
-                                    <constraint firstAttribute="height" constant="200" id="jqe-GV-Tmz"/>
+                                    <constraint firstAttribute="height" constant="150" id="jqe-GV-Tmz"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="larryhou"/>
@@ -266,79 +248,44 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="eee-dU-Eop" firstAttribute="leading" secondItem="Jg4-Uw-sPS" secondAttribute="trailing" constant="8" id="2cq-HF-BC7"/>
+                            <constraint firstItem="wSP-nP-CQT" firstAttribute="leading" secondItem="WaM-O0-bCt" secondAttribute="leading" constant="10" id="6c7-uU-cfy"/>
                             <constraint firstItem="wSP-nP-CQT" firstAttribute="centerY" secondItem="WaM-O0-bCt" secondAttribute="centerY" id="B93-ts-MTC"/>
-                            <constraint firstItem="Jg4-Uw-sPS" firstAttribute="leading" secondItem="jMG-Yg-JWC" secondAttribute="leading" id="BqW-aC-Tsd"/>
-                            <constraint firstItem="KSJ-8h-aNG" firstAttribute="leading" secondItem="eee-dU-Eop" secondAttribute="trailing" constant="8" id="Frm-BR-JAp">
-                                <variation key="heightClass=regular" constant="1"/>
-                            </constraint>
                             <constraint firstItem="wSP-nP-CQT" firstAttribute="centerY" secondItem="WaM-O0-bCt" secondAttribute="centerY" id="IE1-C7-sxn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wSP-nP-CQT" secondAttribute="trailing" id="KNz-tr-Bry"/>
                             <constraint firstItem="jMG-Yg-JWC" firstAttribute="trailing" secondItem="WaM-O0-bCt" secondAttribute="trailingMargin" id="KjS-TS-wbP"/>
                             <constraint firstItem="jMG-Yg-JWC" firstAttribute="top" secondItem="Bhy-f1-iQ5" secondAttribute="bottom" constant="8" symbolic="YES" id="OB9-QH-gkn"/>
                             <constraint firstItem="wSP-nP-CQT" firstAttribute="top" secondItem="Bhy-f1-iQ5" secondAttribute="bottom" constant="100" id="STa-W0-Yaa"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="wSP-nP-CQT" secondAttribute="leading" id="VX2-Wc-Any"/>
-                            <constraint firstItem="KSJ-8h-aNG" firstAttribute="centerY" secondItem="eee-dU-Eop" secondAttribute="centerY" id="ZcY-2S-ibt">
-                                <variation key="heightClass=regular" constant="-1"/>
-                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="wSP-nP-CQT" secondAttribute="trailing" constant="10" id="U7Z-KY-pCH"/>
                             <constraint firstItem="jMG-Yg-JWC" firstAttribute="leading" secondItem="WaM-O0-bCt" secondAttribute="leadingMargin" id="jdM-A6-Vaa"/>
                             <constraint firstItem="hmg-Zk-4WG" firstAttribute="top" secondItem="wSP-nP-CQT" secondAttribute="bottom" constant="20" id="jkZ-jb-836"/>
-                            <constraint firstItem="Jg4-Uw-sPS" firstAttribute="centerY" secondItem="eee-dU-Eop" secondAttribute="centerY" id="m8O-Vx-fln"/>
-                            <constraint firstItem="eee-dU-Eop" firstAttribute="top" secondItem="jMG-Yg-JWC" secondAttribute="bottom" constant="11" id="qbo-FS-1Y2"/>
-                            <constraint firstItem="KSJ-8h-aNG" firstAttribute="trailing" secondItem="jMG-Yg-JWC" secondAttribute="trailing" id="uP2-YV-yS0"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="jMG-Yg-JWC"/>
-                                <exclude reference="Jg4-Uw-sPS"/>
-                                <exclude reference="eee-dU-Eop"/>
-                                <exclude reference="KSJ-8h-aNG"/>
                                 <exclude reference="wSP-nP-CQT"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="jkZ-jb-836"/>
                                 <exclude reference="KjS-TS-wbP"/>
                                 <exclude reference="OB9-QH-gkn"/>
                                 <exclude reference="jdM-A6-Vaa"/>
-                                <exclude reference="BqW-aC-Tsd"/>
-                                <exclude reference="m8O-Vx-fln"/>
-                                <exclude reference="2cq-HF-BC7"/>
-                                <exclude reference="qbo-FS-1Y2"/>
-                                <exclude reference="Frm-BR-JAp"/>
-                                <exclude reference="ZcY-2S-ibt"/>
-                                <exclude reference="uP2-YV-yS0"/>
                                 <exclude reference="B93-ts-MTC"/>
                                 <exclude reference="IE1-C7-sxn"/>
-                                <exclude reference="KNz-tr-Bry"/>
                                 <exclude reference="STa-W0-Yaa"/>
-                                <exclude reference="VX2-Wc-Any"/>
+                                <exclude reference="jkZ-jb-836"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="jMG-Yg-JWC"/>
-                                <include reference="Jg4-Uw-sPS"/>
-                                <include reference="eee-dU-Eop"/>
-                                <include reference="KSJ-8h-aNG"/>
                                 <include reference="wSP-nP-CQT"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="jkZ-jb-836"/>
                                 <include reference="KjS-TS-wbP"/>
                                 <include reference="OB9-QH-gkn"/>
                                 <include reference="jdM-A6-Vaa"/>
-                                <include reference="BqW-aC-Tsd"/>
-                                <include reference="m8O-Vx-fln"/>
-                                <include reference="2cq-HF-BC7"/>
-                                <include reference="qbo-FS-1Y2"/>
-                                <include reference="Frm-BR-JAp"/>
-                                <include reference="ZcY-2S-ibt"/>
-                                <include reference="uP2-YV-yS0"/>
                                 <include reference="B93-ts-MTC"/>
                                 <exclude reference="IE1-C7-sxn"/>
-                                <include reference="KNz-tr-Bry"/>
                                 <exclude reference="STa-W0-Yaa"/>
-                                <include reference="VX2-Wc-Any"/>
+                                <exclude reference="jkZ-jb-836"/>
                             </mask>
                         </variation>
                     </view>
@@ -346,8 +293,6 @@
                     <connections>
                         <outlet property="barcodeImageView" destination="wSP-nP-CQT" id="cJm-pw-FA9"/>
                         <outlet property="inputTextView" destination="jMG-Yg-JWC" id="YcV-FR-lU6"/>
-                        <outlet property="quietSpaceIndicator" destination="KSJ-8h-aNG" id="eGK-pk-gHH"/>
-                        <outlet property="quietSpaceSlider" destination="eee-dU-Eop" id="0AA-aO-GYb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zNn-rI-DfB" userLabel="First Responder" sceneMemberID="firstResponder"/>
