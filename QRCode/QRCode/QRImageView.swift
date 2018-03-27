@@ -12,42 +12,29 @@ import UIKit
 @IBDesignable
 class QRImageView:GeneratorImageView
 {
-    private static let DEFAULT_MESSAGE = "larryhou"
-    
-    private var ib_inputMessage:String = QRImageView.DEFAULT_MESSAGE
-    private var ib_useCoreGraphics = true
-    private var ib_correctionLevel = "M"
-    
     @IBInspectable
-    var correctionLevel:String
+    var inputCorrectionLevel:String = "M" //M[L:7%,M:15%,Q:25%,H:30%]
     {
-        get {return ib_correctionLevel}
-        set
+        didSet
         {
-            self.ib_correctionLevel = newValue
             self.drawQRImage()
         }
     }
     
     @IBInspectable
-    var useCoreGraphics:Bool
+    var useCoreGraphics:Bool = true
     {
-        get {return ib_useCoreGraphics}
-        set
+        didSet
         {
-            self.ib_useCoreGraphics = newValue
             self.drawQRImage()
         }
     }
     
     @IBInspectable
-    var inputMessage:String
+    var inputMessage:String = "larryhou"
     {
-        get {return self.ib_inputMessage}
-        
-        set
+        didSet
         {
-            self.ib_inputMessage = newValue == "" ? QRImageView.DEFAULT_MESSAGE : newValue
             self.drawQRImage()
         }
     }
@@ -70,7 +57,7 @@ class QRImageView:GeneratorImageView
         let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
+        filter?.setValue(inputCorrectionLevel, forKey: "inputCorrectionLevel")
         
         var image = (filter?.outputImage)!
         let scale = self.frame.width / image.extent.width
@@ -85,9 +72,7 @@ class QRImageView:GeneratorImageView
         let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue(correctionLevel, forKey: "inputCorrectionLevel")
-        
-        
+        filter?.setValue(inputCorrectionLevel, forKey: "inputCorrectionLevel")
         
         self.image = stripOutputImage(of: filter)
     }

@@ -44,13 +44,13 @@ class QRImageViewController: UIViewController, UITextViewDelegate
         switch sender.selectedSegmentIndex
         {
             case 1:
-                inputQRView.correctionLevel = "M"
+                inputQRView.inputCorrectionLevel = "M"
             case 2:
-                inputQRView.correctionLevel = "Q"
+                inputQRView.inputCorrectionLevel = "Q"
             case 3:
-                inputQRView.correctionLevel = "H"
+                inputQRView.inputCorrectionLevel = "H"
             default:
-                inputQRView.correctionLevel = "L"
+                inputQRView.inputCorrectionLevel = "L"
         }
     }
     

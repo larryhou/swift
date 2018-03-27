@@ -41,8 +41,7 @@
                                     <constraint firstAttribute="width" secondItem="ihG-YR-OiQ" secondAttribute="height" multiplier="1:1" id="Brq-PD-aRv"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="inputCompactStyle" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="hello"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="larryhou"/>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -393,7 +392,7 @@
                                     <constraint firstAttribute="width" secondItem="nI5-Wh-II2" secondAttribute="height" multiplier="1:1" id="EyB-mq-Dsh"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="请输入..."/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="larryhou"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="useCoreGraphics" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
@@ -410,7 +409,7 @@
                                     <action selector="levelDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="4X9-mU-TNZ"/>
                                 </connections>
                             </segmentedControl>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="sdfsfdadsfsdfsdfasdfsfdadsfssdfsfdadsfsdfsdfasdfsfdadsfssdfsfdadsfsdfsdfasdfsfdadsfs" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xDY-MQ-bz2">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="larryhou" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xDY-MQ-bz2">
                                 <rect key="frame" x="10" y="68" width="355" height="70"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
@@ -552,10 +551,13 @@
                                 </connections>
                             </pickerView>
                             <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GJG-hm-OVh" customClass="PDF417ImageView" customModule="QRCode" customModuleProvider="target">
-                                <rect key="frame" x="10" y="316" width="355" height="300"/>
+                                <rect key="frame" x="10" y="316" width="355" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="QRR-XU-wrD"/>
+                                    <constraint firstAttribute="height" constant="150" id="QRR-XU-wrD"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="inputMessage" value="larryhou"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="QRR-XU-wrD"/>

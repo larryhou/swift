@@ -47,5 +47,6 @@ class AztecImageViewController:UIViewController, UITextViewDelegate
     func textViewDidChange(_ textView: UITextView)
     {
         aztecImageView.inputMessage = textView.text
+        print(textView.text)
     }
 }

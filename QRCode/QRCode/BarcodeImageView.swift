@@ -12,31 +12,16 @@ import UIKit
 @IBDesignable
 class BarcodeImageView:GeneratorImageView
 {
-    private static let DEFAULT_MESSAGE = "larryhou"
-    
-    private var ib_inputQuietSpace:Double = 7.0
-    private var ib_inputMessage:String = BarcodeImageView.DEFAULT_MESSAGE
-    
     @IBInspectable
-    var inputQuietSpace:Double
+    var inputQuietSpace:Double = 7.0 // 7.0[0.0,20.0]
     {
-        get {return ib_inputQuietSpace}
-        set
-        {
-            ib_inputQuietSpace = newValue
-            drawBarcodeImage()
-        }
+        didSet { drawBarcodeImage() }
     }
     
     @IBInspectable
-    var inputMessage:String
+    var inputMessage:String = "larryhou"
     {
-        get {return ib_inputMessage}
-        set
-        {
-            ib_inputMessage = newValue == "" ? BarcodeImageView.DEFAULT_MESSAGE : newValue
-            drawBarcodeImage()
-        }
+        didSet { drawBarcodeImage() }
     }
     
     func drawBarcodeImage()

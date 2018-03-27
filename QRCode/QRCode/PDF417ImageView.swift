@@ -36,67 +36,76 @@ class GeneratorImageView: UIImageView
 @IBDesignable
 class PDF417ImageView:GeneratorImageView
 {
-    private static let DEFAULT_MESSAGE = "larryhou"
-    
-    private var ib_inputMessage = PDF417ImageView.DEFAULT_MESSAGE
-    private var ib_preferredAspectRatio = 3.0
-    private var ib_compactionMode = 2.0
-    private var ib_compactStyle = false
-    private var ib_alwaysSpecifyCompaction = false
-    
     @IBInspectable
-    var inputMessage:String
+    var inputMessage:String = "larryhou"
     {
-        get {return ib_inputMessage}
-        set
-        {
-            ib_inputMessage = newValue == "" ? PDF417ImageView.DEFAULT_MESSAGE : newValue
-            drawPDF417Image()
-        }
+        didSet { drawPDF417Image() }
     }
     
     @IBInspectable
-    var preferredAspectRatio:Double
+    var inputMinWidth:Float = 56.0 // 0.0[56.0,583.0]
     {
-        get {return ib_preferredAspectRatio}
-        set
-        {
-            ib_preferredAspectRatio = newValue
-            drawPDF417Image()
-        }
+        didSet { drawPDF417Image() }
     }
     
     @IBInspectable
-    var compactionMode:Double
+    var inputMaxWidth:Float = 56.0 // 0.0[56.0,583.0]
     {
-        get {return ib_compactionMode}
-        set
-        {
-            ib_compactionMode = newValue
-            drawPDF417Image()
-        }
+        didSet { drawPDF417Image() }
     }
     
     @IBInspectable
-    var compactStyle:Bool
+    var inputMinHeight:Float = 13.0 // 0.0[13.0,283.0]
     {
-        get {return ib_compactStyle}
-        set
-        {
-            ib_compactStyle = newValue
-            drawPDF417Image()
-        }
+        didSet { drawPDF417Image() }
     }
     
     @IBInspectable
-    var alwaysSpecifyCompaction:Bool
+    var inputMaxHeight:Float = 13.0 // 0.0[13.0,283.0]
     {
-        get {return ib_alwaysSpecifyCompaction}
-        set
-        {
-            ib_alwaysSpecifyCompaction = newValue
-            drawPDF417Image()
-        }
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputDataColumns:Float = 10.0 // 0.0[1.0,30.0]
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputRows:Float = 10.0 // 0.0[3.0,90.0]
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputPreferredAspectRatio:Float = 3.0 // 0.0[0.0,9223372036854775808.0]
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputCompactionMode:Float = 2.0 // 0.0[0.0,3.0]
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputCorrectionLevel:Int = 4 // 0[0,8]
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputCompactStyle:Bool = false
+    {
+        didSet { drawPDF417Image() }
+    }
+    
+    @IBInspectable
+    var inputAlwaysSpecifyCompaction:Bool = false
+    {
+        didSet { drawPDF417Image() }
     }
     
     func drawPDF417Image()
@@ -106,10 +115,17 @@ class PDF417ImageView:GeneratorImageView
         let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue(preferredAspectRatio, forKey: "inputPreferredAspectRatio")
-        filter?.setValue(compactionMode, forKey: "inputCompactionMode")
-        filter?.setValue(compactStyle, forKey: "inputCompactStyle")
-        filter?.setValue(alwaysSpecifyCompaction, forKey: "inputAlwaysSpecifyCompaction")
+//        filter?.setValue(inputMinWidth, forKey: "inputMinWidth")
+//        filter?.setValue(inputMaxWidth, forKey: "inputMaxWidth")
+//        filter?.setValue(inputMinHeight, forKey: "inputMinHeight")
+//        filter?.setValue(inputMaxHeight, forKey: "inputMaxHeight")
+//        filter?.setValue(inputDataColumns, forKey: "inputDataColumns")
+//        filter?.setValue(inputRows, forKey: "inputRows")
+        filter?.setValue(inputPreferredAspectRatio, forKey: "inputPreferredAspectRatio")
+        filter?.setValue(inputCompactionMode, forKey: "inputCompactionMode")
+        filter?.setValue(inputCompactStyle, forKey: "inputCompactStyle")
+        filter?.setValue(inputCorrectionLevel, forKey: "inputCorrectionLevel")
+        filter?.setValue(inputAlwaysSpecifyCompaction, forKey: "inputAlwaysSpecifyCompaction")
         
         self.image = stripOutputImage(of: filter)
     }

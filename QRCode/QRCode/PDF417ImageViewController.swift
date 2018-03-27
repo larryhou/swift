@@ -13,7 +13,7 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
 {
     struct CompactStyleInfo
     {
-        let mode:Double, name:String
+        let mode:Float, name:String
     }
     
     @IBOutlet weak var imageView: PDF417ImageView!
@@ -52,17 +52,17 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
     @IBAction func aspactRatioDidChange(_ sender: UISlider)
     {
         aspactRatioIndicator.text = String(format:"%2.0f", sender.value)
-        imageView.preferredAspectRatio = Double(sender.value)
+        imageView.inputPreferredAspectRatio = Float(sender.value)
     }
     
     @IBAction func compactStyleDidChange(_ sender: UISwitch)
     {
-        imageView.compactStyle = sender.isOn
+        imageView.inputCompactStyle = sender.isOn
     }
     
     @IBAction func alwaysSpecifyCompactionDidChange(_ sender: UISwitch)
     {
-        imageView.alwaysSpecifyCompaction = sender.isOn
+        imageView.inputAlwaysSpecifyCompaction = sender.isOn
     }
     
     //MARK: text
@@ -100,6 +100,6 @@ class PDF417ImageViewController:UIViewController, UIPickerViewDelegate, UIPicker
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        imageView.compactionMode = styles[row].mode
+        imageView.inputCompactionMode = styles[row].mode
     }
 }

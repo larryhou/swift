@@ -12,31 +12,28 @@ import UIKit
 @IBDesignable
 class AztecImageView:GeneratorImageView
 {
-    private static let DEFAULT_MESSAGE = "larryhou"
-    
-    private var ib_inputMessage = AztecImageView.DEFAULT_MESSAGE
-    private var ib_inputCompactStyle = false
-    
     @IBInspectable
-    var inputMessage:String
+    var inputMessage:String = "larryhou"
     {
-        get {return ib_inputMessage}
-        set
-        {
-            ib_inputMessage = newValue == "" ? AztecImageView.DEFAULT_MESSAGE : newValue
-            drawAztecImage()
-        }
+        didSet { drawAztecImage() }
     }
     
     @IBInspectable
-    var inputCompactStyle:Bool
+    var inputCompactStyle:Bool = false
     {
-        get {return ib_inputCompactStyle}
-        set
-        {
-            ib_inputCompactStyle = newValue
-            drawAztecImage()
-        }
+        didSet { drawAztecImage() }
+    }
+    
+    @IBInspectable
+    var inputCorrectionLevel:Float = 50.0 // 23.0[5.0,95.0]
+    {
+        didSet { drawAztecImage() }
+    }
+    
+    @IBInspectable
+    var inputLayers:Float = 1.0 // 0.0[1.0,32.0]
+    {
+        didSet { drawAztecImage() }
     }
     
     func drawAztecImage()
@@ -45,7 +42,9 @@ class AztecImageView:GeneratorImageView
         let data = inputMessage.data(using: .utf8)
         
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue(inputCompactStyle, forKey: "inputCompactStyle")
+//        filter?.setValue(inputLayers, forKey: "inputLayers")
+//        filter?.setValue(inputCompactStyle, forKey: "inputCompactStyle")
+        filter?.setValue(inputCorrectionLevel, forKey: "inputCorrectionLevel")
         
         self.image = stripOutputImage(of: filter)
     }
