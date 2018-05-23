@@ -42,8 +42,12 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
     //MARK: segue
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool
     {
-        guard tableView.indexPathForSelectedRow != nil,
-        storeProducts != nil else {return false}
+        if identifier == "buy"
+        {
+            guard tableView.indexPathForSelectedRow != nil,
+                storeProducts != nil else {return false}
+        }
+        
         return true
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
