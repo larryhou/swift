@@ -76,10 +76,21 @@ class BuyProductController:UIViewController, UITableViewDataSource, UITableViewD
         priceView.text = formatter.string(from: NSNumber(value: product.price.doubleValue))
     }
     
+    override func viewDidDisappear(_ animated: Bool)
+    {
+        super.viewDidDisappear(animated)
+        SKPaymentQueue.default().remove(self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        SKPaymentQueue.default().add(self)
+    }
+    
     @IBAction func buy(_ sender:UIButton)
     {
         let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(self)
         SKPaymentQueue.default().add(payment)
     }
     
