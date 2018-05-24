@@ -114,10 +114,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="554-at-80w">
-                                <rect key="frame" x="0.0" y="64" width="375" height="275"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="240"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="275" id="yCj-Fw-rDK"/>
+                                    <constraint firstAttribute="height" constant="240" id="yCj-Fw-rDK"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductInfoCell" textLabel="LqT-8I-fq5" detailTextLabel="wpQ-ji-QBg" style="IBUITableViewCellStyleValue2" id="DsJ-CW-JoC">
@@ -128,38 +128,48 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="价格" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LqT-8I-fq5">
-                                                    <rect key="frame" x="15" y="14" width="91" height="16"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="$400" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wpQ-ji-QBg">
-                                                    <rect key="frame" x="112" y="14" width="33" height="16"/>
+                                                    <rect key="frame" x="112" y="14" width="41" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Sje-Ej-Ctd" id="3Pe-2f-vQt"/>
+                                    <outlet property="delegate" destination="Sje-Ej-Ctd" id="z30-4W-uQ8"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$3500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="NJq-YM-hMg">
-                                <rect key="frame" x="97" y="368" width="181" height="60"/>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="60"/>
+                                <rect key="frame" x="112.5" y="334" width="150.5" height="50"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="按月续费会员 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drQ-U1-hdj">
-                                <rect key="frame" x="121.5" y="433" width="132.5" height="20"/>
+                                <rect key="frame" x="121.5" y="389" width="132.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="购买后可以得到10个游戏点券购买后可以得到10个游戏点券购买后可以得到10个游戏点券购买后可以得到" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOU-YV-K6w">
+                                <rect key="frame" x="16" y="417" width="343" height="61"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="of9-lF-JoP">
-                                <rect key="frame" x="147" y="495" width="80" height="68"/>
+                                <rect key="frame" x="147" y="469" width="80" height="68"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="40"/>
                                 <state key="normal" title="购买"/>
                                 <connections>
@@ -169,19 +179,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="of9-lF-JoP" firstAttribute="centerX" secondItem="HAl-J8-jXy" secondAttribute="centerX" id="4HZ-Z6-3o8"/>
                             <constraint firstItem="554-at-80w" firstAttribute="top" secondItem="HAl-J8-jXy" secondAttribute="top" id="7yb-7z-pQU"/>
-                            <constraint firstItem="of9-lF-JoP" firstAttribute="top" secondItem="drQ-U1-hdj" secondAttribute="bottom" constant="42" id="U3Y-W3-E8h"/>
+                            <constraint firstItem="cOU-YV-K6w" firstAttribute="top" secondItem="drQ-U1-hdj" secondAttribute="bottom" constant="8" id="PDp-x3-u4f"/>
                             <constraint firstItem="drQ-U1-hdj" firstAttribute="top" secondItem="NJq-YM-hMg" secondAttribute="bottom" constant="5" id="V8N-su-pil"/>
+                            <constraint firstItem="of9-lF-JoP" firstAttribute="top" secondItem="drQ-U1-hdj" secondAttribute="bottom" constant="60" id="drt-nS-JuR"/>
                             <constraint firstItem="HAl-J8-jXy" firstAttribute="trailing" secondItem="554-at-80w" secondAttribute="trailing" id="dsh-BJ-kdQ"/>
-                            <constraint firstItem="of9-lF-JoP" firstAttribute="centerX" secondItem="HAl-J8-jXy" secondAttribute="centerX" id="fcL-Ix-Tpk"/>
+                            <constraint firstItem="cOU-YV-K6w" firstAttribute="leading" secondItem="HAl-J8-jXy" secondAttribute="leading" constant="16" id="gty-Da-Bby"/>
+                            <constraint firstItem="HAl-J8-jXy" firstAttribute="trailing" secondItem="cOU-YV-K6w" secondAttribute="trailing" constant="16" id="nWx-fg-N7r"/>
                             <constraint firstItem="554-at-80w" firstAttribute="leading" secondItem="HAl-J8-jXy" secondAttribute="leading" id="qoc-YU-X1H"/>
                             <constraint firstItem="NJq-YM-hMg" firstAttribute="centerX" secondItem="HAl-J8-jXy" secondAttribute="centerX" id="tpu-3W-1I6"/>
                             <constraint firstItem="drQ-U1-hdj" firstAttribute="centerX" secondItem="NJq-YM-hMg" secondAttribute="centerX" id="vCy-rD-lBT"/>
-                            <constraint firstItem="NJq-YM-hMg" firstAttribute="top" secondItem="554-at-80w" secondAttribute="bottom" constant="29" id="vg4-tW-yur"/>
+                            <constraint firstItem="NJq-YM-hMg" firstAttribute="top" secondItem="554-at-80w" secondAttribute="bottom" constant="30" id="vg4-tW-yur"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HAl-J8-jXy"/>
                     </view>
                     <connections>
+                        <outlet property="descriptionView" destination="cOU-YV-K6w" id="yin-ba-HaV"/>
                         <outlet property="nameView" destination="drQ-U1-hdj" id="JCl-4s-A6z"/>
                         <outlet property="priceView" destination="NJq-YM-hMg" id="e9o-sy-aXv"/>
                         <outlet property="tableView" destination="554-at-80w" id="0Rh-Yi-dLf"/>

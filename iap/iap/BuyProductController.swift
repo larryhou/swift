@@ -25,24 +25,51 @@ extension SKPaymentTransactionState:CustomStringConvertible
     }
 }
 
-class BuyProductController:UIViewController
+struct ProductProperty
+{
+    let label:String
+    let value:String
+}
+
+class BuyProductController:UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var priceView:UILabel!
     @IBOutlet weak var nameView:UILabel!
+    @IBOutlet weak var descriptionView:UILabel!
     
     var product:SKProduct!
     var formatter:NumberFormatter!
+    var properties:[ProductProperty]!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        let locale = product.priceLocale
+        
+        properties = []
+        properties.append(ProductProperty(label: "标识符", value: product.productIdentifier))
+        properties.append(ProductProperty(label: "名称", value: product.localizedTitle))
+        properties.append(ProductProperty(label: "价格", value: product.price.doubleValue.description))
+        properties.append(ProductProperty(label: "货币符号", value: locale.currencySymbol ?? "--"))
+        properties.append(ProductProperty(label: "货币格式", value: formatter.string(from: 123456789.99)!))
+        if let currencyCode = locale.currencyCode
+        {
+            properties.append(ProductProperty(label: "货币名称", value: locale.localizedString(forCurrencyCode: currencyCode) ?? "--"))
+        }
+        properties.append(ProductProperty(label: "货币码", value: locale.currencyCode ?? "--"))
+        properties.append(ProductProperty(label: "地区码", value: locale.regionCode ?? "--"))
+        properties.append(ProductProperty(label: "语言码", value: locale.languageCode ?? "--"))
+        properties.append(ProductProperty(label: "小数点符号", value: locale.decimalSeparator ?? "--"))
+        properties.append(ProductProperty(label: "千分位符号", value: locale.groupingSeparator ?? "--"))
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
+        descriptionView.text = product.localizedDescription
         nameView.text = product.localizedTitle
         priceView.text = formatter.string(from: NSNumber(value: product.price.doubleValue))
     }
@@ -57,6 +84,29 @@ class BuyProductController:UIViewController
     @IBAction func cancel(_ sender:UIButton)
     {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: table view
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return properties.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ProductInfoCell")
+        {
+            let data = properties[indexPath.row]
+            cell.textLabel?.text = data.label
+            cell.detailTextLabel?.text = data.value
+            return cell
+        }
+        return UITableViewCell()
     }
 }
 

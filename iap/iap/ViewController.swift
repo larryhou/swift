@@ -101,6 +101,7 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
                 formatter = NumberFormatter()
                 formatter.numberStyle = .currency
                 formatter.locale = data.priceLocale
+                formatter.formatterBehavior = .behavior10_4
                 formatter.usesGroupingSeparator = true
             }
             
@@ -110,7 +111,7 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
         else
         {
             name = productIdentifiers[indexPath.row]
-            price = "--"
+            price = ""
         }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ProductItemCell") as? ProductItemCell
