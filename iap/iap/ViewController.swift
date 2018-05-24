@@ -27,6 +27,8 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse)
     {
         storeProducts = response.products
+        request.delegate = nil
+        formatter = nil
         tableView.reloadData()
     }
     
@@ -34,6 +36,16 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
     {
         super.viewDidLoad()
         
+        loadInAppPurchases()
+    }
+    
+    @IBAction func refresh(_ sender:Any)
+    {
+        loadInAppPurchases()
+    }
+    
+    func loadInAppPurchases()
+    {
         let request = SKProductsRequest(productIdentifiers:Set<String>(productIdentifiers))
         request.delegate = self
         request.start()
@@ -122,6 +134,10 @@ class ViewController: UITableViewController, SKProductsRequestDelegate
         }
         
         return UITableViewCell()
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.landscape, .landscapeLeft, .landscapeRight]
     }
 
     override func didReceiveMemoryWarning()

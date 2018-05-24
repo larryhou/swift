@@ -66,9 +66,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="eOv-6z-bNB">
                         <barButtonItem key="backBarButtonItem" title="返回列表" id="Q2X-nj-QqG"/>
-                        <barButtonItem key="rightBarButtonItem" title="购买历史" id="U3I-NF-CQy">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="r5a-sG-g8l">
                             <connections>
-                                <segue destination="QZf-yD-cnf" kind="show" identifier="history" id="O6n-V6-4da"/>
+                                <action selector="refresh:" destination="DrK-8D-NzS" id="5lM-mD-jiL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -76,34 +76,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaV-Dy-Ij3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1872.8" y="138.98050974512745"/>
-        </scene>
-        <!--History Controller-->
-        <scene sceneID="tbQ-9z-fbx">
-            <objects>
-                <tableViewController id="QZf-yD-cnf" customClass="HistoryController" customModule="iap" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u9Y-yr-fxM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BoughtItem" id="wKV-Ae-5fy">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wKV-Ae-5fy" id="kKj-0T-ytb">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="QZf-yD-cnf" id="bgq-7I-8Wz"/>
-                            <outlet property="delegate" destination="QZf-yD-cnf" id="64m-Lf-45g"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XbE-66-Zw0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2674" y="-672"/>
         </scene>
         <!--Buy Product Controller-->
         <scene sceneID="GTy-Kl-pqA">

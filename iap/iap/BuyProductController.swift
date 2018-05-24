@@ -53,7 +53,7 @@ class BuyProductController:UIViewController, UITableViewDataSource, UITableViewD
         properties.append(ProductProperty(label: "名称", value: product.localizedTitle))
         properties.append(ProductProperty(label: "价格", value: product.price.doubleValue.description))
         properties.append(ProductProperty(label: "货币符号", value: locale.currencySymbol ?? "--"))
-        properties.append(ProductProperty(label: "货币格式", value: formatter.string(from: 123456789.99)!))
+        properties.append(ProductProperty(label: "货币格式", value: formatter.string(from: 1234567890.99)!))
         if let currencyCode = locale.currencyCode
         {
             properties.append(ProductProperty(label: "货币名称", value: locale.localizedString(forCurrencyCode: currencyCode) ?? "--"))
