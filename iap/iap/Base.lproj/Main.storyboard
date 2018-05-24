@@ -65,7 +65,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="eOv-6z-bNB">
-                        <barButtonItem key="backBarButtonItem" title="返回列表" id="Q2X-nj-QqG"/>
+                        <barButtonItem key="backBarButtonItem" title="返回" id="Q2X-nj-QqG"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="r5a-sG-g8l">
                             <connections>
                                 <action selector="refresh:" destination="DrK-8D-NzS" id="5lM-mD-jiL"/>
