@@ -57,6 +57,8 @@ class BuyProductController:UIViewController, UITableViewDataSource, UITableViewD
         if let currencyCode = locale.currencyCode
         {
             properties.append(ProductProperty(label: "货币名称", value: locale.localizedString(forCurrencyCode: currencyCode) ?? "--"))
+            properties.append(ProductProperty(label: "英文名称", value: Locale(identifier: "en_US").localizedString(forCurrencyCode: currencyCode) ?? "--"))
+            properties.append(ProductProperty(label: "中文名称", value: Locale(identifier: "zh_CN").localizedString(forCurrencyCode: currencyCode) ?? "--"))
         }
         properties.append(ProductProperty(label: "货币码", value: locale.currencyCode ?? "--"))
         properties.append(ProductProperty(label: "地区码", value: locale.regionCode ?? "--"))
