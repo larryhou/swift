@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 
-class MapWorld: SKScene
-{
-    
+class MapWorld: SKScene {
+
 }

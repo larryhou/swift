@@ -10,47 +10,38 @@ import Foundation
 import CoreLocation
 import UIKit
 
-class PlacemarkViewController:UITableViewController
-{
-	let CELL_IDENTIFIER:String = "PlacemarkCell"
-	var placemark:CLPlacemark!
-	
-	private var list:[NSObject]!
-	
-	override func viewDidLoad()
-	{
+class PlacemarkViewController: UITableViewController {
+	let CELL_IDENTIFIER: String = "PlacemarkCell"
+	var placemark: CLPlacemark!
+
+	private var list: [NSObject]!
+
+	override func viewDidLoad() {
 		super.viewDidLoad()
 		tableView.registerNib(UINib(nibName: "PlacemarkCell", bundle: nil), forCellReuseIdentifier: CELL_IDENTIFIER)
-		
+
 		list = []
-		for (key, value) in placemark.addressDictionary
-		{
+		for (key, value) in placemark.addressDictionary {
 			list.append(key)
 		}
 	}
-	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
-	{
+
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 3
 	}
-	
-	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-	{
-		switch section
-		{
+
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
 			case 0:return "Attributes"
 			case 1:return "Address Dictionary"
 			default:return "Geographic"
 		}
 	}
-	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-	{
+
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		var cell = tableView.dequeueReusableCellWithIdentifier(CELL_IDENTIFIER) as UITableViewCell!
-		if indexPath.section == 0
-		{
-			switch indexPath.row
-			{
+		if indexPath.section == 0 {
+			switch indexPath.row {
 				case 0:
 					cell.textLabel?.text = "name"
 					cell.detailTextLabel?.text = placemark.name
@@ -82,44 +73,32 @@ class PlacemarkViewController:UITableViewController
 					cell.textLabel?.text = "postalCode"
 					cell.detailTextLabel?.text = placemark.postalCode
 			}
-		}
-		else
-		if indexPath.section == 1
-		{
+		} else
+		if indexPath.section == 1 {
 			var key = list[indexPath.row]
 			var value: AnyObject = placemark.addressDictionary[key]!
-			
+
 			cell.textLabel?.text = key.description
-			if value is [String]
-			{
+			if value is [String] {
 				cell.detailTextLabel?.text = (value as [String]).first
-			}
-			else
-			{
+			} else {
 				cell.detailTextLabel?.text = (value as String)
 			}
-		}
-		else
-		{
-			if indexPath.row == 0
-			{
+		} else {
+			if indexPath.row == 0 {
 				cell.textLabel?.text = "inlandWater"
 				cell.detailTextLabel?.text = placemark.inlandWater
-			}
-			else
-			{
+			} else {
 				cell.textLabel?.text = "ocean"
 				cell.detailTextLabel?.text = placemark.ocean
 			}
 		}
-		
+
 		return cell
 	}
-	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-	{
-		switch section
-		{
+
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
 			case 0:return 10
 			case 1:return placemark.addressDictionary.count
 			default:return 2

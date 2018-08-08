@@ -13,42 +13,39 @@ import FirebaseDatabase
 import KVNProgress
 
 class ElementsViewController: UIViewController, UITableViewDataSource {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        
-        
+
     }
-    
+
     @IBAction func willLogout(_ sender: AnyObject) {
         KVNProgress.show(withStatus: "Logging out...")
-        do{
+        do {
             try FIRAuth.auth()?.signOut()
             //self.navigationController?.popViewController(animated: true)
             KVNProgress.showSuccess(withStatus: "Logged Out ☹️")
             self.presentingViewController?.dismiss(animated: true, completion: nil)
-        }catch{
-        
+        } catch {
+
             KVNProgress.showError(withStatus: "Unknown Error")
         }
     }
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        
+
         cell.textLabel?.text = "Hello guest 🙂"
         return cell
     }
@@ -61,5 +58,5 @@ class ElementsViewController: UIViewController, UITableViewDataSource {
      // Pass the selected object to the new view controller.
      }
      */
-    
+
 }

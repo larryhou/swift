@@ -8,42 +8,36 @@
 
 import UIKit
 
-class ViewController: UIViewController
-{
+class ViewController: UIViewController {
 
-	override func viewDidLoad()
-	{
+	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		performSessionTask()
 	}
-	
-	func performSessionTask()
-	{
-		var proxy:[NSObject:AnyObject] = [:]
+
+	func performSessionTask() {
+		var proxy: [NSObject: AnyObject] = [:]
 		proxy.updateValue(kCFProxyTypeHTTP, forKey: kCFProxyTypeKey)
 		proxy.updateValue("proxy.tencent.com", forKey: kCFProxyHostNameKey)
 		proxy.updateValue("8080", forKey: kCFProxyPortNumberKey)
-		
+
 		let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
-		session.downloadTaskWithURL(NSURL(string: "https://www.baidu.com/")!, completionHandler:
-		{
-			(url:NSURL!, response:NSURLResponse!, error:NSError!) in
-			
+		session.downloadTaskWithURL(NSURL(string: "https://www.baidu.com/")!, completionHandler: {
+			(url: NSURL!, response: NSURLResponse!, _: NSError!) in
+
 			let cfencoding = CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)
 			let nsencoding = CFStringConvertEncodingToNSStringEncoding(cfencoding)
-			
+
 			let contents = NSString(data: NSData(contentsOfURL: url)!, encoding: nsencoding)
 			println(contents)
 			println(response)
-			
+
 		}).resume()
 	}
 
-	override func didReceiveMemoryWarning()
-	{
+	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
 }
-

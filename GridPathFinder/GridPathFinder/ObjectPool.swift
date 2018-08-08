@@ -8,54 +8,43 @@
 
 import Foundation
 
-protocol IPoolObject
-{
+protocol IPoolObject {
     init()
     func awake()
     func recycle()
 }
 
-class ObjectPool<T> where T:IPoolObject, T:Equatable
-{
-    private var pool:[T]
-    
-    init()
-    {
+class ObjectPool<T> where T: IPoolObject, T: Equatable {
+    private var pool: [T]
+
+    init() {
         self.pool = []
     }
-    
-    func get()->T
-    {
-        return get{T()}
+
+    func get() -> T {
+        return get {T()}
     }
-    
-    func get(_ getobj:@noescape ()->T)->T
-    {
-        let object:T
-        if pool.count > 0
-        {
+
+    func get(_ getobj:@noescape ()->T)->T {
+        let object: T
+        if pool.count > 0 {
             object = pool.removeLast()
-        }
-        else
-        {
+        } else {
             object = getobj()
         }
-        
+
         object.awake()
         return object
     }
-    
-    func recycle(_ object:T)
-    {
+
+    func recycle(_ object: T) {
         object.recycle()
-        if let index = pool.index(of: object) , index >= 0
-        {
+        if let index = pool.index(of: object), index >= 0 {
             pool.append(object)
         }
     }
-    
-    func clear()
-    {
+
+    func clear() {
         pool.removeAll()
     }
 }

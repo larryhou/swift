@@ -9,45 +9,37 @@
 import Foundation
 
 // 一对
-class HandV2OnePair : PatternEvaluator
-{
-    static func getOccurrences() -> UInt
-    {
+class HandV2OnePair: PatternEvaluator {
+    static func getOccurrences() -> UInt {
         return
             13 * combinate(4, select: 2) *
             combinate(12, select: 5) * pow(4, exponent: 5)
     }
-    
-    static func evaluate(_ hand: PokerHand)
-    {
+
+    static func evaluate(_ hand: PokerHand) {
         var cards = (hand.givenCards + hand.tableCards).sort()
-        var dict:[Int:[PokerCard]] = [:]
-        
+        var dict: [Int: [PokerCard]] = [:]
+
         var pair = -1
-        for i in 0..<cards.count
-        {
+        for i in 0..<cards.count {
             let item = cards[i]
-            if dict[item.value] == nil
-            {
+            if dict[item.value] == nil {
                 dict[item.value] = []
             }
-            
+
             dict[item.value]?.append(item)
-            if let count = dict[item.value]?.count where count == 2
-            {
+            if let count = dict[item.value]?.count where count == 2 {
                 pair = item.value
             }
         }
-        
-        var result:[PokerCard] = dict[pair]!
-        for i in 0..<cards.count
-        {
-            if cards[i].value != pair && result.count < 5
-            {
+
+        var result: [PokerCard] = dict[pair]!
+        for i in 0..<cards.count {
+            if cards[i].value != pair && result.count < 5 {
                 result.append(cards[i])
             }
         }
-        
+
         hand.matches = result
     }
 }

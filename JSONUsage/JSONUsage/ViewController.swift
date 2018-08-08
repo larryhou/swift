@@ -9,18 +9,16 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController
-{
-	override func viewDidLoad()
-	{
+class ViewController: UIViewController {
+	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
         guard let url = Bundle.main.url(forResource: "0700", withExtension: "json"),
             let data = try? Data(contentsOf: url) else {
                 print("JSON file not found")
                 return
         }
-		
+
         do {
             let jsonData = try JSONDecoder().decode(JSONData.self, from: data)
             print(jsonData)

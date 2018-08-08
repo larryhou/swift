@@ -10,135 +10,111 @@ import Foundation
 import CoreGraphics
 import GameplayKit
 
-extension CGMutablePath
-{
-    func circle(_ radius:CGFloat)->CGPath
-    {
-        return circle(width:radius, height: radius)
+extension CGMutablePath {
+    func circle(_ radius: CGFloat) -> CGPath {
+        return circle(width: radius, height: radius)
     }
-    
-    func circle(width:CGFloat, height:CGFloat)->CGPath
-    {
+
+    func circle(width: CGFloat, height: CGFloat) -> CGPath {
         addEllipse(in: CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
-    
-    func square(size:CGFloat)->CGPath
-    {
+
+    func square(size: CGFloat) -> CGPath {
         return rectangle(width: size, height: size)
     }
-    
-    func rectangle(width:CGFloat, height:CGFloat)->CGPath
-    {
+
+    func rectangle(width: CGFloat, height: CGFloat) -> CGPath {
         addRect(CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height)))
         return self
     }
-    
-    func triangle(dimension:CGFloat, equilateral:Bool)->CGPath
-    {
+
+    func triangle(dimension: CGFloat, equilateral: Bool) -> CGPath {
         return polygon(sideCount: 3, dimension: dimension, equilateral: equilateral)
     }
-    
-    func polygon(sideCount count:Int, dimension:CGFloat, equilateral:Bool = false, centerAtOrigin:Bool = true)->CGPath
-    {
+
+    func polygon(sideCount count: Int, dimension: CGFloat, equilateral: Bool = false, centerAtOrigin: Bool = true) -> CGPath {
         let radius = dimension * 0.5
-        var vertex:[(x:CGFloat, y:CGFloat)] = [], offset = CGPoint()
-        
-        let data = randomPolygonVertexAngles(count, equilateral: equilateral, repeatCount:5)
-        for i in 0..<count
-        {
+        var vertex:[(x:CGFloat, y: CGFloat)] = [], offset = CGPoint()
+
+        let data = randomPolygonVertexAngles(count, equilateral: equilateral, repeatCount: 5)
+        for i in 0..<count {
             let angle = data.vertex[i]
             let point = (x:radius * sin(angle), y:radius * cos(angle))
             vertex.append(point)
-            
-            if !centerAtOrigin
-            {
+
+            if !centerAtOrigin {
                 offset.x = min(point.x, offset.x)
                 offset.y = min(point.y, offset.y)
             }
         }
-        
+
         let start = vertex[0]
-        move(to:CGPoint( x: start.x - offset.x, y: start.y - offset.y))
-        
+        move(to: CGPoint( x: start.x - offset.x, y: start.y - offset.y))
+
         vertex.append(start)
-        for i in 1..<vertex.count
-        {
+        for i in 1..<vertex.count {
             addLine(to: CGPoint(x: vertex[i].x - offset.x, y: vertex[i].y - offset.y))
         }
-        
+
         return self
     }
-    
-    func randomPolygonVertexAngles(_ sideCount:Int, equilateral:Bool = false, repeatCount:Int = 1)->(vertex:[CGFloat], area:CGFloat)
-    {
+
+    func randomPolygonVertexAngles(_ sideCount: Int, equilateral: Bool = false, repeatCount: Int = 1)->(vertex: [CGFloat], area: CGFloat) {
         let repeatCount = equilateral ? 1 : repeatCount
         let total = CGFloat.pi * 2, delta = total / CGFloat(sideCount)
-        
-        var maxArea:CGFloat = 0.0, vertex:[CGFloat] = Array(repeating: 0.0, count: sideCount)
-        
-        for _ in 0..<repeatCount
-        {
-            var parts:[CGFloat] = [], divider:CGFloat = 0.0
-            for _ in 0..<sideCount
-            {
+
+        var maxArea: CGFloat = 0.0, vertex: [CGFloat] = Array(repeating: 0.0, count: sideCount)
+
+        for _ in 0..<repeatCount {
+            var parts: [CGFloat] = [], divider: CGFloat = 0.0
+            for _ in 0..<sideCount {
                 let num = CGFloat(GKRandomSource.sharedRandom().nextInt(upperBound: 0xFF))
                 parts.append(num)
                 divider += num
             }
-            
-            var area:CGFloat = 0.0, sum:CGFloat = 0.0
-            for i in 1...sideCount
-            {
-                let angle:CGFloat
-                if i == sideCount
-                {
+
+            var area: CGFloat = 0.0, sum: CGFloat = 0.0
+            for i in 1...sideCount {
+                let angle: CGFloat
+                if i == sideCount {
                     angle = total - sum
-                }
-                else
-                {
-                    if !equilateral
-                    {
+                } else {
+                    if !equilateral {
                         angle = total * parts[i - 1] / divider
-                    }
-                    else
-                    {
+                    } else {
                         angle = delta
                     }
                 }
-                
+
                 area += sin(angle / 2) * cos(angle / 2)
                 sum += angle
-                
+
                 parts[i - 1] = sum
             }
-            
-            if area > maxArea
-            {
+
+            if area > maxArea {
                 vertex = parts
                 maxArea = area
             }
         }
-        
+
         return (vertex, maxArea)
     }
-    
-    func grid(_ row:Int, column:Int, size:CGSize)->CGPath
-    {
-        for r in 0...row
-        {
+
+    func grid(_ row: Int, column: Int, size: CGSize) -> CGPath {
+        for r in 0...row {
             let y = CGFloat(r) * size.height
-            move(to:CGPoint(x: 0.0, y: y))
+            move(to: CGPoint(x: 0.0, y: y))
             addLine(to: CGPoint(x: size.width * CGFloat(column), y: y))
         }
-        
-        for c in 0...column
-        {
+
+        for c in 0...column {
             let x = CGFloat(c) * size.width
-            move(to:CGPoint(x: x, y: 0.0))
-            addLine(to:CGPoint(x: x, y: size.height * CGFloat(row)))
+            move(to: CGPoint(x: x, y: 0.0))
+            addLine(to: CGPoint(x: x, y: size.height * CGFloat(row)))
         }
-        
+
         return self
     }
 }

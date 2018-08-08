@@ -9,14 +9,12 @@
 import UIKit
 import Security
 
-class ViewController: UIViewController
-{
+class ViewController: UIViewController {
 
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var query:[CFString:Any] = [:]
+
+        var query: [CFString: Any] = [:]
 //        query[kSecClass] = kSecClassInternetPassword
 //        query[kSecClass] = kSecClassGenericPassword
         query[kSecClass] = kSecClassIdentity
@@ -27,34 +25,28 @@ class ViewController: UIViewController
         query[kSecMatchLimit] = kSecMatchLimitAll
 //        query[kSecAttrProtocol] = kSecAttrProtocolHTTP
 //        query[kSecAttrSynchronizable] = true
-        
-        var result:CFTypeRef?
+
+        var result: CFTypeRef?
         print(query as CFDictionary)
         let status = SecItemCopyMatching(query as CFDictionary, &result)
-        if status == errSecSuccess
-        {
+        if status == errSecSuccess {
             print(result!)
-        }
-        else
-        {
+        } else {
             print(errors[status]!)
         }
-        
+
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning()
-    {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-
 }
 
-var errors:[OSStatus:String] =
-{
-    var data:[OSStatus:String] = [:]
+var errors: [OSStatus: String] = {
+    var data: [OSStatus: String] = [:]
     data[errSecSuccess] = "errSecSuccess"
     data[errSecUnimplemented] = "errSecUnimplemented"
     data[errSecDskFull] = "errSecDskFull"
@@ -432,4 +424,3 @@ var errors:[OSStatus:String] =
     data[errSecTimestampRevocationNotification] = "errSecTimestampRevocationNotification"
     return data
 }()
-

@@ -9,31 +9,25 @@
 import Foundation
 import UIKit
 
-class HomeViewController: UITableViewController
-{
-    
+class HomeViewController: UITableViewController {
+
 }
 
-class InteractiveNavigationController : UINavigationController
-{
-    var transitionController:NavigationTransitionController!
-    
-    override func loadView()
-    {
+class InteractiveNavigationController: UINavigationController {
+    var transitionController: NavigationTransitionController!
+
+    override func loadView() {
         super.loadView()
         transitionController = NavigationTransitionController(navigationController: self, duration: 0.2)
     }
 }
 
-class ImagePreviewController: UIViewController
-{
-    override func viewDidLoad()
-    {
+class ImagePreviewController: UIViewController {
+    override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }

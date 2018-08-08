@@ -8,41 +8,35 @@
 
 import UIKit
 
-class QRImageViewController: UIViewController, UITextViewDelegate
-{
+class QRImageViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var inputQRView: QRImageView!
     @IBOutlet weak var inputTextView: UITextView!
-    @IBOutlet weak var levelControl:UISegmentedControl!
-    
-    override func viewDidLoad()
-    {
+    @IBOutlet weak var levelControl: UISegmentedControl!
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
         inputTextView.text = ""
-        
+
         inputQRView.layer.borderWidth = 1.0
         inputQRView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         levelDidChange(levelControl)
     }
-    
-    func textViewDidChange(_ textView: UITextView)
-    {
+
+    func textViewDidChange(_ textView: UITextView) {
         inputQRView.inputMessage = textView.text
     }
-    
-    @IBAction func levelDidChange(_ sender:UISegmentedControl)
-    {
-        switch sender.selectedSegmentIndex
-        {
+
+    @IBAction func levelDidChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
             case 1:
                 inputQRView.inputCorrectionLevel = "M"
             case 2:
@@ -53,26 +47,22 @@ class QRImageViewController: UIViewController, UITextViewDelegate
                 inputQRView.inputCorrectionLevel = "L"
         }
     }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
-    {
-        if text == "\n"
-        {
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
             textView.resignFirstResponder()
             return false
         }
-        
+
         return true
     }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool
-    {
+
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    override func didReceiveMemoryWarning()
-    {
+
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 }
