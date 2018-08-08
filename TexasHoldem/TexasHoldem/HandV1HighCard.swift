@@ -9,15 +9,12 @@
 import Foundation
 
 // 高牌
-class HandV1HighCard : PatternEvaluator
-{
-    static func getOccurrences() -> UInt
-    {
+class HandV1HighCard: PatternEvaluator {
+    static func getOccurrences() -> UInt {
         return combinate(13, select: 7) * pow(4, exponent: 7)
     }
-    
-    static func evaluate(_ hand: PokerHand)
-    {
+
+    static func evaluate(_ hand: PokerHand) {
         var cards = (hand.givenCards + hand.tableCards).sort()
         hand.matches = Array(cards[0..<5])
     }

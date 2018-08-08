@@ -9,18 +9,16 @@
 import Foundation
 import UIKit
 
-class StatusTableViewCell:UITableViewCell
-{
-	
+class StatusTableViewCell: UITableViewCell {
+
 	@IBOutlet weak var label: UILabel!
 	@IBOutlet weak var indicator: UIActivityIndicatorView!
-	
+
 	@IBOutlet weak var timeTicker: UILabel!
 }
 
-class TrackStatusTableViewCell:UITableViewCell
-{
+class TrackStatusTableViewCell: UITableViewCell {
 	@IBOutlet weak var label: UILabel!
 	@IBOutlet weak var indicator: UIActivityIndicatorView!
-	
+
 }

@@ -8,147 +8,121 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIScrollViewDelegate
-{
-	private let MAXIMUM_SCALE:CGFloat = 0.5
-	
-	private var zoomView:UIImageView!
+class ViewController: UIViewController, UIScrollViewDelegate {
+	private let MAXIMUM_SCALE: CGFloat = 0.5
 
-	override func viewDidLoad()
-	{
+	private var zoomView: UIImageView!
+
+	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		var view = self.view as UIScrollView
 		view.contentSize = CGSize(width: 320, height: 568)
 		view.minimumZoomScale = 0.01
 		view.maximumZoomScale = 2.00
 		view.delegate = self
 		view.pinchGestureRecognizer.addTarget(self, action: "pinchUpdated:")
-		
+
 		zoomView = UIImageView(image: UIImage(named: "4.jpg"))
 		zoomView.userInteractionEnabled = false
 		view.addSubview(zoomView)
-		
+
 		view.zoomScale = view.minimumZoomScale
 		repairImageZoom()
-		
+
 		UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationChanged:", name: UIDeviceOrientationDidChangeNotification, object: nil)
-		
+
 		var tap = UITapGestureRecognizer()
 		tap.numberOfTapsRequired = 2
 		tap.addTarget(self, action: "smartZoomImage:")
 		view.addGestureRecognizer(tap)
 	}
-	
-	func orientationChanged(notification:NSNotification)
-	{
+
+	func orientationChanged(notification: NSNotification) {
 		alignImageAtCenter()
 		repairImageZoom()
 	}
-	
-	func smartZoomImage(gesture:UITapGestureRecognizer)
-	{
+
+	func smartZoomImage(gesture: UITapGestureRecognizer) {
 		let view = self.view as UIScrollView
-		let MINIMUM_SCALE:CGFloat = view.frame.width / (zoomView.frame.width / view.zoomScale)
-		
-		var scale:CGFloat!
-		if view.zoomScale > MINIMUM_SCALE + 0.0001
-		{
+		let MINIMUM_SCALE: CGFloat = view.frame.width / (zoomView.frame.width / view.zoomScale)
+
+		var scale: CGFloat!
+		if view.zoomScale > MINIMUM_SCALE + 0.0001 {
 			scale = MINIMUM_SCALE
-		}
-		else
-		{
+		} else {
 			scale = MAXIMUM_SCALE
 		}
-		
-		if scale != nil
-		{
+
+		if scale != nil {
 			view.setZoomScale(scale, animated: true)
 		}
 	}
-	
-	func pinchUpdated(gesture:UIPinchGestureRecognizer)
-	{
+
+	func pinchUpdated(gesture: UIPinchGestureRecognizer) {
 		let view = self.view as UIScrollView
-		
-		switch gesture.state
-		{
+
+		switch gesture.state {
 			case .Began:
 				view.panGestureRecognizer.enabled = false
 				break
-			
+
 			case .Ended:
 				view.panGestureRecognizer.enabled = true
 				repairImageZoom()
 				break
-			
+
 			default:break
 		}
 	}
-	
-	func repairImageZoom()
-	{
+
+	func repairImageZoom() {
 		let view = self.view as UIScrollView
-		let MINIMUM_SCALE:CGFloat = view.frame.width / (zoomView.frame.width / view.zoomScale)
-		
-		var scale:CGFloat!
-		if view.zoomScale < MINIMUM_SCALE
-		{
+		let MINIMUM_SCALE: CGFloat = view.frame.width / (zoomView.frame.width / view.zoomScale)
+
+		var scale: CGFloat!
+		if view.zoomScale < MINIMUM_SCALE {
 			scale = MINIMUM_SCALE
-		}
-		else
-		if view.zoomScale > MAXIMUM_SCALE
-		{
+		} else
+		if view.zoomScale > MAXIMUM_SCALE {
 			scale = MAXIMUM_SCALE
 		}
-		
-		if scale != nil
-		{
+
+		if scale != nil {
 			view.setZoomScale(scale, animated: true)
 		}
 	}
-	
-	func alignImageAtCenter()
-	{
+
+	func alignImageAtCenter() {
 		var view = self.view as UIScrollView
-		var inset = UIEdgeInsetsMake(0, 0, 0, 0)
-		
+		var inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
 		var frame = zoomView.frame
-		if frame.width < view.frame.width
-		{
+		if frame.width < view.frame.width {
 			inset.left = (view.frame.width - frame.width) / 2.0
-		}
-		else
-		{
+		} else {
 			inset.left = 0.0
 		}
-		
-		if frame.height < view.frame.height
-		{
+
+		if frame.height < view.frame.height {
 			inset.top = (view.frame.height - frame.height) / 2.0
-		}
-		else
-		{
+		} else {
 			inset.top = 0.0
 		}
-		
+
 		view.contentInset = inset
 	}
-	
-	func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView?
-	{
+
+	func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
 		return zoomView
 	}
-	
-	func scrollViewDidZoom(scrollView: UIScrollView)
-	{
+
+	func scrollViewDidZoom(scrollView: UIScrollView) {
 		alignImageAtCenter()
 	}
 
-	override func didReceiveMemoryWarning()
-	{
+	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
 }
-

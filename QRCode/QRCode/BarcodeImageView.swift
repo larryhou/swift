@@ -10,33 +10,29 @@ import Foundation
 import UIKit
 
 @IBDesignable
-class BarcodeImageView:GeneratorImageView
-{
+class BarcodeImageView: GeneratorImageView {
     @IBInspectable
-    var inputQuietSpace:Double = 0.0 // 7.0[0.0,20.0]
+    var inputQuietSpace: Double = 0.0 // 7.0[0.0,20.0]
     {
         didSet { drawBarcodeImage() }
     }
-    
+
     @IBInspectable
-    var inputMessage:String = "larryhou"
-    {
+    var inputMessage: String = "larryhou" {
         didSet { drawBarcodeImage() }
     }
-    
-    func drawBarcodeImage()
-    {
+
+    func drawBarcodeImage() {
         let filter = CIFilter(name: "CICode128BarcodeGenerator")
         let data = inputMessage.data(using: .utf8)
-        
+
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(inputQuietSpace, forKey: "inputQuietSpace")
-        
+
         self.image = stripOutputImage(of: filter)
     }
-    
-    override func prepareForInterfaceBuilder()
-    {
+
+    override func prepareForInterfaceBuilder() {
         drawBarcodeImage()
     }
 }

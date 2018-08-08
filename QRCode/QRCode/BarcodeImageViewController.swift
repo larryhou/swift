@@ -9,32 +9,27 @@
 import Foundation
 import UIKit
 
-class BarcodeImageViewController:UIViewController, UITextFieldDelegate
-{
+class BarcodeImageViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputTextView: UITextField!
     @IBOutlet weak var barcodeImageView: BarcodeImageView!
-    
-    override func viewDidLoad()
-    {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
 //        barcodeImageView.layer.borderWidth = 1.0
 //        barcodeImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
-        
+
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    @IBAction func inputTextDidChange(_ sender: UITextField)
-    {
+
+    @IBAction func inputTextDidChange(_ sender: UITextField) {
         barcodeImageView.inputMessage = sender.text!
     }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

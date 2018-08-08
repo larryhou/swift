@@ -9,11 +9,9 @@
 import Foundation
 
 // 葫芦
-class HandV7FullHouse:PatternEvaluator
-{
-    static func getOccurrences() -> UInt
-    {
-        var count:UInt = 0
+class HandV7FullHouse: PatternEvaluator {
+    static func getOccurrences() -> UInt {
+        var count: UInt = 0
         count += // 3-2-1-1
             13 * combinate(4, select: 3) *
             12 * combinate(4, select: 2) *
@@ -22,67 +20,54 @@ class HandV7FullHouse:PatternEvaluator
             13 * combinate(4, select: 3) *
             12 * combinate(4, select: 2) *
             11 * combinate(4, select: 2)
-        
+
         count += // 3-3-1
             13 * combinate(4, select: 3) *
             12 * combinate(4, select: 3) *
             (52 - 4 * 2)
-        
+
         return count
     }
-    
-    static func evaluate(_ hand:PokerHand)
-    {
+
+    static func evaluate(_ hand: PokerHand) {
         var cards = (hand.givenCards + hand.tableCards).sort()
-        
+
         var three = -1, prev3 = -1, two = -1
-        var dict:[Int:[PokerCard]] = [:]
-        for i in 0..<cards.count
-        {
+        var dict: [Int: [PokerCard]] = [:]
+        for i in 0..<cards.count {
             let item = cards[i]
-            if dict[item.value] == nil
-            {
+            if dict[item.value] == nil {
                 dict[item.value] = []
             }
-            
+
             dict[item.value]?.append(item)
         }
-        
-        for (value, list) in dict
-        {
-            if list.count == 3
-            {
-                if three == -1
-                {
+
+        for (value, list) in dict {
+            if list.count == 3 {
+                if three == -1 {
                     three = value
-                }
-                else // Keep three of a kind with max value
-                if let last = dict[three]?.first, item = list.first where item > last
-                {
+                } else // Keep three of a kind with max value
+                if let last = dict[three]?.first, item = list.first where item > last {
                     prev3 = three
                     three = value
                 }
             }
-            
-            if list.count == 2
-            {
-                if two == -1
-                {
+
+            if list.count == 2 {
+                if two == -1 {
                     two = value
-                }
-                else // Keep two pair with max value
-                if let last = dict[two]?.first, item = list.first where item > last
-                {
+                } else // Keep two pair with max value
+                if let last = dict[two]?.first, item = list.first where item > last {
                     two = value
                 }
             }
         }
-        
-        if prev3 != -1 && prev3 > two
-        {
+
+        if prev3 != -1 && prev3 > two {
             two = prev3
         }
-        
+
         hand.matches = dict[three]! + Array(dict[two]![0..<2])
     }
 }

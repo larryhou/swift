@@ -9,36 +9,30 @@
 import Foundation
 import UIKit
 
-class AztecImageViewController:UIViewController, UITextViewDelegate
-{
+class AztecImageViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var aztecImageView: AztecImageView!
-    
-    override func viewDidLoad()
-    {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         aztecImageView.layer.borderWidth = 1.0
         aztecImageView.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
-    {
-        if text == "\n"
-        {
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
             textView.resignFirstResponder()
             return false
         }
-        
+
         return true
     }
-    
-    func textViewDidChange(_ textView: UITextView)
-    {
+
+    func textViewDidChange(_ textView: UITextView) {
         aztecImageView.inputMessage = textView.text
         print(textView.text)
     }

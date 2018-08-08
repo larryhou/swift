@@ -10,47 +10,38 @@ import Photos
 import Foundation
 import UIKit
 
-class PhotoViewController: UIViewController, PhotoSelectViewControllerDelegate
-{
+class PhotoViewController: UIViewController, PhotoSelectViewControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
-    
-    override func viewDidLoad()
-    {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(selectPhoto(_:)))
         tap.numberOfTouchesRequired = 1
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
     }
-    
-    @objc func selectPhoto(_ sender:UITapGestureRecognizer)
-    {
+
+    @objc func selectPhoto(_ sender: UITapGestureRecognizer) {
         let browseController = PhotoSelectViewController.instantiate(from: storyboard!, delegate: self)
         present(browseController, animated: true, completion: nil)
     }
-    
-    func didSelectPhoto(_ asset: PHAsset)
-    {
-        PHImageManager.default().requestImageData(for: asset, options: nil)
-        { (data, uti, orientation, info) in
-            if let image = data
-            {
+
+    func didSelectPhoto(_ asset: PHAsset) {
+        PHImageManager.default().requestImageData(for: asset, options: nil) { (data, _, _, _) in
+            if let image = data {
                 self.replaceImage(with: UIImage(data: image))
             }
         }
     }
-    
-    func replaceImage(with image:UIImage?)
-    {
-        UIView.transition(with: imageView, duration: 1, options: [.transitionCrossDissolve, .preferredFramesPerSecond60], animations:
-        { [unowned self] in
+
+    func replaceImage(with image: UIImage?) {
+        UIView.transition(with: imageView, duration: 1, options: [.transitionCrossDissolve, .preferredFramesPerSecond60], animations: { [unowned self] in
             self.imageView.image = image
         }, completion: nil)
     }
-    
-    @IBAction func visionModeUpdate(_ sender: UISwitch)
-    {
-        
+
+    @IBAction func visionModeUpdate(_ sender: UISwitch) {
+
     }
 }

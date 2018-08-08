@@ -12,8 +12,7 @@
 import Foundation
 import CoreData
 
-extension LocationEvent
-{
+extension LocationEvent {
 
     @NSManaged var date: NSDate?
     @NSManaged var id: NSNumber?

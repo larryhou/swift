@@ -10,78 +10,63 @@ import Foundation
 import AVFoundation
 import UIKit
 
-class ResultView: UIView
-{
-    required init?(coder aDecoder: NSCoder)
-    {
+class ResultView: UIView {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         layer.cornerRadius = 8
-        if #available(iOS 11, *)
-        {
+        if #available(iOS 11, *) {
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
     }
 }
 
-class ResultViewController: UIViewController
-{
-    var mrcObjects:[AVMetadataMachineReadableCodeObject]!
-    
+class ResultViewController: UIViewController {
+    var mrcObjects: [AVMetadataMachineReadableCodeObject]!
+
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var mrcContent: UITextView!
     @IBOutlet weak var mrcTitle: UILabel!
-    
-    override func viewDidLoad()
-    {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.isHidden = true
-        
+
         reload()
     }
-    
-    override func viewDidAppear(_ animated: Bool)
-    {
+
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resultView.frame = resultView.frame.offsetBy(dx: 0, dy: resultView.frame.height)
         animate(visible: true)
         view.isHidden = false
     }
-    
-    func animate(visible:Bool)
-    {
+
+    func animate(visible: Bool) {
         let frame = resultView.frame
         let bottom = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: frame.size)
         let top = bottom.offsetBy(dx: 0, dy: -frame.height)
-        
+
         let to = visible ? top : bottom
-        UIView.animate(withDuration: 0.3, animations:
-        {
+        UIView.animate(withDuration: 0.3, animations: {
             self.resultView.frame = to
-        }, completion:
-        {
-            if $0 && !visible
-            {
+        }, completion: {
+            if $0 && !visible {
                 self.dismiss(animated: true, completion: nil)
             }
         })
     }
-    
-    func reload()
-    {
-        if let data = mrcObjects.first, let stringValue = data.stringValue
-        {
-            if mrcTitle.text != data.type.rawValue
-            {
+
+    func reload() {
+        if let data = mrcObjects.first, let stringValue = data.stringValue {
+            if mrcTitle.text != data.type.rawValue {
                 mrcTitle.text = data.type.rawValue
             }
-            
-            if mrcContent.text != stringValue
-            {
+
+            if mrcContent.text != stringValue {
                 mrcContent.text = stringValue
             }
         }

@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 @objc(TrackTime)
-class TrackTime: NSManagedObject
-{
+class TrackTime: NSManagedObject {
 
 }

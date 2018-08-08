@@ -8,15 +8,12 @@
 
 import Cocoa
 
-class WindowController: NSWindowController
-{
-    override func windowDidLoad()
-    {
+class WindowController: NSWindowController {
+    override func windowDidLoad() {
         super.windowDidLoad()
-        
+
         window?.backgroundColor = .white
-        if let delegate = window?.contentViewController as? NSWindowDelegate
-        {
+        if let delegate = window?.contentViewController as? NSWindowDelegate {
             window?.delegate = delegate
         }
     }
