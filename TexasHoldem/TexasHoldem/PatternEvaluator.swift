@@ -8,29 +8,23 @@
 
 import Foundation
 
-protocol PatternEvaluator
-{
-    static func evaluate(_ hand:PokerHand);
-    static func getOccurrences() -> UInt;
+protocol PatternEvaluator {
+    static func evaluate(_ hand: PokerHand)
+    static func getOccurrences() -> UInt
 }
 
-extension Int
-{
-    var double:Double
-    {
+extension Int {
+    var double: Double {
         return Double(self)
     }
 }
 
-extension PatternEvaluator
-{
-    static var probability:Double
-    {
+extension PatternEvaluator {
+    static var probability: Double {
         return getOccurrences().double / combinate(52, select: 7).double
     }
-    
-    static var description:String
-    {
+
+    static var description: String {
         return String(format: "%@ %7.4f%%", String(self), probability * 100)
     }
 }

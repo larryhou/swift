@@ -9,35 +9,28 @@
 import UIKit
 import StoreKit
 
-class ViewController: UIViewController, SKStoreProductViewControllerDelegate
-{
+class ViewController: UIViewController, SKStoreProductViewControllerDelegate {
 
-	override func viewDidLoad()
-	{
+	override func viewDidLoad() {
 		super.viewDidLoad()
 		previewiTunesProduct(414478124)
 	}
-	
-	func previewiTunesProduct(id:Double)
-	{
+
+	func previewiTunesProduct(id: Double) {
 		var controller = SKStoreProductViewController()
 		controller.delegate = self
-		controller.loadProductWithParameters([SKStoreProductParameterITunesItemIdentifier:id], completionBlock: nil)
+		controller.loadProductWithParameters([SKStoreProductParameterITunesItemIdentifier: id], completionBlock: nil)
 		presentViewController(controller, animated: true, completion: nil)
-		
+
 	}
-	
-	func productViewControllerDidFinish(viewController: SKStoreProductViewController!)
-	{
+
+	func productViewControllerDidFinish(viewController: SKStoreProductViewController!) {
 		println("done")
 	}
 
-	override func didReceiveMemoryWarning()
-	{
+	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
 
-
 }
-

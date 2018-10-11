@@ -9,27 +9,22 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate
-{
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
-    {
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
 
-    func applicationDidFinishLaunching(_ aNotification: Notification)
-    {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }
 
-    func applicationWillTerminate(_ aNotification: Notification)
-    {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 
     // MARK: - Core Data stack
 
-    lazy var persistentContainer: NSPersistentContainer =
-    {
+    lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -37,13 +32,11 @@ class AppDelegate: NSObject, NSApplicationDelegate
          error conditions that could cause the creation of the store to fail.
         */
         let container = NSPersistentContainer(name: "ColorPicker")
-        container.loadPersistentStores(completionHandler:
-        { (storeDescription, error) in
-            if let error = error
-            {
+        container.loadPersistentStores(completionHandler: { (_, error) in
+            if let error = error {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
+
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -60,23 +53,17 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
     // MARK: - Core Data Saving and Undo support
 
-    @IBAction func saveAction(_ sender: AnyObject?)
-    {
+    @IBAction func saveAction(_ sender: AnyObject?) {
         // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
         let context = persistentContainer.viewContext
 
-        if !context.commitEditing()
-        {
+        if !context.commitEditing() {
             NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
         }
-        if context.hasChanges
-        {
-            do
-            {
+        if context.hasChanges {
+            do {
                 try context.save()
-            }
-            catch
-            {
+            } catch {
                 // Customize this code block to include application-specific recovery steps.
                 let nserror = error as NSError
                 NSApplication.shared.presentError(nserror)
@@ -92,16 +79,16 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         // Save changes in the application's managed object context before the application terminates.
         let context = persistentContainer.viewContext
-        
+
         if !context.commitEditing() {
             NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing to terminate")
             return .terminateCancel
         }
-        
+
         if !context.hasChanges {
             return .terminateNow
         }
-        
+
         do {
             try context.save()
         } catch {
@@ -112,9 +99,9 @@ class AppDelegate: NSObject, NSApplicationDelegate
             if (result) {
                 return .terminateCancel
             }
-            
+
             let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
-            let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info");
+            let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")
             let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
             let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
             let alert = NSAlert()
@@ -122,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
             alert.informativeText = info
             alert.addButton(withTitle: quitButton)
             alert.addButton(withTitle: cancelButton)
-            
+
             let answer = alert.runModal()
             if answer == .alertSecondButtonReturn {
                 return .terminateCancel
@@ -133,4 +120,3 @@ class AppDelegate: NSObject, NSApplicationDelegate
     }
 
 }
-

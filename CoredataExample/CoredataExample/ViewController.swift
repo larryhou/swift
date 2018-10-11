@@ -9,14 +9,12 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController
-{
-    var managedObjectContext:NSManagedObjectContext!
+class ViewController: UIViewController {
+    var managedObjectContext: NSManagedObjectContext!
 
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
 //        let tag = NSEntityDescription.insertNewObjectForEntityForName("LocationTag", inManagedObjectContext: managedObjectContext) as! LocationTag
 //        tag.name = "jason"
 //        do
@@ -33,11 +31,9 @@ class ViewController: UIViewController
 //        print(tag)
     }
 
-    override func didReceiveMemoryWarning()
-    {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-}
 
+}

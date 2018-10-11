@@ -17,55 +17,39 @@ let manager = ArgumentsManager()
 manager.insertOption("--encode-mode", abbr: "-e", help: "Use url encode mode to process", hasValue: false) { decodeMode = false }
 manager.insertOption("--decode-mode", abbr: "-d", help: "Use url decode mode to process", hasValue: false) { decodeMode = true }
 manager.insertOption("--verbose", abbr: "-v", help: "Enable verbose printing", hasValue: false) { verbose = true }
-manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false)
-{
+manager.insertOption("--help", abbr: "-h", help: "Show help message", hasValue: false) {
     manager.showHelpMessage()
     exit(0)
 }
 
-while arguments.count > 0
-{
+while arguments.count > 0 {
     let text = arguments[0]
-    if manager.recognizeOption(text, triggerWhenMatch: true)
-    {
+    if manager.recognizeOption(text, triggerWhenMatch: true) {
         arguments.removeAtIndex(0)
-        if let hasValue = manager.getOption(text)?.hasValue where hasValue
-        {
+        if let hasValue = manager.getOption(text)?.hasValue where hasValue {
             //TODO: parsing argument value
         }
-    }
-    else
-    {
+    } else {
         break
     }
 }
 
-if verbose
-{
+if verbose {
     print(Process.arguments)
 }
 
-if arguments.count > 0
-{
-    while arguments.count > 0
-    {
+if arguments.count > 0 {
+    while arguments.count > 0 {
         var text = arguments.removeAtIndex(0)
-        if decodeMode
-        {
+        if decodeMode {
             text = text.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        }
-        else
-        {
+        } else {
             text = text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         }
-        
+
         print(text)
     }
-}
-else
-{
+} else {
     manager.showHelpMessage(stderr)
     exit(1)
 }
-
-

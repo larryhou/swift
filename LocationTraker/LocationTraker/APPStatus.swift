@@ -16,8 +16,7 @@ class APPStatus: NSManagedObject {
 
 }
 
-enum APPStatusType:String
-{
+enum APPStatusType: String {
     case Launch = "Launch"
     case EnterBackground = "EnterBackground"
     case EnterForeground = "EnterForeground"

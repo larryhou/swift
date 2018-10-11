@@ -9,10 +9,8 @@
 import Foundation
 import UIKit
 
-class CameraViewController: UIViewController
-{
-    override func viewDidLoad()
-    {
+class CameraViewController: UIViewController {
+    override func viewDidLoad() {
         print("load", self)
         super.viewDidLoad()
     }

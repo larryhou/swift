@@ -9,45 +9,38 @@
 import Foundation
 import UIKit
 
-class ViewTransitionController: UIViewController
-{
-    var options:UIViewAnimationOptions = []
-    
-    var fromView:UIImageView!
-    var toView:UIImageView!
-    
-    override func viewDidLoad()
-    {
+class ViewTransitionController: UIViewController {
+    var options: UIViewAnimationOptions = []
+
+    var fromView: UIImageView!
+    var toView: UIImageView!
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fromView = UIImageView(image: UIImage(named: "src"))
         fromView.frame = view.frame
         view.addSubview(fromView)
-        
+
         toView = UIImageView(image: UIImage(named: "dst"))
         toView.frame = view.frame
-        
+
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panUpdate(_:)))
         pan.maximumNumberOfTouches = 1
         view.addGestureRecognizer(pan)
     }
-    
+
     var fractionComplete = CGFloat.nan
-    var animator:UIViewPropertyAnimator!
-    @objc func panUpdate(_ sender:UIPanGestureRecognizer)
-    {
+    var animator: UIViewPropertyAnimator!
+    @objc func panUpdate(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
-        switch sender.state
-        {
+        switch sender.state {
             case .began:
-                animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
-                { [unowned self] in
+                animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear) { [unowned self] in
                     self.view.frame.origin.y = self.view.frame.height
                 }
-                animator.addCompletion
-                { position in
-                    if position == .end
-                    {
+                animator.addCompletion { position in
+                    if position == .end {
                         self.dismiss(animated: false, completion: nil)
                     }
                     self.fractionComplete = CGFloat.nan
@@ -61,16 +54,14 @@ class ViewTransitionController: UIViewController
                 animator.fractionComplete = fractionComplete
                 sender.setTranslation(CGPoint.zero, in: view)
             default:
-                if animator.fractionComplete <= 0.25
-                {
+                if animator.fractionComplete <= 0.25 {
                     animator.isReversed = true
                 }
                 animator.continueAnimation(withTimingParameters: nil, durationFactor: 1.0)
         }
     }
-    
-    func startAnimation()
-    {
+
+    func startAnimation() {
         view.addSubview(toView)
         UIView.transition(from: fromView, to: toView, duration: 1.0, options: options)
     }

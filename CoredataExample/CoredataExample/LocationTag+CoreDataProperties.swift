@@ -12,8 +12,7 @@
 import Foundation
 import CoreData
 
-extension LocationTag
-{
+extension LocationTag {
 
     @NSManaged var name: String?
     @NSManaged var events: NSSet?

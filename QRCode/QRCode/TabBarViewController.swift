@@ -9,10 +9,8 @@
 import Foundation
 import UIKit
 
-class TabBarViewController:UITabBarController
-{
-    override var supportedInterfaceOrientations:UIInterfaceOrientationMask
-    {
+class TabBarViewController: UITabBarController {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 }

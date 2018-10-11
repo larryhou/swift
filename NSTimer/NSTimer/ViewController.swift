@@ -9,41 +9,35 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController
-{
-	private var startstamp:NSTimeInterval = 0
-	private var laststamp:NSTimeInterval = 0
+class ViewController: UIViewController {
+	private var startstamp: NSTimeInterval = 0
+	private var laststamp: NSTimeInterval = 0
 
-	override func viewDidLoad()
-	{
+	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		scheduleNewTimer()
 	}
-	
-	func scheduleNewTimer()
-	{
+
+	func scheduleNewTimer() {
 		startstamp = NSDate.timeIntervalSinceReferenceDate()
 		laststamp = startstamp
-		
+
 		NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "tickUpdate:", userInfo: "data", repeats: true)
 	}
-	
-	func tickUpdate(timer:NSTimer)
-	{
+
+	func tickUpdate(timer: NSTimer) {
 		let now = NSDate.timeIntervalSinceReferenceDate()
-		
+
 		println(now - laststamp)
-		
+
 		laststamp = now
-		if now - startstamp >= 30.0
-		{
+		if now - startstamp >= 30.0 {
 			timer.invalidate()
 		}
 	}
 
-	override func didReceiveMemoryWarning()
-	{
+	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}

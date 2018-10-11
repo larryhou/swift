@@ -10,32 +10,25 @@ import Foundation
 import CoreData
 
 @objc(LocationTag)
-class LocationTag: NSManagedObject
-{
-    func addTagsObject(value:LocationEvent)
-    {
+class LocationTag: NSManagedObject {
+    func addTagsObject(value: LocationEvent) {
         mutableSetValueForKey("events").addObject(value)
     }
-    
-    func removeTagsObject(value:LocationEvent)
-    {
+
+    func removeTagsObject(value: LocationEvent) {
         mutableSetValueForKey("events").removeObject(value)
     }
-    
-    func addTags(values:NSSet)
-    {
+
+    func addTags(values: NSSet) {
         let list = mutableSetValueForKey("events")
-        for item in values
-        {
+        for item in values {
             list.addObject(item)
         }
     }
-    
-    func removeTags(values:NSSet)
-    {
+
+    func removeTags(values: NSSet) {
         let list = mutableSetValueForKey("events")
-        for item in values
-        {
+        for item in values {
             list.removeObject(item)
         }
     }

@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 
-class PatternTableViewCell:UITableViewCell
-{
-    private static var color_hash:[HandPattern:UIColor]
-    {
-        var hash:[HandPattern:UIColor] = [:]
+class PatternTableViewCell: UITableViewCell {
+    private static var color_hash: [HandPattern: UIColor] {
+        var hash: [HandPattern: UIColor] = [:]
         hash[.highCard]         = UIColor(white: 0.90, alpha: 1.0)
         hash[.onePair]          = UIColor(white: 0.75, alpha: 1.0)
         hash[.twoPair]          = UIColor(white: 0.50, alpha: 1.0)
@@ -25,25 +23,24 @@ class PatternTableViewCell:UITableViewCell
         hash[.straightFlush]    = UIColor.red()
         return hash
     }
-    
+
     @IBOutlet weak var id: UILabel!
     @IBOutlet weak var pattern: UILabel!
     @IBOutlet weak var givenCards: UILabel!
     @IBOutlet weak var tableCards: UILabel!
     @IBOutlet weak var matchCards: UILabel!
-    
-    private var hand:PokerHand = PokerHand()
-    
-    func renderView(_ data:RawPokerHand)
-    {
+
+    private var hand: PokerHand = PokerHand()
+
+    func renderView(_ data: RawPokerHand) {
         PokerHand.parse(data.data, hand: hand)
         hand.evaluate()
-        
+
         id.text = String(format: "%07d", data.index + 1)
-        
+
         pattern.text = hand.pattern.description
         pattern.textColor = PatternTableViewCell.color_hash[hand.pattern]
-        
+
         givenCards.text = hand.givenCards.toString()
         tableCards.text = hand.tableCards.toString()
         matchCards.text = hand.matches.toString()
